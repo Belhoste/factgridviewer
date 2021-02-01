@@ -1,0 +1,57 @@
+
+  <body class="mat-typography mat-app-background">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+    rel="stylesheet">
+    
+    <p>
+    <mat-toolbar color="primary">
+        <div>FactGrid: a database for historians</div>
+        <span class="example-spacer"></span>
+      
+        <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Example icon-button with a menu">
+            <mat-icon>language</mat-icon>
+            </button>
+            <mat-menu #menuLanguage="matMenu">
+              <button (click)="langSetting(lang)" *ngFor = "let lang of langs" mat-menu-item>
+                <span>{{lang.name}}</span>
+              </button>
+    
+            </mat-menu>
+            
+      <button mat-icon-button [matMenuTriggerFor]="menuProject" aria-label="Example icon-button with a menu">
+         <mat-icon>settings</mat-icon>
+            </button>
+         <mat-menu #menuProject="matMenu">
+            <button (click)="selectProject(project)" *ngFor = "let project of projects" mat-menu-item>
+               {{project.name}}
+            </button>
+        </mat-menu>
+    </mat-toolbar>
+    </p>
+    
+    <mat-card color="primary">
+
+      <div>
+          <mat-form-field color=black, class="example-full-width">
+            <mat-label>Enter an Item</mat-label>
+            <input matInput placeholder="Ex. Item" value="Goethe" [formControl] = "searchInput">
+          </mat-form-field>
+          <span></span>
+      </div>
+  
+      <div>
+      <ul style="list-style: none;" >
+          <li *ngFor="let item of items" >
+                  <button mat-raised-button color="primary" style="height:25px;width:90%" #content (click)="onItemSelect(item)">
+                    {{item.label}}, {{item.description }} 
+                </button>
+          </li>
+      </ul>
+     </div>
+  
+  </mat-card>
+  
+  <display-component *ngIf="searchToken === 'off'" [item]="selectedItem"></display-component>
+
+</body>
