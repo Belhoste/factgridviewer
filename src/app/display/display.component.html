@@ -16,11 +16,6 @@ rel="stylesheet">
    <mat-icon-button color="primary" #content (click)="onClick(P2_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span><br/>   
  <span *ngIf="P3">{{P3.label}}:&nbsp;</span><span *ngFor='let P3_item of P3_items'>&nbsp;{{ P3_item.label }},&nbsp;{{P3_item.description}}
    <mat-icon-button color="primary" #content (click)="onClick(P3_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span></p>
- 
-   <p *ngIf="P2">{{ item[0].label }}</p><!--c'est bon-->
-   <p *ngIf="P2">{{ item[0].claims.P2[0].datavalue.value }}</p>
-  <p *ngIf="item"><span *ngFor="let u of item[0].claims.P2">{{ u }}</span></p>
-
 </mat-card>
 
 </div>

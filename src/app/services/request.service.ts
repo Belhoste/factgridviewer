@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin, of } from 'rxjs';
 //import { SetLanguageService } from './set-language.service';
 import { tap, map, catchError } from 'rxjs/operators';
@@ -154,13 +154,14 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 }
   
   searchItem(label, lang) {
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin','https://morning-falls-85417.herokuapp.com')
     let params = new HttpParams().set('action',"wbsearchentities")
     .set('search',label)
     .set('language',lang)
     .set('uselang',lang)
     .set('limit',"50")
     .set('format',"json"); 
-   return this.http.get('https://database.factgrid.de//w/api.php', {params: params})   
+   return this.http.get('https://database.factgrid.de//w/api.php', {headers: headers, params: params})   
  // return this.http.get('https://www.wikidata.org//w/api.php', {params: params}) 
     }
 

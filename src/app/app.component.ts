@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, tap, filter, mergeMap, exhaustMap, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { Observable, pipe, from, of } from 'rxjs';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { CreateItemToDisplayService} from './services/create-item-to-display.service';
@@ -13,12 +13,13 @@ import { AppAndDisplaySharedService} from './services/app-and-display-shared.ser
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy {
-
+export class AppComponent implements OnInit
+, OnDestroy 
+{
 
 langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, {name:'Italian',code:"it"}, {name:'Hungarian',code:"hu"}, {name:'Swedish',code:"se"}];
 
-projects = [{name:'All', id:undefined},{name:'Illuminati',id:"Q31770"},{name:'Harmonia Universalis',id:"Q99677"},{name:'Formation of German student corporations',id:"Q28114"}];
+projects = [{name:'All', id:"all"},{name:'Illuminati',id:"Q31770"},{name:'Harmonia Universalis',id:"Q99677"},{name:'Formation of German student corporations',id:"Q28114"}];
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
@@ -58,13 +59,16 @@ displayClickedItem: string;
     switchMap(url => this.request.getItem(url)),
     map(res => Object.values(res.entities)),
     filter(res => res !== undefined),
-    filter(res => res != null),
+    filter(res => res != null)
    )
-    .subscribe(re => { this.items = this.setLanguage.item(re, this.selectedLang);
-    console.log(this.filterProject(this.items, this.selectedProject));
-    if(this.selectedProject !== undefined ) {
-    this.items = this.filterProject(this.items, this.selectedProject); } 
+    .subscribe(re => { 
+      this.items = this.setLanguage.item(re, this.selectedLang);
+      console.log(this.items);
+      console.log(this.selectedProject);
+    this.items = this.filterProject(this.items, this.selectedProject);  
+    console.log(this.items);
     this.searchToken="on";
+    this.changeDetector.detectChanges();
     })
 
   }
@@ -72,7 +76,8 @@ displayClickedItem: string;
  onItemSelect(item){ 
   this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
   this.items = [];
-   this.searchToken = "off";
+  this.searchToken = "off";
+  this.changeDetector.detectChanges();
    return this.sharedService.item
      }
 
@@ -88,11 +93,12 @@ displayClickedItem: string;
   
   
   };
-  
+
   selectProject(project){
+      if (project === undefined) {this.selectedProject = "all"};
       if (project !== undefined) {this.selectedProject = project.id; };
-      localStorage['selectedProject'] = this.selectedProject;
       console.log(this.selectedProject);
+      localStorage['selectedProject'] = this.selectedProject;
        }
      
   langSetting(lang){
@@ -102,9 +108,9 @@ displayClickedItem: string;
      console.log(localStorage['selectedLang'])
      }
 
-  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix)}
+  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix, { headers : { 'Access-Control-Allow-Origin':'https://morning-falls-85417.herokuapp.com'}})}
 
-  getItem(url:string): Observable<any> { return this.http.get(url)};
+  getItem(url:string): Observable<any> { return this.http.get(url, { headers : { 'Access-Control-Allow-Origin':'https://morning-falls-85417.herokuapp.com'}})};
 
   createList(re) {  //create an url whith the elements of an array
     let list = "";
@@ -121,22 +127,24 @@ displayClickedItem: string;
     }
   
   filterProject(arr, project){        //to only get items of the selectedProject (=selectedItems)
-      let selectedItems = []
-      console.log(selectedItems);
+    let selectedItems = []
       for (let i=0; i<arr.length; i++){
- //        if (project === undefined) { continue };
-         if (arr[i].claims.P131 !== undefined){
-          if (arr[i].claims.P131[0].mainsnak.datavalue.value.id === project){
+       if (arr[i].claims.P131!==undefined){
+         let id = arr[i].claims.P131[0].mainsnak.datavalue.value.id;
+           if (project == "all") { selectedItems = arr };
+           if (project == id){
             selectedItems.push(arr[i]);
-            }
-          }       
+          }
         }
-       return selectedItems
+        if (project == "all" ){ selectedItems = arr};
       }
+       return selectedItems
+    }
 
-      ngOnDestroy(): void {
-        this.labels.unsubscribe()
-        }
+
+     ngOnDestroy(): void {
+       this.labels.unsubscribe()
+       }
 
 }
 

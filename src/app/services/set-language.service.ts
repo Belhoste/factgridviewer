@@ -81,6 +81,7 @@ changeLang(lang,res) {
       aliasesLang = res.aliases.en
       aliasesValue = res.aliases.en[0].value;}
     if (lang === 'fr') {
+      aliasesLang = undefined;
       if (res.labels.fr !== undefined) {
         labelLang = res.labels.fr;
         labelValue = res.labels.fr.value;}
@@ -92,6 +93,7 @@ changeLang(lang,res) {
         aliasesValue = res.aliases.fr[0].value;}
     }
     else if (lang === 'de') {
+      aliasesLang = undefined;
       if (res.labels.de !== undefined) {
         labelLang = res.labels.de;
         labelValue = res.labels.de.value; 
@@ -103,6 +105,6 @@ changeLang(lang,res) {
         aliasesValue = res.aliases.de[0].value;}
      }
    }
-    return [labelLang,labelValue,descriptionLang, descriptionValue, aliasesLang, aliasesValue] 
+    return [labelLang,labelValue,descriptionLang,descriptionValue,aliasesLang,aliasesValue] 
   }
 }
