@@ -154,7 +154,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 }
   
   searchItem(label, lang) {
-    let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin','https://morning-falls-85417.herokuapp.com/')
     let params = new HttpParams().set('action',"wbsearchentities")
     .set('search',label)
     .set('language',lang)
@@ -167,7 +167,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   //searchItem(label:string, lang:string): Observable<any> { return this.http.get(this.searchUrl(label,lang))} ;
 
-  getItem(re): Observable<any> { return this.http.get(re) };
+  getItem(re): Observable<any> { return this.http.get(re, { headers: headers}) };
 
   selectUrl(url:string) {  let selectUrl = re => re == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json"? 
      "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json" : re  };
