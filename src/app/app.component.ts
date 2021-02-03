@@ -48,7 +48,7 @@ displayClickedItem: string;
 
     this.labels = this.searchInput.valueChanges
     .pipe(
-    debounceTime(900),
+    debounceTime(600),
     switchMap(label => this.request.searchItem(label, this.selectedLang) ), 
     tap(res => console.log(res)),
     map( res => this.createList(res)),
