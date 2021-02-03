@@ -6,6 +6,7 @@ const app = express();
 app.use(
     cors({
      origin: "https://sleepy-ridge-62412.herokuapp.com/",
+     credentials : true,
      methods: "GET"
      })
      );
