@@ -109,11 +109,11 @@ displayClickedItem: string;
      }
 
   searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix
-   , { headers : { 'Access-Control-Allow-Origin':'https://sleepy-ridge-62412.herokuapp.com'}}
+   , { headers : { 'Access-Control-Allow-Origin':'*'}}
     )}
 
   getItem(url:string): Observable<any> { return this.http.get(url
-   , { headers : { 'Access-Control-Allow-Origin':'https://sleepy-ridge-62412.herokuapp.com'}}
+   , { headers : { 'Access-Control-Allow-Origin':'*'}}
     ) };
 
   createList(re) {  //create an url whith the elements of an array
