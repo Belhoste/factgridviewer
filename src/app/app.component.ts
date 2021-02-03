@@ -108,7 +108,7 @@ displayClickedItem: string;
      console.log(localStorage['selectedLang'])
      }
 
-  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix, { headers : { 'Access-Control-Allow-Origin':'*'}})}
+  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix, { headers : { 'Access-Control-Allow-Origin':"*"}})}
 
   getItem(url:string): Observable<any> { return this.http.get(url, { headers : { 'Access-Control-Allow-Origin':'*'}}) };
 
