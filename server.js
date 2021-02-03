@@ -2,8 +2,6 @@ const express = require('express');
 
 const app = express();
 
-app.use(express.static('./dist/factgrid'));
-
 const whitelist = ['http://localhost:3000']; // list of allow domain
 
 const corsOptions = {
@@ -20,6 +18,8 @@ const corsOptions = {
         return callback(null, true);
     }
 }
+
+app.use(express.static('./dist/factgrid'));
 
 app.use(cors(corsOptions));
 
