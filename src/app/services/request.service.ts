@@ -154,7 +154,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 }
   
   searchItem(label, lang) {
- //   let headers = new HttpHeaders().set('Access-Control-Allow-Origin','https://sleepy-ridge-62412.herokuapp.com')
+   let headers = new HttpHeaders().set('Access-Control-Allow-Origin','https://sleepy-ridge-62412.herokuapp.com')
     let params = new HttpParams().set('action',"wbsearchentities")
     .set('search',label)
     .set('language',lang)
@@ -162,7 +162,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     .set('limit',"50")
     .set('format',"json"); 
    return this.http.get('https://database.factgrid.de//w/api.php', {
- //    headers: headers, 
+     headers: headers, 
      params: params})   
  // return this.http.get('https://www.wikidata.org//w/api.php', {params: params}) 
     }
