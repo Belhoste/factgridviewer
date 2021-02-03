@@ -66,6 +66,7 @@ displayClickedItem: string;
     this.items = this.setLanguage.item(re, this.selectedLang);
     this.items = this.filterProject(this.items, this.selectedProject);  
     this.searchToken="on";
+    console.log(this.items);
     this.changeDetector.detectChanges();
     })
 
