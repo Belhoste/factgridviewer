@@ -3,7 +3,12 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+     origin: "https://sleepy-ridge-62412.herokuapp.com/",
+     methods: "GET"
+     })
+     );
 
 app.use(express.static('./dist/factgrid'));
 
