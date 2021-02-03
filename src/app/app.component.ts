@@ -37,8 +37,8 @@ projects = [{name:'All', id:"all"},{name:'Illuminati',id:"Q31770"},{name:'Harmon
 
 private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
 private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json' ;
-private getUrlSuffix= '&format=json' ; 
+private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
+private getUrlSuffix= '&format=json&origin=*' ; 
 
 displayClickedItem: string;
 
@@ -52,21 +52,18 @@ displayClickedItem: string;
     switchMap(label => this.request.searchItem(label, this.selectedLang) ), 
     map( res => this.createList(res)),
     //map(res => res == "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=&format=json"? 
-   // "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=Q42&format=json" : res ),
+   // "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : res ),
     map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json"? 
-   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json" : res ),
-    debounceTime(200), 
+   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json&origin=*" : res ),
+    debounceTime(200),
     switchMap(url => this.request.getItem(url)),
     map(res => Object.values(res.entities)),
     filter(res => res !== undefined),
     filter(res => res != null)
    )
     .subscribe(re => { 
-      this.items = this.setLanguage.item(re, this.selectedLang);
-      console.log(this.items);
-      console.log(this.selectedProject);
+    this.items = this.setLanguage.item(re, this.selectedLang);
     this.items = this.filterProject(this.items, this.selectedProject);  
-    console.log(this.items);
     this.searchToken="on";
     this.changeDetector.detectChanges();
     })
