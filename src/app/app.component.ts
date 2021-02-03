@@ -108,9 +108,13 @@ displayClickedItem: string;
      console.log(localStorage['selectedLang'])
      }
 
-  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix, { headers : { 'Access-Control-Allow-Origin':"https://sleepy-ridge-62412.herokuapp.com"}})}
+  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix
+  //  , { headers : { 'Access-Control-Allow-Origin':"https://sleepy-ridge-62412.herokuapp.com"}}
+    )}
 
-  getItem(url:string): Observable<any> { return this.http.get(url, { headers : { 'Access-Control-Allow-Origin':'https://sleepy-ridge-62412.herokuapp.com'}}) };
+  getItem(url:string): Observable<any> { return this.http.get(url
+ //   , { headers : { 'Access-Control-Allow-Origin':'https://sleepy-ridge-62412.herokuapp.com'}}
+    ) };
 
   createList(re) {  //create an url whith the elements of an array
     let list = "";
