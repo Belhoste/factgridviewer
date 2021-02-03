@@ -48,8 +48,9 @@ displayClickedItem: string;
 
     this.labels = this.searchInput.valueChanges
     .pipe(
-    debounceTime(400),
+    debounceTime(900),
     switchMap(label => this.request.searchItem(label, this.selectedLang) ), 
+    tap(res => console.log(res)),
     map( res => this.createList(res)),
     //map(res => res == "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=&format=json"? 
    // "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : res ),
@@ -106,11 +107,11 @@ displayClickedItem: string;
      }
 
   searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix
-   , { headers : { 'Access-Control-Allow-Origin':'*'}}
+//   , { headers : { 'Access-Control-Allow-Origin':'*'}}
     )}
 
   getItem(url:string): Observable<any> { return this.http.get(url
-   , { headers : { 'Access-Control-Allow-Origin':'*'}}
+//   , { headers : { 'Access-Control-Allow-Origin':'*'}}
     ) };
 
   createList(re) {  //create an url whith the elements of an array

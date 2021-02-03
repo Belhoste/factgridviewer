@@ -16,8 +16,8 @@ export class RequestService {
 
  private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
  private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-	private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json' ;
-  private getUrlSuffix= '&format=json' ; 
+	private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
+  private getUrlSuffix= '&format=json&origin=*' ; 
  // private res:string;
 
   constructor(private http: HttpClient) { }
@@ -154,6 +154,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 }
   
   searchItem(label, lang) {
+   console.log(label);
    let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
     let params = new HttpParams().set('action',"wbsearchentities")
     .set('search',label)

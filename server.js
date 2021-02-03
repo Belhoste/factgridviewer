@@ -1,11 +1,11 @@
 const express = require('express');
-//const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 
 /*app.use(
     cors({
-     origin: "https://sleepy-ridge-62412.herokuapp.com/",
+     origin: "*",
      credentials : true,
      methods: "GET"
      })
