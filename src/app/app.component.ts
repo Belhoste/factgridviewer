@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
-import { debounceTime, switchMap, map, tap, filter, mergeMap, exhaustMap, distinctUntilChanged, startWith } from 'rxjs/operators';
+import { debounceTime, switchMap, map, tap, filter, takeWhile, mergeMap, exhaustMap, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { Observable, pipe, from, of } from 'rxjs';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
@@ -48,21 +48,27 @@ displayClickedItem: string;
 
     this.labels = this.searchInput.valueChanges
     .pipe(
-    debounceTime(600),
+    debounceTime(400),
     switchMap(label => this.request.searchItem(label, this.selectedLang) ), 
     tap(res => console.log(res)),
     map( res => this.createList(res)),
+    tap(res =>console.log(res)),
     //map(res => res == "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=&format=json"? 
    // "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : res ),
-    map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json"? 
-   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json&origin=*" : res ),
-    debounceTime(200),
+    map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
+   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res ),
+    tap(res =>console.log(res)),
+   debounceTime(200),
     switchMap(url => this.request.getItem(url)),
+    takeWhile (res => res !== undefined),
+    tap(res => console.log(res)),
+    filter (res => res.entities !== undefined),
+    filter (res => res.entities !== null),
     map(res => Object.values(res.entities)),
-    filter(res => res !== undefined),
-    filter(res => res != null)
+    tap(res => console.log(res))
    )
     .subscribe(re => { 
+      console.log(re);
     this.items = this.setLanguage.item(re, this.selectedLang);
     this.items = this.filterProject(this.items, this.selectedProject);  
     this.searchToken="on";
