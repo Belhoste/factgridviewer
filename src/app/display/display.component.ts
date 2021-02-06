@@ -8,6 +8,7 @@ import { CreateItemToDisplayService} from '../services/create-item-to-display.se
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
 
+
 @Component({
   selector: 'display-component',
   templateUrl: 'display.component.html',
@@ -36,16 +37,61 @@ export class DisplayComponent implements OnInit, OnDestroy {
   aliases:string[];
   claims: any[];
   picture:string;
-  P2_label:string;
+  
 
   item:any[];
-  itemContent:any
+  itemContent:any;
+
+  P2:any[];
+  P2_label:string;
   P2_items: any;
+
+  P3:any[];
   P3_label: string;
   P3_items: any;
-  P2:any[]
-  P3:any[]
+  
+  human:string;
+  
+  sex:string;
+  P154:any[];//sex
+  P154_label:string;//sex
+  P154_items:any;//sex
 
+  name:string;
+  P247:any[];//name
+  P247_label:string;//name
+  P247_items:any;//name
+
+  P248:any[];//forenames
+  P248_label:string;//forenames
+  P248_items:any;//forenames
+
+  P77:any[];//birthday
+  P77_label:string;//birthday
+  P77_time:string;//birthday
+  P77_items:any;//birthday
+
+  P82:any[];//birthplace
+  P82_label:string;//birthplace
+  P82_items:any;//birthplace
+
+
+
+
+  //name:string;
+  foreNames:string[];
+  birthday:string;
+  birthPlace:string;
+  deathDay:string;
+  deathPlace:string;
+  deathCause:string;
+  father:any;
+  mother:any;
+  brotherhood:string[];
+  marriage:string[];
+
+
+ 
 
  clickedObject: Subject<any>
  clickedObject2:any;
@@ -62,6 +108,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
  // this.sharedService.item.subscribe(x=>console.log(JSON.stringify(x)));
   this.subscription = this.sharedService.item.subscribe(item=>{
   if (item !==undefined){
+  console.log(item);
+  this.human = item[0].claims.P2.human;
   this.item = item;
   this.itemContent = item[0];
   this.label = item[0].label;
@@ -70,25 +118,75 @@ export class DisplayComponent implements OnInit, OnDestroy {
   this.id = item[0].id;
   this.urlId = this.factGridUrl+this.id;
   if (item[0].claims.P189 !==undefined) this.picture = "https://commons.wikimedia.org/wiki/File:"+item[0].claims.P189[0].mainsnak.datavalue.value
-  this.P2 = item[0].claims.P2;
   
+  this.P2 = item[0].claims.P2;
   this.P2_items = item[0].claims.P2;
   if (this.P2 !== undefined){
     this.P2_label = this.P2[0].label;
     for (let i=0;i<this.P2.length; i++){
       this.P2_items[i]=item[0].claims.P2[i].mainsnak
-      }
+    }
+  }
   this.P3 = item[0].claims.P3; 
   this.P3_items = item[0].claims.P3;
   if (this.P3 !== undefined) {
-    this.P3_label = this.P3[0].label;
+    this.P3_label = this.P3[1];
     for (let i=0;i<this.P3.length; i++){
         this.P3_items[i]=item[0].claims.P3[i].mainsnak ;
             }
          } 
-       }
+
+  this.P154 = item[0].claims.P154; 
+  this.P154_items = item[0].claims.P154;
+  console.log(this.P154_items);
+  if (this.P154 !== undefined) {
+     this.P154_label = this.P154[1];
+     for (let i=0;i<this.P154.length; i++){
+      this.P154_items[i]=item[0].claims.P154[i].mainsnak ;
+      console.log(this.P154_items[i].datavalue.value);
+          }
+       }            
+       
+  this.P247 = item[0].claims.P247; 
+  this.P247_items = item[0].claims.P247;
+    if (this.P247 !== undefined) {
+       this.P247_label = this.P247[1];
+        for (let i=0;i<this.P247.length; i++){
+          console.log(item[0].claims.P247[i].mainsnak)
+          this.P247_items[i]=item[0].claims.P247[i].mainsnak ;
+               }
+            }   
+            
+  this.P248 = item[0].claims.P248; 
+  this.P248_items = item[0].claims.P248;
+    if (this.P248 !== undefined) {
+      this.P248_label = this.P248[1];
+        for (let i=0;i<this.P248.length; i++){
+          this.P248_items[i]=item[0].claims.P248[i].mainsnak ;
+               }
+           }   
+
+  this.P77 = item[0].claims.P77; 
+    this.P77_items = item[0].claims.P77;
+      if (this.P77 !== undefined) {
+        this.P77_label = this.P77[1];
+        for (let i=0;i<this.P77.length; i++){
+          this.P77_items[i]=item[0].claims.P77[i].mainsnak ;            
+          this.P77_time = this.P77_items[i].datavalue.value.time;}
+           }   
+        }  
+
+  this.P82 = item[0].claims.P82; 
+        this.P82_items = item[0].claims.P82;
+          if (this.P82 !== undefined) {
+             this.P82_label = this.P82[1];
+              for (let i=0;i<this.P82.length; i++){
+                this.P82_items[i]=item[0].claims.P82[i].mainsnak ;
+                     }
+                  }   
+
+
       }
-    }
     );
   }
 

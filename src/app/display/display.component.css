@@ -1,5 +1,14 @@
 /* app-component.css à mettre dans display-component.css*/
 
+
+.blue-text {
+  color:#283593;
+  }
+
+.pink-text {
+  color:#FF4081;
+}
+
 .center {
     display: flex;
     justify-content: center;
@@ -30,6 +39,14 @@ ul.inline {
 .percent2 {
     font-size: 90%;
   }
+
+.percent3 {
+    font-size: 170%;
+  }
+
+.property {
+  color:#3F51B5;
+}
 
 /* .mat-icon {
     vertical-align: middle;

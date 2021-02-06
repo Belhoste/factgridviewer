@@ -7,6 +7,7 @@ import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { CreateItemToDisplayService} from './services/create-item-to-display.service';
 import { AppAndDisplaySharedService} from './services/app-and-display-shared.service';
+import { classicNameResolver } from 'typescript';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +43,8 @@ private getUrlSuffix= '&format=json&origin=*' ;
 
 displayClickedItem: string;
 
-  constructor(private changeDetector: ChangeDetectorRef, public sharedService:AppAndDisplaySharedService, private http: HttpClient, private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService) { }
+  constructor( private changeDetector: ChangeDetectorRef, public sharedService:AppAndDisplaySharedService, private http: HttpClient, 
+    private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService) {}
 
   ngOnInit(): void {
 
@@ -50,33 +52,28 @@ displayClickedItem: string;
     .pipe(
     debounceTime(400),
     switchMap(label => this.request.searchItem(label, this.selectedLang) ), 
-    tap(res => console.log(res)),
     map( res => this.createList(res)),
-    tap(res =>console.log(res)),
     //map(res => res == "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=&format=json"? 
    // "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : res ),
     map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
    "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res ),
-    tap(res =>console.log(res)),
-   debounceTime(200),
+    debounceTime(200),
     switchMap(url => this.request.getItem(url)),
     takeWhile (res => res !== undefined),
-    tap(res => console.log(res)),
     filter (res => res.entities !== undefined),
     filter (res => res.entities !== null),
     map(res => Object.values(res.entities)),
-    tap(res => console.log(res))
    )
     .subscribe(re => { 
-      console.log(re);
     this.items = this.setLanguage.item(re, this.selectedLang);
     this.items = this.filterProject(this.items, this.selectedProject);  
     this.searchToken="on";
-    console.log(this.items);
     this.changeDetector.detectChanges();
     })
 
   }
+
+
 
  onItemSelect(item){ 
   this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
@@ -149,7 +146,6 @@ displayClickedItem: string;
       }
        return selectedItems
     }
-
 
      ngOnDestroy(): void {
        this.labels.unsubscribe()

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
+import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
@@ -17,6 +18,7 @@ import { ItemSelectComponent } from './item-select/item-select.component';
 import { DisplayComponent } from './display/display.component';
 import { JoinPipe } from './join.pipe';
 import { CommaJoinPipe } from './comma-join.pipe';
+import { CustomDatePipe } from './custom-date.pipe';
 //import { Display2Component } from './display2/display2.component';
 //import { ItemService } from './item.service';
 
@@ -28,6 +30,7 @@ import { CommaJoinPipe } from './comma-join.pipe';
     ItemSelectComponent,
     JoinPipe,
     CommaJoinPipe,
+    CustomDatePipe,
   //  Display2Component
   ],
   imports: [
@@ -43,7 +46,8 @@ import { CommaJoinPipe } from './comma-join.pipe';
     MatIconModule,
     MatMenuModule,
     FlexLayoutModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDividerModule
   ],
   bootstrap: [AppComponent]
 })

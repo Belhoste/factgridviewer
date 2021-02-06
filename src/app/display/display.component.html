@@ -1,9 +1,13 @@
+<body class="mat-typography mat-app-background">
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
 rel="stylesheet">
 
 <div>
 <mat-card>
-  <mat-card-title>{{ label }}
+  <mat-card-title>
+  <span class="blue-text">{{ label }}</span>
+  <span>&nbsp;</span>
   <span class="percent">
     {{ aliases | join }}
   </span>
@@ -12,18 +16,52 @@ rel="stylesheet">
   <h3><a  href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a></h3>
   <img mat-card-image *ngIf="picture" src={{picture}}>
  
- <p class="percent2"><span *ngIf="P2">{{P2.label}}:&nbsp;</span><span *ngFor='let P2_item of P2_items'>&nbsp;{{ P2_item.label }},&nbsp;{{P2_item.description}}
-   <mat-icon-button color="primary" #content (click)="onClick(P2_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span><br/>   
- <span *ngIf="P3">{{P3.label}}:&nbsp;</span><span *ngFor='let P3_item of P3_items'>&nbsp;{{ P3_item.label }},&nbsp;{{P3_item.description}}
-   <mat-icon-button color="primary" #content (click)="onClick(P3_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span></p>
+ <p class="percent2">
+   <span *ngIf="P2" class="property">{{P2.label}}:&nbsp;</span><span *ngFor='let P2_item of P2_items'>&nbsp;{{ P2_item.label }},&nbsp;{{P2_item.description}}
+   <mat-icon-button color="primary" #content (click)="onClick(P2_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>   
+ </p>
+ <p class="percent2">
+   <span *ngIf="P3" class="property">{{P3.label}}:&nbsp;</span><span *ngFor='let P3_item of P3_items'>&nbsp;{{ P3_item.label }},&nbsp;{{P3_item.description}}
+   <mat-icon-button color="primary" #content (click)="onClick(P3_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+ </p>
 </mat-card>
 
 </div>
 <div class = "parent" 
    fxLayout = "row"
     fx.Layout.sm="column">
-<div fxFlex="80%" class="left">"left"</div>
+<div fxFlex="80%" class="left">
+  <mat-divider></mat-divider>
+  <mat-card *ngIf='"human"!==undefined'>
+    <mat-card-subtitle class="percent3">{{human}}</mat-card-subtitle>
+    <p>
+      <span *ngIf="P3" class="property">{{P3.label}}:&nbsp;</span><span *ngFor='let P3_item of P3_items'>&nbsp;{{ P3_item.label }},&nbsp;{{P3_item.description}}
+      <mat-icon-button color="primary" #content (click)="onClick(P3_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+    </p>
+
+    <p>
+      <span *ngIf="P154" class="property">{{P154.label}}:&nbsp;</span><span *ngFor='let P154_item of P154_items'>&nbsp;{{ P154_item.label }}
+      <mat-icon-button color="primary" #content (click)="onClick(P154_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>   
+    </p>
+    <p>
+      <span *ngIf="P247" class="property">{{P247.label}}:&nbsp;</span><span *ngFor='let P247_item of P247_items'>&nbsp;{{ P247_item.label }}
+      <mat-icon-button color="primary" #content (click)="onClick(P247_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>   
+    </p>
+    <p>
+      <span *ngIf="P248" class="property">{{P248.label}}:&nbsp;</span><span *ngFor='let P248_item of P248_items'>&nbsp;{{ P248_item.label }}
+      <mat-icon-button color="primary" #content (click)="onClick(P248_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>   
+    </p>
+    <p>
+      <span *ngIf="P77" class="property">{{P77.label}}:&nbsp;</span><span>&nbsp;{{ P77_time | customDate }}</span>   
+    </p>
+    <p>
+      <span *ngIf="P82" class="property">{{P82.label}}:&nbsp;</span><span *ngFor='let P82_item of P82_items'>&nbsp;{{ P82_item.label }}
+      <mat-icon-button color="primary" #content (click)="onClick(P82_item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>   
+    </p>
+    <p>
+  </mat-card>
+</div>
 <div fxFlex="20%" class="right">"right"</div>
 </div>
 
-
+</body>
