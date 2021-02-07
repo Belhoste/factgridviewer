@@ -3,8 +3,8 @@
 
 import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Observable, Subscription, Subject } from 'rxjs';
-import { AppAndDisplaySharedService} from '../services/app-and-display-shared.service';
-import { CreateItemToDisplayService} from '../services/create-item-to-display.service';
+import { AppAndDisplaySharedService } from '../services/app-and-display-shared.service';
+import { CreateItemToDisplayService } from '../services/create-item-to-display.service';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
 
@@ -75,7 +75,13 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P82_label:string;//birthplace
   P82_items:any;//birthplace
 
+  P40:any[];//burialdate
+  P40_label:string;//burialdata
+  P40_items:any;//burialdate
 
+  P79:any[];//grave
+  P79_label:string;//grave
+  P79_items:any;//grave
 
 
   //name:string;
@@ -117,8 +123,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   this.aliases = item[0].aliases;
   this.id = item[0].id;
   this.urlId = this.factGridUrl+this.id;
-  if (item[0].claims.P189 !==undefined) this.picture = "https://commons.wikimedia.org/wiki/File:"+item[0].claims.P189[0].mainsnak.datavalue.value
-  
+ // if (item[0].claims.P189 !==undefined) this.picture = "https://commons.wikimedia.org/wiki/File:"+item[0].claims.P189[0].mainsnak.datavalue.value
+   if (item[0].claims.P189 !==undefined) {
+     if (item[0].claims.P189[0].references[0].snaks.P55 !==undefined) {
+     this.picture = item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value }
+   }
   this.P2 = item[0].claims.P2;
   this.P2_items = item[0].claims.P2;
   if (this.P2 !== undefined){
@@ -127,6 +136,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.P2_items[i]=item[0].claims.P2[i].mainsnak
     }
   }
+
   this.P3 = item[0].claims.P3; 
   this.P3_items = item[0].claims.P3;
   if (this.P3 !== undefined) {
@@ -138,12 +148,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   this.P154 = item[0].claims.P154; 
   this.P154_items = item[0].claims.P154;
-  console.log(this.P154_items);
   if (this.P154 !== undefined) {
      this.P154_label = this.P154[1];
      for (let i=0;i<this.P154.length; i++){
       this.P154_items[i]=item[0].claims.P154[i].mainsnak ;
-      console.log(this.P154_items[i].datavalue.value);
           }
        }            
        
@@ -152,7 +160,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (this.P247 !== undefined) {
        this.P247_label = this.P247[1];
         for (let i=0;i<this.P247.length; i++){
-          console.log(item[0].claims.P247[i].mainsnak)
           this.P247_items[i]=item[0].claims.P247[i].mainsnak ;
                }
             }   
@@ -177,13 +184,32 @@ export class DisplayComponent implements OnInit, OnDestroy {
         }  
 
   this.P82 = item[0].claims.P82; 
-        this.P82_items = item[0].claims.P82;
+    this.P82_items = item[0].claims.P82;
           if (this.P82 !== undefined) {
              this.P82_label = this.P82[1];
               for (let i=0;i<this.P82.length; i++){
                 this.P82_items[i]=item[0].claims.P82[i].mainsnak ;
                      }
-                  }   
+                  }  
+
+  this.P40 = item[0].claims.P40; 
+  this.P40_items = item[0].claims.P40;
+         if (this.P40 !== undefined) {
+                this.P40_label = this.P40[1];
+                for (let i=0;i<this.P40.length; i++){
+                    this.P40_items[i]=item[0].claims.P40[i].mainsnak ;
+                   }
+           }
+
+  this.P79 = item[0].claims.P79; 
+  this.P79_items = item[0].claims.P79;
+         if (this.P79 !== undefined) {
+                 this.P79_label = this.P79[1];
+                  for (let i=0;i<this.P79.length; i++){
+                    this.P79_items[i]=item[0].claims.P79[i].mainsnak ;
+                }
+  }
+    
 
 
       }

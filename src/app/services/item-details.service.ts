@@ -16,12 +16,10 @@ export class ItemDetailsService {
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q7") {
-        console.log(lang);
         if ( lang === "en") {re.claims[propertyIds[i]].human = "Life and family"}
         else if ( lang === "de") {re.claims[propertyIds[i]].human = "Leben und Familie"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].human = "Vie et famille"};
-      console.log(re.claims[propertyIds[i]].human)
-      }
+            }
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
          re.claims[propertyIds[i]][j].mainsnak.label = items[k].label;

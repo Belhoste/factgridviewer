@@ -1,6 +1,13 @@
 /* app-component.css à mettre dans display-component.css*/
 
 
+mat-card img{
+  object-fit: cover; /*this makes the image in src fit to the size specified below*/
+  width: 15%; /* Here you can use wherever you want to specify the width and also the height of the <img>*/
+  height: 100%;
+}
+
+
 .blue-text {
   color:#283593;
   }
@@ -41,11 +48,15 @@ ul.inline {
   }
 
 .percent3 {
-    font-size: 170%;
+    font-size: 130%;
   }
 
 .property {
   color:#3F51B5;
+}
+
+.internalLink {
+   cursor: pointer;
 }
 
 /* .mat-icon {
