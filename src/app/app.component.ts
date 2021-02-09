@@ -7,7 +7,7 @@ import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { CreateItemToDisplayService} from './services/create-item-to-display.service';
 import { AppAndDisplaySharedService} from './services/app-and-display-shared.service';
-import { classicNameResolver } from 'typescript';
+import { CustomDatePipe } from './custom-date.pipe';
 
 @Component({
   selector: 'app-root',
@@ -99,7 +99,6 @@ displayClickedItem: string;
   selectProject(project){
       if (project === undefined) {this.selectedProject = "all"};
       if (project !== undefined) {this.selectedProject = project.id; };
-      console.log(this.selectedProject);
       localStorage['selectedProject'] = this.selectedProject;
        }
      
@@ -107,7 +106,6 @@ displayClickedItem: string;
      if (lang !== undefined) {
      this.selectedLang = lang.code; }
      localStorage['selectedLang'] = this.selectedLang;
-     console.log(localStorage['selectedLang'])
      }
 
   searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix

@@ -6,6 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import {MatInputModule} from '@angular/material/input';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
@@ -19,6 +21,14 @@ import { DisplayComponent } from './display/display.component';
 import { JoinPipe } from './join.pipe';
 import { CommaJoinPipe } from './comma-join.pipe';
 import { CustomDatePipe } from './custom-date.pipe';
+import { registerLocaleData } from '@angular/common';
+import localeEn from '@angular/common/locales/en';
+import localeFr from '@angular/common/locales/fr';
+import localeDe from '@angular/common/locales/de';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+
 //import { Display2Component } from './display2/display2.component';
 //import { ItemService } from './item.service';
 
@@ -43,12 +53,23 @@ import { CustomDatePipe } from './custom-date.pipe';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
+    MatListModule,
+    MatGridListModule,
     MatIconModule,
     MatMenuModule,
     FlexLayoutModule,
     MatTooltipModule,
-    MatDividerModule
+    MatDividerModule,
+    TranslateModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(){
+    registerLocaleData(localeEn, 'en'); 
+    registerLocaleData(localeFr, 'fr');
+    registerLocaleData(localeDe, 'de');
+  }
+
+ }

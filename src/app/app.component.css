@@ -1,3 +1,9 @@
+.div {
+  padding-left: 50 px;
+  margin-left: 50 px;
+}
+
+
 .center {
     display: flex;
     justify-content: center;
@@ -13,7 +19,7 @@
     width: 100%;
   }
   
-.example-full-width {
+.form-width {
     width: 20%;
   }
 

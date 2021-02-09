@@ -11,7 +11,6 @@ export class ItemDetailsService {
   constructor() { }
 
    addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks 
-
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
@@ -35,6 +34,7 @@ export class ItemDetailsService {
   }
 
   addQualifierItemDetails(items, re, propertyIds){  //add labels, definitions and aliases of items in the qualifiers/* 
+    console.log(re);
     let qualifierPropertyArray = [];
        for (let i=0; i<propertyIds.length; i++){  
               for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
