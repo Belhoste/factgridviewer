@@ -27,6 +27,7 @@ import localeFr from '@angular/common/locales/fr';
 import localeDe from '@angular/common/locales/de';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
 
 
 //import { Display2Component } from './display2/display2.component';
@@ -41,6 +42,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
     JoinPipe,
     CommaJoinPipe,
     CustomDatePipe,
+    ChangeUndefinedItemPipe,
   //  Display2Component
   ],
   imports: [

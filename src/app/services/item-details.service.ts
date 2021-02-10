@@ -34,7 +34,6 @@ export class ItemDetailsService {
   }
 
   addQualifierItemDetails(items, re, propertyIds){  //add labels, definitions and aliases of items in the qualifiers/* 
-    console.log(re);
     let qualifierPropertyArray = [];
        for (let i=0; i<propertyIds.length; i++){  
               for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
@@ -59,6 +58,7 @@ export class ItemDetailsService {
       }
 
       addReferenceItemDetails(items, re, propertyIds){  //add labels, definitions and aliases of items in the references
+        console.log(items);
         for (let i=0; i<propertyIds.length; i++){  
           for (let j=0; j<re.claims[propertyIds[i]].length; j++) {           
             if (re.claims[propertyIds[i]][j].references === undefined) {continue}
@@ -81,5 +81,27 @@ export class ItemDetailsService {
         }
         return re
           }
+
+    addSidelinksDetails(re){
+        if (re.sitelinks.commonswiki !==undefined){
+          let url= re.sitelinks.commonswiki.title.replace(" ","_");
+          re.sitelinks.commonswiki.url = "https://commons.wikimedia.org/wiki/"+url
+        }
+        if (re.sitelinks.enwiki !==undefined){
+          let url= re.sitelinks.enwiki.title.replace(" ","_");
+          re.sitelinks.enwiki.url="https://en.wikipedia.org/wiki/"+url
+        }
+        if (re.sitelinks.dewiki !==undefined){
+          let url= re.sitelinks.dewiki.title.replace(" ","_");
+          re.sitelinks.dewiki.url="https://de.wikipedia.org/wiki/"+url
+        }
+        if (re.sitelinks.frwiki !==undefined){
+          let url= re.sitelinks.frwiki.title.replace(" ","_");
+          re.sitelinks.frwiki.url="https://fr.wikipedia.org/wiki/"+url
+        }
+        if (re.sitelinks.wikidatawiki !==undefined){
+          re.sitelinks.wikidatawiki.url="https://www.wikidata.org/wiki/"+re.sitelinks.wikidatawiki.title
+        }
+      }
 
 }

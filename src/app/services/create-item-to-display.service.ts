@@ -28,6 +28,7 @@ export class CreateItemToDisplayService {
           map(res =>{        
           let qualifierProperties=[];
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
+          this.addItemDetails.addSidelinksDetails(re);
           let referenceProperties = this.details.getReferenceProperties(re);
           this.addPropertyDetails.addClaimPropertyDetails(propertiesDetails,re, propertyIds);
           this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails,re, propertyIds)[0];

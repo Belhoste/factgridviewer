@@ -26,6 +26,10 @@ mat-card img{
   margin-right: 20 px;
 }
 
+.mat-list-base.inline-list {
+  display: flex;   /*inline list*/
+}
+
 .blue-text {
   color:#283593;
   }
