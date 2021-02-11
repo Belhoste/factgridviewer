@@ -62,6 +62,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P142:any[];//mother
   P142_item:string;
   P203:any[];//siblings
+  P84:any[];//marriage
+  P150:any[];//children
+
 
   commonswiki:any;
   dewiki:any;
@@ -69,6 +72,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   frwiki:any;
   wikidatawiki:any;
   wikis:any[];
+
+  lifeAndFamily:any[];
 
 
 
@@ -87,19 +92,17 @@ export class DisplayComponent implements OnInit, OnDestroy {
  clickedObject: Subject<any>
  clickedObject2:any;
  object
- 
   
  onClick(item){
-  item=item[0].mainsnak.datavalue.value.id;
+   console.log(item);
+  item=item.mainsnak.datavalue.value.id;
+  console.log(item);
   this.clickedItem.emit(item);
 }
 
-
  ngOnInit(): void {
- // this.sharedService.item.subscribe(x=>console.log(JSON.stringify(x)));
   this.subscription = this.sharedService.item.subscribe(item=>{
   if (item !==undefined){
-    console.log(item);
     this.human = item[0].claims.P2.human;
     this.item = item;
     this.itemContent = item[0];
@@ -126,6 +129,54 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.P141 = item[0].claims.P141;
     this.P142 = item[0].claims.P142; 
     this.P203 = item[0].claims.P203;
+    this.P84 = item[0].claims.P84;
+    this.P150 = item[0].claims.P150;
+    this.lifeAndFamily = []
+    if (this.P154 !==undefined){
+      this.lifeAndFamily.push(this.P154);
+    }
+    if (this.P247 !==undefined){
+      this.lifeAndFamily.push(this.P247);
+    }
+    if (this.P248 !==undefined){
+      this.lifeAndFamily.push(this.P248);
+    }
+    if (this.P77 !==undefined){
+      this.lifeAndFamily.push(this.P77);
+    }
+    if (this.P82 !==undefined){
+      this.lifeAndFamily.push(this.P82);
+    }
+    if (this.P38 !==undefined){
+      this.lifeAndFamily.push(this.P38);
+    }
+    if (this.P168 !==undefined){
+      this.lifeAndFamily.push(this.P168);
+    }
+    if (this.P40 !==undefined){
+      this.lifeAndFamily.push(this.P40);
+    }
+    if (this.P79 !==undefined){
+      this.lifeAndFamily.push(this.P79);
+    }
+    if (this.P141 !==undefined){
+      this.lifeAndFamily.push(this.P141);
+    }
+    if (this.P142 !==undefined){
+      this.lifeAndFamily.push(this.P142);
+    }
+    if (this.P203 !==undefined){
+      this.lifeAndFamily.push(this.P203);
+    }
+    if (this.P84 !==undefined){
+      this.lifeAndFamily.push(this.P84);
+    }
+    if (this.P150 !==undefined){
+      this.lifeAndFamily.push(this.P150);
+    }
+
+    console.log(this.lifeAndFamily);
+    
 
     this.wikis = [];
    if (item[0].sitelinks.commonswiki !==undefined){

@@ -1,10 +1,12 @@
 <body class="mat-typography mat-app-background">
 
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
 rel="stylesheet">
 
-<mat-card >
-    <div id="home-content">
+  <div>
+     <mat-card  class= mat-elevation-z8>
+      <div id="home-content">
        <div fxFlex.gt-sm="50%" fxFlex>
          <mat-card-title>
            <span class="blue-text">{{ label }}</span>
@@ -24,109 +26,53 @@ rel="stylesheet">
 
          <p *ngIf="P2" class="percent2">
           <span class="property">{{P2.label}}:&nbsp;</span><span *ngFor='let P of P2'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{ P.mainsnak.description }}
-          <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P2)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>   
+          <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>   
         </p>
         
          <p *ngIf="P3" class="percent2">
            <span class="property">{{P3.label}}:&nbsp;</span><span *ngFor='let P of P3'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
-           <mat-icon-button color="primary" class="internalLink"  #content (click)="onClick(P3)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+           <mat-icon-button color="primary" class="internalLink"  #content (click)="onClick(P)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
          </p>
-     </div>
-     </div>
-</mat-card>
+       </div>
+      </div>
+    </mat-card>
+  </div>
 
-<div class = "parent" 
-   fxLayout = "row"
-    fxLayout.sm="column"
-    fxLayout.xs="column">
-<div fxFlex="80%" class="left">
-  <mat-card *ngIf='"human"!==undefined'>
-    <mat-card-subtitle class="percent3">{{human}}</mat-card-subtitle>
-    <mat-divider color="primary"></mat-divider>  
-    <mat-grid-list cols="1" rowHeight="25px">
-        <mat-grid-tile>
-          <div class="w-100">
-            <span *ngIf="P154" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P154.label}}:&nbsp;</span><span *ngFor='let P of P154'>&nbsp;{{ P.mainsnak.label }}
-            <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P154)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+  <div class = "parent" 
+       fxLayout = "row"
+       fxLayout.sm="column"
+       fxLayout.xs="column"
+       >
+    <div fxFlex="80%" class="left">
+      <mat-card *ngIf='"human"!==undefined'  class= mat-elevation-z8>
+         <mat-card-subtitle class="percent3">{{human}}</mat-card-subtitle>
+         <mat-divider color="primary"></mat-divider>  
+        <mat-card-content fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="50%" fxFlex.xs="100%" fxLayout="row" *ngFor="let P of lifeAndFamily">
+            <div class="details">
+              <label class="property">{{P.label}}:</label>
+            </div>
+            <div class="details" *ngFor="let Q of P">          
+              <label *ngIf="Q.mainsnak.label">{{Q.mainsnak.label}}<span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(Q)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span></label>
+              <label *ngIf="Q.mainsnak.datavalue.value.time">{{Q.mainsnak.datavalue.value.time|customDate}}</label>
+            </div>
           </div>
-        </mat-grid-tile> 
-        <mat-grid-tile>
-          <div class="w-100">
-            <span *ngIf="P247" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P247.label}}:&nbsp;</span><span *ngFor='let P of P247'>&nbsp;{{ P.mainsnak.label }}
-            <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P247)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-          </div>
-        </mat-grid-tile>  
-        <mat-grid-tile>
-          <div class="w-100">
-            <span *ngIf="P248" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P248.label}}:&nbsp;</span><span *ngFor='let P of P248'>&nbsp;{{P.qualifiers.P101[0].datavalue.value}}: {{ P.mainsnak.label }}
-            <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P248)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-          </div>
-        </mat-grid-tile>  
-        <mat-grid-tile>
-          <div class="w-100">
-            <span *ngIf="P77" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P77.label}}:&nbsp;</span><span *ngFor='let P of P77'>&nbsp;{{ P.mainsnak.datavalue.value.time | customDate }}&nbsp;&nbsp;</span>
-            <span *ngIf="P82" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P82.label}}:&nbsp;</span><span *ngFor='let P of P82'>&nbsp;{{ P.mainsnak.label }}
-              <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P82)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-          </div>
-        </mat-grid-tile> 
-        <mat-grid-tile>
-          <div class="w-100">
-            <span *ngIf="P38" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P38.label}}:&nbsp;</span><span *ngFor='let P of P38'>&nbsp;{{ P.mainsnak.datavalue.value.time | customDate }}&nbsp;</span>
-            <span *ngIf="P168" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P168.label}}:&nbsp;</span><span *ngFor='let P of P168'>&nbsp;{{ P.mainsnak.label }}
-              <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P168)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;</span>
-            <span *ngIf="P40" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P40.label}}:&nbsp;</span><span *ngFor='let P of P40'>&nbsp;{{ P.mainsnak.datavalue.value.time | customDate }}&nbsp;&nbsp;&nbsp;</span>
-            <span *ngIf="P79" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P79.label}}:&nbsp;</span><span *ngFor='let P of P79'>&nbsp;{{ P.mainsnak.label }}
-              <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P79)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-          </div>
-        </mat-grid-tile>
-    </mat-grid-list> 
-        
-    <mat-grid-list cols="1" rowHeight="25px" >
-        <mat-grid-tile>
-          <div *ngIf ="P141" class="w-100">
-            <span *ngIf="P141" class="property" #father>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ P141.label }}:&nbsp;</span><span *ngFor='let P of P141'>&nbsp;{{ P.mainsnak.label  | changeUndefinedItem }}
-              <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P141)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-            <span *ngIf="P142" class="property" #mother>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ P142.label }}:&nbsp;</span><span *ngFor='let P of P142'>&nbsp;{{ P.mainsnak.label  | changeUndefinedItem }}
-              <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P142)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="w-100">
-            <span *ngIf="P203" class="property">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{P203.label}}:&nbsp;</span><span *ngFor='let P of P203'>&nbsp;{{P.mainsnak.label}}
-            <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P203)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-          </div>
-        </mat-grid-tile>
-    </mat-grid-list>
-    <mat-divider></mat-divider>
-  
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-  </mat-card>
-</div>
-<div fxFlex="20%" class="right">
-  <mat-card>
-    <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
-    <mat-divider color="primary"></mat-divider> 
+    <div fxFlex="20%" class="right">
+      <mat-card class= mat-elevation-z8>
+        <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
+        <mat-divider color="primary"></mat-divider> 
         <mat-list  *ngFor="let wiki of wikis">
-            <span mat-list-item >
-            <span>{{wiki.site}}: </span><a href ="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
-            </span>
+          <span mat-list-item >
+              <span>{{wiki.site}}: </span><a href ="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
+          </span>
         </mat-list>
-
-<!---  <mat-grid-list cols="2" rowHeight="25px">
-       <mat-grid-tile>
-          <div *ngFor="let wiki of wikis">
-            <span>
-              {{wiki.site}}:
-            </span>
-           <span href ="{{wiki.url}}" target="_blank">
-              {{wiki.title}}
-           </span>
-          </div>
-       </mat-grid-tile>
-   </mat-grid-list>
-   --> 
-  </mat-card>
-</div>
-</div>
+      </mat-card>
+    </div> 
+  </div>  
+  
 
 </body>
