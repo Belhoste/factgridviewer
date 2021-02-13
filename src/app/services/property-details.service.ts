@@ -47,7 +47,7 @@ addClaimPropertyDetails(properties, re, propertyIds){ // add labels, description
           return [re, qualifierPropertyArray]
       }
 
-  addQualifier2PropertyDetails(properties, re, propertyIds){  //add id, labels, definitions and aliases of properties to the new array qualifiers2/* 
+  addQualifier2PropertyDetails(properties, re, propertyIds){  //add id, labels, definitions and aliases of properties tong the new array qualifiers2/* 
       let qualifier2PropertyArray = [];
       let qualifier2:any[] = [];
          for (let i=0; i<propertyIds.length; i++){  

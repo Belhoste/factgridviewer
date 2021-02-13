@@ -18,8 +18,15 @@ mat-card{
 
 mat-card img{
   object-fit: contain; /*this makes the image in src fit to the size specified below*/
-  width: 500px; 
-  height:500px;
+  width: 100%;
+  margin-top: 10px;
+  
+}
+
+.img {
+  width: 20%; 
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .padding1 {
