@@ -25,28 +25,57 @@ addClaimPropertyDetails(properties, re, propertyIds){ // add labels, description
   addQualifierPropertyDetails(properties, re, propertyIds){  //add labels, definitions and aliases of properties in the qualifiers/* 
     let qualifierPropertyArray = [];
        for (let i=0; i<propertyIds.length; i++){  
-              for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
-                if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
+            for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
+              if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
                 qualifierPropertyArray = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
-                 let qualifiersArray = Object.values(re.claims[propertyIds[i]][j].qualifiers);
-                  for  (let k=0; k<qualifierPropertyArray.length; k++){
-                  let prop = qualifierPropertyArray[k]
-                   for (let l=0; l<properties.length; l++){                                       
-                      if (qualifiersArray[k][0].property === properties[l].id){
-                          re.claims[propertyIds[i]][j].qualifiers[prop].label = properties[l].label;
-                         if (properties[k].description !== undefined)
-                         re.claims[propertyIds[i]][j].qualifiers[prop].description = properties[l].description;
-                         if (properties[k].aliases !== undefined)
-                         re.claims[propertyIds[i]][j].qualifiers[prop].aliases = properties[l].aliases;                            
-                     }
-                   }
-                }
+                  let qualifiersArray = Object.values(re.claims[propertyIds[i]][j].qualifiers);
+                    for (let l=0; l<properties.length; l++){
+                       for  (let k=0; k<qualifierPropertyArray.length; k++){
+                          let prop = qualifierPropertyArray[k]                        
+                            if (qualifiersArray[k][0].property === properties[l].id){
+                                re.claims[propertyIds[i]][j].qualifiers[prop].label = properties[l].label;
+                            if (properties[l].description !== undefined)
+                                re.claims[propertyIds[i]][j].qualifiers[prop].description = properties[l].description;
+                            if (properties[l].aliases !== undefined)
+                                re.claims[propertyIds[i]][j].qualifiers[prop].aliases = properties[l].aliases;
+                            }  
+                        }                     
+                    }     
+              
             }
          }
-    return [re, qualifierPropertyArray]
+          return [re, qualifierPropertyArray]
       }
+
+  addQualifier2PropertyDetails(properties, re, propertyIds){  //add id, labels, definitions and aliases of properties to the new array qualifiers2/* 
+      let qualifier2PropertyArray = [];
+      let qualifier2:any[] = [];
+         for (let i=0; i<propertyIds.length; i++){  
+              for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
+                if (re.claims[propertyIds[i]][j].qualifiers !==undefined) {
+                  re.claims[propertyIds[i]][j].qualifiers2 = [];
+                  qualifier2PropertyArray = re.claims[propertyIds[i]][j]["qualifiers-order"];      
+                    for (let k=0; k<qualifier2PropertyArray.length; k++){
+                       qualifier2[k]={id:undefined, label:undefined, description:undefined, aliases:undefined, value:{id:undefined, time:undefined, string:undefined, label:undefined, description:undefined, aliases:undefined}};
+                      for (let l=0; l<properties.length; l++){
+                        if (re.claims[propertyIds[i]][j]["qualifiers-order"][k] !== properties[l].id){ continue }
+                          qualifier2[k].id = properties[l].id;
+                          qualifier2[k].label = properties[l].label
+                          if (properties[l].description !== undefined)
+                              qualifier2[k].description = properties[l].description;
+                          if (properties[l].aliases !== undefined)
+                              qualifier2[k].aliases = properties[l].aliases;                  
+                        
+                        re.claims[propertyIds[i]][j].qualifiers2.push(qualifier2[k])
+                      }        
+                    }            
+                  }
+               }
+             }
+        return re
+     }
       
-addReferencePropertyDetails(properties, re, propertyIds){  //add labels, definitions and aliases of properties in the references
+  addReferencePropertyDetails(properties, re, propertyIds){  //add labels, definitions and aliases of properties in the references
     for (let i=0; i<propertyIds.length; i++){  
       for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
         

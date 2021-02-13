@@ -45,17 +45,21 @@ export class DisplayComponent implements OnInit, OnDestroy {
   human:string;
   sex:string;
   name:string;
+  career:string;
 
-  P2:any[];
-  P3:any[];
+  P2:any[];// instance of
+  P3:any[];// subclass of
+  P8:any[];//part of
   P154:any[];//sex
   P247:any[];//name
   P248:any[];//forenames
+  P248_qualifiers:any[];//qualifiers of forenames
   P77:any[];//birthday
   P82:any[];//birthplace
   P38:any[];//deathday
   P168:any[];//deathplace
   P40:any[];//burialdate
+  P40_qualifiers:any[];
   P79:any[];//grave
   P141:any[];//father
   P141_item:string;
@@ -64,6 +68,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P203:any[];//siblings
   P84:any[];//marriage
   P150:any[];//children
+  P151:any;
+  P101:string;//place in sequence
+
+  
+  P155:any[];//activities
+  P164:any[];//position
 
 
   commonswiki:any;
@@ -74,6 +84,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   wikis:any[];
 
   lifeAndFamily:any[];
+  careerAndActivities:any[];
 
 
 
@@ -94,16 +105,16 @@ export class DisplayComponent implements OnInit, OnDestroy {
  object
   
  onClick(item){
-   console.log(item);
-  item=item.mainsnak.datavalue.value.id;
-  console.log(item);
+  item = item.value.id;
   this.clickedItem.emit(item);
 }
 
  ngOnInit(): void {
   this.subscription = this.sharedService.item.subscribe(item=>{
   if (item !==undefined){
+    console.log(item);
     this.human = item[0].claims.P2.human;
+    this.career = item[0].claims.P2.career;
     this.item = item;
     this.itemContent = item[0];
     this.label = item[0].label;
@@ -112,11 +123,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.id = item[0].id;
     this.urlId = this.factGridUrl+this.id;
    if (item[0].claims.P189 !==undefined) {
-     if (item[0].claims.P189[0].references[0].snaks.P55 !==undefined) {
+     if (item[0].claims.P189[0].references !==undefined){
+       if (item[0].claims.P189[0].references[0].snaks.P55 !==undefined) {
      this.picture = item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value }
       }
+    }
     this.P2 = item[0].claims.P2;
     this.P3 = item[0].claims.P3; 
+    this.P8 = item[0].claims.P8;
     this.P154 = item[0].claims.P154;                
     this.P247 = item[0].claims.P247;    
     this.P248 = item[0].claims.P248; 
@@ -131,6 +145,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.P203 = item[0].claims.P203;
     this.P84 = item[0].claims.P84;
     this.P150 = item[0].claims.P150;
+   
     this.lifeAndFamily = []
     if (this.P154 !==undefined){
       this.lifeAndFamily.push(this.P154);
@@ -175,7 +190,18 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.lifeAndFamily.push(this.P150);
     }
 
-    console.log(this.lifeAndFamily);
+    this.P155 = item[0].claims.P155;
+    this.P164 = item[0].claims.P164;
+
+    this.careerAndActivities = [];
+
+    if (this.P155 !==undefined){
+      this.careerAndActivities.push(this.P155); 
+    }  
+    if (this.P164 !==undefined){
+      this.careerAndActivities.push(this.P164); 
+    }  
+
     
 
     this.wikis = [];
@@ -186,22 +212,32 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.wikis.push(item[0].sitelinks.enwiki);
     }
     if (item[0].sitelinks.dewiki !==undefined){
- //     let url= item[0].sitelinks.dewiki.title.replace(" ","_");
- //     item[0].sitelinks.dewiki.url="https://de.wikipedia.org/wiki/"+url
       this.wikis.push(item[0].sitelinks.dewiki);
     }
     if (item[0].sitelinks.frwiki !==undefined){
       this.wikis.push(item[0].sitelinks.frwiki); 
     }
     if (item[0].sitelinks.wikidatawiki !==undefined){
- //     item[0].sitelinks.wikidatawiki.url="https://www.wikidata.org/wiki/"+item[0].sitelinks.wikidatawiki.title
         this.wikis.push(item[0].sitelinks.wikidatawiki); 
         }
-    console.log(this.wikis);
       }
+    
     }
   )
 }
+
+qualifiersList(u){
+  for (let i=0;i<u.length;i++){
+    if (u["'qualifiers-order'"] !== undefined) {
+      let v=u["'qualifiers-order'"]
+      for (let j=0; j<v.length;j++){
+         let label=u.qualifiers.u[j][0].label
+         let value=u.qualifiers.u[j][0].datavalue.value
+         }
+       }
+     }
+  }
+
 
 
 ngOnDestroy(): void {
