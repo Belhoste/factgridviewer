@@ -47,6 +47,7 @@ rel="stylesheet">
 
   <div class = "parent" 
        fxLayout = "row"
+       fxLayout.md="column"
        fxLayout.sm="column"
        fxLayout.xs="column"
        >
@@ -54,8 +55,8 @@ rel="stylesheet">
       <mat-card *ngIf='"human"!==undefined'  class= mat-elevation-z8>
          <mat-card-subtitle class="percent3">{{human}}</mat-card-subtitle>
          <mat-divider color="primary"></mat-divider>  
-        <mat-card-content fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <div fxFlex="50%" fxFlex.xs="100%" fxLayout="row" *ngFor="let P of lifeAndFamily">
+        <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="row" *ngFor="let P of lifeAndFamily">
             <div class="details">
               <label class="property">{{P.label}}:</label>
             </div>
@@ -77,8 +78,8 @@ rel="stylesheet">
     <mat-card *ngIf='"career"!==undefined'  class= mat-elevation-z8>
       <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
       <mat-divider color="primary"></mat-divider>  
-     <mat-card-content fxLayout="row wrap" fxLayoutAlign="start stretch">
-       <div fxFlex="50%" fxFlex.xs="100%" fxLayout="row" *ngFor="let P of careerAndActivities">
+     <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+       <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">
          <div class="details">
            <label class="property">{{P.label}}:</label>
          </div>
