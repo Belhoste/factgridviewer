@@ -116,8 +116,12 @@ setItemsList(u) {  //create the list of items in the statements
  for (const val of values){
    for (const u of val) {
    if (u.references === undefined) {continue}
+   console.log(u.references);
     for (const ref of u.references ){
-   referenceProperties = referenceProperties.concat(ref["snaks-order"]);
+      for (const prop of ref["snaks-order"]) {
+       referenceProperties.push(prop);
+       console.log(referenceProperties);
+         }
        }
       }
     }
@@ -195,17 +199,17 @@ setQualifierItems(values,arr){ // create an array of the items in the qualifiers
     arr = arr.filter(Boolean);
     let result = [];
       for (const val of values){ 
-        for (const u of val){
-           for (let j=0; j<arr.length;j++) {  
+        for (const u of val){ 
              if (u.references === undefined){ continue }
-              for (let i=0; i<arr.length; i++) {
+              for (let i=0; i<u.references.length; i++) {
+                for (let j=0; j<arr.length; j++) {
                  if (u.references[i] !== undefined) {
-                   if (u.references[i].snaks[arr[i]] !== undefined) {
-                   if (u.references[i].snaks[arr[i]].datatype ="wikibase-item")
-                     result.push(u.references[i].snaks[arr[i]][0].datavalue.value.id)
+                   if (u.references[i].snaks[arr[j]] !== undefined) {
+                   if (u.references[i].snaks[arr[j]].datatype ="wikibase-item")
+                     result.push(u.references[i].snaks[arr[j]][0].datavalue.value.id)
                      }
-                  }        
-                }
+                  }  
+                }               
              }
           }
         }

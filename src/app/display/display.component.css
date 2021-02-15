@@ -30,7 +30,7 @@ mat-card img{
 }
 
 .padding1 {
-  padding: 20 px;
+  padding: 2 px;
 }
 
 .w-100 {      
@@ -40,6 +40,7 @@ mat-card img{
 
 .mat-list-base.inline-list {
   display: flex;   /*inline list*/
+  padding: 2 px;
 }
 
 .blue-text {
@@ -50,12 +51,17 @@ mat-card img{
   color:#FF4081;
 }
 
+.title {
+  padding-top: 8px;
+}
+
 .details {
-  padding: 4px;
+  padding: 0px;
 }
 
 .details > label {
   overflow-wrap: break-word;
+  padding:0px;
 }
 
 .center {
@@ -95,6 +101,10 @@ ul.inline {
 
 .property {
   color:#3F51B5;
+}
+
+.referenceProperty {
+  color:#AD1457;
 }
 
 .internalLink {

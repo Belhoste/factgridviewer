@@ -68,14 +68,20 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P203:any[];//siblings
   P84:any[];//marriage
   P150:any[];//children
-  P151:any;
+  P151:any; //publications stemming from this research
   P101:string;//place in sequence
 
   
   P155:any[];//activities
   P164:any[];//position
 
+//references
+  P311:any[];//text source
+  P51:string;//primary source
+  P146:string; //online information
+  P138:string; //online digitalisation
 
+ //wiki
   commonswiki:any;
   dewiki:any;
   enwiki:any;
@@ -145,6 +151,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.P203 = item[0].claims.P203;
     this.P84 = item[0].claims.P84;
     this.P150 = item[0].claims.P150;
+
+    this.P311 = item[0].claims.P311;
+    this.P51 = item[0].claims.P51;
+    this.P146 = item[0].claims.P146;
+    this.P138 = item[0].claims.P138;
    
     this.lifeAndFamily = []
     if (this.P154 !==undefined){

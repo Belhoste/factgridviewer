@@ -64,7 +64,8 @@ rel="stylesheet">
                 fxLayout.sm="column" 
                 fxLayout.xs="column"
                 *ngFor="let P of lifeAndFamily">
-            <div class="details">
+            <div flex-shrink flex-basis="auto">
+            <div class="title">
               <label class="property"><strong>{{P.label}}:</strong></label>
             </div>
             <div class="details" *ngFor="let M of P">    
@@ -78,6 +79,15 @@ rel="stylesheet">
               <label>{{M.qualifiers2[0].value.time |customDate }}</label>
               <label>{{M.qualifiers2[0].value.string }}</label>
             </div>
+            <div class="details" class="perCent" *ngIf="M['references2']">
+              <label class="referenceProperty"><em>{{M.references2[0].label}}: </em></label>
+              <label>{{M.references2[0].value.label}}
+              <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+              <label>{{M.references2[0].value.time |customDate }}</label>
+              <label>{{M.references2[0].value.string }}</label>
+              <label>{{M.references2[0].value.url }}</label>
+            </div>  
+          </div> 
           </div>      
         </div>
       </mat-card-content>
@@ -87,7 +97,7 @@ rel="stylesheet">
       <mat-divider color="primary"></mat-divider>  
      <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">
-         <div class="details">
+         <div class="title">
            <label class="property"><strong>{{P.label}}:</strong></label>
          </div>
          <div class="details" *ngFor="let M of P">    
@@ -100,6 +110,15 @@ rel="stylesheet">
            <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
            <label>{{M.qualifiers2[0].value.time |customDate }}</label>
            <label>{{M.qualifiers2[0].value.string }}</label>
+          <div class="details" class="perCent" *ngIf="M['references2']">
+            <label class="property"><em>{{M.references2[0].label}}: </em></label>
+            <label>{{M.references2[0].value.label}}
+            <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+            <label>{{M.references2[0].value.time |customDate }}</label>
+            <label>{{M.references2[0].value.string }}</label>
+            <label>{{M.references2[0].value.url }}</label>
+          </div>         
+           
          </div>
        </div>      
      </div>
