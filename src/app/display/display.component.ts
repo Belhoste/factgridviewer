@@ -72,8 +72,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P101:string;//place in sequence
 
   
-  P155:any[];//activities
+  
   P164:any[];//position
+  P165:any[];//activities
 
 //references
   P311:any[];//text source
@@ -201,19 +202,20 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.lifeAndFamily.push(this.P150);
     }
 
-    this.P155 = item[0].claims.P155;
+    
     this.P164 = item[0].claims.P164;
+    this.P165 = item[0].claims.P165;
 
     this.careerAndActivities = [];
 
-    if (this.P155 !==undefined){
-      this.careerAndActivities.push(this.P155); 
-    }  
     if (this.P164 !==undefined){
       this.careerAndActivities.push(this.P164); 
     }  
+    if (this.P165 !==undefined){
+      this.careerAndActivities.push(this.P165); 
+    }  
 
-    
+  console.log(this.careerAndActivities);
 
     this.wikis = [];
    if (item[0].sitelinks.commonswiki !==undefined){
