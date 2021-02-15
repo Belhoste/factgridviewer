@@ -135,7 +135,9 @@ export class ItemDetailsService {
                             re.claims[propertyIds[i]][j].references2[m].value.id === referencesArray[l][0].datavalue.value.id
                             re.claims[propertyIds[i]][j].references2[m].value.time = referencesArray[l][0].datavalue.value.time;
                             if (referencesArray[l][0].datatype === "string"){
-                            re.claims[propertyIds[i]][j].r[k].value.string = referencesArray[l][0].datavalue.value };
+                              console.log(referencesArray[l][0].datatype)
+                            re.claims[propertyIds[i]][j].references2[m].value.string = referencesArray[l][0].datavalue.value };
+          
                             if (referencesArray[l][0].datatype === "url"){
                               re.claims[propertyIds[i]][j].references2[m].value.url = referencesArray[l][0].datavalue.value };
                             re.claims[propertyIds[i]][j].references2[m].value.label = referencesArray[l][0].datavalue.value.label;
