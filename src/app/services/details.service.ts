@@ -116,11 +116,9 @@ setItemsList(u) {  //create the list of items in the statements
  for (const val of values){
    for (const u of val) {
    if (u.references === undefined) {continue}
-   console.log(u.references);
     for (const ref of u.references ){
       for (const prop of ref["snaks-order"]) {
        referenceProperties.push(prop);
-       console.log(referenceProperties);
          }
        }
       }
@@ -130,8 +128,9 @@ setItemsList(u) {  //create the list of items in the statements
   referenceProperties =this.uniq(referenceProperties);
 
 let qualifierItems = this.setQualifierItems(values,qualifierProperties).filter(function( element ) {  //get items in the qualifiers, remove the undefined
- 
- });
+  return element !== undefined;
+});
+
  let referenceItems = this.setReferenceItems(values,referenceProperties).filter(function( element ) { //get items in the references, remove the undefined
     return element !== undefined;
  });

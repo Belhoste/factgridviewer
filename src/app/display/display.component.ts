@@ -82,6 +82,24 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P146:string; //online information
   P138:string; //online digitalisation
 
+//external links
+P378:string; // identifiant VIAF
+P375:string; // identifiant OCLC
+P76:string; // identifiant GND
+P500:string; // identifiant Data BnF
+P376:string; // identifiant WorldCat
+P346:string; // identifiant PPN
+P367:string; // identifiant BNF
+P366:string;// identifiant IRef
+P418:string; // identifiant GeoNames
+P369:string; // identifiant VD17
+P368:string; // identifiant VD16
+P370:string; // identifiant VD18
+P424:string; // identifiant Harmonia Universalis
+P533:string; // identifiant Amburger
+P529:string; // identifiant småortskod
+P374:string; // identifiant Geni.com  
+
  //wiki
   commonswiki:any;
   dewiki:any;
@@ -92,6 +110,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   lifeAndFamily:any[];
   careerAndActivities:any[];
+  externalLinks:any[];
 
 
 
@@ -216,6 +235,27 @@ export class DisplayComponent implements OnInit, OnDestroy {
     }  
 
   console.log(this.careerAndActivities);
+
+    this.P378=item[0].claims.P378
+    this.P375=item[0].claims.P375
+    this.P76=item[0].claims.P76
+    this.P500=item[0].claims.P500
+    this.P376=item[0].claims.P376
+    this.P346=item[0].claims.P346
+    this.P367=item[0].claims.P367
+    this.P366=item[0].claims.P366
+    this.P146=item[0].claims.P146
+    this.P418=item[0].claims.P418
+    this.P369=item[0].claims.P369
+    this.P368=item[0].claims.P368
+    this.P370=item[0].claims.P370
+    this.P424=item[0].claims.P424
+    this.P533=item[0].claims.P533
+    this.P529=item[0].claims.P529
+    this.P374=item[0].claims.P374
+
+    this.externalLinks = [];
+
 
     this.wikis = [];
    if (item[0].sitelinks.commonswiki !==undefined){

@@ -129,13 +129,21 @@ rel="stylesheet">
 
     <div fxFlex="20%" class="right">
       <mat-card class= mat-elevation-z8>
-        <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
+        <div class="title">
+        <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
+        </div>
         <mat-divider color="primary"></mat-divider> 
+      <div class="title">
+        <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
+      </div>
+        <mat-divider color="primary"></mat-divider>
+         
         <mat-list  *ngFor="let wiki of wikis">
           <span mat-list-item >
               <span>{{wiki.site}}: </span><a href ="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
           </span>
         </mat-list>
+      
       </mat-card>
     </div> 
   </div>  
