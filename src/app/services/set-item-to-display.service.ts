@@ -16,9 +16,6 @@ export class SetItemToDisplayService {
   
     const baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
     const getUrlSuffix= '&props=labels|descriptions&format=json' ;
-  
-    console.log(u.claims);
-    console.log(values);
     
     for (const val of values) { //mainsnaks
       let i:number;
@@ -30,13 +27,8 @@ export class SetItemToDisplayService {
   for (const val of mainsnaks) { //array of objects {P:Q}
     if (val.datavalue.value.id === undefined) continue; mainsnaks2.push("{"+val.property+":"+val.datavalue.value.id+"}")
   };
-  
-    //console.log(mainsnaks);
-  
-    //console.log(mainsnaks2);
 
     return mainsnaks2
-
   }
 
   addDetails(properties,claims){

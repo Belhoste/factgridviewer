@@ -46,6 +46,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   sex:string;
   name:string;
   career:string;
+  place:string;
 
   P2:any[];// instance of
   P3:any[];// subclass of
@@ -76,29 +77,34 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P164:any[];//position
   P165:any[];//activities
 
+//place
+  P48:any //geographic coordinates
+  P58:any// number of inhabitants
+  P297:any // territorial affiliation
+  P466:any // capital of
+
 //references
   P311:any[];//text source
   P51:string;//primary source
   P146:string; //online information
   P138:string; //online digitalisation
+  url:string;
 
 //external links
-P378:string; // identifiant VIAF
-P375:string; // identifiant OCLC
-P76:string; // identifiant GND
-P500:string; // identifiant Data BnF
-P376:string; // identifiant WorldCat
-P346:string; // identifiant PPN
-P367:string; // identifiant BNF
-P366:string;// identifiant IRef
-P418:string; // identifiant GeoNames
-P369:string; // identifiant VD17
-P368:string; // identifiant VD16
-P370:string; // identifiant VD18
-P424:string; // identifiant Harmonia Universalis
-P533:string; // identifiant Amburger
-P529:string; // identifiant småortskod
-P374:string; // identifiant Geni.com  
+P378 ;// identifiant viaf url;
+P76 ;// identifiant GND
+P500 ;// identifiant Data BnF
+P346 ;// identifiant PPN
+P367 ; //identifiant BnF
+P366 ;// identifiant IRef
+P418 ;// identifiant GeoNames subfix:.html
+P368 ;// identifiant VD16
+P369 ;// identifiant VD17
+P370 ;// identifiant VD18
+P424 ;// identifiant Harmonia Universalis
+P533 ;// identifiant Amburger
+P374 ; // identifiant Geni.com
+P414; // 	INSEE municipality code
 
  //wiki
   commonswiki:any;
@@ -110,9 +116,8 @@ P374:string; // identifiant Geni.com
 
   lifeAndFamily:any[];
   careerAndActivities:any[];
+  locationAndSituation:any[];
   externalLinks:any[];
-
-
 
 
   foreNames:string[];
@@ -141,6 +146,7 @@ P374:string; // identifiant Geni.com
     console.log(item);
     this.human = item[0].claims.P2.human;
     this.career = item[0].claims.P2.career;
+    this.place = item[0].claims.P2.place;
     this.item = item;
     this.itemContent = item[0];
     this.label = item[0].label;
@@ -154,6 +160,11 @@ P374:string; // identifiant Geni.com
      this.picture = item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value }
       }
     }
+
+    //person
+
+    //person: life and family
+
     this.P2 = item[0].claims.P2;
     this.P3 = item[0].claims.P3; 
     this.P8 = item[0].claims.P8;
@@ -178,6 +189,7 @@ P374:string; // identifiant Geni.com
     this.P138 = item[0].claims.P138;
    
     this.lifeAndFamily = []
+
     if (this.P154 !==undefined){
       this.lifeAndFamily.push(this.P154);
     }
@@ -220,7 +232,8 @@ P374:string; // identifiant Geni.com
     if (this.P150 !==undefined){
       this.lifeAndFamily.push(this.P150);
     }
-
+  
+    //person:career and activities
     
     this.P164 = item[0].claims.P164;
     this.P165 = item[0].claims.P165;
@@ -234,13 +247,38 @@ P374:string; // identifiant Geni.com
       this.careerAndActivities.push(this.P165); 
     }  
 
-  console.log(this.careerAndActivities);
+  //place
 
-    this.P378=item[0].claims.P378
-    this.P375=item[0].claims.P375
-    this.P76=item[0].claims.P76
-    this.P500=item[0].claims.P500
-    this.P376=item[0].claims.P376
+  this.P48 = item[0].claims.P48;
+  this.P58 = item[0].claims.P58;
+  this.P297 = item[0].claims.P297;
+  this.P466 = item[0].claims.P466;
+    
+    this.locationAndSituation =[];
+    
+    if (this.P48 !==undefined){
+      this.locationAndSituation.push(this.P48);
+    
+    if (this.P58 !==undefined){
+      this.locationAndSituation.push(this.P58); 
+      }  
+    
+    if (this.P297 !==undefined){
+      this.locationAndSituation.push(this.P297); 
+      }  
+    
+    if (this.P466 !==undefined){
+      this.locationAndSituation.push(this.P466); 
+      }   
+    }  
+
+    console.log(this.locationAndSituation);
+
+  //externalLinks
+
+    this.P378=item[0].claims.P378;
+    this.P76=item[0].claims.P76;
+    this.P500=item[0].claims.P500;
     this.P346=item[0].claims.P346
     this.P367=item[0].claims.P367
     this.P366=item[0].claims.P366
@@ -251,10 +289,69 @@ P374:string; // identifiant Geni.com
     this.P370=item[0].claims.P370
     this.P424=item[0].claims.P424
     this.P533=item[0].claims.P533
-    this.P529=item[0].claims.P529
     this.P374=item[0].claims.P374
+    this.P414=item[0].claims.P414
 
     this.externalLinks = [];
+
+    if (this.P378 !==undefined){
+     this.P378.url= "https://viaf.org/viaf/"+this.P378[0].mainsnak.datavalue.value;
+      this.externalLinks.push(this.P378) };
+
+    if (this.P76 !==undefined){
+    this.P76.url = "https://d-nb.info/gnd/"+this.P76[0].mainsnak.datavalue.value;
+     this.externalLinks.push(this.P76) };
+
+    if (this.P500 !==undefined){
+      this.P500.url = "https://data.bnf.fr/en/"+this.P500[0].mainsnak.datavalue.value;
+      this.externalLinks.push(this.P500) };
+
+    if (this.P346 !==undefined){
+       this.P346.url = "https://kxp.k10plus.de/DB=2.1/PPNSET?PPN="+this.P346[0].mainsnak.datavalue.value;
+        this.externalLinks.push(this.P346) };
+
+    if (this.P367 !==undefined){
+       this.P367.url = "https://catalogue.bnf.fr/ark:/12148/cb"+this.P367[0].mainsnak.datavalue.value;
+        this.externalLinks.push(this.P367) };
+
+    if (this.P366 !==undefined){
+          this.P366.url = "https://www.idref.fr/"+this.P366[0].mainsnak.datavalue.value;
+            this.externalLinks.push(this.P366) };
+    
+    if (this.P418 !==undefined){
+          this.P418.url = "https://www.geonames.org/"+this.P418[0].mainsnak.datavalue.value
+                this.externalLinks.push(this.P418) };
+            
+    if (this.P368 !==undefined){
+          this.P368.url = 'https://opacplus.bib-bvb.de/TouchPoint_touchpoint/start.do?Query=1120%3D%22%5C%22VD16+$1%5C""&SearchProfile=Altbestand&Language=De'+this.P368[0].mainsnak.datavalue.value
+               this.externalLinks.push(this.P368) };
+
+    if (this.P369 !==undefined){
+          this.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27$1%27:'+this.P369[0].mainsnak.datavalue.value
+              this.externalLinks.push(this.P369) };
+
+    if (this.P370 !==undefined){
+        this.P370.url = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18'+this.P369[0].mainsnak.datavalue.value
+           this.externalLinks.push(this.P370) };
+
+    if (this.P424 !==undefined){
+            this.P424.url = 'https://harmoniauniversalis.univ-paris1.fr/#/personne/'+this.P424[0].mainsnak.datavalue.value
+               this.externalLinks.push(this.P424) };
+
+    if (this.P533 !==undefined){
+        this.P533.url = 'https://amburger.ios-regensburg.de/index.php?id='+this.P533[0].mainsnak.datavalue.value
+            this.externalLinks.push(this.P533) };
+
+    if (this.P374 !==undefined){
+              this.P374.url = 'https://www.geni.com/profile/index/'+this.P533[0].mainsnak.datavalue.value
+                  this.externalLinks.push(this.P374) };
+
+    if (this.P414 !==undefined){
+            this.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'+this.P414[0].mainsnak.datavalue.value
+                        this.externalLinks.push(this.P414) };
+
+
+   
 
 
     this.wikis = [];
@@ -273,6 +370,15 @@ P374:string; // identifiant Geni.com
     if (item[0].sitelinks.wikidatawiki !==undefined){
         this.wikis.push(item[0].sitelinks.wikidatawiki); 
         }
+    if (item[0].sitelinks.enwikisource !==undefined){
+       this.wikis.push(item[0].sitelinks.enwikisource); 
+        }
+    if (item[0].sitelinks.dewikisource !==undefined){
+          this.wikis.push(item[0].sitelinks.dewikisource); 
+        }
+    if (item[0].sitelinks.frwikisource !==undefined){
+          this.wikis.push(item[0].sitelinks.frwikisource); 
+        }
       }
     
     }
@@ -290,6 +396,13 @@ qualifiersList(u){
        }
      }
   }
+
+setExternalLinks(u){
+
+  u= u.url
+
+
+}
 
 
 

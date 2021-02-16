@@ -52,7 +52,11 @@ mat-card img{
 }
 
 .title {
-  padding-top: 8px;
+  padding-top: 4px;
+}
+
+.title2 {
+  padding-top: 14px;
 }
 
 .details {

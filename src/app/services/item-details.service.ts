@@ -27,6 +27,11 @@ export class ItemDetailsService {
         else if ( lang === "de") {re.claims[propertyIds[i]].career = "Beruf und Aktivitäten"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].career = "carrière et activités"};
             }
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q8") {
+        if ( lang === "en") {re.claims[propertyIds[i]].place = "location and situation"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].place = "Standort und Lage"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].place = "localisation et situation"};
+      }
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
          re.claims[propertyIds[i]][j].mainsnak.label = items[k].label;
@@ -41,48 +46,16 @@ export class ItemDetailsService {
     return re
   }
 
-
-/*      addQualifierItemDetails(items, re, propertyIds){  //add labels, definitions and aliases of items in the qualifiers/* 
-        let qualifierPropertyArray = [];
-              for (let i=0; i<propertyIds.length; i++){  
-                  for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
-                      if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
-                        qualifierPropertyArray = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
-                         let qualifiersArray = Object.values(re.claims[propertyIds[i]][j].qualifiers);
-                          for  (let k=0; k<qualifierPropertyArray.length; k++){
-                          let prop = qualifierPropertyArray[k]
-                           for (let l=0; l<items.length; l++){      
-                            console.log(re.claims[propertyIds[i]][j].qualifiers[prop][0].datavalue.value);
-                            console.log(re.claims[propertyIds[i]][j].qualifiers[prop][0].datavalue.value.id)                                 
-                              if (re.claims[propertyIds[i]][j].qualifiers[prop][0].datavalue.value["numeric-id"] !== items[l].id){ continue }
-                              console.log(re.claims[propertyIds[i]][j].qualifiers[prop][0].datavalue.value);
-                                re.claims[propertyIds[i]][j].qualifiers[prop][0].datavalue.value.label = items[l].label;
-                                 if (items[k].description !== undefined)
-                                 re.claims[propertyIds[i]][j].qualifiers[prop][0].datavalue.value.description = items[l].description;
-                                 if (items[k].aliases !== undefined)
-                                 re.claims[propertyIds[i]][j].qualifiers[prop][0].datavalue.value.aliases = items[l].aliases;                            
-                           }
-                        }
-                    }
-                 }
-            return re
-              }
-  */
-
  addQualifierItemDetails(items, re, propertyIds){  //add labels, definitions and aliases of items in the qualifiers/* 
-     console.log(items);
        for (let i=0; i<propertyIds.length; i++){  
             for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
                 if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
                  let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
                    for  (let k=0; k<props.length; k++){
-                    console.log(re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.id);
                      for (let l=0; l<items.length; l++){      
                         if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.id !== items[l].id){ continue }
                           if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "wikibase-item"){
-                            console.log(re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.id);
                             re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.label = items[l].label;
-
                            if (items[k].description !== undefined)
                            re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.description = items[l].description;
                            if (items[k].aliases !== undefined)
@@ -109,7 +82,6 @@ export class ItemDetailsService {
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.id = qualifiersArray[k][0].datavalue.value.id;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.time = qualifiersArray[k][0].datavalue.value.time;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value.label;
-                    console.log(re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value.label);
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.description = qualifiersArray[k][0].datavalue.value.description;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.aliases = qualifiersArray[k][0].datavalue.value.aliases; 
                     if (qualifiersArray[k][0].datatype === "string"){
@@ -154,10 +126,7 @@ export class ItemDetailsService {
                  if (re.claims[propertyIds[i]][j].references === undefined) {continue}
                    for (let k=0; k<re.claims[propertyIds[i]][j].references.length; k++){
                    let props = Object.keys(re.claims[propertyIds[i]][j].references[k].snaks);
-                   let referencesArray = Object.values(re.claims[propertyIds[i]][j].references[k].snaks);//l'objet referencesArray est à revoir, il n'a pas la structure qui convient.
-                     console.log(referencesArray);
-                     console.log(re.claims[propertyIds[i]][j].references2)
-                  
+                   let referencesArray = Object.values(re.claims[propertyIds[i]][j].references[k].snaks);//l'objet referencesArray est à revoir, il n'a pas la structure qui convient.                 
                       for (let l=0; l<referencesArray.length; l++){
                         for (let m=0; m<re.claims[propertyIds[i]][j].references2.length;m++){
                           if (re.claims[propertyIds[i]][j].references2[m].value.id === referencesArray[l][0].datavalue.value.id)
@@ -165,9 +134,7 @@ export class ItemDetailsService {
                             re.claims[propertyIds[i]][j].references2[m].value.id === referencesArray[l][0].datavalue.value.id
                             re.claims[propertyIds[i]][j].references2[m].value.time = referencesArray[l][0].datavalue.value.time;
                             if (referencesArray[l][0].datatype === "string"){
-                              console.log(referencesArray[l][0].datatype)
                             re.claims[propertyIds[i]][j].references2[m].value.string = referencesArray[l][0].datavalue.value };
-          
                             if (referencesArray[l][0].datatype === "url"){
                               re.claims[propertyIds[i]][j].references2[m].value.url = referencesArray[l][0].datavalue.value };
                             re.claims[propertyIds[i]][j].references2[m].value.label = referencesArray[l][0].datavalue.value.label;
