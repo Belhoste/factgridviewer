@@ -18,6 +18,9 @@ export class ItemDetailsService {
    addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks 
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
+        if ( lang === "en") {re.claims[propertyIds[i]].other = "further"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].other = "weiteren"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].other = "autres"};
         if ( lang === "en") {re.claims[propertyIds[i]].sources = "sources"}
         else if ( lang === "de") {re.claims[propertyIds[i]].sources = "Quellen"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].sources = "sources"};
@@ -40,6 +43,14 @@ export class ItemDetailsService {
         if ( lang === "en") {re.claims[propertyIds[i]].place = "location and situation"}
         else if ( lang === "de") {re.claims[propertyIds[i]].place = "Standort und Lage"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].place = "localisation et situation"};
+      }
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q12" || 
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q220833" ||  
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q140806" ||
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q11214" ) {
+        if ( lang === "en") {re.claims[propertyIds[i]].org = "location and context"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].org = "Standort und Umfeld"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].org = "localisation et contexte"};
       }
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
