@@ -21,6 +21,7 @@ export class CreateItemToDisplayService {
     createItemToDisplay(re, selectedLang) {
       let values = Object.values(re.claims);
       let propertyIds = Object.keys(re.claims);
+      console.log(propertyIds);
       let u;
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
@@ -43,7 +44,7 @@ export class CreateItemToDisplayService {
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
   u=      this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
           
-          return [u, qualifierProperties, referenceProperties]
+          return [u, propertyIds, qualifierProperties, referenceProperties]
            }) 
         )
         return observedItem

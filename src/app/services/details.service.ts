@@ -45,15 +45,6 @@ setPropertiesList(u) { //create the list of properties in the statements
     for (const u of val )
       qualifierProperties=qualifierProperties.concat(u["qualifiers-order"]);
   }
-  
- 
-/*
- for (const val of values){
-   for (const u of val)
-     if (u.references !== undefined) {
-      referenceProperties = referenceProperties.concat(u.references[0]["snaks-order"]);
-  }
-  */
 
   for (const val of values){
     for (const u of val) {
@@ -65,7 +56,9 @@ setPropertiesList(u) { //create the list of properties in the statements
    }
  
  qualifierProperties =this.uniq(qualifierProperties);
+ console.log(qualifierProperties);
  referenceProperties =this.uniq(referenceProperties);
+ console.log(referenceProperties);
  
  properties = properties.concat(qualifierProperties).concat(referenceProperties) // get items in the statements
  properties = this.uniq(properties); // remove the duplicates

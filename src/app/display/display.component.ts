@@ -127,6 +127,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P138:string; //online digitalisation
   url:string;
 
+
 //external links
 P378 ;// identifiant viaf url;
 P76 ;// identifiant GND
@@ -143,6 +144,10 @@ P533 ;// identifiant Amburger
 P374 ; // identifiant Geni.com
 P414; // 	INSEE municipality code
 
+//list of all the above properties
+remainingPropertiesList:any[] = [];
+
+
  //wiki
   commonswiki:any;
   dewiki:any;
@@ -158,6 +163,9 @@ P414; // 	INSEE municipality code
   locationAndSituation:any[];
   sourcesList:any[];
   externalLinks:any[];
+  otherClaims:any[];
+
+  total
 
 
 
@@ -213,6 +221,19 @@ P414; // 	INSEE municipality code
     this.P8 = item[0].claims.P8;
     this.P97 = item[0].claims.P97;
 
+    if (item[0].claims.P2 !==undefined){ //instance of
+      item[1].splice(item[1].indexOf("P2"),1);
+    }
+    if (item[0].claims.P3 !==undefined){ //subclass of
+      item[1].splice(item[1].indexOf("P3"),1);
+    }
+    if (item[0].claims.P8 !==undefined){ //part of
+      item[1].splice(item[1].indexOf("P8"),1);
+    }
+    if (item[0].claims.P97 !==undefined){ //field of research
+      item[1].splice(item[1].indexOf("P97"),1);
+    }
+
     //person
 
     //person: life and family
@@ -248,84 +269,112 @@ P414; // 	INSEE municipality code
     
     this.lifeAndFamily = []
 
-    if (this.P154 !==undefined){
-      this.lifeAndFamily.push(this.P154);
+    if (item[0].claims.P154 !==undefined){ //sex
+      item[1].splice(item[1].indexOf("P154"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P154);
     }
-    if (this.P247 !==undefined){
-      this.lifeAndFamily.push(this.P247);
+    if (item[0].claims.P247 !==undefined){ //name
+      item[1].splice(item[1].indexOf("P247"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P247);
     }
-    if (this.P248 !==undefined){
-      this.lifeAndFamily.push(this.P248);
+    if (item[0].claims.P248 !==undefined){ //forenames
+      item[1].splice(item[1].indexOf("P248"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P248);
     }
-    if (this.P140 !==undefined){
-      this.lifeAndFamily.push(this.P140);
+    if (item[0].claims.P140 !==undefined){ //Illuminati code name
+      item[1].splice(item[1].indexOf("P140"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P140);
     }
-    if (this.P77 !==undefined){
-      this.lifeAndFamily.push(this.P77);
+    if (item[0].claims.P77 !==undefined){ //birthday
+      item[1].splice(item[1].indexOf("P77"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P77);
     }
-    if (this.P82 !==undefined){
-      this.lifeAndFamily.push(this.P82);
+    if (item[0].claims.P82 !==undefined){ //birthplace
+      item[1].splice(item[1].indexOf("P82"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P82);
     }
-    if (this.P290 !==undefined){
-      this.lifeAndFamily.push(this.P290);
+    if (item[0].claims.P290 !==undefined){ //life span (at least) from
+      item[1].splice(item[1].indexOf("P290"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P290);
     }
-    if (this.P186 !==undefined){
-      this.lifeAndFamily.push(this.P186);
+    if (item[0].claims.P186 !==undefined){ //medical conditions
+      item[1].splice(item[1].indexOf("P186"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P186);
     }
-    if (this.P38 !==undefined){
-      this.lifeAndFamily.push(this.P38);
+    if (item[0].claims.P38 !==undefined){ //deathday
+      item[1].splice(item[1].indexOf("P38"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P38);
     }
-    if (this.P168 !==undefined){
-      this.lifeAndFamily.push(this.P168);
+    if (item[0].claims.P168 !==undefined){ //deathplace
+      item[1].splice(item[1].indexOf("P168"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P168);
     }
-    if (this.P40 !==undefined){
-      this.lifeAndFamily.push(this.P40);
+    if (item[0].claims.P40 !==undefined){ //burialdate
+      item[1].splice(item[1].indexOf("P40"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P40);
     }
-    if (this.P79 !==undefined){
-      this.lifeAndFamily.push(this.P79);
+    if (item[0].claims.P79 !==undefined){ //grave
+      item[1].splice(item[1].indexOf("P79"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P79);
     }
-    if (this.P141 !==undefined){
-      this.lifeAndFamily.push(this.P141);
+    if (this.P141 !==undefined){ //father
+      item[1].splice(item[1].indexOf("P141"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P141);
     }
-    if (this.P142 !==undefined){
-      this.lifeAndFamily.push(this.P142);
+    if (item[0].claims.P142 !==undefined){ //mother
+      item[1].splice(item[1].indexOf("P142"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P142);
     }
-    if (this.P203 !==undefined){
-      this.lifeAndFamily.push(this.P203);
+    if (item[0].claims.P203 !==undefined){ //siblings
+      item[1].splice(item[1].indexOf("P203"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P203);
     }
-    if (this.P84 !==undefined){
-      this.lifeAndFamily.push(this.P84);
+    if (item[0].claims.P84 !==undefined){ //marriage
+      item[1].splice(item[1].indexOf("P84"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P84);
     }
-    if (this.P200 !==undefined){
-      this.lifeAndFamily.push(this.P200);
+    if (item[0].claims.P200 !==undefined){ //number of children
+      item[1].splice(item[1].indexOf("P200"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P200);
     }
-    if (this.P150 !==undefined){
-      this.lifeAndFamily.push(this.P150);
+    if (item[0].claims.P150 !==undefined){  //children
+      item[1].splice(item[1].indexOf("P150"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P150);
     }
-    if (this.P172 !==undefined){
-      this.lifeAndFamily.push(this.P172);
+    if (item[0].claims.P172 !==undefined){ //religion
+      item[1].splice(item[1].indexOf("P172"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P172);
     }
-    if (this.P83 !==undefined){
-      this.lifeAndFamily.push(this.P83);
+    if (item[0].claims.P83 !==undefined){ // place (residence)
+      item[1].splice(item[1].indexOf("P83"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P83);
     }
-    if (this.P296 !==undefined){
-      this.lifeAndFamily.push(this.P296);
+    if (item[0].claims.P296 !==undefined){ //sejour
+      item[1].splice(item[1].indexOf("P296"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P296);
     }
 
     //person:education
 
-   this.P160 = item[0].claims.P160;
-   this.P161 = item[0].claims.P161;
-
    this.education = [];
 
-   if (this.P160 !==undefined){
+   if(item[0].claims.P160 !==undefined){ // educating institutions
+    item[1].splice(item[1].indexOf("P160"),1);
+    this.education.push(this.item[0].claims.P160) 
+   }
+
+   if(item[0].claims.P161 !==undefined){ //teachers
+    item[1].splice(item[1].indexOf("P161"),1);
+    this.education.push(this.item[0].claims.P161);
+   }
+
+  /* if (this.P160 !==undefined){
     this.education.push(this.P160); 
   } 
   if (this.P161 !==undefined){
     this.education.push(this.P161); 
   } 
-  
+ */ 
     //person:career and activities
     
     this.P164 = item[0].claims.P164;
@@ -336,20 +385,25 @@ P414; // 	INSEE municipality code
 
     this.careerAndActivities = [];
 
-    if (this.P164 !==undefined){
-      this.careerAndActivities.push(this.P164); 
+    if (item[0].claims.P164 !==undefined){ //position
+      item[1].splice(item[1].indexOf("P164"),1);
+      this.careerAndActivities.push(item[0].claims.P164); 
     }  
-    if (this.P165 !==undefined){
-      this.careerAndActivities.push(this.P165); 
+    if (item[0].claims.P165 !==undefined){ //activities
+      item[1].splice(item[1].indexOf("P165"),1);
+      this.careerAndActivities.push(item[0].claims.P165); 
     }  
-    if (this.P315 !==undefined){
-      this.careerAndActivities.push(this.P315); 
+    if (item[0].claims.P315 !==undefined){ //employer
+      item[1].splice(item[1].indexOf("P315"),1);
+      this.careerAndActivities.push(item[0].claims.P315); 
     }  
-    if (this.P242 !==undefined){
-      this.careerAndActivities.push(this.P242); 
+    if (item[0].claims.P242 !==undefined){ //events witnessed
+      item[1].splice(item[1].indexOf("P242"),1);
+      this.careerAndActivities.push(item[0].claims.P242); 
     }  
-    if (this.P119 !==undefined){
-      this.careerAndActivities.push(this.P119); 
+    if (item[0].claims.P119 !==undefined){ //active participant in
+      item[1].splice(item[1].indexOf("P119"),1);
+      this.careerAndActivities.push(item[0].claims.P119); 
     }  
   
     //person: sociability and culture
@@ -363,23 +417,29 @@ P414; // 	INSEE municipality code
 
   this.sociabilityAndCulture = [];
 
-  if (this.P91 !==undefined){
-    this.sociabilityAndCulture.push(this.P91); 
+  if (item[0].claims.P91 !==undefined){ //member of
+    item[1].splice(item[1].indexOf("P91"),1); 
+    this.sociabilityAndCulture.push(item[0].claims.P91); 
   }
-  if (this.P454 !==undefined){
-    this.sociabilityAndCulture.push(this.P454); 
+  if (item[0].claims.P454 !==undefined){ //proposed to become a member of
+    item[1].splice(item[1].indexOf("P454"),1);
+    this.sociabilityAndCulture.push(item[0].claims.P454); 
   }
-  if (this.P192 !==undefined){
-    this.sociabilityAndCulture.push(this.P192); 
+  if (item[0].claims.P192 !==undefined){ //friendship
+    item[1].splice(item[1].indexOf("P192"),1);
+    this.sociabilityAndCulture.push(item[0].claims.P192); 
   }  
-  if (this.P447 !==undefined){
-    this.sociabilityAndCulture.push(this.P447); 
+  if (item[0].claims.P447 !==undefined){ //masonic degree
+    item[1].splice(item[1].indexOf("P447"),1);
+    this.sociabilityAndCulture.push(item[0].claims.P447); 
   } 
-  if (this.P497 !==undefined){
-    this.sociabilityAndCulture.push(this.P497); 
+  if (item[0].claims.P497 !==undefined){ //interested in
+    item[1].splice(item[1].indexOf("P497"),1);
+    this.sociabilityAndCulture.push(item[0].claims.P497); 
   }  
-  if (this.P167 !==undefined){
-    this.sociabilityAndCulture.push(this.P167); 
+  if (item[0].claims.P167 !==undefined){ //contributor to
+    item[1].splice(item[1].indexOf("P167"),1);
+    this.sociabilityAndCulture.push(item[0].claims.P167); 
   }
 
   console.log(this.sociabilityAndCulture)
@@ -394,19 +454,23 @@ P414; // 	INSEE municipality code
     
     this.locationAndSituation =[];
     
-    if (this.P48 !==undefined){
-      this.locationAndSituation.push(this.P48);
+    if (item[0].claims.P48 !==undefined){ //geographic coordinates
+      item[1].splice(item[1].indexOf("P48"),1);
+      this.locationAndSituation.push(item[0].claims.P48);
     
-    if (this.P58 !==undefined){
-      this.locationAndSituation.push(this.P58); 
+    if (item[0].claims.P58 !==undefined){ //number of inhabitants
+      item[1].splice(item[1].indexOf("P58"),1);
+      this.locationAndSituation.push(item[0].claims.P58); 
       }  
     
-    if (this.P297 !==undefined){
-      this.locationAndSituation.push(this.P297); 
+    if (item[0].claims.P297 !==undefined){ //territorial affiliation
+      item[1].splice(item[1].indexOf("P297"),1);
+      this.locationAndSituation.push(item[0].claims.P297); 
       }  
     
-    if (this.P466 !==undefined){
-      this.locationAndSituation.push(this.P466); 
+    if (item[0].claims.P466 !==undefined){  //capital of
+      item[1].splice(item[1].indexOf("P466"),1);
+      this.locationAndSituation.push(item[0].claims.P466); 
       }   
     }  
 
@@ -416,11 +480,13 @@ P414; // 	INSEE municipality code
     
     this.sourcesList =[];
     
-    if (this.P12 !==undefined){
-      this.sourcesList.push(this.P12);
+    if (item[0].claims.P12 !==undefined){ //literature
+      item[1].splice(item[1].indexOf("P12"),1);
+      this.sourcesList.push(item[0].claims.P12);
     }
 
     console.log(this.sourcesList);
+
   //externalLinks
 
     this.P378=item[0].claims.P378;
@@ -441,76 +507,94 @@ P414; // 	INSEE municipality code
 
     this.externalLinks = [];
 
-    if (this.P146 !==undefined){
-       this.externalLinks.push(this.P146) };
+    if (item[0].claims.P146 !==undefined){  //online information
+      item[1].splice(item[1].indexOf("P146"),1);
+       this.externalLinks.push(item[0].claims.P146) };
 
-    if (this.P378 !==undefined){
-     this.P378.url= "https://viaf.org/viaf/"+this.P378[0].mainsnak.datavalue.value;
-      this.externalLinks.push(this.P378) };
+    if (item[0].claims.P378 !==undefined){ //id viaf
+      item[1].splice(item[1].indexOf("P378"),1);
+      item[0].claims.P378.url= "https://viaf.org/viaf/"+item[0].claims.P378[0].mainsnak.datavalue.value;
+      this.externalLinks.push(item[0].claims.P378) };
 
-    if (this.P76 !==undefined){
-    this.P76.url = "https://d-nb.info/gnd/"+this.P76[0].mainsnak.datavalue.value;
-     this.externalLinks.push(this.P76) };
+    if (item[0].claims.P76 !==undefined){ // id GND
+      item[1].splice(item[1].indexOf("P76"),1);
+      item[0].claims.P76.url = "https://d-nb.info/gnd/"+item[0].claims.P76[0].mainsnak.datavalue.value;
+     this.externalLinks.push(item[0].claims.P76) };
 
-    if (this.P500 !==undefined){
-      this.P500.url = "https://data.bnf.fr/en/"+this.P500[0].mainsnak.datavalue.value;
-      this.externalLinks.push(this.P500) };
+    if (item[0].claims.P500 !==undefined){ // id Data BnF
+      item[1].splice(item[1].indexOf("P500"),1);
+      item[0].claims.P500.url = "https://data.bnf.fr/en/"+item[0].claims.P500[0].mainsnak.datavalue.value;
+      this.externalLinks.push(item[0].claims.P500) };
 
-    if (this.P346 !==undefined){
-       this.P346.url = "https://kxp.k10plus.de/DB=2.1/PPNSET?PPN="+this.P346[0].mainsnak.datavalue.value;
-        this.externalLinks.push(this.P346) };
+    if (item[0].claims.P346 !==undefined){ // id PPN
+      item[1].splice(item[1].indexOf("P346"),1);
+      item[0].claims.P346.url = "https://kxp.k10plus.de/DB=2.1/PPNSET?PPN="+item[0].claims.P346[0].mainsnak.datavalue.value;
+        this.externalLinks.push(item[0].claims.P346) };
 
-    if (this.P367 !==undefined){
-       this.P367.url = "https://catalogue.bnf.fr/ark:/12148/cb"+this.P367[0].mainsnak.datavalue.value;
-        this.externalLinks.push(this.P367) };
+    if (item[0].claims.P367 !==undefined){ // id BnF
+      item[1].splice(item[1].indexOf("P367"),1);
+      item[0].claims.P367.url = "https://catalogue.bnf.fr/ark:/12148/cb"+item[0].claims.P367[0].mainsnak.datavalue.value;
+        this.externalLinks.push(item[0].claims.P367) };
 
-    if (this.P366 !==undefined){
-          this.P366.url = "https://www.idref.fr/"+this.P366[0].mainsnak.datavalue.value;
+    if (item[0].claims.P366 !==undefined){ //id IRef
+      item[1].splice(item[1].indexOf("P366"),1);
+      item[0].claims.P366.url = "https://www.idref.fr/"+item[0].claims.P366[0].mainsnak.datavalue.value;
             this.externalLinks.push(this.P366) };
     
-    if (this.P418 !==undefined){
-          this.P418.url = "https://www.geonames.org/"+this.P418[0].mainsnak.datavalue.value
-                this.externalLinks.push(this.P418) };
+    if (item[0].claims.P418 !==undefined){ // id Geonames
+      item[1].splice(item[1].indexOf("P418"),1);
+      item[0].claims.P418.url = "https://www.geonames.org/"+this.P418[0].mainsnak.datavalue.value
+                this.externalLinks.push(item[0].claims.P418) };
             
-    if (this.P368 !==undefined){
-          this.P368.url = 'https://opacplus.bib-bvb.de/TouchPoint_touchpoint/start.do?Query=1120%3D%22%5C%22VD16+$1%5C""&SearchProfile=Altbestand&Language=De'+this.P368[0].mainsnak.datavalue.value
-               this.externalLinks.push(this.P368) };
+    if (item[0].claims.P368 !==undefined){ // id VD16
+      item[1].splice(item[1].indexOf("P368"),1);
+      item[0].claims.P368.url = 'https://opacplus.bib-bvb.de/TouchPoint_touchpoint/start.do?Query=1120%3D%22%5C%22VD16+$1%5C""&SearchProfile=Altbestand&Language=De'
+                          +item[0].claims.P368[0].mainsnak.datavalue.value
+               this.externalLinks.push(item[0].claims.P368) };
 
-    if (this.P369 !==undefined){
-          this.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27$1%27:'+this.P369[0].mainsnak.datavalue.value
-              this.externalLinks.push(this.P369) };
+    if (item[0].claims.P369 !==undefined){ //id VD17
+      item[1].splice(item[1].indexOf("P369"),1);
+      item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27$1%27:'
+                          +item[0].claims.P369[0].mainsnak.datavalue.value
+              this.externalLinks.push(item[0].claims.P369) };
 
-    if (this.P370 !==undefined){
-        this.P370.url = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18'+this.P369[0].mainsnak.datavalue.value
-           this.externalLinks.push(this.P370) };
+    if (item[0].claims.P370 !==undefined){//id VD18
+      item[1].splice(item[1].indexOf("P370"),1);
+      item[0].claims.P370.url = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18'+item[0].claims.P369[0].mainsnak.datavalue.value
+           this.externalLinks.push(item[0].claims.P370) };
 
-    if (this.P424 !==undefined){
-            this.P424.url = 'https://harmoniauniversalis.univ-paris1.fr/#/personne/'+this.P424[0].mainsnak.datavalue.value
+    if (item[0].claims.P424 !==undefined){ //id Harmonia Universalis
+      item[1].splice(item[1].indexOf("P424"),1);
+      item[0].claims.P424.url = 'https://harmoniauniversalis.univ-paris1.fr/#/personne/'+item[0].claims.P424[0].mainsnak.datavalue.value
                this.externalLinks.push(this.P424) };
 
-    if (this.P533 !==undefined){
-        this.P533.url = 'https://amburger.ios-regensburg.de/index.php?id='+this.P533[0].mainsnak.datavalue.value
-            this.externalLinks.push(this.P533) };
+    if (item[0].claims.P533 !==undefined){ // id Amburger
+      item[1].splice(item[1].indexOf("P533"),1);
+      item[0].claims.P533.url = 'https://amburger.ios-regensburg.de/index.php?id='+item[0].claims.P533[0].mainsnak.datavalue.value
+            this.externalLinks.push(item[0].claims.P533) };
 
-    if (this.P374 !==undefined){
-              this.P374.url = 'https://www.geni.com/profile/index/'+this.P533[0].mainsnak.datavalue.value
+    if (item[0].claims.P374 !==undefined){ // id Geni.com
+      item[1].splice(item[1].indexOf("P374"),1);
+      item[0].claims.P374.url = 'https://www.geni.com/profile/index/'+item[0].claims.P533[0].mainsnak.datavalue.value
                   this.externalLinks.push(this.P374) };
 
-    if (this.P414 !==undefined){
-            this.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'+this.P414[0].mainsnak.datavalue.value
+    if (item[0].claims.P414 !==undefined){  // INSEE municipality code
+      item[1].splice(item[1].indexOf("P414"),1);
+      item[0].claims.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'+item[0].claims.P414[0].mainsnak.datavalue.value
                   this.externalLinks.push(this.P414) };
 
-    if (this.P368 !==undefined){
-            this.P368.url = 'https://opacplus.bib-bvb.de/TouchPoint_touchpoint/start.do?Query=1120%3D%22%5C%22VD16+$1%5C""&SearchProfile=Altbestand&Language=De'+this.P368[0].mainsnak.datavalue.value
-                  this.externalLinks.push(this.P368) };
 
-
-   
-
+    this.otherClaims = [];
+      
+    for (let i=0; i<this.item[1].length; i++){
+        let P:string = this.item[1][i];
+        this.otherClaims.push(item[0].claims[P]); 
+      }
 
     this.wikis = [];
-   if (item[0].sitelinks.commonswiki !==undefined){
-      this.wikis.push(item[0].sitelinks.commonswiki);
+    
+    if (item[0].sitelinks.commonswiki !==undefined){
+        this.wikis.push(item[0].sitelinks.commonswiki);
     }
     if (item[0].sitelinks.enwiki !==undefined){
       this.wikis.push(item[0].sitelinks.enwiki);
@@ -550,6 +634,7 @@ qualifiersList(u){
        }
      }
   }
+
 
 setExternalLinks(u){
 
