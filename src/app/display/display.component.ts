@@ -43,20 +43,30 @@ export class DisplayComponent implements OnInit, OnDestroy {
   itemContent:any;
 
   human:string;
+  training:string;
   sex:string;
   name:string;
   career:string;
+  sociability:string;
   place:string;
+  sources:string;
 
   P2:any[];// instance of
   P3:any[];// subclass of
   P8:any[];//part of
+  P97:any[];//field of research
+
+  //life and family
+
   P154:any[];//sex
   P247:any[];//name
   P248:any[];//forenames
+  P140:any[];//Illuminati code name
   P248_qualifiers:any[];//qualifiers of forenames
   P77:any[];//birthday
   P82:any[];//birthplace
+  P290:any[];//life span (at least) from
+  P186:any[];//medical conditions
   P38:any[];//deathday
   P168:any[];//deathplace
   P40:any[];//burialdate
@@ -68,20 +78,47 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P142_item:string;
   P203:any[];//siblings
   P84:any[];//marriage
+  P200 //number of children
   P150:any[];//children
+  P172:any;// religion
+  P83:any[];//place (residence)
+  P296:any[]; //séjour
+
+  //education
+  P160:any; //educating institution
+  P161:any;//teacher(s)
+  
+  
   P151:any; //publications stemming from this research
   P101:string;//place in sequence
 
-  
+  //career and activities
   
   P164:any[];//position
   P165:any[];//activities
+  P315:any[];//employer
+  P242;//events witnessed
+  P119:any[];//active participant in
+
+
+//sociability and culture
+  P91:any[]; // member of
+  P454:any[]; // proposed to become a member of
+  P192:any[];//friendship
+  P447:any[];//masonic degrees
+  P497:any[];//interested in
+  P167:any[];//contributor to
+
 
 //place
   P48:any //geographic coordinates
   P58:any// number of inhabitants
   P297:any // territorial affiliation
   P466:any // capital of
+
+//sources
+  P12:any[];//literature
+
 
 //references
   P311:any[];//text source
@@ -115,9 +152,13 @@ P414; // 	INSEE municipality code
   wikis:any[];
 
   lifeAndFamily:any[];
+  education:any[];
   careerAndActivities:any[];
+  sociabilityAndCulture:any[];
   locationAndSituation:any[];
+  sourcesList:any[];
   externalLinks:any[];
+
 
 
   foreNames:string[];
@@ -130,6 +171,7 @@ P414; // 	INSEE municipality code
   mother:any;
   brotherhood:string[];
   marriage:string[];
+
 
  clickedObject: Subject<any>
  clickedObject2:any;
@@ -145,8 +187,11 @@ P414; // 	INSEE municipality code
   if (item !==undefined){
     console.log(item);
     this.human = item[0].claims.P2.human;
+    this.training = item[0].claims.P2.training;
     this.career = item[0].claims.P2.career;
     this.place = item[0].claims.P2.place;
+    this.sociability = item[0].claims.P2.sociability;
+    this.sources = item[0].claims.P2.sources;
     this.item = item;
     this.itemContent = item[0];
     this.label = item[0].label;
@@ -161,18 +206,25 @@ P414; // 	INSEE municipality code
       }
     }
 
-    //person
-
-    //person: life and family
+    //header
 
     this.P2 = item[0].claims.P2;
     this.P3 = item[0].claims.P3; 
     this.P8 = item[0].claims.P8;
+    this.P97 = item[0].claims.P97;
+
+    //person
+
+    //person: life and family
+
     this.P154 = item[0].claims.P154;                
     this.P247 = item[0].claims.P247;    
     this.P248 = item[0].claims.P248; 
+    this.P140 = item[0].claims.P140;
     this.P77 = item[0].claims.P77;  
     this.P82 = item[0].claims.P82; 
+    this.P290 = item[0].claims.P290;
+    this.P186 = item[0].claims.P186;
     this.P38 = item[0].claims.P38;
     this.P168 = item[0].claims.P168;
     this.P40 = item[0].claims.P40; 
@@ -181,13 +233,19 @@ P414; // 	INSEE municipality code
     this.P142 = item[0].claims.P142; 
     this.P203 = item[0].claims.P203;
     this.P84 = item[0].claims.P84;
+    this.P200 = item[0].claims.P200;
     this.P150 = item[0].claims.P150;
 
     this.P311 = item[0].claims.P311;
     this.P51 = item[0].claims.P51;
     this.P146 = item[0].claims.P146;
     this.P138 = item[0].claims.P138;
-   
+
+    this.P172 = item[0].claims.P172;
+    this.P83 = item [0].claims.P83;
+    this.P296 = item [0].claims.P296;
+
+    
     this.lifeAndFamily = []
 
     if (this.P154 !==undefined){
@@ -199,11 +257,20 @@ P414; // 	INSEE municipality code
     if (this.P248 !==undefined){
       this.lifeAndFamily.push(this.P248);
     }
+    if (this.P140 !==undefined){
+      this.lifeAndFamily.push(this.P140);
+    }
     if (this.P77 !==undefined){
       this.lifeAndFamily.push(this.P77);
     }
     if (this.P82 !==undefined){
       this.lifeAndFamily.push(this.P82);
+    }
+    if (this.P290 !==undefined){
+      this.lifeAndFamily.push(this.P290);
+    }
+    if (this.P186 !==undefined){
+      this.lifeAndFamily.push(this.P186);
     }
     if (this.P38 !==undefined){
       this.lifeAndFamily.push(this.P38);
@@ -229,14 +296,43 @@ P414; // 	INSEE municipality code
     if (this.P84 !==undefined){
       this.lifeAndFamily.push(this.P84);
     }
+    if (this.P200 !==undefined){
+      this.lifeAndFamily.push(this.P200);
+    }
     if (this.P150 !==undefined){
       this.lifeAndFamily.push(this.P150);
     }
+    if (this.P172 !==undefined){
+      this.lifeAndFamily.push(this.P172);
+    }
+    if (this.P83 !==undefined){
+      this.lifeAndFamily.push(this.P83);
+    }
+    if (this.P296 !==undefined){
+      this.lifeAndFamily.push(this.P296);
+    }
+
+    //person:education
+
+   this.P160 = item[0].claims.P160;
+   this.P161 = item[0].claims.P161;
+
+   this.education = [];
+
+   if (this.P160 !==undefined){
+    this.education.push(this.P160); 
+  } 
+  if (this.P161 !==undefined){
+    this.education.push(this.P161); 
+  } 
   
     //person:career and activities
     
     this.P164 = item[0].claims.P164;
     this.P165 = item[0].claims.P165;
+    this.P315 = item[0].claims.P315;
+    this.P242 = item[0].claims.P242;
+    this.P119 = item[0].claims.P119;
 
     this.careerAndActivities = [];
 
@@ -246,6 +342,48 @@ P414; // 	INSEE municipality code
     if (this.P165 !==undefined){
       this.careerAndActivities.push(this.P165); 
     }  
+    if (this.P315 !==undefined){
+      this.careerAndActivities.push(this.P315); 
+    }  
+    if (this.P242 !==undefined){
+      this.careerAndActivities.push(this.P242); 
+    }  
+    if (this.P119 !==undefined){
+      this.careerAndActivities.push(this.P119); 
+    }  
+  
+    //person: sociability and culture
+
+  this.P91 = item[0].claims.P91;
+  this.P454 = item[0].claims.P454;
+  this.P192 = item[0].claims.P192;
+  this.P447 = item[0].claims.P447;
+  this.P497 = item[0].claims.P497;
+  this.P167 = item[0].claims.P167;
+
+  this.sociabilityAndCulture = [];
+
+  if (this.P91 !==undefined){
+    this.sociabilityAndCulture.push(this.P91); 
+  }
+  if (this.P454 !==undefined){
+    this.sociabilityAndCulture.push(this.P454); 
+  }
+  if (this.P192 !==undefined){
+    this.sociabilityAndCulture.push(this.P192); 
+  }  
+  if (this.P447 !==undefined){
+    this.sociabilityAndCulture.push(this.P447); 
+  } 
+  if (this.P497 !==undefined){
+    this.sociabilityAndCulture.push(this.P497); 
+  }  
+  if (this.P167 !==undefined){
+    this.sociabilityAndCulture.push(this.P167); 
+  }
+
+  console.log(this.sociabilityAndCulture)
+
 
   //place
 
@@ -272,8 +410,17 @@ P414; // 	INSEE municipality code
       }   
     }  
 
-    console.log(this.locationAndSituation);
+  //sources
 
+  this.P12 = item[0].claims.P12;
+    
+    this.sourcesList =[];
+    
+    if (this.P12 !==undefined){
+      this.sourcesList.push(this.P12);
+    }
+
+    console.log(this.sourcesList);
   //externalLinks
 
     this.P378=item[0].claims.P378;
@@ -293,6 +440,9 @@ P414; // 	INSEE municipality code
     this.P414=item[0].claims.P414
 
     this.externalLinks = [];
+
+    if (this.P146 !==undefined){
+       this.externalLinks.push(this.P146) };
 
     if (this.P378 !==undefined){
      this.P378.url= "https://viaf.org/viaf/"+this.P378[0].mainsnak.datavalue.value;
@@ -348,7 +498,11 @@ P414; // 	INSEE municipality code
 
     if (this.P414 !==undefined){
             this.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'+this.P414[0].mainsnak.datavalue.value
-                        this.externalLinks.push(this.P414) };
+                  this.externalLinks.push(this.P414) };
+
+    if (this.P368 !==undefined){
+            this.P368.url = 'https://opacplus.bib-bvb.de/TouchPoint_touchpoint/start.do?Query=1120%3D%22%5C%22VD16+$1%5C""&SearchProfile=Altbestand&Language=De'+this.P368[0].mainsnak.datavalue.value
+                  this.externalLinks.push(this.P368) };
 
 
    

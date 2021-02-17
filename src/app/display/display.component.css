@@ -60,7 +60,12 @@ mat-card img{
 }
 
 .details {
+  padding: 1px;
+}
+
+.details2 {
   padding: 0px;
+  margin: 0px;
 }
 
 .details > label {

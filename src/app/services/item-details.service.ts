@@ -18,14 +18,23 @@ export class ItemDetailsService {
    addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks 
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
+        if ( lang === "en") {re.claims[propertyIds[i]].sources = "sources"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].sources = "Quellen"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].sources = "sources"};
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q7") {
         if ( lang === "en") {re.claims[propertyIds[i]].human = "life and family"}
         else if ( lang === "de") {re.claims[propertyIds[i]].human = "Leben und Familie"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].human = "vie et famille"};
+        if ( lang === "en") {re.claims[propertyIds[i]].training = "education"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].training = "Ausbildung"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].training = "éducation"};
         if ( lang === "en") {re.claims[propertyIds[i]].career = "career and activities"}
         else if ( lang === "de") {re.claims[propertyIds[i]].career = "Beruf und Aktivitäten"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].career = "carrière et activités"};
+        if ( lang === "en") {re.claims[propertyIds[i]].sociability = "sociability and culture"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].sociability = "Soziabilität und Kultur"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].sociability = "sociabilité et culture"};
             }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q8") {
         if ( lang === "en") {re.claims[propertyIds[i]].place = "location and situation"}
