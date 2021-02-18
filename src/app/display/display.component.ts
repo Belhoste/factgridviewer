@@ -392,17 +392,19 @@ export class DisplayComponent implements OnInit, OnDestroy {
       }  
     } 
     if (item[0].claims.P49 !==undefined){  //begin date
+      
       item[1].splice(item[1].indexOf("P49"),1);
       this.locationAndContext.push(item[0].claims.P49); 
-    } 
+    
+  }
     if (item[0].claims.P6 !==undefined){  //continuation of
       item[1].splice(item[1].indexOf("P6"),1);
       this.locationAndContext.push(item[0].claims.P6); 
     }
-    if (item[0].claims.P50 !==undefined){  //end date
+    if (item[0].claims.P50 !==undefined){  //end date 
       item[1].splice(item[1].indexOf("P50"),1);
       this.locationAndContext.push(item[0].claims.P50); 
-    } 
+    }
     if (item[0].claims.P7 !==undefined){  //continued by
       item[1].splice(item[1].indexOf("P7"),1);
       this.locationAndContext.push(item[0].claims.P7); 
@@ -423,6 +425,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P9"),1);
       this.locationAndContext.push(item[0].claims.P9); 
     }
+    if (item[0].claims.P268 !==undefined){  //founded by
+      item[1].splice(item[1].indexOf("P268"),1);
+      this.locationAndContext.push(item[0].claims.P268); 
+    }
+    if (item[0].claims.P327 !==undefined){  //documented list of members
+      item[1].splice(item[1].indexOf("P327"),1);
+      this.locationAndContext.push(item[0].claims.P327); 
+    }
 
   //event
 
@@ -435,14 +445,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
   if (item[0].claims.P106 !==undefined){  //date
     item[1].splice(item[1].indexOf("P106"),1);
     this.eventDetail.push(item[0].claims.P106); 
-  }
-  if (item[0].claims.P49 !==undefined){  //begin date
-    item[1].splice(item[1].indexOf("P49"),1);
-    this.eventDetail.push(item[0].claims.P49); 
-  }
-  if (item[0].claims.P50 !==undefined){  //begin date
-    item[1].splice(item[1].indexOf("P50"),1);
-    this.eventDetail.push(item[0].claims.P50); 
   }
   if (item[0].claims.P66 !==undefined){  //institution signing responsible
     item[1].splice(item[1].indexOf("P66"),1);
@@ -582,12 +584,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[0].claims.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'+item[0].claims.P414[0].mainsnak.datavalue.value
                   this.externalLinks.push(item[0].claims.P414) };
 
-
     this.mainList= [];
-
     this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.eventDetail, this.printPublicationDetail);
-    
-    console.log(this.mainList);
     
     this.otherClaims = [];
       
@@ -641,7 +639,6 @@ qualifiersList(u){
        }
      }
   }
-
 
 ngOnDestroy(): void {
 //this.subscription.unsubscribe()
