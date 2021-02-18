@@ -125,7 +125,8 @@ ul.inline {
   }
 
 .percent3 {
-    font-size: 130%;
+    padding-top:10px;
+    font-size: 150%;
   }
 
 .property {

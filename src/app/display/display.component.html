@@ -79,9 +79,8 @@
          >
       <div fxFlex="80%" class="left">
         <mat-card  class= mat-elevation-z8>
-          <div>
-          <mat-divider color="primary"></mat-divider> 
-          <mat-card-subtitle class="percent3" *ngIf='"main"!==undefined'>{{main}}</mat-card-subtitle>
+          <div>   
+          <mat-card-subtitle class="percent3" *ngIf='"main"!==undefined'>{{main}}</mat-card-subtitle>      
 <!--          <mat-divider color="primary"></mat-divider>  
           <div class="map-container" *ngIf="item[0].claims.P48 !==undefined">
             <div class="map-frame">
@@ -134,8 +133,7 @@
           
           <div *ngIf='"training"!==undefined'>
           <mat-divider color="primary"></mat-divider> 
-          <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle>
-          <mat-divider color="primary"></mat-divider>  
+          <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle> 
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
             <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of education">
             <div class="title">
@@ -169,11 +167,10 @@
           </div>
         </mat-card-content>
       </div>
-  
+       
         <div *ngIf='"career"!==undefined'>
           <mat-divider color="primary"></mat-divider> 
         <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
-            <mat-divider color="primary"></mat-divider>  
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">
           <div class="title">
@@ -207,11 +204,10 @@
           </div>
         </mat-card-content>
       </div>
-      
+
       <div *ngIf='"sociability"!==undefined'>
         <mat-divider color="primary"></mat-divider> 
         <mat-card-subtitle class="percent3">{{sociability}}</mat-card-subtitle>
-        <mat-divider color="primary"></mat-divider>  
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sociabilityAndCulture">
           <div class="title">
@@ -247,9 +243,9 @@
         </div>
     
         <div>     
-          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>       
-          <mat-divider color="primary"></mat-divider>  
-         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+          <mat-divider color="primary"></mat-divider> 
+          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>        
+          <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
              <div class="title">
               <label class="property"><strong>{{P.label}}:</strong></label>
@@ -285,8 +281,7 @@
       <mat-card  class= mat-elevation-z8>
         <div>
          <mat-card-subtitle class="percent3">{{sources}}</mat-card-subtitle>
-         <mat-divider color="primary"></mat-divider>  
-        <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sourcesList">
             <div class="title">
               <label class="property"><strong>{{P.label}}:</strong></label>
