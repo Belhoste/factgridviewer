@@ -433,6 +433,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P327"),1);
       this.locationAndContext.push(item[0].claims.P327); 
     }
+    if (item[0].claims.P137 !==undefined){  //history
+      item[1].splice(item[1].indexOf("P137"),1);
+      this.locationAndContext.push(item[0].claims.P137); 
+    }
+    if (item[0].claims.P521 !==undefined){  //system adhered to
+      item[1].splice(item[1].indexOf("P521"),1);
+      this.locationAndContext.push(item[0].claims.P521); 
+    }
 
   //event
 

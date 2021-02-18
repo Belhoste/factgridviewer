@@ -54,9 +54,9 @@ export class ItemDetailsService {
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q140806" ||
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q11214" ||
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q164344") {
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "location and context"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Standort und Umfeld"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "localisation et contexte"};
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "organisation"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Organisation"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "organisation"};
       }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q20") {
         if ( lang === "en") {re.claims[propertyIds[i]].main = "print publication"}
