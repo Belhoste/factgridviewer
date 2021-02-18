@@ -20,9 +20,16 @@ rel="stylesheet">
            {{ description }}
         </p>
       </mat-card-subtitle>
-    <div class="img" style ="text-align: left">
-        <img *ngIf="picture" src={{picture}}>
-    </div>
+  
+        <img mat-card-image 
+        fxFlex="100%" 
+        fxFlex.sm="60%" 
+        fxFlex.md=40%
+        fxFlex.lg=25%
+        fxFlex.xl="15%"
+        *ngIf="picture" src={{picture}}>
+      
+    
     </mat-card-title-group>
       <h3><a  href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a></h3>
 
@@ -139,7 +146,7 @@ rel="stylesheet">
                 <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
               <label>{{M.references2[0].value.time |customDate }}</label>
               <label>{{M.references2[0].value.string }}</label>
-              <label>{{M.references2[0].value.url }}</label>
+              <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
             </div>  
           </div> 
           </div>      
@@ -181,7 +188,7 @@ rel="stylesheet">
                 <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
               <label>{{M.references2[0].value.time |customDate }}</label>
               <label>{{M.references2[0].value.string }}</label>
-              <label>{{M.references2[0].value.url }}</label>
+              <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
             </div>  
           </div> 
           </div>      
@@ -215,7 +222,7 @@ rel="stylesheet">
              <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
              <label>{{M.references2[0].value.time |customDate }}</label>
              <label>{{M.references2[0].value.string }}</label>
-             <label>{{M.references2[0].value.url }}</label>
+             <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
            </div>                    
          </div>      
        </div>
@@ -250,7 +257,7 @@ rel="stylesheet">
               <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
             <label>{{M.references2[0].value.time |customDate }}</label>
             <label>{{M.references2[0].value.string }}</label>
-            <label>{{M.references2[0].value.url }}</label>
+            <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
           </div>               
         </div>      
       </div>
@@ -285,7 +292,7 @@ rel="stylesheet">
               <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
             <label>{{M.references2[0].value.time |customDate }}</label>
             <label>{{M.references2[0].value.string }}</label>
-            <label>{{M.references2[0].value.url }}</label>
+            <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
           </div>               
          </div>      
        </div>
@@ -320,7 +327,7 @@ rel="stylesheet">
                <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
              <label>{{M.references2[0].value.time |customDate }}</label>
              <label>{{M.references2[0].value.string }}</label>
-             <label>{{M.references2[0].value.url }}</label>
+             <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
            </div>               
          </div>      
        </div>
@@ -355,7 +362,7 @@ rel="stylesheet">
               <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
             <label>{{M.references2[0].value.time |customDate }}</label>
             <label>{{M.references2[0].value.string }}</label>
-            <label>{{M.references2[0].value.url }}</label>
+            <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
           </div>               
          </div>      
        </div>

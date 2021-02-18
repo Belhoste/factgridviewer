@@ -16,17 +16,19 @@ mat-card{
   margin-left: 2px;
 }
 
+
 mat-card img{
   object-fit: contain; /*this makes the image in src fit to the size specified below*/
   width: 100%;
-  margin-top: 10px;
+  margin: 5px;
   
 }
 
 .img {
   width: 40%; 
-  margin-top: 10px;
-  margin-left: 10px;
+  height:100px;
+  margin: 10px;
+  
 }
 
 .padding1 {
