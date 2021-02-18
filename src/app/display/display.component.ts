@@ -1,12 +1,13 @@
 
 //ancien app.component.ts
 
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { AppAndDisplaySharedService } from '../services/app-and-display-shared.service';
 import { CreateItemToDisplayService } from '../services/create-item-to-display.service';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
+import * as L from 'leaflet';
 import { SetItemToDisplayService } from '../services/set-item-to-display.service';
 
 @Component({
@@ -16,6 +17,8 @@ import { SetItemToDisplayService } from '../services/set-item-to-display.service
 })
 
 export class DisplayComponent implements OnInit, OnDestroy {
+
+ 
 
   @Output() clickedItem = new EventEmitter<any>();
   
@@ -28,6 +31,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
   private getUrlSuffix= '&format=json' ; 
 
+  map:any;
+
   mainsnak:any;
   id:string = "";
   factGridUrl:string="https://database.factgrid.de/wiki/Item";
@@ -38,6 +43,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   claims: any[];
   picture:string;
   
+  
+  London:any;
 
   item:any[];
   itemContent:any;
@@ -50,8 +57,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   sociability:string;
   place:string;
   org:string;
+  event:string;
   sources:string;
   other:string;
+
+  main:string;
 
   P2:any[];// instance of
   P3:any[];// subclass of
@@ -73,10 +83,13 @@ export class DisplayComponent implements OnInit, OnDestroy {
   careerAndActivities:any[];
   sociabilityAndCulture:any[];
   locationAndSituation:any[]; // for places
-  sourcesList:any[];
+  eventDetail:any[]; //for events
+  printPublicationDetail:any[];//for print publications
+  sourcesList:any[]; //for sources
   externalLinks:any[];
   otherClaims:any[];
   locationAndContext:any[]; //for organisations, societies and institutions
+  mainList:any[]; //main list for persons, places, organisations
 
 
   foreNames:string[];
@@ -101,6 +114,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 }
 
  ngOnInit(): void {
+
   this.subscription = this.sharedService.item.subscribe(item=>{
   if (item !==undefined){
     console.log(item);
@@ -110,8 +124,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.place = item[0].claims.P2.place;
     this.org = item[0].claims.P2.org;
     this.sociability = item[0].claims.P2.sociability;
+    this.event =  item[0].claims.P2.event;
     this.other = item[0].claims.P2.other;
     this.sources = item[0].claims.P2.sources;
+    this.main = item[0].claims.P2.main;
     this.item = item;
     this.itemContent = item[0];
     this.label = item[0].label;
@@ -125,6 +141,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
      this.picture = item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value }
       }
     }
+    
+
 
     //header
 
@@ -172,6 +190,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P140"),1);
       this.lifeAndFamily.push(this.item[0].claims.P140);
     }
+    if (item[0].claims.P363 !==undefined){ //Strict Observance code name
+      item[1].splice(item[1].indexOf("P363"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P363);
+    }
+
     if (item[0].claims.P77 !==undefined){ //birthday
       item[1].splice(item[1].indexOf("P77"),1);
       this.lifeAndFamily.push(this.item[0].claims.P77);
@@ -243,8 +266,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.lifeAndFamily.push(this.item[0].claims.P296);
     }
 
-    console.log(this.lifeAndFamily);
-
     //person:education
 
    this.education = [];
@@ -259,10 +280,17 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.education.push(this.item[0].claims.P304);
    }
 
+   if(item[0].claims.P170 !==undefined){ //academic degree
+    item[1].splice(item[1].indexOf("P170"),1);
+    this.education.push(this.item[0].claims.P170);
+   }
+
    if(item[0].claims.P161 !==undefined){ //teachers
     item[1].splice(item[1].indexOf("P161"),1);
     this.education.push(this.item[0].claims.P161);
    }
+
+
 
     //person:career and activities
     
@@ -318,8 +346,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.sociabilityAndCulture.push(item[0].claims.P167); 
   }
 
-  console.log(this.sociabilityAndCulture)
-
 
   //place
 
@@ -343,8 +369,13 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P466"),1);
       this.locationAndSituation.push(item[0].claims.P466); 
       }   
+    
+      if (item[0].claims.P538 !==undefined){  //historical county
+        item[1].splice(item[1].indexOf("P538"),1);
+        this.locationAndSituation.push(item[0].claims.P538); 
+        }   
+  
 
-  console.log(this.locationAndSituation);
 
   //org
 
@@ -384,8 +415,82 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P14"),1);
       this.locationAndContext.push(item[0].claims.P14); 
     }
+    if (item[0].claims.P465 !==undefined){  //capital
+      item[1].splice(item[1].indexOf("P465"),1);
+      this.locationAndContext.push(item[0].claims.P465); 
+    }
+    if (item[0].claims.P9 !==undefined){  //includes
+      item[1].splice(item[1].indexOf("P9"),1);
+      this.locationAndContext.push(item[0].claims.P9); 
+    }
 
-    console.log(this.locationAndContext);
+  //event
+
+  this.eventDetail = [];
+
+  if (item[0].claims.P47 !==undefined){  //localisation
+    item[1].splice(item[1].indexOf("P47"),1);
+    this.eventDetail.push(item[0].claims.P47); 
+  }
+  if (item[0].claims.P106 !==undefined){  //date
+    item[1].splice(item[1].indexOf("P106"),1);
+    this.eventDetail.push(item[0].claims.P106); 
+  }
+  if (item[0].claims.P49 !==undefined){  //begin date
+    item[1].splice(item[1].indexOf("P49"),1);
+    this.eventDetail.push(item[0].claims.P49); 
+  }
+  if (item[0].claims.P50 !==undefined){  //begin date
+    item[1].splice(item[1].indexOf("P50"),1);
+    this.eventDetail.push(item[0].claims.P50); 
+  }
+  if (item[0].claims.P66 !==undefined){  //institution signing responsible
+    item[1].splice(item[1].indexOf("P66"),1);
+    this.eventDetail.push(item[0].claims.P66); 
+  }
+  if (item[0].claims.P133 !==undefined){  //participants
+    item[1].splice(item[1].indexOf("P133"),1);
+    this.eventDetail.push(item[0].claims.P133); 
+  }
+
+//print publication
+   
+   this.printPublicationDetail = [];
+
+   if (item[0].claims.P144 !==undefined){ //literature
+    item[1].splice(item[1].indexOf("P144"),1);
+    this.printPublicationDetail.push(item[0].claims.P144);
+  }
+
+  if (item[0].claims.P222 !==undefined){ //date of publication according to imprint
+    item[1].splice(item[1].indexOf("P222"),1);
+    this.printPublicationDetail.push(item[0].claims.P222);
+  }
+
+  if (item[0].claims.P241 !==undefined){ //place of publication (without fictitious information)
+    item[1].splice(item[1].indexOf("P241"),1);
+    this.printPublicationDetail.push(item[0].claims.P222);
+  }
+
+  if (item[0].claims.P240 !==undefined){ //place of publication as misleadingly stated
+    item[1].splice(item[1].indexOf("P240"),1);
+    this.printPublicationDetail.push(item[0].claims.P240);
+  }
+
+  if (item[0].claims.P122 !==undefined){ //wider field of genres
+    item[1].splice(item[1].indexOf("P122"),1);
+    this.printPublicationDetail.push(item[0].claims.P122);
+  }
+
+  if (item[0].claims.P18 !==undefined){ //language
+    item[1].splice(item[1].indexOf("P18"),1);
+    this.printPublicationDetail.push(item[0].claims.P18);
+  }
+
+  if (item[0].claims.P329 !==undefined){ //holding institution
+    item[1].splice(item[1].indexOf("P329"),1);
+    this.printPublicationDetail.push(item[0].claims.P329);
+  }
 
   //sources
 
@@ -396,8 +501,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P12"),1);
       this.sourcesList.push(item[0].claims.P12);
     }
-
-    console.log(this.sourcesList);
 
   //externalLinks
 
@@ -480,6 +583,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
                   this.externalLinks.push(item[0].claims.P414) };
 
 
+    this.mainList= [];
+
+    this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.eventDetail, this.printPublicationDetail);
+    
+    console.log(this.mainList);
+    
     this.otherClaims = [];
       
     for (let i=0; i<this.item[1].length; i++){
@@ -519,6 +628,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   )
 }
 
+
+
 qualifiersList(u){
   for (let i=0;i<u.length;i++){
     if (u["'qualifiers-order'"] !== undefined) {
@@ -532,18 +643,10 @@ qualifiersList(u){
   }
 
 
-setExternalLinks(u){
-
-  u= u.url
-
-
-}
-
-
-
 ngOnDestroy(): void {
 //this.subscription.unsubscribe()
 }
+
 
 }
 

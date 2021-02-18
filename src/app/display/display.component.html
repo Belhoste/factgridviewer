@@ -1,88 +1,105 @@
 <body class="mat-typography mat-app-background">
 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
-rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+  rel="stylesheet">
 
-<div>
-  <mat-card  class= mat-elevation-z8>
-    <div fxFlex.gt-sm="100%" fxFlex>
-
-    <mat-card-title-group>
-      <mat-card-title>
-        <p class="blue-text">{{ label }}</p>
-        <p class="percent">
-          {{ aliases | join }}
-        </p>
-     </mat-card-title>
-      <mat-card-subtitle>
-        <p>
-           {{ description }}
-        </p>
-      </mat-card-subtitle>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
   
-        <img mat-card-image 
-        fxFlex="100%" 
-        fxFlex.sm="60%" 
-        fxFlex.md=40%
-        fxFlex.lg=25%
-        fxFlex.xl="15%"
-        *ngIf="picture" src={{picture}}>
-      
+  <div>
+    <mat-card  class= mat-elevation-z8>
+      <div fxFlex.gt-sm="100%" fxFlex>
+  
+      <mat-card-title-group>
+        <mat-card-title>
+          <p class="blue-text">{{ label }}</p>
+          <p class="percent">
+            {{ aliases | join }}
+          </p>
+       </mat-card-title>
+        <mat-card-subtitle>
+          <p>
+             {{ description }}
+          </p>
+        </mat-card-subtitle>
     
-    </mat-card-title-group>
-      <h3><a  href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a></h3>
-
-      <div *ngIf="P2"  class="percent2">
-       <span class="property">{{P2.label}}:&nbsp;</span><span *ngFor='let P of P2'>{{ P.mainsnak.label }},&nbsp;{{ P.mainsnak.description }}
-       <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   
-       </div>
-     
-      <p *ngIf="P3" class="percent2">
-        <span class="property">{{P3.label}}:&nbsp;</span><span *ngFor='let P of P3'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
+          <img mat-card-image 
+          fxFlex="100%" 
+          fxFlex.xm="80%"
+          fxFlex.sm="60%" 
+          fxFlex.md="40%"
+          fxFlex.lg="25%"
+          fxFlex.xl="15%"
+          *ngIf="picture" src={{picture}}>
+        
+      
+      </mat-card-title-group>
+        <h3><a  href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a></h3>
+  
+        <div *ngIf="P2"  class="percent2">
+         <span class="property">{{P2.label}}:&nbsp;</span><span *ngFor='let P of P2'>{{ P.mainsnak.label }},&nbsp;{{ P.mainsnak.description }}
+         <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   
+         </div>
+       
+        <p *ngIf="P3" class="percent2">
+          <span class="property">{{P3.label}}:&nbsp;</span><span *ngFor='let P of P3'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
+          <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+        </p>
+  
+        <p *ngIf="P8" class="percent2">
+         <span class="property">{{P8.label}}:&nbsp;</span><span *ngFor='let P of P8'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
+         <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+       </p>
+  
+       <p *ngIf="P131" class="percent2">
+        <span class="property">{{P131.label}}:&nbsp;</span><span *ngFor='let P of P131'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
         <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-      </p>
-
-      <p *ngIf="P8" class="percent2">
-       <span class="property">{{P8.label}}:&nbsp;</span><span *ngFor='let P of P8'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
-       <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-     </p>
-
-     <p *ngIf="P131" class="percent2">
-      <span class="property">{{P131.label}}:&nbsp;</span><span *ngFor='let P of P131'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
-      <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-    </p> 
-
-     <p *ngIf="P97" class="percent2">
-      <span class="property">{{P97.label}}:&nbsp;</span><span *ngFor='let P of P97'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
-      <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-    </p> 
-
-    </div>
- </mat-card>
-</div>
-
-
-  <div class = "parent" 
-       fxLayout = "row"
-       fxLayout.md="column"
-       fxLayout.sm="column"
-       fxLayout.xs="column"
-       >
-    <div fxFlex="80%" class="left">
-      <mat-card  class= mat-elevation-z8>
-        <div *ngIf='"human"!==undefined'>
-         <mat-card-subtitle class="percent3">{{human}}</mat-card-subtitle>
-         <mat-divider color="primary"></mat-divider>  
-        <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
-          <div fxFlex="50%" fxFlex.sm="100%" 
-                fxFlex.xs="100%" 
-                fxLayout.lg="row" 
-                fxLayout.xl="row" 
-                fxLayout.md="column"
-                fxLayout.sm="column" 
-                fxLayout.xs="column"
-                *ngFor="let P of lifeAndFamily">
+      </p> 
+  
+       <p *ngIf="P97" class="percent2">
+        <span class="property">{{P97.label}}:&nbsp;</span><span *ngFor='let P of P97'>&nbsp;{{ P.mainsnak.label }},&nbsp;{{P.mainsnak.description}}
+        <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+      </p> 
+  
+       </div>
+   </mat-card>
+  </div>
+  
+  
+    <div class = "parent" 
+         fxLayout = "row"
+         fxLayout.md="column"
+         fxLayout.sm="column"
+         fxLayout.xs="column"
+         >
+      <div fxFlex="80%" class="left">
+        <mat-card  class= mat-elevation-z8>
+          <div>
+          <mat-divider color="primary"></mat-divider> 
+          <mat-card-subtitle class="percent3" *ngIf='"main"!==undefined'>{{main}}</mat-card-subtitle>
+<!--          <mat-divider color="primary"></mat-divider>  
+          <div class="map-container" *ngIf="item[0].claims.P48 !==undefined">
+            <div class="map-frame">
+              <div id="map">
+            </div>
+          </div>
+          </div>
+-->
+          <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
+            <div fxFlex="50%" fxFlex.sm="100%" 
+              fxFlex.xs="100%" 
+              fxLayout.lg="row" 
+              fxLayout.xl="row" 
+              fxLayout.md="column"
+              fxLayout.sm="column" 
+              fxLayout.xs="column">
+            </div>
+            <div *ngFor="let P of mainList">
             <div flex-shrink flex-basis="auto">
             <div class="title">
               <label class="property"><strong>{{P.label}}:</strong></label>
@@ -90,315 +107,231 @@ rel="stylesheet">
             <div class="details" *ngFor="let M of P">    
               <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
               <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
-              <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+                <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
               <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
                 <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
                 <label>{{M.qualifiers2[0].value.label}}
-                   <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-                <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-                <label>{{M.qualifiers2[0].value.string }}</label>
+               <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+              <label>{{M.qualifiers2[0].value.time |customDate }}</label>
+              <label>{{M.qualifiers2[0].value.string }}</label>
               </span>
             <div class="details2" class="percent2" *ngIf="M['references2']">
               <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
               <label>{{M.references2[0].value.label}}
-              <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+                <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
               <label>{{M.references2[0].value.time |customDate }}</label>
               <label>{{M.references2[0].value.string }}</label>
               <label>{{M.references2[0].value.url }}</label>
             </div>  
-          </div> 
-          </div>      
-        </div>
-      </mat-card-content>
-      </div>
-       <div *ngIf='"place"!==undefined'>
-        <mat-card-subtitle class="percent3">{{place}}</mat-card-subtitle>
-        <mat-divider color="primary"></mat-divider>  
-        <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
-          <div fxFlex="50%" fxFlex.sm="100%" 
-                fxFlex.xs="100%" 
-                fxLayout.lg="row" 
-                fxLayout.xl="row" 
-                fxLayout.md="column"
-                fxLayout.sm="column" 
-                fxLayout.xs="column"
-                *ngFor="let P of locationAndSituation">
-            <div flex-shrink flex-basis="auto">
+          </div>
+          </div>
+          </div>
+          </mat-card-content>
+          </div>
+          
+          <div *ngIf='"training"!==undefined'>
+          <mat-divider color="primary"></mat-divider> 
+          <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle>
+          <mat-divider color="primary"></mat-divider>  
+          <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of education">
             <div class="title">
-              <label class="property"><strong>{{P.label}}:</strong></label>
-            </div>
-            <div class="details" *ngFor="let M of P">    
-              <label *ngIf="M.mainsnak.datavalue.value.latitude">{{M.mainsnak.datavalue.value.latitude}}, {{M.mainsnak.datavalue.value.longitude}}</label>  
-              <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>  
-              <label *ngIf="M.mainsnak.datavalue.value.amount">{{M.mainsnak.datavalue.value.amount }}</label>          
-              <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
+            <label class="property"><strong>{{P.label}}:</strong></label>
+          </div>
+          <div class="details" *ngFor="let M of P">    
+            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
               <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
               <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
                 <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
                 <label>{{M.qualifiers2[0].value.label}}
-                    <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+                  <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
                 <label>{{M.qualifiers2[0].value.time |customDate }}</label>
                 <label>{{M.qualifiers2[0].value.string }}</label>
               </span>
-            <div class="details" class="percent2" *ngIf="M['references2']">
-              <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-              <label>{{M.references2[0].value.label}}
-                <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-              <label>{{M.references2[0].value.time |customDate }}</label>
-              <label>{{M.references2[0].value.string }}</label>
-              <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-            </div>  
-          </div> 
+              <div class="details" class="percent2" *ngIf="M['references2']">
+                 <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
+                 <label>{{M.references2[0].value.label}}
+                  <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+                <label>{{M.references2[0].value.time |customDate }}</label>
+                <label>{{M.references2[0].value.string }}</label>
+                <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
+              </div>                    
           </div>      
-        </div>
-      </mat-card-content>
-       </div>
-       <div *ngIf='"place"!==undefined'>
-        <mat-card-subtitle class="percent3">{{org}}</mat-card-subtitle>
-        <mat-divider color="primary"></mat-divider>  
-        <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
-          <div fxFlex="50%" fxFlex.sm="100%" 
-                fxFlex.xs="100%" 
-                fxLayout.lg="row" 
-                fxLayout.xl="row" 
-                fxLayout.md="column"
-                fxLayout.sm="column" 
-                fxLayout.xs="column"
-                *ngFor="let P of locationAndContext">
-            <div flex-shrink flex-basis="auto">
-            <div class="title">
-              <label class="property"><strong>{{P.label}}:</strong></label>
-            </div>
-            <div class="details" *ngFor="let M of P">    
-              <label *ngIf="M.mainsnak.datavalue.value.latitude">{{M.mainsnak.datavalue.value.latitude}}, {{M.mainsnak.datavalue.value.longitude}}</label>  
-              <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>  
-              <label *ngIf="M.mainsnak.datavalue.value.amount">{{M.mainsnak.datavalue.value.amount }}</label>          
-              <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
-              <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-              <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
-                <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
-                <label>{{M.qualifiers2[0].value.label}}
-                    <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-                <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-                <label>{{M.qualifiers2[0].value.string }}</label>
-              </span>
-            <div class="details" class="percent2" *ngIf="M['references2']">
-              <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-              <label>{{M.references2[0].value.label}}
-                <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-              <label>{{M.references2[0].value.time |customDate }}</label>
-              <label>{{M.references2[0].value.string }}</label>
-              <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-            </div>  
-          </div> 
-          </div>      
-        </div>
-      </mat-card-content>
-       </div>
-    </mat-card>
-    <mat-card  class= mat-elevation-z8>
-      <div *ngIf='"training"!==undefined'>
-       <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle>
-       <mat-divider color="primary"></mat-divider>  
-      <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of education">
-          <div class="title">
-            <label class="property"><strong>{{P.label}}:</strong></label>
           </div>
-          <div class="details" *ngFor="let M of P">    
-            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
-            <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
-            <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-          <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
-            <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
-            <label>{{M.qualifiers2[0].value.label}}
-            <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-            <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-            <label>{{M.qualifiers2[0].value.string }}</label>
-          </span>
-           <div class="details" class="percent2" *ngIf="M['references2']">
-             <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-             <label>{{M.references2[0].value.label}}
-             <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-             <label>{{M.references2[0].value.time |customDate }}</label>
-             <label>{{M.references2[0].value.string }}</label>
-             <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-           </div>                    
-         </div>      
-       </div>
-      <div>
-      </div>
-     </mat-card-content>
-     </div>
-    </mat-card>
-    <mat-card  class= mat-elevation-z8>
-     <div *ngIf='"career"!==undefined'>
-      <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
-      <mat-divider color="primary"></mat-divider>  
-      <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">
-          <div class="title">
-           <label class="property"><strong>{{P.label}}:</strong></label>
+          <div>
           </div>
-          <div class="details" *ngFor="let M of P">    
-            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
-            <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
-            <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-          <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
-            <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
-            <label>{{M.qualifiers2[0].value.label}}
-              <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-            <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-            <label>{{M.qualifiers2[0].value.string }}</label>
-          </span>
-          <div class="details" class="percent2" *ngIf="M['references2']">
-            <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-            <label>{{M.references2[0].value.label}}
-              <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-            <label>{{M.references2[0].value.time |customDate }}</label>
-            <label>{{M.references2[0].value.string }}</label>
-            <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-          </div>               
-        </div>      
+        </mat-card-content>
       </div>
-     <div>
-     </div>
-    </mat-card-content>
-    </div>
-    </mat-card>
-    <mat-card  class= mat-elevation-z8>
-      <div *ngIf='"sociability"!==undefined'>
-       <mat-card-subtitle class="percent3">{{sociability}}</mat-card-subtitle>
-       <mat-divider color="primary"></mat-divider>  
-      <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sociabilityAndCulture">
-          <div class="title">
-            <label class="property"><strong>{{P.label}}:</strong></label>
-          </div>
-          <div class="details" *ngFor="let M of P">    
-            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
-            <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
-              <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-          <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
-            <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
-            <label>{{M.qualifiers2[0].value.label}}
-            <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-            <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-            <label>{{M.qualifiers2[0].value.string }}</label>
-          </span>
-          <div class="details" class="percent2" *ngIf="M['references2']">
-            <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-            <label>{{M.references2[0].value.label}}
-              <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-            <label>{{M.references2[0].value.time |customDate }}</label>
-            <label>{{M.references2[0].value.string }}</label>
-            <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-          </div>               
-         </div>      
-       </div>
-      <div>
-      </div>
-     </mat-card-content>
-     </div>
-    </mat-card>
-    <mat-card  class= mat-elevation-z8>
-      <div>     
-        <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>       
-        <mat-divider color="primary"></mat-divider>  
-       <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-         <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
-           <div class="title">
-            <label class="property"><strong>{{P.label}}:</strong></label>
-           </div>
-           <div class="details" *ngFor="let M of P">    
-             <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
-             <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
-             <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-           <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
-             <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
-             <label>{{M.qualifiers2[0].value.label}}
-               <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-             <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-             <label>{{M.qualifiers2[0].value.string }}</label>
-           </span>
-           <div class="details" class="percent2" *ngIf="M['references2']">
-             <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-             <label>{{M.references2[0].value.label}}
-               <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-             <label>{{M.references2[0].value.time |customDate }}</label>
-             <label>{{M.references2[0].value.string }}</label>
-             <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-           </div>               
-         </div>      
-       </div>
-      <div>
-      </div>
-     </mat-card-content>
-     </div>
-     </mat-card>
-    <mat-card  class= mat-elevation-z8>
-      <div>
-       <mat-card-subtitle class="percent3">{{sources}}</mat-card-subtitle>
-       <mat-divider color="primary"></mat-divider>  
-      <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sourcesList">
-          <div class="title">
-            <label class="property"><strong>{{P.label}}:</strong></label>
-          </div>
-          <div class="details" *ngFor="let M of P">    
-            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
-            <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
-              <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
-          <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
-            <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
-            <label>{{M.qualifiers2[0].value.label}}
-            <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-            <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-            <label>{{M.qualifiers2[0].value.string }}</label>
-          </span>
-          <div class="details" class="percent2" *ngIf="M['references2']">
-            <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-            <label>{{M.references2[0].value.label}}
-              <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-            <label>{{M.references2[0].value.time |customDate }}</label>
-            <label>{{M.references2[0].value.string }}</label>
-            <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-          </div>               
-         </div>      
-       </div>
-      <div>
-      </div>
-     </mat-card-content>
-     </div>
-    </mat-card>
-
-</div>
-
-    <div fxFlex="20%" class="right">
-      <mat-card class= mat-elevation-z8>
-        <div class="title">
-        <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
-        </div>
-        <div>
-        <mat-list  *ngFor="let externalLink of externalLinks">
-          <span mat-list-item >
-              <span>{{externalLink.label}}: </span><a href ="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
-          </span>
-        </mat-list>
-       </div>
-        <mat-divider color="primary"></mat-divider> 
-      <div class="title2">
-        <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
-      </div>
-        <mat-list  *ngFor="let wiki of wikis">
-          <span mat-list-item >
-              <span>{{wiki.site}}: </span><a href ="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
-          </span>
-        </mat-list>
-      
-      </mat-card>
-    </div> 
-  </div>  
   
-
-</body>
+        <div *ngIf='"career"!==undefined'>
+          <mat-divider color="primary"></mat-divider> 
+        <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
+            <mat-divider color="primary"></mat-divider>  
+        <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">
+          <div class="title">
+            <label class="property"><strong>{{P.label}}:</strong></label>
+          </div>
+          <div class="details" *ngFor="let M of P">    
+            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
+            <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+            <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
+              <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
+              <label>{{M.qualifiers2[0].value.label}}
+                <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+              <label>{{M.qualifiers2[0].value.time |customDate }}</label>
+              <label>{{M.qualifiers2[0].value.string }}</label>
+            </span>
+            <div class="details" class="percent2" *ngIf="M['references2']">
+              <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
+              <label>{{M.references2[0].value.label}}
+                <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+              <label>{{M.references2[0].value.time |customDate }}</label>
+              <label>{{M.references2[0].value.string }}</label>
+              <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
+            </div>               
+          </div>      
+          </div>
+          <div>
+          </div>
+        </mat-card-content>
+      </div>
+      
+      <div *ngIf='"sociability"!==undefined'>
+        <mat-divider color="primary"></mat-divider> 
+        <mat-card-subtitle class="percent3">{{sociability}}</mat-card-subtitle>
+        <mat-divider color="primary"></mat-divider>  
+        <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sociabilityAndCulture">
+          <div class="title">
+            <label class="property"><strong>{{P.label}}:</strong></label>
+          </div>
+          <div class="details" *ngFor="let M of P">    
+            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
+              <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+            <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
+              <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
+              <label>{{M.qualifiers2[0].value.label}}
+                <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+              <label>{{M.qualifiers2[0].value.time |customDate }}</label>
+              <label>{{M.qualifiers2[0].value.string }}</label>
+            </span>
+            <div class="details" class="percent2" *ngIf="M['references2']">
+              <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
+              <label>{{M.references2[0].value.label}}
+                <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+              <label>{{M.references2[0].value.time |customDate }}</label>
+              <label>{{M.references2[0].value.string }}</label>
+              <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
+            </div>               
+          </div>      
+          </div>
+          <div>
+          </div>
+        </mat-card-content>
+        </div>
+    
+        <div>     
+          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>       
+          <mat-divider color="primary"></mat-divider>  
+         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
+             <div class="title">
+              <label class="property"><strong>{{P.label}}:</strong></label>
+             </div>
+             <div class="details" *ngFor="let M of P">    
+               <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+               <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
+               <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+             <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
+               <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
+               <label>{{M.qualifiers2[0].value.label}}
+                 <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+               <label>{{M.qualifiers2[0].value.time |customDate }}</label>
+               <label>{{M.qualifiers2[0].value.string }}</label>
+             </span>
+             <div class="details" class="percent2" *ngIf="M['references2']">
+               <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
+               <label>{{M.references2[0].value.label}}
+                 <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+               <label>{{M.references2[0].value.time |customDate }}</label>
+               <label>{{M.references2[0].value.string }}</label>
+               <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
+             </div>               
+           </div>      
+         </div>
+        <div>
+        </div>
+       </mat-card-content>
+       </div>
+       </mat-card>
+      <mat-card  class= mat-elevation-z8>
+        <div>
+         <mat-card-subtitle class="percent3">{{sources}}</mat-card-subtitle>
+         <mat-divider color="primary"></mat-divider>  
+        <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sourcesList">
+            <div class="title">
+              <label class="property"><strong>{{P.label}}:</strong></label>
+            </div>
+            <div class="details" *ngFor="let M of P">    
+              <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+              <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
+                <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+            <span class="details" class="percent2" *ngIf="M['qualifiers-order']">
+              <label class="property"><em>{{M.qualifiers2[0].label}}: </em></label>
+              <label>{{M.qualifiers2[0].value.label}}
+              <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+              <label>{{M.qualifiers2[0].value.time |customDate }}</label>
+              <label>{{M.qualifiers2[0].value.string }}</label>
+            </span>
+            <div class="details" class="percent2" *ngIf="M['references2']">
+              <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
+              <label>{{M.references2[0].value.label}}
+                <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
+              <label>{{M.references2[0].value.time |customDate }}</label>
+              <label>{{M.references2[0].value.string }}</label>
+              <label><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
+            </div>               
+           </div>      
+         </div>
+        <div>
+        </div>
+       </mat-card-content>
+       </div>
+      </mat-card>
+  
+     </div>
+  
+      <div fxFlex="20%" class="right">
+        <mat-card class= mat-elevation-z8>
+          <div class="title">
+          <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
+          </div>
+          <div>
+          <mat-list  *ngFor="let externalLink of externalLinks">
+            <span mat-list-item >
+                <span>{{externalLink.label}}: </span><a href ="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
+            </span>
+          </mat-list>
+         </div>
+          <mat-divider color="primary"></mat-divider> 
+        <div class="title2">
+          <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
+        </div>
+          <mat-list  *ngFor="let wiki of wikis">
+            <span mat-list-item >
+                <span>{{wiki.site}}: </span><a href ="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
+            </span>
+          </mat-list>
+        
+        </mat-card>
+      </div> 
+    </div>  
+    
+  
+  </body>
+  

@@ -26,9 +26,9 @@ export class ItemDetailsService {
         else if ( lang === "fr") {re.claims[propertyIds[i]].sources = "sources"};
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q7") {
-        if ( lang === "en") {re.claims[propertyIds[i]].human = "life and family"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].human = "Leben und Familie"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].human = "vie et famille"};
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "life and family"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Leben und Familie"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "vie et famille"};
         if ( lang === "en") {re.claims[propertyIds[i]].training = "education"}
         else if ( lang === "de") {re.claims[propertyIds[i]].training = "Ausbildung"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].training = "éducation"};
@@ -40,17 +40,28 @@ export class ItemDetailsService {
         else if ( lang === "fr") {re.claims[propertyIds[i]].sociability = "sociabilité et culture"};
             }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q8") {
-        if ( lang === "en") {re.claims[propertyIds[i]].place = "location and situation"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].place = "Standort und Lage"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].place = "localisation et situation"};
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "location and situation"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Standort und Lage"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "localisation et situation"};
+      }
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q9") {
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "event"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Ereignis"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "évènement"};
       }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q12" || 
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q220833" ||  
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q140806" ||
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q11214" ) {
-        if ( lang === "en") {re.claims[propertyIds[i]].org = "location and context"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].org = "Standort und Umfeld"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].org = "localisation et contexte"};
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q11214" ||
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q164344") {
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "location and context"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Standort und Umfeld"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "localisation et contexte"};
+      }
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q20") {
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "print publication"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Druckpublikation"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "publication imprimée"};
       }
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
