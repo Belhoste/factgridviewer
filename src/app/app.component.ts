@@ -7,20 +7,18 @@ import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { CreateItemToDisplayService} from './services/create-item-to-display.service';
 import { AppAndDisplaySharedService} from './services/app-and-display-shared.service';
-import { CustomDatePipe } from './custom-date.pipe';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit
-, OnDestroy 
+export class AppComponent implements OnInit, OnDestroy 
 {
 
-langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, {name:'Italian',code:"it"}, {name:'Hungarian',code:"hu"}, {name:'Swedish',code:"se"}];
+  langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, {name:'Italian',code:"it"}, {name:'Hungarian',code:"hu"}, {name:'Swedish',code:"se"}];
 
-projects = [{name:'All', id:"all"},{name:'Illuminati',id:"Q31770"},{name:'Harmonia Universalis',id:"Q99677"},{name:'Formation of German student corporations',id:"Q28114"}];
+  projects = [{name:'All', id:"all"},{name:'Illuminati',id:"Q31770"},{name:'Harmonia Universalis',id:"Q99677"},{name:'Formation of German student corporations',id:"Q28114"}];
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
@@ -48,10 +46,12 @@ displayClickedItem: string;
 
   ngOnInit(): void {
 
+    if (localStorage['selectedProject'] === undefined) localStorage.setItem('selectedProject','all');
+    
     this.labels = this.searchInput.valueChanges
     .pipe(
     debounceTime(400),
-    switchMap(label => this.request.searchItem(label, this.selectedLang) ), 
+    switchMap(label => this.request.searchItem(label, this.selectedLang)), 
     map( res => this.createList(res)),
     //map(res => res == "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=&format=json"? 
    // "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : res ),
@@ -70,12 +70,9 @@ displayClickedItem: string;
     this.searchToken="on";
     this.changeDetector.detectChanges();
     })
-
   }
 
-
-
- onItemSelect(item){ 
+  onItemSelect(item){ 
   this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
   this.items = [];
   this.searchToken = "off";
@@ -92,8 +89,6 @@ displayClickedItem: string;
    );
    this.searchToken = "off";
     return this.sharedService.item
-  
-  
   };
 
   selectProject(project){
@@ -148,7 +143,6 @@ displayClickedItem: string;
      ngOnDestroy(): void {
        this.labels.unsubscribe()
        }
-
 }
 
                         

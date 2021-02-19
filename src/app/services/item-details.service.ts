@@ -63,6 +63,16 @@ export class ItemDetailsService {
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Druckpublikation"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "publication imprimée"};
       }
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q146602") {
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
+      }
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q37073") {
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
+      }
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
          re.claims[propertyIds[i]][j].mainsnak.label = items[k].label;

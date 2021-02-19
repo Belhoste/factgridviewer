@@ -57,6 +57,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   sociability:string;
   place:string;
   org:string;
+  activity:string;
   event:string;
   sources:string;
   other:string;
@@ -83,6 +84,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   careerAndActivities:any[];
   sociabilityAndCulture:any[];
   locationAndSituation:any[]; // for places
+  activityDetail:any[]; //for activities
   eventDetail:any[]; //for events
   printPublicationDetail:any[];//for print publications
   sourcesList:any[]; //for sources
@@ -370,13 +372,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.locationAndSituation.push(item[0].claims.P466); 
       }   
     
-      if (item[0].claims.P538 !==undefined){  //historical county
-        item[1].splice(item[1].indexOf("P538"),1);
-        this.locationAndSituation.push(item[0].claims.P538); 
-        }   
+    if (item[0].claims.P538 !==undefined){  //historical county
+      item[1].splice(item[1].indexOf("P538"),1);
+      this.locationAndSituation.push(item[0].claims.P538); 
+      }   
   
-
-
   //org
 
     this.locationAndContext = [];
@@ -384,19 +384,19 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (item[0].claims.P8 !==undefined){  //part of
     item[1].splice(item[1].indexOf("P8"),1);
     this.locationAndContext.push(item[0].claims.P8); 
-    }      
+    }
     if (item[0].claims.P83 !==undefined){
-      if(item[0].claims.P2 !=="Q7") {//place of home address
         item[1].splice(item[1].indexOf("P83"),1);
         this.locationAndContext.push(item[0].claims.P83); 
-      }  
-    } 
-    if (item[0].claims.P49 !==undefined){  //begin date
-      
+    }  
+    if (item[0].claims.P208 !==undefined){  //address  
+      item[1].splice(item[1].indexOf("P208"),1);
+      this.locationAndContext.push(item[0].claims.P208); 
+    }
+    if (item[0].claims.P49 !==undefined){  //begin date     
       item[1].splice(item[1].indexOf("P49"),1);
       this.locationAndContext.push(item[0].claims.P49); 
-    
-  }
+    }
     if (item[0].claims.P6 !==undefined){  //continuation of
       item[1].splice(item[1].indexOf("P6"),1);
       this.locationAndContext.push(item[0].claims.P6); 
@@ -441,6 +441,20 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P521"),1);
       this.locationAndContext.push(item[0].claims.P521); 
     }
+    if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
+      item[1].splice(item[1].indexOf("P320"),1);
+      this.locationAndContext.push(item[0].claims.P320); 
+    }
+
+  //activity
+
+  this.activityDetail = [];
+
+  if (item[0].claims.P267 !==undefined){  //organisational context     
+    item[1].splice(item[1].indexOf("P267"),1);
+    this.locationAndContext.push(item[0].claims.P267); 
+  }
+
 
   //event
 
@@ -503,13 +517,16 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
   //sources
-
     
     this.sourcesList =[];
     
     if (item[0].claims.P12 !==undefined){ //literature
       item[1].splice(item[1].indexOf("P12"),1);
       this.sourcesList.push(item[0].claims.P12);
+    }
+    if (item[0].claims.P51 !==undefined){ //primary source
+      item[1].splice(item[1].indexOf("P51"),1);
+      this.sourcesList.push(item[0].claims.P51);
     }
 
   //externalLinks
@@ -593,7 +610,13 @@ export class DisplayComponent implements OnInit, OnDestroy {
                   this.externalLinks.push(item[0].claims.P414) };
 
     this.mainList= [];
-    this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.eventDetail, this.printPublicationDetail);
+    
+    if (item[0].claims.P2 !==undefined){  // no definition of instance
+      item[1].splice(item[1].indexOf("P2"),1);
+      this.mainList.push(item[0].claims.P2) };
+
+
+    this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.printPublicationDetail);
     
     this.otherClaims = [];
       
