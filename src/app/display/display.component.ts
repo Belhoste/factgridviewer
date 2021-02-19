@@ -201,6 +201,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P77"),1);
       this.lifeAndFamily.push(this.item[0].claims.P77);
     }
+    if (item[0].claims.P37 !==undefined){ //date of baptism
+      item[1].splice(item[1].indexOf("P37"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P37);
+    }
     if (item[0].claims.P82 !==undefined){ //birthplace
       item[1].splice(item[1].indexOf("P82"),1);
       this.lifeAndFamily.push(this.item[0].claims.P82);

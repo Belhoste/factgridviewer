@@ -18,7 +18,8 @@ export class AppComponent implements OnInit, OnDestroy
 
   langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, {name:'Italian',code:"it"}, {name:'Hungarian',code:"hu"}, {name:'Swedish',code:"se"}];
 
-  projects = [{name:'All', id:"all"},{name:'Illuminati',id:"Q31770"},{name:'Harmonia Universalis',id:"Q99677"},{name:'Formation of German student corporations',id:"Q28114"}];
+  projects = [{name:'All', id:"all"},{name:'Illuminati',id:"Q31770"}, {name:'German student corporations', id:"Q28114"}, {name:'Harmonia Universalis',id:"Q99677"},
+           {name:'Prose Fiction', id:"Q195137"}, {name:'Research on the Schopenhauer Society', id:"Q219584"}, {name:'Religion im Herzogtum Gotha-Sachsen-Altenburg'}];
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
@@ -95,6 +96,7 @@ displayClickedItem: string;
       if (project === undefined) {this.selectedProject = "all"};
       if (project !== undefined) {this.selectedProject = project.id; };
       localStorage['selectedProject'] = this.selectedProject;
+      console.log(localStorage['selectedProject']);
        }
      
   langSetting(lang){
@@ -124,21 +126,40 @@ displayClickedItem: string;
     url = this.baseGetURL+list+this.getUrlSuffix;
     return url
     }
-  
-  filterProject(arr, project){        //to only get items of the selectedProject (=selectedItems)
-    let selectedItems = []
-      for (let i=0; i<arr.length; i++){
-       if (arr[i].claims.P131!==undefined){
-         let id = arr[i].claims.P131[0].mainsnak.datavalue.value.id;
-           if (project == "all") { selectedItems = arr };
-           if (project == id){
-            selectedItems.push(arr[i]);
+
+    filterProject(arr, project){        //to only get items of the selectedProject (=selectedItems)
+      let selectedItems = []
+        for (let i=0; i<arr.length; i++){
+         if (arr[i].claims.P131!==undefined){
+ 		   for (let j=0; j<arr[i].claims.P131.length;j++){
+            let id = arr[i].claims.P131[j].mainsnak.datavalue.value.id;
+  //             if (project == "all") { selectedItems = arr };
+               if (project == id){
+              selectedItems.push(arr[i]);
+            }
+          }
+          if (project == "all" ){ selectedItems = arr};
           }
         }
-        if (project == "all" ){ selectedItems = arr};
+         return selectedItems
       }
-       return selectedItems
-    }
+  
+ /*   filterProject(arr, project){        //to only get items of the selectedProject (=selectedItems)
+      let selectedItems = []
+        for (let i=0; i<arr.length; i++){
+         if (arr[i].claims.P131!==undefined){
+           let id = arr[i].claims.P131[0].mainsnak.datavalue.value.id;
+             if (project == "all") { selectedItems = arr };
+             if (project == id){
+              selectedItems.push(arr[i]);
+            }
+          }
+          if (project == "all" ){ selectedItems = arr};
+        }
+         return selectedItems
+      }
+      */
+
 
      ngOnDestroy(): void {
        this.labels.unsubscribe()
