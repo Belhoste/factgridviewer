@@ -39,9 +39,16 @@
         
       
       </mat-card-title-group>
-        <h3><a  href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a></h3>
-  
-        <div *ngIf="P2"  class="percent2">
+ <!---    <h3><a  href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a></h3>
+   --> 
+          <div *ngIf="id" class="percent2">
+          <span  class="property">FactGrid ID:&nbsp;&nbsp;</span>
+          <span class="percent3"><a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
+          </span>
+          </div> 
+          <div class="title2"></div>
+       
+         <div *ngIf="P2"  class="percent2">
          <span class="property">{{P2.label}}:&nbsp;</span><span *ngFor='let P of P2'>{{ P.mainsnak.label }},&nbsp;{{ P.mainsnak.description }}
          <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   
          </div>

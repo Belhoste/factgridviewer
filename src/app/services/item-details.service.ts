@@ -63,7 +63,8 @@ export class ItemDetailsService {
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Druckpublikation"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "publication imprimée"};
       }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q146602") {
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q146602" ||
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21909") {
         if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};

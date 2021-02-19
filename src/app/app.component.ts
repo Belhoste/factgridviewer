@@ -47,7 +47,7 @@ displayClickedItem: string;
 
   ngOnInit(): void {
 
-    if (localStorage['selectedProject'] === undefined) localStorage.setItem('selectedProject','all');
+    //if (localStorage['selectedProject'] === undefined) localStorage.setItem('selectedProject','all');
     
     this.labels = this.searchInput.valueChanges
     .pipe(
@@ -127,43 +127,26 @@ displayClickedItem: string;
     return url
     }
 
-    filterProject(arr, project){        //to only get items of the selectedProject (=selectedItems)
+    filterProject(items, project){        //to only get items of the selectedProject (=selectedItems)
       let selectedItems = []
-        for (let i=0; i<arr.length; i++){
-         if (arr[i].claims.P131!==undefined){
- 		   for (let j=0; j<arr[i].claims.P131.length;j++){
-            let id = arr[i].claims.P131[j].mainsnak.datavalue.value.id;
-  //             if (project == "all") { selectedItems = arr };
-               if (project == id){
-              selectedItems.push(arr[i]);
-            }
-          }
-          if (project == "all" ){ selectedItems = arr};
-          }
-        }
-         return selectedItems
-      }
-  
- /*   filterProject(arr, project){        //to only get items of the selectedProject (=selectedItems)
-      let selectedItems = []
-        for (let i=0; i<arr.length; i++){
-         if (arr[i].claims.P131!==undefined){
-           let id = arr[i].claims.P131[0].mainsnak.datavalue.value.id;
-             if (project == "all") { selectedItems = arr };
+        for (let i=0; i<items.length; i++){
+         if (items[i].claims.P131!==undefined){
+           for (let j=0; j<items[i].claims.P131.length; j++) {
+           let id = items[i].claims.P131[j].mainsnak.datavalue.value.id;
+  //           if (project == "all") { selectedItems = items };
              if (project == id){
-              selectedItems.push(arr[i]);
-            }
+              selectedItems.push(items[i]);
+               }
+             }
           }
-          if (project == "all" ){ selectedItems = arr};
+          if (project == "all" ){ selectedItems = items};
         }
          return selectedItems
       }
-      */
+      
 
 
      ngOnDestroy(): void {
        this.labels.unsubscribe()
        }
 }
-
-                        

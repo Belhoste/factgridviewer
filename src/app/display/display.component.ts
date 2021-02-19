@@ -449,6 +449,18 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P320"),1);
       this.locationAndContext.push(item[0].claims.P320); 
     }
+    if (item[0].claims.P342 !==undefined){  //worshipful master (masonic lodge)   
+      item[1].splice(item[1].indexOf("P342"),1);
+      this.locationAndContext.push(item[0].claims.P342); 
+    }
+    if (item[0].claims.P319 !==undefined){  //organisational roof  
+      item[1].splice(item[1].indexOf("P319"),1);
+      this.locationAndContext.push(item[0].claims.P319); 
+    }
+    if (item[0].claims.P430 !==undefined){  //grand lodge (masonic lodge)   
+      item[1].splice(item[1].indexOf("P430"),1);
+      this.locationAndContext.push(item[0].claims.P430); 
+    }
 
   //activity
 
@@ -532,6 +544,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P51"),1);
       this.sourcesList.push(item[0].claims.P51);
     }
+    if (item[0].claims.P185 !==undefined){ //archives at
+      item[1].splice(item[1].indexOf("P185"),1);
+      this.sourcesList.push(item[0].claims.P185);
+    }
+    
 
   //externalLinks
 
@@ -605,7 +622,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
     if (item[0].claims.P374 !==undefined){ // id Geni.com
       item[1].splice(item[1].indexOf("P374"),1);
-      item[0].claims.P374.url = 'https://www.geni.com/profile/index/'+item[0].claims.P533[0].mainsnak.datavalue.value
+      item[0].claims.P374.url = 'https://www.geni.com/profile/index/'+item[0].claims.P374[0].mainsnak.datavalue.value
                   this.externalLinks.push(item[0].claims.P374) };
 
     if (item[0].claims.P414 !==undefined){  // INSEE municipality code
