@@ -449,6 +449,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P320"),1);
       this.locationAndContext.push(item[0].claims.P320); 
     }
+    if (item[0].claims.P338 !==undefined){  //founding members     
+      item[1].splice(item[1].indexOf("P338"),1);
+      this.locationAndContext.push(item[0].claims.P338); 
+    }
     if (item[0].claims.P342 !==undefined){  //worshipful master (masonic lodge)   
       item[1].splice(item[1].indexOf("P342"),1);
       this.locationAndContext.push(item[0].claims.P342); 
@@ -632,10 +636,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
     this.mainList= [];
     
-    if (item[0].claims.P2 !==undefined){  // no definition of instance
-      item[1].splice(item[1].indexOf("P2"),1);
+    if (item[0].claims.P2 ===undefined){  // no definition of instance
+  //    item[1].splice(item[1].indexOf("P2"),1);
       this.mainList.push(item[0].claims.P2) };
-
 
     this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.printPublicationDetail);
     
@@ -645,6 +648,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
         let P:string = this.item[1][i];
         this.otherClaims.push(item[0].claims[P]); 
       }
+
+    console.log(this.otherClaims);
+    console.log(this.item[1]);
 
     this.wikis = [];
     
