@@ -86,11 +86,32 @@ mat-card img{
 .details2 {
   padding: 0px;
   margin: 0px;
+  text-overflow: ellipsis;
+  word-break: normal;
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20px;
+}
+
+.break-word-container {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 .details > label {
   overflow-wrap: break-word;
   padding:0px;
+}
+
+.details3 {
+  word-break: normal;
+  text-overflow: ellipsis;
 }
 
 .center {

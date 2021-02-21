@@ -64,15 +64,16 @@ export class ItemDetailsService {
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "publication imprimée"};
       }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q146602" ||
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21909") {
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21909" ||
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q37073") {
         if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
       }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q37073") {
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q10671") {
+        if ( lang === "en") {re.claims[propertyIds[i]].main = "document"}
+        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Dokument"}
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "document"};
       }
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
