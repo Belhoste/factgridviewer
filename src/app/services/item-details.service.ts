@@ -128,8 +128,9 @@ export class ItemDetailsService {
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.description = qualifiersArray[k][0].datavalue.value.description;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.aliases = qualifiersArray[k][0].datavalue.value.aliases; 
                     if (qualifiersArray[k][0].datatype === "string"){
-                      re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value };          
-                  }
+                      re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value };    
+                    re.claims[propertyIds[i]][j].qualifiers2[k].value.amount = qualifiersArray[k][0].datavalue.value.amount };                    
+                    console.log(re.claims[propertyIds[i]][j].qualifiers2[k].value.amount);
               }
             }
           }
