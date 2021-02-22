@@ -18,12 +18,12 @@ export class AppComponent implements OnInit, OnDestroy
 
   langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, {name:'Italian',code:"it"}, {name:'Hungarian',code:"hu"}, {name:'Swedish',code:"se"}];
 
-  projects = [{name:'All', id:"all"},{name:'Illuminati',id:"Q31770"}, {name:'German student corporations', id:"Q28114"}, {name:'Harmonia Universalis',id:"Q99677"},
-           {name:'Prose Fiction', id:"Q195137"}, {name:'Research on the Schopenhauer Society', id:"Q219584"}, {name:'Religion im Herzogtum Gotha-Sachsen-Altenburg'}];
+  researchFields = [{name:'all', id:"all"},{name:'Illuminati',id:"Q10677"}, {name:'student corporations', id:"Q28115"}, {name:'animal magnetism',id:"Q172203"}, {name:'freemasonry', id:"Q10678"},
+                     {name:'prose fiction', id:"Q195135"}];
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
-  selectedProject: string = localStorage['selectedProject'];
+  selectedResearchField: string = localStorage['selectedResearchField'];
 
   title = 'factgrid';
   searchInput = new FormControl();
@@ -67,7 +67,9 @@ displayClickedItem: string;
    )
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.selectedLang);
-    this.items = this.filterProject(this.items, this.selectedProject);  
+    this.items = this.filterResearchField(this.items, this.selectedResearchField);  
+    console.log(this.selectedResearchField);
+    console.log(this.items);
     this.searchToken="on";
     this.changeDetector.detectChanges();
     })
@@ -92,11 +94,11 @@ displayClickedItem: string;
     return this.sharedService.item
   };
 
-  selectProject(project){
-      if (project === undefined) {this.selectedProject = "all"};
-      if (project !== undefined) {this.selectedProject = project.id; };
-      localStorage['selectedProject'] = this.selectedProject;
-      console.log(localStorage['selectedProject']);
+  researchFieldSelect(researchField){
+      if (researchField === undefined) {this.selectedResearchField = "all"};
+      if (researchField !== undefined) {this.selectedResearchField = researchField.id; };
+      localStorage['selectedResearchField'] = this.selectedResearchField;
+      console.log(localStorage['selectedResearchField']);
        }
      
   langSetting(lang){
@@ -127,19 +129,19 @@ displayClickedItem: string;
     return url
     }
 
-    filterProject(items, project){        //to only get items of the selectedProject (=selectedItems)
+    filterResearchField(items, researchField){        //to only get items of the selectedResearchField (=selectedItems)
       let selectedItems = []
         for (let i=0; i<items.length; i++){
-         if (items[i].claims.P131!==undefined){
-           for (let j=0; j<items[i].claims.P131.length; j++) {
-           let id = items[i].claims.P131[j].mainsnak.datavalue.value.id;
+         if (items[i].claims.P97!==undefined){
+           for (let j=0; j<items[i].claims.P97.length; j++) {
+           let id = items[i].claims.P97[j].mainsnak.datavalue.value.id;
   //           if (project == "all") { selectedItems = items };
-             if (project == id){
+             if (researchField == id){
               selectedItems.push(items[i]);
                }
              }
           }
-          if (project == "all" ){ selectedItems = items};
+          if (researchField == "all" ){ selectedItems = items};
         }
          return selectedItems
       }

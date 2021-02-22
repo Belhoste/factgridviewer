@@ -20,12 +20,12 @@
     
             </mat-menu>
             
-      <button mat-icon-button [matMenuTriggerFor]="menuProject" aria-label="Example icon-button with a menu">
+      <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Example icon-button with a menu">
          <mat-icon>settings</mat-icon>
             </button>
-         <mat-menu #menuProject="matMenu">
-            <button (click)="selectProject(project)" *ngFor = "let project of projects" mat-menu-item>
-               <span>{{project.name}}</span><mat-icon *ngIf="selectedProject===project.id">done</mat-icon>
+         <mat-menu #menuResearchField="matMenu">
+            <button (click)="researchFieldSelect(researchField)" *ngFor = "let researchField of researchFields" mat-menu-item>
+               <span>{{researchField.name}}</span><mat-icon *ngIf="selectedResearchField===researchField.id">done</mat-icon>
             </button>
         </mat-menu>
     </mat-toolbar>
@@ -37,7 +37,7 @@
         &nbsp;&nbsp;&nbsp;
       </span>
       <mat-form-field color=black>
-          <mat-label>Select a project and enter an item</mat-label>
+          <mat-label>Select a field of research and enter an item</mat-label>
             <input matInput placeholder="Ex. Item" value="Goethe" [formControl] = "searchInput">
       </mat-form-field>
     

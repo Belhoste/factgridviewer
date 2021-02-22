@@ -79,6 +79,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   wikidatawiki:any;
   wikis:any[];
 
+  wikiCommons:string;
+
   lifeAndFamily:any[];//for persons
   education:any[];
   careerAndActivities:any[];
@@ -120,6 +122,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   this.subscription = this.sharedService.item.subscribe(item=>{
   if (item !==undefined){
     console.log(item);
+ //   this.wikiCommons = item[0].claims.P189[0].mainsnak.datatype
     this.human = item[0].claims.P2.human;
     this.training = item[0].claims.P2.training;
     this.career = item[0].claims.P2.career;
@@ -224,6 +227,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (item[0].claims.P168 !==undefined){ //deathplace
       item[1].splice(item[1].indexOf("P168"),1);
       this.lifeAndFamily.push(this.item[0].claims.P168);
+    }
+    if (item[0].claims.P162 !==undefined){ //cause of death
+      item[1].splice(item[1].indexOf("P162"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P162);
     }
     if (item[0].claims.P40 !==undefined){ //burialdate
       item[1].splice(item[1].indexOf("P40"),1);
@@ -441,6 +448,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P137"),1);
       this.locationAndContext.push(item[0].claims.P137); 
     }
+    if (item[0].claims.P34 !==undefined){  //name history
+      item[1].splice(item[1].indexOf("P34"),1);
+      this.locationAndContext.push(item[0].claims.P34); 
+    }
     if (item[0].claims.P521 !==undefined){  //system adhered to
       item[1].splice(item[1].indexOf("P521"),1);
       this.locationAndContext.push(item[0].claims.P521); 
@@ -497,9 +508,46 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.eventDetail.push(item[0].claims.P133); 
   }
 
-//print publication
+//print publication or document
    
    this.printPublicationDetail = [];
+
+  if (item[0].claims.P21 !==undefined){ //author
+    item[1].splice(item[1].indexOf("P21"),1);
+    this.printPublicationDetail.push(item[0].claims.P21);
+  }
+  if (item[0].claims.P11 !==undefined){ //titlel
+    item[1].splice(item[1].indexOf("P11"),1);
+    this.printPublicationDetail.push(item[0].claims.P11);
+  }
+  if (item[0].claims.P39 !==undefined){ //begin of composition
+    item[1].splice(item[1].indexOf("P39"),1);
+    this.printPublicationDetail.push(item[0].claims.P39);
+  }
+  if (item[0].claims.P15 !==undefined){ //media type
+    item[1].splice(item[1].indexOf("P15"),1);
+    this.printPublicationDetail.push(item[0].claims.P15);
+  }
+  if (item[0].claims.P121 !==undefined){ //type of work (standardised)
+    item[1].splice(item[1].indexOf("P121"),1);
+    this.printPublicationDetail.push(item[0].claims.P121);
+  }
+  if (item[0].claims.P107 !==undefined){ //number of pages/ leafs/ sheets
+    item[1].splice(item[1].indexOf("P107"),1);
+    this.printPublicationDetail.push(item[0].claims.P107);
+  }
+  if (item[0].claims.P93 !==undefined){ //format
+    item[1].splice(item[1].indexOf("P93"),1);
+    this.printPublicationDetail.push(item[0].claims.P93);
+  }
+  if (item[0].claims.P95 !==undefined){ //place of origin
+    item[1].splice(item[1].indexOf("P95"),1);
+    this.printPublicationDetail.push(item[0].claims.P95);
+  }
+  if (item[0].claims.P28 !==undefined){ //recipient
+    item[1].splice(item[1].indexOf("P28"),1);
+    this.printPublicationDetail.push(item[0].claims.P28);
+  }
 
    if (item[0].claims.P144 !==undefined){ //literature
     item[1].splice(item[1].indexOf("P144"),1);
@@ -535,6 +583,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P329"),1);
     this.printPublicationDetail.push(item[0].claims.P329);
   }
+
+  //document
+  
 
   //sources
     

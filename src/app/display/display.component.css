@@ -38,6 +38,10 @@ mat-card img{
   height: 100%;
 }
 
+#c1{
+  float:right;
+}​
+
 #map {
   height: 100%;
 }
@@ -88,13 +92,6 @@ mat-card img{
   margin: 0px;
   text-overflow: ellipsis;
   word-break: normal;
-}
-
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 20px;
 }
 
 .break-word-container {

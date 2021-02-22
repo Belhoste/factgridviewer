@@ -27,20 +27,29 @@
              {{ description }}
           </p>
         </mat-card-subtitle>
-    
+  <!--        <div fxLayout="column" *ngIf="P2">
+            <figure>
+              <img mat-card-image 
+            fxFlex="66%"
+            *ngIf="picture" src={{picture}}>
+            </figure>
+             <figcaption class="referenceProperty">
+            <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wikiCommons</em></figcaption>
+            <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;wikiCommons</em></label>
+            </div>
+            --->
           <img mat-card-image 
-          fxFlex="100%" 
-          fxFlex.xs="30%"
-          fxFlex.sm="30%" 
-          fxFlex.md="30%"
-          fxFlex.lg="20%"
-          fxFlex.xl="20%"
-          *ngIf="picture" src={{picture}}>
-        
-      
+            fxFlex="100%" 
+            fxFlex.xs="30%"
+            fxFlex.sm="30%" 
+            fxFlex.md="30%"
+            fxFlex.lg="20%"
+            fxFlex.xl="17%"
+            *ngIf="picture" src={{picture}}>            
+       
+    
       </mat-card-title-group>
- <!---    <h3><a  href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a></h3>
-   --> 
+  
           <div *ngIf="id" class="percent2">
           <span  class="property">FactGrid ID:&nbsp;&nbsp;</span>
           <span class="percent3"><a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
@@ -111,9 +120,10 @@
               <label class="property"><strong>{{P.label}}:</strong></label>
             </div>
             <div class="details" *ngFor="let M of P">    
-              <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+              <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>  
+              <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label>         
               <label *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value}}</label>
-              <label *ngIf="M.mainsnak.datatype === 'url'">
+              <label  class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
                 <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
               <label>{{M.mainsnak.datavalue.value.amount}}</label>
               <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
@@ -152,8 +162,9 @@
           </div>
           <div class="details" *ngFor="let M of P">    
             <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
             <label *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
-            <label *ngIf="M.mainsnak.datatype === 'url'">
+            <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
               <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
             <label>{{M.mainsnak.datavalue.value.amount}}</label>
             <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
@@ -192,8 +203,9 @@
           </div>
           <div class="details" *ngFor="let M of P">    
             <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
             <label *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
-            <label *ngIf="M.mainsnak.datatype === 'url'">
+            <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
               <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
             <label>{{M.mainsnak.datavalue.value.amount}}</label>
             <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
@@ -232,8 +244,9 @@
           </div>
           <div class="details" *ngFor="let M of P">    
             <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
             <label *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
-            <label *ngIf="M.mainsnak.datatype === 'url'">
+            <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
               <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
             <label>{{M.mainsnak.datavalue.value.amount}}</label>
             <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
@@ -272,8 +285,9 @@
              </div>
              <div class="details" *ngFor="let M of P">    
                <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+               <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
                <label *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
-               <label *ngIf="M.mainsnak.datatype === 'url'">
+               <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
                 <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
                <label>{{M.mainsnak.datavalue.value.amount}}</label>
                <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
@@ -314,7 +328,7 @@
               <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
               <label *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
               <label>{{M.mainsnak.datavalue.value.amount}}</label>
-              
+              <label *ngIf="M.mainsnak.datavalue.value.text">{{M.mainsnak.datavalue.value.text}}</label> 
               <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
               <label *ngIf="M.mainsnak">{{M.mainsnak.label}}
                 <span *ngIf="M.mainsnak.datatype ==='string'">{{M.mainsnak.datavalue.value}}</span>

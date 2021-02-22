@@ -60,7 +60,7 @@ item2(res,lang) {//create an array of items with id, label and description in th
    else if (propertiesLang[0] === undefined && res[i].descriptions.en !== undefined && res[i].aliases.en !==undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, aliases: aliases })}	 
    else if (propertiesLang[0] === undefined && res[i].descriptions.en ===undefined && res[i].aliases.en !==undefined) {arr.push({ id: res[i].id, label: res[i].labels.en.value, aliases: aliases })}
    else if (propertiesLang[0] === undefined && res[i].descriptions.en !== undefined && res[i].aliases.en ===undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value })}	 
-  }
+   };
   return arr
  }
 
