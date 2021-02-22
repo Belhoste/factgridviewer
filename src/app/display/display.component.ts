@@ -199,6 +199,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P363"),1);
       this.lifeAndFamily.push(this.item[0].claims.P363);
     }
+    if (item[0].claims.P530 !==undefined){ //Name with the Asiatic Brethren
+      item[1].splice(item[1].indexOf("P530"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P530);
+    }
+    if (item[0].claims.P354 !==undefined){ //Rosicrucian code name
+      item[1].splice(item[1].indexOf("P354"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P354);
+    }
 
     if (item[0].claims.P77 !==undefined){ //birthday
       item[1].splice(item[1].indexOf("P77"),1);
@@ -516,7 +524,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P21"),1);
     this.printPublicationDetail.push(item[0].claims.P21);
   }
-  if (item[0].claims.P11 !==undefined){ //titlel
+  if (item[0].claims.P20 !==undefined){ //author as (misleadingly) stated
+    item[1].splice(item[1].indexOf("P20"),1);
+    this.printPublicationDetail.push(item[0].claims.P20);
+  }
+  if (item[0].claims.P11 !==undefined){ //title
     item[1].splice(item[1].indexOf("P11"),1);
     this.printPublicationDetail.push(item[0].claims.P11);
   }
@@ -548,7 +560,18 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P28"),1);
     this.printPublicationDetail.push(item[0].claims.P28);
   }
-
+  if (item[0].claims.P33 !==undefined){ //persons mentioned
+    item[1].splice(item[1].indexOf("P33"),1);
+    this.printPublicationDetail.push(item[0].claims.P33);
+  }
+  if (item[0].claims.P306 !==undefined){ //quoting
+    item[1].splice(item[1].indexOf("P306"),1);
+    this.printPublicationDetail.push(item[0].claims.P306);
+  }
+  if (item[0].claims.P72 !==undefined){ // digest in German
+    item[1].splice(item[1].indexOf("P72"),1);
+    this.printPublicationDetail.push(item[0].claims.P72);
+  }
    if (item[0].claims.P144 !==undefined){ //literature
     item[1].splice(item[1].indexOf("P144"),1);
     this.printPublicationDetail.push(item[0].claims.P144);
@@ -568,21 +591,48 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P240"),1);
     this.printPublicationDetail.push(item[0].claims.P240);
   }
-
   if (item[0].claims.P122 !==undefined){ //wider field of genres
     item[1].splice(item[1].indexOf("P122"),1);
     this.printPublicationDetail.push(item[0].claims.P122);
   }
-
   if (item[0].claims.P18 !==undefined){ //language
     item[1].splice(item[1].indexOf("P18"),1);
     this.printPublicationDetail.push(item[0].claims.P18);
   }
-
+  if (item[0].claims.P126 !==undefined){ //owner
+    item[1].splice(item[1].indexOf("P126"),1);
+    this.printPublicationDetail.push(item[0].claims.P126);
+  }
   if (item[0].claims.P329 !==undefined){ //holding institution
     item[1].splice(item[1].indexOf("P329"),1);
     this.printPublicationDetail.push(item[0].claims.P329);
   }
+  if (item[0].claims.P323 !==undefined){ //next higher archival level
+    item[1].splice(item[1].indexOf("P323"),1);
+    this.printPublicationDetail.push(item[0].claims.P323);
+  }
+  if (item[0].claims.P125 !==undefined){ //document accessibility
+    item[1].splice(item[1].indexOf("P125"),1);
+    this.printPublicationDetail.push(item[0].claims.P125);
+  }
+  if (item[0].claims.P136 !==undefined){ //history of provenance
+    item[1].splice(item[1].indexOf("P136"),1);
+    this.printPublicationDetail.push(item[0].claims.P136);
+  }
+  if (item[0].claims.P64 !==undefined){ //published in
+    item[1].splice(item[1].indexOf("P64"),1);
+    this.printPublicationDetail.push(item[0].claims.P64);
+  }
+  if (item[0].claims.P138 !==undefined){ //online digitalisation
+    item[1].splice(item[1].indexOf("P138"),1);
+    this.printPublicationDetail.push(item[0].claims.P138);
+  }
+  if (item[0].claims.P251 !==undefined){ //FactGrid transcript
+    item[1].splice(item[1].indexOf("P251"),1);
+    this.printPublicationDetail.push(item[0].claims.P251);
+  }
+
+
 
   //document
   
