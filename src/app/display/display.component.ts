@@ -528,9 +528,17 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P20"),1);
     this.printPublicationDetail.push(item[0].claims.P20);
   }
+  if (item[0].claims.P25 !==undefined){ //handwritten by
+    item[1].splice(item[1].indexOf("P25"),1);
+    this.printPublicationDetail.push(item[0].claims.P25);
+  }
   if (item[0].claims.P11 !==undefined){ //title
     item[1].splice(item[1].indexOf("P11"),1);
     this.printPublicationDetail.push(item[0].claims.P11);
+  }
+  if (item[0].claims.P5 !==undefined){ //title page transcript
+    item[1].splice(item[1].indexOf("P5"),1);
+    this.printPublicationDetail.push(item[0].claims.P5);
   }
   if (item[0].claims.P39 !==undefined){ //begin of composition
     item[1].splice(item[1].indexOf("P39"),1);
@@ -575,6 +583,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
    if (item[0].claims.P144 !==undefined){ //literature
     item[1].splice(item[1].indexOf("P144"),1);
     this.printPublicationDetail.push(item[0].claims.P144);
+  }
+
+  if (item[0].claims.P115 !==undefined){ //originality of the item
+    item[1].splice(item[1].indexOf("P115"),1);
+    this.printPublicationDetail.push(item[0].claims.P115);
   }
 
   if (item[0].claims.P222 !==undefined){ //date of publication according to imprint
@@ -622,6 +635,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
   if (item[0].claims.P64 !==undefined){ //published in
     item[1].splice(item[1].indexOf("P64"),1);
     this.printPublicationDetail.push(item[0].claims.P64);
+  }
+  if (item[0].claims.P124 !==undefined){ //published in
+    item[1].splice(item[1].indexOf("P124"),1);
+    this.printPublicationDetail.push(item[0].claims.P124);
   }
   if (item[0].claims.P138 !==undefined){ //online digitalisation
     item[1].splice(item[1].indexOf("P138"),1);
