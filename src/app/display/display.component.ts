@@ -28,6 +28,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   subscription:Subscription
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
+  selectedItems: any[];
+
   private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
   private getUrlSuffix= '&format=json' ; 
 
@@ -149,9 +151,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
     
     if (item[0].claims.P48 !== undefined) {
     this.coords = item[0].claims.P48[0].mainsnak;
-    console.log(this.coords); }
+    }
     
-
+    this.selectedItems = JSON.parse(sessionStorage.getItem('selectedItems'));
+    
     //header
 
     this.P2 = item[0].claims.P2;

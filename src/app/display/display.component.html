@@ -10,8 +10,16 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
-  
   <div>
+      <mat-card class= mat-elevation-z8 style="padding-left:2px;padding-right:2px">
+        <div fxFlex.gt-sm="100%" fxFlex  fxLayout="row wrap">
+        <mat-list  *ngFor="let selectedItem of selectedItems">
+          <span mat-list-item >
+              <button mat-raised-button class="button" color="accent" (click)="onClick(selectedItem)">{{selectedItem.label}}</button>
+          </span>
+        </mat-list>
+      </div>
+      </mat-card>
     <mat-card  class= mat-elevation-z8>
       <div fxFlex.gt-sm="100%" fxFlex>
   
@@ -351,7 +359,7 @@
   
      </div>
   
-      <div fxFlex="20%" class="right">
+      <div fxFlex="20%">
         <mat-card class= mat-elevation-z8>
           <div class="title">
           <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
@@ -376,6 +384,7 @@
         </mat-card>
       </div> 
     </div>  
+ 
     
   
   </body>

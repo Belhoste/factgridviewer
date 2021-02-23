@@ -166,12 +166,23 @@ ul.inline {
   width: 100%
 }
 
+button{
+  font-size:10px;
+  height: auto;
+  width:130px;
+  line-height: 16px !important;
+  padding: 2px 2px 2px 10px !important;
+  margin-right:4px;
+   }
+
 /* .mat-icon {
     vertical-align: middle;
    }
 
-*button{
- white-space: pre-wrap ;
+button{
+ font-size:8px;
+ height auto;
+ width:100%
   }
 
 mat-card{

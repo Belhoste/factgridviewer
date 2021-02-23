@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, tap, filter, takeWhile, mergeMap, exhaustMap, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { Observable, pipe, from, of } from 'rxjs';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders, JsonpClientBackend} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { CreateItemToDisplayService} from './services/create-item-to-display.service';
@@ -18,10 +18,13 @@ export class AppComponent implements OnInit, OnDestroy
 
   langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, {name:'Italian',code:"it"}, {name:'Hungarian',code:"hu"}, {name:'Swedish',code:"se"}];
 
-  researchFields = [{name:'all', id:"all"},{name:'Illuminati',id:"Q10677"}, {name:'student corporations', id:"Q28115"}, {name:'animal magnetism',id:"Q172203"}, {name:'freemasonry', id:"Q10678"},
+  researchFields:any[] = [{name:'all', id:"all"},{name:'Illuminati',id:"Q10677"}, {name:'student corporations', id:"Q28115"}, {name:'animal magnetism',id:"Q172203"}, {name:'freemasonry', id:"Q10678"},
                      {name:'prose fiction', id:"Q195135"}];
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
+
+  selectedItems:any[] = [];
+
 
   selectedResearchField: string = localStorage['selectedResearchField'];
 
@@ -46,8 +49,6 @@ displayClickedItem: string;
     private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService) {}
 
   ngOnInit(): void {
-
-    //if (localStorage['selectedProject'] === undefined) localStorage.setItem('selectedProject','all');
     
     this.labels = this.searchInput.valueChanges
     .pipe(
@@ -68,8 +69,6 @@ displayClickedItem: string;
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.selectedLang);
     this.items = this.filterResearchField(this.items, this.selectedResearchField);  
-    console.log(this.selectedResearchField);
-    console.log(this.items);
     this.searchToken="on";
     this.changeDetector.detectChanges();
     })
@@ -77,6 +76,11 @@ displayClickedItem: string;
 
   onItemSelect(item){ 
   this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
+  this.sharedService.item.subscribe(re=>{
+    let u = { value: {id: re[0].id}, label: re[0].label }
+    this.selectedItems.push(u);
+    sessionStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+    });
   this.items = [];
   this.searchToken = "off";
   this.changeDetector.detectChanges();
@@ -88,9 +92,13 @@ displayClickedItem: string;
     this.changeDetector.detectChanges();
     this.sharedService.item=this.request.getItem(this.baseGetURL+item+this.getUrlSuffix).pipe(
     map(res => res=Object.values(res.entities)),
-    switchMap(res =>this.sharedService.item= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
-   );
-   this.searchToken = "off";
+    switchMap(res =>this.sharedService.item= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang)));
+    this.sharedService.item.subscribe(re=>{
+      let u = { value: {id: re[0].id}, label: re[0].label }
+      this.selectedItems.push(u);
+      sessionStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+      });
+    this.searchToken = "off";
     return this.sharedService.item
   };
 
@@ -98,7 +106,6 @@ displayClickedItem: string;
       if (researchField === undefined) {this.selectedResearchField = "all"};
       if (researchField !== undefined) {this.selectedResearchField = researchField.id; };
       localStorage['selectedResearchField'] = this.selectedResearchField;
-      console.log(localStorage['selectedResearchField']);
        }
      
   langSetting(lang){
