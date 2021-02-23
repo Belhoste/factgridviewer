@@ -28,6 +28,7 @@ import localeDe from '@angular/common/locales/de';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
+import { MapComponent } from './display/map/map.component';
 
 
 //import { Display2Component } from './display2/display2.component';
@@ -43,6 +44,7 @@ import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
     CommaJoinPipe,
     CustomDatePipe,
     ChangeUndefinedItemPipe,
+    MapComponent,
   //  Display2Component
   ],
   imports: [

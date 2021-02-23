@@ -43,8 +43,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   claims: any[];
   picture:string;
   
-  
-  London:any;
+  coords:any;
 
   item:any[];
   itemContent:any;
@@ -61,6 +60,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   event:string;
   sources:string;
   other:string;
+  
 
   main:string;
 
@@ -147,7 +147,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
       }
     }
     
-
+    if (item[0].claims.P48 !== undefined) {
+    this.coords = item[0].claims.P48[0].mainsnak;
+    console.log(this.coords); }
+    
 
     //header
 
@@ -194,6 +197,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (item[0].claims.P140 !==undefined){ //Illuminati code name
       item[1].splice(item[1].indexOf("P140"),1);
       this.lifeAndFamily.push(this.item[0].claims.P140);
+    }
+    if (item[0].claims.P139 !==undefined){ //Illuminati code name of
+      item[1].splice(item[1].indexOf("P139"),1);
+      this.lifeAndFamily.push(this.item[0].claims.P139);
     }
     if (item[0].claims.P363 !==undefined){ //Strict Observance code name
       item[1].splice(item[1].indexOf("P363"),1);
@@ -394,7 +401,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (item[0].claims.P538 !==undefined){  //historical county
       item[1].splice(item[1].indexOf("P538"),1);
       this.locationAndSituation.push(item[0].claims.P538); 
-      }   
+      } 
+    
+      if (item[0].claims.P461 !==undefined){  //named after
+      item[1].splice(item[1].indexOf("P461"),1);
+        this.locationAndSituation.push(item[0].claims.P461); 
+      }  
   
   //org
 
@@ -432,6 +444,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P449"),1);
       this.locationAndContext.push(item[0].claims.P449); 
     }
+    if (item[0].claims.P428 !==undefined){  //next higher hierarchy level
+      item[1].splice(item[1].indexOf("P428"),1);
+      this.locationAndContext.push(item[0].claims.P428); 
+    }
+    
     if (item[0].claims.P14 !==undefined){  //in leading positions
       item[1].splice(item[1].indexOf("P14"),1);
       this.locationAndContext.push(item[0].claims.P14); 
@@ -628,6 +645,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P125"),1);
     this.printPublicationDetail.push(item[0].claims.P125);
   }
+  if (item[0].claims.P229 !==undefined){ //provenance
+    item[1].splice(item[1].indexOf("P229"),1);
+    this.printPublicationDetail.push(item[0].claims.P229);
+  }
   if (item[0].claims.P136 !==undefined){ //history of provenance
     item[1].splice(item[1].indexOf("P136"),1);
     this.printPublicationDetail.push(item[0].claims.P136);
@@ -648,6 +669,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P251"),1);
     this.printPublicationDetail.push(item[0].claims.P251);
   }
+  if (item[0].claims.P226 !==undefined){ //FactGrid transcript
+    item[1].splice(item[1].indexOf("P226"),1);
+    this.printPublicationDetail.push(item[0].claims.P226);
+  }
+  
 
 
 
@@ -665,6 +691,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (item[0].claims.P51 !==undefined){ //primary source
       item[1].splice(item[1].indexOf("P51"),1);
       this.sourcesList.push(item[0].claims.P51);
+    }
+    if (item[0].claims.P143 !==undefined){ //mentioned in
+      item[1].splice(item[1].indexOf("P143"),1);
+      this.sourcesList.push(item[0].claims.P143);
     }
     if (item[0].claims.P185 !==undefined){ //archives at
       item[1].splice(item[1].indexOf("P185"),1);

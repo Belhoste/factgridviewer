@@ -160,6 +160,12 @@ ul.inline {
    position: absolute;
 }
 
+#leaflet-map {
+  flex: 5;
+  height: 100%;
+  width: 100%
+}
+
 /* .mat-icon {
     vertical-align: middle;
    }

@@ -97,14 +97,6 @@
         <mat-card  class= mat-elevation-z8>
           <div>   
           <mat-card-subtitle class="percent3" *ngIf='"main"!==undefined'>{{main}}</mat-card-subtitle>      
-<!--          <mat-divider color="primary"></mat-divider>  
-          <div class="map-container" *ngIf="item[0].claims.P48 !==undefined">
-            <div class="map-frame">
-              <div id="map">
-            </div>
-          </div>
-          </div>
--->
           <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
             <div fxFlex="50%" fxFlex.sm="100%" 
               fxFlex.xs="100%" 
@@ -113,7 +105,8 @@
               fxLayout.md="column"
               fxLayout.sm="column" 
               fxLayout.xs="column">
-            </div>
+          </div> 
+            <app-map *ngIf="coords" id="leaflet-map" [coords]="coords.datavalue.value"></app-map>
             <div *ngFor="let P of mainList">
             <div flex-shrink flex-basis="auto">
             <div class="title">
