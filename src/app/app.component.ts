@@ -49,6 +49,14 @@ displayClickedItem: string;
     private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService) {}
 
   ngOnInit(): void {
+
+    if (localStorage['selectedItems']===undefined){ 
+      localStorage.setItem("selectedItems", JSON.stringify([{ value: {id: "Q152233"}, label:"FactGrid" }]));
+    }
+
+    if (localStorage['selectedResearchField']===undefined){ 
+      localStorage.setItem("selectedReseardField", "all");
+    }
     
     this.labels = this.searchInput.valueChanges
     .pipe(

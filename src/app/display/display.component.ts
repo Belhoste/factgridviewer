@@ -154,7 +154,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     }
     
     this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
-    console.log(this.selectedItems);
+   
     //header
 
     this.P2 = item[0].claims.P2;
