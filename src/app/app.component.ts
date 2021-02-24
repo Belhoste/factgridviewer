@@ -78,8 +78,21 @@ displayClickedItem: string;
   this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
   this.sharedService.item.subscribe(re=>{
     let u = { value: {id: re[0].id}, label: re[0].label }
-    this.selectedItems.push(u);
-    sessionStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+    this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
+    if (this.selectedItems !== undefined){
+      for (let i=0; i<this.selectedItems.length; i++){
+        if (this.selectedItems[i] !== null) {
+         if (this.selectedItems[i].value.id === u.value.id){
+         this.selectedItems.splice(i,1);
+         break
+         }
+        }
+      }
+    }
+    this.selectedItems.unshift(u);
+    if (this.selectedItems.length=51) {
+       this.selectedItems.pop()};
+    localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
     });
   this.items = [];
   this.searchToken = "off";
@@ -95,8 +108,21 @@ displayClickedItem: string;
     switchMap(res =>this.sharedService.item= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang)));
     this.sharedService.item.subscribe(re=>{
       let u = { value: {id: re[0].id}, label: re[0].label }
-      this.selectedItems.push(u);
-      sessionStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+      this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
+      if (this.selectedItems !== undefined){
+        for (let i=0; i<this.selectedItems.length; i++){
+          if (this.selectedItems[i] !== null) {
+           if (this.selectedItems[i].value.id === u.value.id){
+           this.selectedItems.splice(i,1);
+           break
+           }
+          }
+        }
+      }
+      this.selectedItems.unshift(u);
+      if (this.selectedItems.length=51) {
+         this.selectedItems.pop()};
+      localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
       });
     this.searchToken = "off";
     return this.sharedService.item
@@ -152,8 +178,21 @@ displayClickedItem: string;
         }
          return selectedItems
       }
-      
 
+      uniq(arr){  //remove duplicates in an array / it is used in setPropertiesList and setItemsList
+        var seen = {};
+        arr = arr.filter(Boolean);
+        return arr.filter(function(item) {
+            return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+        });
+    }
+
+    removeDuplicates(data, key){
+         return [ ...new Map(
+             data.map(x => [key(x), x])
+         ).values()
+      ]
+    }
 
      ngOnDestroy(): void {
        this.labels.unsubscribe()

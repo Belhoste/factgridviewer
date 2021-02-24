@@ -21,7 +21,14 @@ mat-card img{
   object-fit: contain; /*this makes the image in src fit to the size specified below*/
   width: 100%;
   margin: 5px;
-  
+}
+
+.itemSelected-mat-card{
+  height: fit-content;
+  background-color:rgb(99, 98, 98) !important;
+  margin-bottom: 4px;
+  margin-right: 2px;
+  margin-left: 2px;
 }
 
 .map-container {
@@ -73,6 +80,14 @@ mat-card img{
 
 .pink-text {
   color:#FF4081;
+}
+
+.white-text {
+  color:white;
+  }
+
+.pink2-text {
+  color:#AD1457;
 }
 
 .title {
@@ -169,15 +184,23 @@ ul.inline {
 button{
   font-size:10px;
   height: auto;
-  width:130px;
+  width:170px;
   line-height: 16px !important;
   padding: 2px 2px 2px 10px !important;
-  margin-right:4px;
+  margin-right:5px;
    }
+
+button-content{
+  text-overflow: ellipsis;
+  }
 
 /* .mat-icon {
     vertical-align: middle;
    }
+
+button-content{
+  text-overflow: ellipsis;
+}
 
 button{
  font-size:8px;

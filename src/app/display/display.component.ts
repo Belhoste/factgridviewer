@@ -153,8 +153,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.coords = item[0].claims.P48[0].mainsnak;
     }
     
-    this.selectedItems = JSON.parse(sessionStorage.getItem('selectedItems'));
-    
+    this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
+    console.log(this.selectedItems);
     //header
 
     this.P2 = item[0].claims.P2;
@@ -799,9 +799,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
         let P:string = this.item[1][i];
         this.otherClaims.push(item[0].claims[P]); 
       }
-
-    console.log(this.otherClaims);
-    console.log(this.item[1]);
 
     this.wikis = [];
     
