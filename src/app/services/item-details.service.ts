@@ -130,7 +130,6 @@ export class ItemDetailsService {
                     if (qualifiersArray[k][0].datatype === "string"){
                       re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value };    
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.amount = qualifiersArray[k][0].datavalue.value.amount };                    
-                    console.log(re.claims[propertyIds[i]][j].qualifiers2[k].value.amount);
               }
             }
           }

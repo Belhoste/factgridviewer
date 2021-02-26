@@ -55,7 +55,7 @@ displayClickedItem: string;
     }
 
     if (localStorage['selectedResearchField']===undefined){ 
-      localStorage.setItem("selectedReseardField", "all");
+      localStorage.setItem("selectedResearchField", "all");
     }
     
     this.labels = this.searchInput.valueChanges

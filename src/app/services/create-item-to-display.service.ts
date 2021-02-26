@@ -21,7 +21,6 @@ export class CreateItemToDisplayService {
     createItemToDisplay(re, selectedLang) {
       let values = Object.values(re.claims);
       let propertyIds = Object.keys(re.claims);
-      console.log(propertyIds);
       let u;
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),

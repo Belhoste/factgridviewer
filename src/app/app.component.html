@@ -3,7 +3,7 @@
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
     rel="stylesheet">
-    
+    <body>
   
     <mat-toolbar color="primary" fxLayout="row">
         <div>FactGrid 
@@ -32,16 +32,14 @@
     
 
     
-    <div>
+    <div class="select-bar">
       <span>
         &nbsp;&nbsp;&nbsp;
       </span>
-      <mat-form-field color=black>
-          <mat-label>Select a field of research and enter an item</mat-label>
+      <mat-form-field color=primary>
+          <mat-label>Enter an item</mat-label>
             <input matInput placeholder="Ex. Item" value="Goethe" [formControl] = "searchInput">
       </mat-form-field>
-    
- 
     </div>
 
   
@@ -67,5 +65,7 @@
 
 <display-component *ngIf="searchToken === 'off'" (clickedItem)="clickedItemHandler($event)"></display-component>
   
- <display2-component *ngIf="searchToken === 'off'"></display2-component>
+<!--- <display2-component *ngIf="searchToken === 'off'"></display2-component>-->
+
+</body>
 

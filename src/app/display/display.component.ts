@@ -1,14 +1,12 @@
 
 //ancien app.component.ts
 
-import { AfterViewInit, Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { AppAndDisplaySharedService } from '../services/app-and-display-shared.service';
 import { CreateItemToDisplayService } from '../services/create-item-to-display.service';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
-import * as L from 'leaflet';
-import { SetItemToDisplayService } from '../services/set-item-to-display.service';
 
 @Component({
   selector: 'display-component',
@@ -17,8 +15,6 @@ import { SetItemToDisplayService } from '../services/set-item-to-display.service
 })
 
 export class DisplayComponent implements OnInit, OnDestroy {
-
- 
 
   @Output() clickedItem = new EventEmitter<any>();
   
@@ -33,27 +29,28 @@ export class DisplayComponent implements OnInit, OnDestroy {
   private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
   private getUrlSuffix= '&format=json' ; 
 
-  map:any;
-
-  mainsnak:any;
+ 
+  item:any[];
+//  mainsnak:any;
   id:string = "";
   factGridUrl:string="https://database.factgrid.de/wiki/Item";
   urlId:string
   label:string;
   description:string;
   aliases:string[];
-  claims: any[];
+//  claims: any[];
   picture:string;
-  
+  map:any;
   coords:any;
 
-  item:any[];
-  itemContent:any;
+ // itemContent:any;
 
-  human:string;
+// subdivisions for the item
+
+  main:string;
   training:string;
-  sex:string;
-  name:string;
+//  sex:string;
+//  name:string;
   career:string;
   sociability:string;
   place:string;
@@ -62,9 +59,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   event:string;
   sources:string;
   other:string;
-  
-
-  main:string;
+ 
+ // properties for the header
 
   P2:any[];// instance of
   P3:any[];// subclass of
@@ -74,6 +70,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
 
  //wiki
+
   commonswiki:any;
   dewiki:any;
   enwiki:any;
@@ -82,6 +79,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   wikis:any[];
 
   wikiCommons:string;
+
+  // arrays to display the properties
 
   lifeAndFamily:any[];//for persons
   education:any[];
@@ -98,23 +97,23 @@ export class DisplayComponent implements OnInit, OnDestroy {
   mainList:any[]; //main list for persons, places, organisations
 
 
-  foreNames:string[];
-  birthday:string;
-  birthPlace:string;
-  deathDay:string;
-  deathPlace:string;
-  deathCause:string;
-  father:any;
-  mother:any;
-  brotherhood:string[];
-  marriage:string[];
+ // foreNames:string[];
+ // birthday:string;
+ // birthPlace:string;
+//  deathDay:string;
+//  deathPlace:string;
+ // deathCause:string;
+////  father:any;
+//  mother:any;
+//  brotherhood:string[];
+//  marriage:string[];
 
 
- clickedObject: Subject<any>
- clickedObject2:any;
- object
+// clickedObject: Subject<any>
+ //clickedObject2:any;
+ //object
   
- onClick(item){
+ onClick(item){ //handling click
   item = item.value.id;
   this.clickedItem.emit(item);
 }
@@ -124,8 +123,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
   this.subscription = this.sharedService.item.subscribe(item=>{
   if (item !==undefined){
     console.log(item);
+  
+    this.item = item;
+  
+    
  //   this.wikiCommons = item[0].claims.P189[0].mainsnak.datatype
-    this.human = item[0].claims.P2.human;
+ //   this.human = item[0].claims.P2.human;
     this.training = item[0].claims.P2.training;
     this.career = item[0].claims.P2.career;
     this.place = item[0].claims.P2.place;
@@ -135,12 +138,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.other = item[0].claims.P2.other;
     this.sources = item[0].claims.P2.sources;
     this.main = item[0].claims.P2.main;
-    this.item = item;
-    this.itemContent = item[0];
-    this.label = item[0].label;
-    this.description = item[0].description;
-    this.aliases = item[0].aliases;
-    this.id = item[0].id;
+ 
+    //this.itemContent = item[0];
+
     this.urlId = this.factGridUrl+this.id;
    if (item[0].claims.P189 !==undefined) {
      if (item[0].claims.P189[0].references !==undefined){
@@ -155,7 +155,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
     
     this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
    
-    //header
+    ///header
+
+    this.id = item[0].id;
+    this.label = item[0].label;
+    this.description = item[0].description;
+    this.aliases = item[0].aliases;
 
     this.P2 = item[0].claims.P2;
     this.P3 = item[0].claims.P3; 
@@ -179,7 +184,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P131"),1); 
     }
 
-    //person
+    ///person
 
     //person: life and family
     
@@ -378,7 +383,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
 
-  //place
+  ///place
 
     this.locationAndSituation =[];
     
@@ -411,7 +416,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
         this.locationAndSituation.push(item[0].claims.P461); 
       }  
   
-  //org
+  ///org
 
     this.locationAndContext = [];
 
@@ -505,7 +510,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.locationAndContext.push(item[0].claims.P430); 
     }
 
-  //activity
+  ///activity
 
   this.activityDetail = [];
 
@@ -515,7 +520,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
 
-  //event
+  ///event
 
   this.eventDetail = [];
 
@@ -536,7 +541,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.eventDetail.push(item[0].claims.P133); 
   }
 
-//print publication or document
+///print publication or document
    
    this.printPublicationDetail = [];
 
@@ -677,13 +682,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.printPublicationDetail.push(item[0].claims.P226);
   }
   
-
-
-
-  //document
-  
-
-  //sources
+  ///sources
     
     this.sourcesList =[];
     
@@ -703,9 +702,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P185"),1);
       this.sourcesList.push(item[0].claims.P185);
     }
-    
 
-  //externalLinks
+  ///externalLinks
 
     this.externalLinks = [];
 
@@ -788,7 +786,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.mainList= [];
     
     if (item[0].claims.P2 ===undefined){  // no definition of instance
-  //    item[1].splice(item[1].indexOf("P2"),1);
       this.mainList.push(item[0].claims.P2) };
 
     this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.printPublicationDetail);
@@ -832,9 +829,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   )
 }
 
-
-
-qualifiersList(u){
+qualifiersList(u){ //setting the list of qualifiers for a mainsnak
   for (let i=0;i<u.length;i++){
     if (u["'qualifiers-order'"] !== undefined) {
       let v=u["'qualifiers-order'"]
@@ -847,7 +842,7 @@ qualifiersList(u){
   }
 
 ngOnDestroy(): void {
-//this.subscription.unsubscribe()
+   this.subscription.unsubscribe()
 }
 
 
