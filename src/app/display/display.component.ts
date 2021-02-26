@@ -31,26 +31,17 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
  
   item:any[];
-//  mainsnak:any;
   id:string = "";
   factGridUrl:string="https://database.factgrid.de/wiki/Item";
   urlId:string
   label:string;
   description:string;
   aliases:string[];
-//  claims: any[];
   picture:string;
   map:any;
   coords:any;
-
- // itemContent:any;
-
-// subdivisions for the item
-
   main:string;
   training:string;
-//  sex:string;
-//  name:string;
   career:string;
   sociability:string;
   place:string;
@@ -67,7 +58,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
   P8:any[];//part of
   P97:any[];//field of research
   P131:any[]; //research projects that contributed to this data set
-
 
  //wiki
 
@@ -96,23 +86,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
   locationAndContext:any[]; //for organisations, societies and institutions
   mainList:any[]; //main list for persons, places, organisations
 
-
- // foreNames:string[];
- // birthday:string;
- // birthPlace:string;
-//  deathDay:string;
-//  deathPlace:string;
- // deathCause:string;
-////  father:any;
-//  mother:any;
-//  brotherhood:string[];
-//  marriage:string[];
-
-
-// clickedObject: Subject<any>
- //clickedObject2:any;
- //object
-  
  onClick(item){ //handling click
   item = item.value.id;
   this.clickedItem.emit(item);
@@ -125,17 +98,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
     console.log(item);
   
     this.item = item;
-  
-    
- //   this.wikiCommons = item[0].claims.P189[0].mainsnak.datatype
- //   this.human = item[0].claims.P2.human;
-    this.training = item[0].claims.P2.training;
-    this.career = item[0].claims.P2.career;
     this.place = item[0].claims.P2.place;
     this.org = item[0].claims.P2.org;
-    this.sociability = item[0].claims.P2.sociability;
     this.event =  item[0].claims.P2.event;
-    this.other = item[0].claims.P2.other;
     this.sources = item[0].claims.P2.sources;
     this.main = item[0].claims.P2.main;
  
@@ -183,6 +148,39 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (item[0].claims.P131 !==undefined){ //research projects that contributed to this data set
       item[1].splice(item[1].indexOf("P131"),1); 
     }
+
+    ///place
+
+    this.locationAndSituation =[];
+    
+    if (item[0].claims.P48 !==undefined){ //geographic coordinates
+      item[1].splice(item[1].indexOf("P48"),1);
+      this.locationAndSituation.push(item[0].claims.P48);}
+    
+    if (item[0].claims.P58 !==undefined){ //number of inhabitants
+      item[1].splice(item[1].indexOf("P58"),1);
+      this.locationAndSituation.push(item[0].claims.P58); 
+      }  
+    
+    if (item[0].claims.P297 !==undefined){ //territorial affiliation
+      item[1].splice(item[1].indexOf("P297"),1);
+      this.locationAndSituation.push(item[0].claims.P297); 
+      }  
+    
+    if (item[0].claims.P466 !==undefined){  //capital of
+      item[1].splice(item[1].indexOf("P466"),1);
+      this.locationAndSituation.push(item[0].claims.P466); 
+      }   
+    
+    if (item[0].claims.P538 !==undefined){  //historical county
+      item[1].splice(item[1].indexOf("P538"),1);
+      this.locationAndSituation.push(item[0].claims.P538); 
+      } 
+    
+      if (item[0].claims.P461 !==undefined){  //named after
+      item[1].splice(item[1].indexOf("P461"),1);
+        this.locationAndSituation.push(item[0].claims.P461); 
+      }  
 
     ///person
 
@@ -326,7 +324,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.education.push(this.item[0].claims.P161);
    }
 
-
+   if (this.education.length > 0) { this.training = item[0].claims.P2.training ; };
 
     //person:career and activities
     
@@ -352,6 +350,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[1].splice(item[1].indexOf("P119"),1);
       this.careerAndActivities.push(item[0].claims.P119); 
     }  
+
+    console.log(this.career);
+
+    if (this.careerAndActivities.length > 0) {  this.career = item[0].claims.P2.career ; };
+
+    console.log(this.career);
   
     //person: sociability and culture
 
@@ -382,39 +386,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.sociabilityAndCulture.push(item[0].claims.P167); 
   }
 
-
-  ///place
-
-    this.locationAndSituation =[];
-    
-    if (item[0].claims.P48 !==undefined){ //geographic coordinates
-      item[1].splice(item[1].indexOf("P48"),1);
-      this.locationAndSituation.push(item[0].claims.P48);}
-    
-    if (item[0].claims.P58 !==undefined){ //number of inhabitants
-      item[1].splice(item[1].indexOf("P58"),1);
-      this.locationAndSituation.push(item[0].claims.P58); 
-      }  
-    
-    if (item[0].claims.P297 !==undefined){ //territorial affiliation
-      item[1].splice(item[1].indexOf("P297"),1);
-      this.locationAndSituation.push(item[0].claims.P297); 
-      }  
-    
-    if (item[0].claims.P466 !==undefined){  //capital of
-      item[1].splice(item[1].indexOf("P466"),1);
-      this.locationAndSituation.push(item[0].claims.P466); 
-      }   
-    
-    if (item[0].claims.P538 !==undefined){  //historical county
-      item[1].splice(item[1].indexOf("P538"),1);
-      this.locationAndSituation.push(item[0].claims.P538); 
-      } 
-    
-      if (item[0].claims.P461 !==undefined){  //named after
-      item[1].splice(item[1].indexOf("P461"),1);
-        this.locationAndSituation.push(item[0].claims.P461); 
-      }  
+  if (this.sociabilityAndCulture.length > 0) {  this.sociability = item[0].claims.P2.sociability ; };
   
   ///org
 
@@ -518,7 +490,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P267"),1);
     this.locationAndContext.push(item[0].claims.P267); 
   }
-
 
   ///event
 
@@ -797,6 +768,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
         this.otherClaims.push(item[0].claims[P]); 
       }
 
+    if (this.otherClaims.length > 0) {  this.other = item[0].claims.P2.other ; };
+
+    
     this.wikis = [];
     
     if (item[0].sitelinks.commonswiki !==undefined){
@@ -843,9 +817,7 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
 
 ngOnDestroy(): void {
    this.subscription.unsubscribe()
-}
-
-
+  }
 }
 
 

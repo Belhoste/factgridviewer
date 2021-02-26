@@ -119,6 +119,7 @@
               <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>  
               <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label>         
               <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value}}</label>
+              <label *ngIf="M.mainsnak.datatype === 'wikibase-property'">{{M.mainsnak.datavalue.value.id}}</label>
               <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
                 <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
               <label>{{M.mainsnak.datavalue.value.amount}}</label>
@@ -130,7 +131,7 @@
                 <label>{{M.qualifiers2[0].value.label}}
                <span *ngIf="M.qualifiers2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.qualifiers2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
               <label>{{M.qualifiers2[0].value.time |customDate }}</label>
-              <label class="break-word-container">{{M.qualifiers2[0].value.string }}</label>
+              <label>{{M.qualifiers2[0].value.string }}</label>
               <label>{{M.qualifiers2[0].value.amount}}</label>
               </span>
             <div class="details2" class="percent2" *ngIf="M['references2']">
@@ -148,7 +149,7 @@
           </mat-card-content>
           </div>
           
-          <div *ngIf='"training"!==undefined'>
+          <div *ngIf="'training'!==undefined">
           <mat-divider color="primary"></mat-divider> 
           <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle> 
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -189,7 +190,7 @@
         </mat-card-content>
       </div>
        
-        <div *ngIf='"career"!==undefined'>
+        <div *ngIf="career">
           <mat-divider color="primary"></mat-divider> 
         <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -271,9 +272,11 @@
         </mat-card-content>
         </div>
     
-        <div>     
+        <div *ngIf="'other'!== undefined">     
           <mat-divider color="primary"></mat-divider> 
-          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>        
+          <span *ngIf="'other'!== 'empty'">
+          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>   
+        </span>     
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
              <div class="title">
