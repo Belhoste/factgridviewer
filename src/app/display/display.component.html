@@ -19,7 +19,16 @@
     
     <div fxFlex="90%" class="left">
     
-    <div>
+   
+    <div class = "parent" 
+         fxLayout = "row"
+         fxLayout.md="column"
+         fxLayout.sm="column"
+         fxLayout.xs="column"
+         >
+      <div fxFlex="80%" class="left">
+	  
+	      <div>
       <mat-card  class= mat-elevation-z8>
         <div fxFlex.gt-sm="100%" fxFlex>
         <mat-card-title-group>
@@ -33,28 +42,8 @@
             <p>
                {{ description }}
             </p>
-          </mat-card-subtitle>
-  <!--        <div fxLayout="column" *ngIf="P2">
-            <figure>
-              <img mat-card-image 
-            fxFlex="66%"
-            *ngIf="picture" src={{picture}}>
-            </figure>
-             <figcaption class="referenceProperty">
-            <em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wikiCommons</em></figcaption>
-            <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;wikiCommons</em></label>
-            </div>
-            --->
-          <img mat-card-image 
-            fxFlex="100%" 
-            fxFlex.xs="30%"
-            fxFlex.sm="30%" 
-            fxFlex.md="30%"
-            fxFlex.lg="20%"
-            fxFlex.xl="17%"
-            *ngIf="picture" src={{picture}}>            
+          </mat-card-subtitle>         
        
-    
         </mat-card-title-group>
           <div *ngIf="id" class="percent2">
           <span  class="property">FactGrid ID:&nbsp;&nbsp;</span>
@@ -89,14 +78,7 @@
         </div>
       </mat-card>
     </div>
-   
-    <div class = "parent" 
-         fxLayout = "row"
-         fxLayout.md="column"
-         fxLayout.sm="column"
-         fxLayout.xs="column"
-         >
-      <div fxFlex="80%" class="left">
+	  
         <mat-card  class= mat-elevation-z8>
           <div>   
           <mat-card-subtitle class="percent3" *ngIf='"main"!==undefined'>{{main}}</mat-card-subtitle>      
@@ -358,6 +340,12 @@
      </div>
   
       <div fxFlex="20%">
+	      <mat-card class= mat-elevation-z8>
+	        <img mat-card-image 
+            fxFlex="100%" 
+ 
+            *ngIf="picture" src={{picture}}>  
+        </mat-card>			
         <mat-card class= mat-elevation-z8>
           <div class="title">
           <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
