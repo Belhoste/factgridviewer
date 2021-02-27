@@ -44,6 +44,16 @@ $theming-material-components-theme: mat-light-theme(
 
 @import "../node_modules/leaflet/dist/leaflet.css";
 
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label:not(.mat-empty):not(.mat-form-field-empty) {
+  font-size:12px;
+  // scale or font-size
+}
+
+.mat-focused .mat-form-field-label {
+  color: blue !important;
+  font-size: 20px;
+} 
+
   
 body {
   height: 100%;
