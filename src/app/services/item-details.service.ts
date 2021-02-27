@@ -122,6 +122,7 @@ export class ItemDetailsService {
                  let prop = qualifierPropertyArray[k];
                   for (let l=0; l<re.claims[propertyIds[i]][j].qualifiers2.length;l++){
                     if (re.claims[propertyIds[i]][j].qualifiers2[k].id !== prop){continue}
+                    re.claims[propertyIds[i]][j].qualifiers2[k].datatype = qualifiersArray[k][0].datatype;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.id = qualifiersArray[k][0].datavalue.value.id;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.time = qualifiersArray[k][0].datavalue.value.time;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value.label;
