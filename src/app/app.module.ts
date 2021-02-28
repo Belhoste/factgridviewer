@@ -31,6 +31,7 @@ import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
 import { MapComponent } from './display/map/map.component';
 
 
+
 //import { Display2Component } from './display2/display2.component';
 //import { ItemService } from './item.service';
 
