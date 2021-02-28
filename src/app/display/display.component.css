@@ -68,6 +68,14 @@ mat-card img{
   
 }
 
+.hide-division {
+  display: none;
+  }
+
+.show-division {
+    display: block;
+    }
+
 .padding1 {
   padding: 2 px;
 }
@@ -112,6 +120,13 @@ mat-card img{
 
 .details {
   padding: 1px;
+}
+
+.details1 {
+  padding: 10px;
+  margin: 10px;
+  text-overflow: ellipsis;
+  word-break: normal;
 }
 
 .details2 {
@@ -170,8 +185,9 @@ ul.inline {
   }
 
 .percent3 {
-    padding-top:10px;
+    padding:15px;
     font-size: 150%;
+    font-weight: 321;
   }
 
 .property {

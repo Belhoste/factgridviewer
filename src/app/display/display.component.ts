@@ -86,6 +86,13 @@ export class DisplayComponent implements OnInit, OnDestroy {
   locationAndContext:any[]; //for organisations, societies and institutions
   mainList:any[]; //main list for persons, places, organisations
 
+  //display the subtitles
+  isTraining:boolean = false;
+  isCareer:boolean = false;
+  isSociability:boolean = false;
+  isOther:boolean = false;
+  isSources:boolean = false;
+
  onClick(item){ //handling click
   item = item.value.id;
   this.clickedItem.emit(item);
@@ -324,7 +331,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.education.push(this.item[0].claims.P161);
    }
 
-   if (this.education.length > 0) { this.training = item[0].claims.P2.training ; };
+   if (this.education.length > 0) { this.training = item[0].claims.P2.training ; this.isTraining = true }
 
     //person:career and activities
     
@@ -353,9 +360,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
     console.log(this.career);
 
-    if (this.careerAndActivities.length > 0) {  this.career = item[0].claims.P2.career ; };
+    if (this.careerAndActivities.length > 0) {  this.career = item[0].claims.P2.career ; this.isCareer = true };
 
-    console.log(this.career);
+    
   
     //person: sociability and culture
 
@@ -386,7 +393,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.sociabilityAndCulture.push(item[0].claims.P167); 
   }
 
-  if (this.sociabilityAndCulture.length > 0) {  this.sociability = item[0].claims.P2.sociability ; };
+  if (this.sociabilityAndCulture.length > 0) {  this.sociability = item[0].claims.P2.sociability ; 
+                                                   this.isSociability = true};
   
   ///org
 
@@ -674,6 +682,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.sourcesList.push(item[0].claims.P185);
     }
 
+    if (this.sourcesList.length > 0) {  this.isSources = true };
+
   ///externalLinks
 
     this.externalLinks = [];
@@ -768,7 +778,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
         this.otherClaims.push(item[0].claims[P]); 
       }
 
-    if (this.otherClaims.length > 0) {  this.other = item[0].claims.P2.other ; };
+    if (this.otherClaims.length > 0) {  this.other = item[0].claims.P2.other ; 
+                                        this.isOther = true };
 
     
     this.wikis = [];
@@ -801,6 +812,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
     
     }
   )
+}
+
+showTraining(){
+  
+
 }
 
 qualifiersList(u){ //setting the list of qualifiers for a mainsnak

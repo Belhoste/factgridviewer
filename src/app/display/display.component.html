@@ -139,7 +139,7 @@
           </mat-card-content>
           </div>
           
-          <div *ngIf="'training'!==undefined">
+        <div [ngClass]="isTraining ? 'show-division':'hide-division'">
           <mat-divider color="primary"></mat-divider> 
           <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle> 
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -182,7 +182,7 @@
         </mat-card-content>
       </div>
        
-        <div *ngIf="career">
+        <div [ngClass]="isCareer ? 'show-division':'hide-division'">
           <mat-divider color="primary"></mat-divider> 
         <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -225,7 +225,7 @@
         </mat-card-content>
       </div>
 
-      <div *ngIf='"sociability"!==undefined'>
+      <div [ngClass]="isSociability ? 'show-division':'hide-division'">
         <mat-divider color="primary"></mat-divider> 
         <mat-card-subtitle class="percent3">{{sociability}}</mat-card-subtitle>
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -268,11 +268,9 @@
         </mat-card-content>
         </div>
     
-        <div *ngIf="'other'!== undefined">     
+        <div [ngClass]="isOther ? 'show-division':'hide-division'">     
           <mat-divider color="primary"></mat-divider> 
-          <span *ngIf="'other'!== 'empty'">
-          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>   
-        </span>     
+          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>       
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
              <div class="title">
@@ -313,7 +311,9 @@
        </mat-card-content>
        </div>
        </mat-card>
-      <mat-card  class= mat-elevation-z8>
+     
+      <div [ngClass]="isSources ? 'show-division':'hide-division'">
+       <mat-card  class= mat-elevation-z8>
         <div>
          <mat-card-subtitle class="percent3">{{sources}}</mat-card-subtitle>
          <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -355,6 +355,7 @@
        </mat-card-content>
        </div>
       </mat-card>
+    </div>
   
      </div>
   
