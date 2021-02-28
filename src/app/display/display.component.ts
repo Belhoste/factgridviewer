@@ -86,12 +86,18 @@ export class DisplayComponent implements OnInit, OnDestroy {
   locationAndContext:any[]; //for organisations, societies and institutions
   mainList:any[]; //main list for persons, places, organisations
 
-  //display the subtitles
+  //display the elements
+  isMain:boolean = false;
+  isExternalLinks:boolean = false;
+  isWikis:boolean = false;
+  isPicture:boolean = false;
   isTraining:boolean = false;
   isCareer:boolean = false;
   isSociability:boolean = false;
   isOther:boolean = false;
   isSources:boolean = false;
+  isActivity:boolean = false;
+  isEvent:boolean = false;
 
  onClick(item){ //handling click
   item = item.value.id;
@@ -110,6 +116,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.event =  item[0].claims.P2.event;
     this.sources = item[0].claims.P2.sources;
     this.main = item[0].claims.P2.main;
+    
  
     //this.itemContent = item[0];
 
@@ -499,6 +506,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
     this.locationAndContext.push(item[0].claims.P267); 
   }
 
+  if (this.activityDetail.length > 0) {  this.isActivity = true};
+
   ///event
 
   this.eventDetail = [];
@@ -519,6 +528,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
     item[1].splice(item[1].indexOf("P133"),1);
     this.eventDetail.push(item[0].claims.P133); 
   }
+
+  if (this.eventDetail.length > 0) {  this.isEvent = true};
 
 ///print publication or document
    
@@ -764,6 +775,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
       item[0].claims.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'+item[0].claims.P414[0].mainsnak.datavalue.value
                   this.externalLinks.push(item[0].claims.P414) };
 
+    if (this.externalLinks.length > 0) {  this.isExternalLinks = true };        
+    
     this.mainList= [];
     
     if (item[0].claims.P2 ===undefined){  // no definition of instance
@@ -771,6 +784,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
     this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.printPublicationDetail);
     
+    if (this.mainList.length > 0) {  this.isMain = true };
+
     this.otherClaims = [];
       
     for (let i=0; i<this.item[1].length; i++){
@@ -808,6 +823,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
     if (item[0].sitelinks.frwikisource !==undefined){
           this.wikis.push(item[0].sitelinks.frwikisource); 
         }
+
+     if (this.wikis.length > 0) {   this.isWikis = true };
+
       }
     
     }

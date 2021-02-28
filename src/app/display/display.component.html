@@ -28,7 +28,7 @@
          >
       <div fxFlex="80%" class="left">
 	  
-	      <div>
+	    <div>
       <mat-card  class= mat-elevation-z8>
         <div fxFlex.gt-sm="100%" fxFlex>
         <mat-card-title-group>
@@ -78,7 +78,7 @@
         </div>
       </mat-card>
     </div>
-	  
+    <div [ngClass]="isMain ? 'show-division':'hide-division'"></div>
         <mat-card  class= mat-elevation-z8>
           <div>   
           <mat-card-subtitle class="percent3" *ngIf='"main"!==undefined'>{{main}}</mat-card-subtitle>      
@@ -95,6 +95,7 @@
               fxLayout.xs="column">
           </div> 
             <app-map *ngIf="coords" id="leaflet-map" [coords]="coords.datavalue.value"></app-map>
+            
             <div *ngFor="let P of mainList">
               <div flex-shrink flex-basis="auto">
                 <div class="title">
@@ -356,16 +357,17 @@
        </div>
       </mat-card>
     </div>
-  
-     </div>
+  </div>
   
       <div fxFlex="20%">
+  <!---      <div [ngClass]="isPicture ? 'show-division':'hide-division'"> --->
 	      <mat-card class= mat-elevation-z8>
 	        <img mat-card-image 
             fxFlex="100%" 
- 
             *ngIf="picture" src={{picture}}>  
-        </mat-card>			
+        </mat-card>	
+  <!---    </div>  --->
+      <div  [ngClass]="isExternalLinks || isWikis ? 'show-division':'hide-division'">	
         <mat-card class= mat-elevation-z8>
           <div class="title">
           <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
@@ -390,6 +392,7 @@
       </div>
     </div> 
     </div>
+  </div>
   <div fxFlex="10%">
     <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
       <div fxLayout="column">
