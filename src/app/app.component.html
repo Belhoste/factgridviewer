@@ -30,12 +30,11 @@
         </mat-menu>
     </mat-toolbar>
     
-
+   <!-- <div class = "parent" 
+    fxLayout = "column">
+    -->
     
     <div class="select-bar" class="center" style="font-size: 22px">
-      <span>
-        &nbsp;&nbsp;&nbsp;
-      </span>
       <mat-form-field color=primary class="mat-headline">
           <mat-label>Enter an item</mat-label>
             <input matInput placeholder="Ex. Item" value="Goethe" [formControl] = "searchInput">
@@ -44,7 +43,7 @@
 
   
   
-      <div>
+ <!---     <div>
         <ul style="list-style: none;" >
             <li *ngFor="let item of items" >
                   <button mat-raised-button color="primary" style="height:25px;width:90%"  (click)="onItemSelect(item)">
@@ -54,12 +53,29 @@
         </ul>
      </div>
 
+--->
+    <div  *ngIf="searchToken === 'on'" fxLayout="row" fxLayoutAlign="space-around center">
+      <div class="search-div">
+      <mat-card  fxFlex class= mat-elevation-z8fx>  
+        <div flex-shrink flex-basis="auto">
+            <div *ngFor="let item of items">
+             {{item.label}}, <span class="description-text">{{item.description }}</span>
+              <mat-icon-button class="internalLink" #content (click)="onItemSelect(item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
+            <hr>
+        </div>
+      </div>
+      </mat-card>
+    </div>
+    </div>
+      
+  <!--  </div>
+
      
   
   
  
   
- <!-- <display-component *ngIf="searchToken === 'off'" [item]="selectedItem"></display-component> -->
+  <display-component *ngIf="searchToken === 'off'" [item]="selectedItem"></display-component> -->
  
 <!-- <display-component *ngIf="searchToken === 'off'"></display-component>-->
 

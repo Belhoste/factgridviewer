@@ -1,7 +1,7 @@
 
 //ancien app.component.ts
 
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, EventEmitter, Output } from '@angular/core';
 import { Observable, Subscription, Subject } from 'rxjs';
 import { AppAndDisplaySharedService } from '../services/app-and-display-shared.service';
 import { CreateItemToDisplayService } from '../services/create-item-to-display.service';
@@ -29,15 +29,17 @@ export class DisplayComponent implements OnInit, OnDestroy {
   private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
   private getUrlSuffix= '&format=json' ; 
 
- 
+  factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
+
   item:any[];
   id:string = "";
-  factGridUrl:string="https://database.factgrid.de/wiki/Item";
-  urlId:string
+  factGridUrl:string;
+  urlId:string;
   label:string;
   description:string;
   aliases:string[];
-  picture:string;
+  picture:string ;
+  //="https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png";
   map:any;
   coords:any;
   main:string;
@@ -50,6 +52,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   event:string;
   sources:string;
   other:string;
+
+
  
  // properties for the header
 
@@ -121,12 +125,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     //this.itemContent = item[0];
 
     this.urlId = this.factGridUrl+this.id;
-   if (item[0].claims.P189 !==undefined) {
-     if (item[0].claims.P189[0].references !==undefined){
-       if (item[0].claims.P189[0].references[0].snaks.P55 !==undefined) {
-     this.picture = item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value }
-      }
-    }
+   
     
     if (item[0].claims.P48 !== undefined) {
     this.coords = item[0].claims.P48[0].mainsnak;
@@ -365,8 +364,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
       this.careerAndActivities.push(item[0].claims.P119); 
     }  
 
-    console.log(this.career);
-
     if (this.careerAndActivities.length > 0) {  this.career = item[0].claims.P2.career ; this.isCareer = true };
 
     
@@ -402,6 +399,18 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   if (this.sociabilityAndCulture.length > 0) {  this.sociability = item[0].claims.P2.sociability ; 
                                                    this.isSociability = true};
+
+  ///picture
+ 
+  if (this.item[0].claims.P189 !==undefined) {
+    if (this.item[0].claims.P189[0].references !==undefined){
+     if (this.item[0].claims.P189[0].references[0].snaks.P55 !==undefined)
+//      this.picture = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png'
+        this.picture = this.item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value ;
+    
+     }
+     console.log(this.picture);
+    }
   
   ///org
 
@@ -826,15 +835,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
      if (this.wikis.length > 0) {   this.isWikis = true };
 
+
       }
     
     }
   )
-}
-
-showTraining(){
-  
-
 }
 
 qualifiersList(u){ //setting the list of qualifiers for a mainsnak
@@ -848,6 +853,11 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
        }
      }
   }
+
+
+
+  
+  
 
 ngOnDestroy(): void {
    this.subscription.unsubscribe()

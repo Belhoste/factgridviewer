@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy
 
  public selectedItem:Observable<any>;
 
- searchToken:string = "off";
+ searchToken:string = "on";
   labels
   items = [];
   newItem;
