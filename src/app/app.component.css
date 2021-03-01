@@ -42,6 +42,11 @@
   font-weight: 321;
   }
 
+.internalLink {
+    cursor: pointer;
+    position: absolute;
+ }
+
 button{
  white-space: pre-wrap ;
  overflow: hidden;
