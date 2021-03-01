@@ -6,9 +6,9 @@
     <body>
   
     <mat-toolbar color="primary" fxLayout="row">
-        <div>FactGrid 
+    <!---    <div>FactGrid 
           <span fxFlex fxHide.xs>: a database for historians</span>
-        </div>
+        </div>-->
         <span class="example-spacer"></span>
         <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Example icon-button with a menu">
             <mat-icon>language</mat-icon>
@@ -33,13 +33,19 @@
    <!-- <div class = "parent" 
     fxLayout = "column">
     -->
-    
-    <div class="select-bar" class="center" style="font-size: 22px">
-      <mat-form-field color=primary class="mat-headline">
-          <mat-label>Enter an item</mat-label>
+    <div>
+      <div class="FactGrid-div">
+      <div class="FactGridTitle-div">
+            <p>FactGrid</p>
+      </div>
+        <span>a database for historians</span>
+    </div>
+       <div class="select-bar" class="center" style="font-size: 15px">
+      <mat-form-field color=primary appearance="standard" class="mat-headline">
             <input matInput placeholder="Ex. Item" value="Goethe" [formControl] = "searchInput">
       </mat-form-field>
     </div>
+  </div>
 
   
   

@@ -104,6 +104,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isEvent:boolean = false;
 
  onClick(item){ //handling click
+ 
   item = item.value.id;
   this.clickedItem.emit(item);
 }
@@ -412,6 +413,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
      console.log(this.picture);
     }
   
+  if (this.picture !==undefined) this.isPicture = true;
+
   ///org
 
     this.locationAndContext = [];

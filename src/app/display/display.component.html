@@ -143,6 +143,7 @@
           
         <div [ngClass]="isTraining ? 'show-division':'hide-division'">
           <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle> 
+          <hr>
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
             <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of education">
             <div class="title">
@@ -184,6 +185,7 @@
        
         <div [ngClass]="isCareer ? 'show-division':'hide-division'">
         <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
+        <hr>
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">
           <div class="title">
@@ -225,6 +227,7 @@
 
       <div [ngClass]="isSociability ? 'show-division':'hide-division'">
         <mat-card-subtitle class="percent3">{{sociability}}</mat-card-subtitle>
+        <hr>
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sociabilityAndCulture">
           <div class="title">
@@ -356,39 +359,45 @@
   </div>
   
       <div fxFlex="20%">
-  <!---      <div [ngClass]="isPicture ? 'show-division':'hide-division'"> --->
+    <div [ngClass]="isPicture ? 'show-division':'hide-division'"> 
 	      <mat-card class= mat-elevation-z8>
-	        <img mat-card-image 
-            fxFlex="100%" 
-            *ngIf="picture; else otherPicture" src={{picture}}>  
-  <ng-template #otherPicture>
+	        <img mat-card-image fxFlex="100%" src={{picture}}>  
+
+ <!----             ; else otherPicture
+             <ng-template #otherPicture>
             <img mat-card-image 
-              fxFlex="40%" 
-              src="https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png">
-          </ng-template>
+              fxFlex="100%" 
+              src="https://blog.factgrid.de/wp-content/uploads/2017/11/Mediterranean_chart_fourteenth_century2-detail.jpg">
+         </ng-template>
+         --->
+         </mat-card>
   
-        </mat-card>	
-  <!---    </div>  --->
-      <div  [ngClass]="isExternalLinks || isWikis ? 'show-division':'hide-division'">	
+      </div>  
+      <div>	
+  <!--      [ngClass]="isExternalLinks || isWikis ? 'show-division':'hide-division'"--->
         <mat-card class= mat-elevation-z8>
           <div class="title">
           <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
+          <hr>
           </div>
           <div>
           <mat-list  *ngFor="let externalLink of externalLinks">
             <span mat-list-item >
                 <span>{{externalLink.label}}: </span><a href ="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
             </span>
+            <hr>
           </mat-list>
+          <div></div>
          </div>
-          <mat-divider color="primary"></mat-divider> 
         <div class="title2">
           <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
+          <hr>
         </div>
           <mat-list  *ngFor="let wiki of wikis">
             <span mat-list-item >
                 <span>{{wiki.site}}: </span><a href ="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
             </span>
+            <hr>
           </mat-list>
         </mat-card>
       </div>
