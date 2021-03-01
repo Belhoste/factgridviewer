@@ -65,7 +65,7 @@
       <mat-card  fxFlex class= mat-elevation-z8fx>  
         <div flex-shrink flex-basis="auto">
             <div *ngFor="let item of items">
-             {{item.label}}, <span class="description-text">{{item.description }}</span>
+             {{item.label}} ({{item.id}}), <span class="description-text">{{item.description }}</span>
               <mat-icon-button class="internalLink" #content (click)="onItemSelect(item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
             <hr>
         </div>
