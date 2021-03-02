@@ -16,8 +16,12 @@ export class ItemDetailsService {
   qualifiers2:any[];
 
    addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks 
+    
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
+        if ( propertyIds[i] === "P320")
+        { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql",
+         console.log(re.claims[propertyIds[i]][j].mainsnak.datatype)};
         if ( lang === "en") {re.claims[propertyIds[i]].other = "further"}
         else if ( lang === "de") {re.claims[propertyIds[i]].other = "weiteren"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].other = "autres"};

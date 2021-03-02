@@ -20,6 +20,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   
   constructor(private request:RequestService, private sharedService:AppAndDisplaySharedService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService){}
 
+  clickedArray:string[]=["",""];
+  
   selectedItem:Observable<any>;
   subscription:Subscription
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
@@ -104,10 +106,15 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isEvent:boolean = false;
 
  onClick(item){ //handling click
- 
   item = item.value.id;
-  this.clickedItem.emit(item);
-}
+  this.clickedArray[0] = item;
+  this.clickedItem.emit(this.clickedArray);
+  }
+
+onClick2(sparqlList){ //handling click for sparql query
+  this.clickedArray[1]=sparqlList;
+  this.clickedItem.emit(this.clickedArray);
+  }
 
  ngOnInit(): void {
 

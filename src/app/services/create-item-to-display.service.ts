@@ -48,6 +48,11 @@ export class CreateItemToDisplayService {
         )
         return observedItem
     }
+
+    createListToDisplay(re, selectedLang){
+       let observedList 
+
+    }
 }
   
 

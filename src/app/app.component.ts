@@ -7,6 +7,7 @@ import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { CreateItemToDisplayService} from './services/create-item-to-display.service';
 import { AppAndDisplaySharedService} from './services/app-and-display-shared.service';
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,8 @@ export class AppComponent implements OnInit, OnDestroy
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
   selectedItems:any[] = [];
+
+  sparql:string;
 
 
   selectedResearchField: string = localStorage['selectedResearchField'];
@@ -108,12 +111,17 @@ displayClickedItem: string;
    return this.sharedService.item
      }
 
-  clickedItemHandler(item: any){ 
+  clickedItemHandler(item: any[]){ 
     this.searchToken= "on";
     this.changeDetector.detectChanges();
-    this.sharedService.item=this.request.getItem(this.baseGetURL+item+this.getUrlSuffix).pipe(
+    let url = this.baseGetURL+item[0]+this.getUrlSuffix;
+    if(url!=="https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"){
+    this.sharedService.item=this.request.getItem(url).pipe(
+    tap(res=>console.log(res)),
     map(res => res=Object.values(res.entities)),
-    switchMap(res =>this.sharedService.item= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang)));
+    switchMap(res =>this.sharedService.item= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
+    );
+    };
     this.sharedService.item.subscribe(re=>{
       let u = { value: {id: re[0].id}, label: re[0].label }
       this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
@@ -132,6 +140,17 @@ displayClickedItem: string;
          this.selectedItems.pop()};
       localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
       });
+    
+      console.log(item[1]);
+    
+    if (item[1] !== undefined){
+      this.sparql = this.newSparqlAdress(item[1]);
+      console.log(this.sparql);
+      this.sharedService.list=this.request.getList(this.sparql);
+      this.sharedService.list.subscribe(re=>console.log(re));
+    }
+    
+    
     this.searchToken = "off";
     return this.sharedService.item
   };
@@ -201,6 +220,13 @@ displayClickedItem: string;
          ).values()
       ]
     }
+
+    newSparqlAdress(address:string) : string { 
+      const newPrefix = "https://database.factgrid.de/sparql?query=";
+      const oldPrefix = "https://database.factgrid.de/query/#";
+      address = address.replace(oldPrefix, newPrefix);
+      return address
+      }
 
      ngOnDestroy(): void {
        this.labels.unsubscribe()

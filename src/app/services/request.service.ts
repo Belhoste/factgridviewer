@@ -171,12 +171,31 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   //searchItem(label:string, lang:string): Observable<any> { return this.http.get(this.searchUrl(label,lang))} ;
 
-  getItem(re): Observable<any> { return this.http.get(re) };
+  getItem(re): Observable<any> { return this.http.get(re).pipe(catchError((err)=> {return of(undefined)})) };
 
   selectUrl(url:string) {  let selectUrl = re => re == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
      "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json&origin=*" : re  };
 
+  
+  getList(sparql:string): Observable<any> {   
+       let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
+       let params = new HttpParams()
+       .set('origin',"*")
+       .set('format',"json");
+      return this.http.get(sparql, {
+        headers: headers,
+        params: params})    
+       }
+
  // selectUrl(url:string) {  let selectUrl = re => re == "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
   //   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : re  };
  
-  }
+  newSparqlAddress(address) { 
+    const newPrefix = "https://database.factgrid.de/sparql?query=";
+    const oldPrefix = "https://database.factgrid.de/query/#";
+    address = address.replace(oldPrefix, newPrefix);
+    }
+
+}
+
+  
