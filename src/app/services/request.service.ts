@@ -180,7 +180,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
   getList(sparql:string): Observable<any> {   
        let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
        let params = new HttpParams()
-       .set('origin',"*")
        .set('format',"json");
       return this.http.get(sparql, {
         headers: headers,
