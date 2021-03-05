@@ -1,12 +1,13 @@
 
 //ancien app.component.ts
 
-import { Component, OnInit, OnDestroy, AfterViewInit, EventEmitter, Output } from '@angular/core';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
+import { Observable, Subscription, Subject, from } from 'rxjs';
 import { AppAndDisplaySharedService } from '../services/app-and-display-shared.service';
 import { CreateItemToDisplayService } from '../services/create-item-to-display.service';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'display-component',
@@ -18,7 +19,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   @Output() clickedItem = new EventEmitter<any>();
   
-  constructor(private request:RequestService, private sharedService:AppAndDisplaySharedService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService){}
+  constructor(private changeDetector:ChangeDetectorRef, private request:RequestService, private sharedService:AppAndDisplaySharedService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService){}
 
   clickedArray:string[]=["",""];
   
@@ -110,8 +111,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
  onClick(item){ //handling click
   if(item.value !== undefined){
-  item = item.value.id; }
-  this.list=[];
+  item = item.value.id; };
+  this.isList=true;
   this.clickedArray[0] = item;
   this.clickedItem.emit(this.clickedArray);
   }
@@ -123,11 +124,11 @@ onClick2(sparqlList){ //handling click for sparql query
 
  ngOnInit(): void {
 
-  this.subscription2 = this.sharedService.list.subscribe(sparql => {  
-    this.list=[];
+  this.subscription2 = this.sharedService.list.pipe(first()).subscribe(sparql => {  
+    console.log(sparql);
     if (sparql !== undefined) {
-      this.isList = true;
       this.list=sparql.results.bindings;
+      console.log(this.list);
       
    //   setTimeout(this.list = sparql.results.bindings,2000);
     for(let i=0;i<this.list.length;i++){
@@ -136,11 +137,14 @@ onClick2(sparqlList){ //handling click for sparql query
         }
       }
        this.delayDisplayList();
+       this.isList = true;
     }
   );
 
-  this.subscription = this.sharedService.item.subscribe(item=>{
-  if (item !==undefined){
+  this.subscription = this.sharedService.item.pipe(first()).subscribe(item=>{
+  //  if (this.isList = false)  this.list=[];
+    //this.changeDetector.detectChanges();
+    if (item !==undefined){
     this.item = item;
     this.place = item[0].claims.P2.place;
     this.org = item[0].claims.P2.org;
@@ -891,7 +895,7 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
      if (document.getElementById("listing") != null) {  
        document.getElementById("listing").style.visibility = 'hidden';
        setTimeout(function() { 
-         document.getElementById("listing").style.visibility = 'visible';}, 1500);
+         document.getElementById("listing").style.visibility = 'visible';}, 1800);
        }
       }
 

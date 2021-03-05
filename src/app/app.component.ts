@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, tap, filter, takeWhile, mergeMap, exhaustMap, distinctUntilChanged, startWith } from 'rxjs/operators';
-import { Observable, pipe, from, of } from 'rxjs';
+import { Observable, EMPTY, pipe, from, of } from 'rxjs';
 import { HttpClient, HttpHeaders, JsonpClientBackend} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
@@ -109,7 +109,8 @@ displayClickedItem: string;
   this.items = [];
   this.searchToken = "off";
   this.changeDetector.detectChanges();
-   return this.sharedService.item
+  this.sharedService.list = of([{item:{}, itemLabel:{}}]);
+   return [this.sharedService.item, this.sharedService.list]
      }
 
   clickedItemHandler(item: any[]){ 
