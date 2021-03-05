@@ -41,8 +41,7 @@ export class CreateItemToDisplayService {
           this.addItemDetails.addQualifierItemDetails(itemsDetails, re, propertyIds);
           this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
-  u=      this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
-          
+          u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
           return [u, propertyIds, qualifierProperties, referenceProperties]
            }) 
         )

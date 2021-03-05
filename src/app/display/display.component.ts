@@ -23,7 +23,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   clickedArray:string[]=["",""];
   
   selectedItem:Observable<any>;
-  subscription:Subscription
+  subscription:Subscription;
+  subscription2:Subscription;
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
   selectedItems: any[];
@@ -54,6 +55,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   event:string;
   sources:string;
   other:string;
+  list:any[];
 
 
  
@@ -104,9 +106,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isSources:boolean = false;
   isActivity:boolean = false;
   isEvent:boolean = false;
+  isList:boolean = false;
 
  onClick(item){ //handling click
-  item = item.value.id;
+  if(item.value !== undefined){
+  item = item.value.id;}
   this.clickedArray[0] = item;
   this.clickedItem.emit(this.clickedArray);
   }
@@ -118,10 +122,23 @@ onClick2(sparqlList){ //handling click for sparql query
 
  ngOnInit(): void {
 
+  this.subscription2 = this.sharedService.list.subscribe(sparql => {  
+    if (sparql !== undefined) {
+      this.isList = true;
+      this.list=sparql.results.bindings;
+      
+   //   setTimeout(this.list = sparql.results.bindings,2000);
+    for(let i=0;i<this.list.length;i++){
+      this.list[i]["item"].id = this.list[i]["item"].value.replace(	
+        "https://database.factgrid.de/entity/", "")
+        }
+      }
+       this.delayDisplayList();
+    }
+  );
+
   this.subscription = this.sharedService.item.subscribe(item=>{
   if (item !==undefined){
-    console.log(item);
-  
     this.item = item;
     this.place = item[0].claims.P2.place;
     this.org = item[0].claims.P2.org;
@@ -134,7 +151,7 @@ onClick2(sparqlList){ //handling click for sparql query
 
     this.urlId = this.factGridUrl+this.id;
    
-    
+  
     if (item[0].claims.P48 !== undefined) {
     this.coords = item[0].claims.P48[0].mainsnak;
     }
@@ -803,7 +820,9 @@ onClick2(sparqlList){ //handling click for sparql query
 
     this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.printPublicationDetail);
     
-    if (this.mainList.length > 0) {  this.isMain = true };
+    if (this.mainList.length > 0) { 
+           this.isMain = true ;
+      }
 
     this.otherClaims = [];
       
@@ -850,6 +869,8 @@ onClick2(sparqlList){ //handling click for sparql query
     
     }
   )
+
+
 }
 
 qualifiersList(u){ //setting the list of qualifiers for a mainsnak
@@ -864,10 +885,14 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
      }
   }
 
+ delayDisplayList(){
+     if (document.getElementById("listing") != null) {  
+       document.getElementById("listing").style.visibility = 'hidden';
+       setTimeout(function() { 
+         document.getElementById("listing").style.visibility = 'visible';}, 1500);
+       }
+      }
 
-
-  
-  
 
 ngOnDestroy(): void {
    this.subscription.unsubscribe()

@@ -90,6 +90,11 @@ mat-card img{
   padding: 2 px;
 }
 
+.item-title-text {
+  line-height:1.2;
+  color:#283593;
+  }
+
 .blue-text {
   color:#283593;
   }

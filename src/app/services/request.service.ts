@@ -154,7 +154,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 }
   
   searchItem(label, lang) {
-   console.log(label);
    let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
     let params = new HttpParams().set('action',"wbsearchentities")
     .set('search',label)
@@ -173,15 +172,17 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   getItem(re): Observable<any> { return this.http.get(re).pipe(catchError((err)=> {return of(undefined)})) };
 
-  selectUrl(url:string) {  let selectUrl = re => re == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
-     "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json&origin=*" : re  };
+ // selectUrl(re:string) {  let selectUrl = re => re == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
+ //    "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json&origin=*" : re  };
 
   
   getList(sparql:string): Observable<any> {   
-       let params = new HttpParams()
+    let u
+    let params = new HttpParams()
        .set('format',"json")
-      return this.http.get(sparql, {
-        params: params})    
+      u= this.http.get(sparql, {
+        params: params}).pipe(catchError((err)=> {return of(undefined)}))  
+        return u
        }
 
  // selectUrl(url:string) {  let selectUrl = re => re == "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 

@@ -32,7 +32,7 @@
         <div fxFlex.gt-sm="100%" fxFlex>
         <mat-card-title-group>
           <mat-card-title>
-            <p class="blue-text">{{ label }}</p>
+            <p class="item-title-text">{{ label }}</p>
             <p class="percent">
               {{ aliases | join }}
             </p>
@@ -77,6 +77,17 @@
         </div>
       </mat-card>
     </div>
+    <div>
+      
+    </div>
+
+   
+    
+    
+
+
+
+
     <div [ngClass]="isMain ? 'show-division':'hide-division'"></div>
         <mat-card  class= mat-elevation-z8>
           <div>   
@@ -310,7 +321,22 @@
          </div>
        </mat-card-content>
        </div>
+
+       <div id="listing" [ngClass]="isList ? 'show-division':'hide-division'">      
+          <mat-card-content fxLayout="column wrap" 
+                             fxLayoutAlign="start stretch"
+                             fxLayoutGap="5px">
+          <div class="details"  *ngFor="let L of list">
+            <div flex-shrink flex-basis="auto">
+                <label class="details">{{L.itemLabel.value}}<span *ngIf="L.itemLabel.value"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(L.item.id)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+          </div>
+        </div>
+          </mat-card-content>
+      </div>
+
        </mat-card>
+
+  
      
       <div [ngClass]="isSources ? 'show-division':'hide-division'">
        <mat-card  class= mat-elevation-z8>

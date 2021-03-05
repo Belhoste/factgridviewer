@@ -8,6 +8,7 @@ import { RequestService } from './services/request.service';
 import { CreateItemToDisplayService} from './services/create-item-to-display.service';
 import { AppAndDisplaySharedService} from './services/app-and-display-shared.service';
 import { stringify } from '@angular/compiler/src/util';
+import { ListDetailsService } from './services/list-details.service';
 
 @Component({
   selector: 'app-root',
@@ -49,7 +50,7 @@ private getUrlSuffix= '&format=json&origin=*' ;
 displayClickedItem: string;
 
   constructor( private changeDetector: ChangeDetectorRef, public sharedService:AppAndDisplaySharedService, private http: HttpClient, 
-    private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService) {}
+    private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService, private setList:ListDetailsService) {}
 
   ngOnInit(): void {
 
@@ -117,7 +118,6 @@ displayClickedItem: string;
     let url = this.baseGetURL+item[0]+this.getUrlSuffix;
     if(url!=="https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"){
     this.sharedService.item=this.request.getItem(url).pipe(
-    tap(res=>console.log(res)),
     map(res => res=Object.values(res.entities)),
     switchMap(res =>this.sharedService.item= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
     );
@@ -138,21 +138,17 @@ displayClickedItem: string;
       this.selectedItems.unshift(u);
       if (this.selectedItems.length=51) {
          this.selectedItems.pop()};
-      localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
-      });
+         localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+        });
     
-      console.log(item[1]);
-    
-    if (item[1] !== undefined){
+  //  if (item[0] === undefined){ 
+  //    if (item[1] ==! undefined) {  //handle sparql queries
       this.sparql = this.newSparqlAdress(item[1]);
-      console.log(this.sparql);
-      this.sharedService.list=this.request.getList(this.sparql);
-      this.sharedService.list.subscribe(re=>console.log(re));
-    }
-    
-    
+      this.sharedService.list =this.request.getList(this.sparql);     
+  //        }
+  //     }
     this.searchToken = "off";
-    return this.sharedService.item
+    return [this.sharedService.item, this.sharedService.list]
   };
 
   researchFieldSelect(researchField){
