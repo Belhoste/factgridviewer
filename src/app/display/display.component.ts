@@ -110,7 +110,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
  onClick(item){ //handling click
   if(item.value !== undefined){
-  item = item.value.id;}
+  item = item.value.id; }
+  this.list=[];
   this.clickedArray[0] = item;
   this.clickedItem.emit(this.clickedArray);
   }
@@ -123,6 +124,7 @@ onClick2(sparqlList){ //handling click for sparql query
  ngOnInit(): void {
 
   this.subscription2 = this.sharedService.list.subscribe(sparql => {  
+    this.list=[];
     if (sparql !== undefined) {
       this.isList = true;
       this.list=sparql.results.bindings;
@@ -895,7 +897,8 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
 
 
 ngOnDestroy(): void {
-   this.subscription.unsubscribe()
+   this.subscription.unsubscribe();
+   this.subscription2.unsubscribe();
   }
 }
 
