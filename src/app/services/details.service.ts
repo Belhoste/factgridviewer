@@ -10,7 +10,7 @@ import { SelectedItemListService } from './selected-item-list.service';
 
 export class DetailsService {
 
-  constructor( private requestService:RequestService, private setLanguage:SetLanguageService ) { }
+  constructor(private requestService:RequestService, private setLanguage:SetLanguageService ) { }
 
 getReferenceProperties(u) {
   let values: any[] = Object.values(u.claims) ;

@@ -87,9 +87,11 @@ displayClickedItem: string;
   }
 
   onItemSelect(item){ 
+  console.log(item);
   this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
   this.sharedService.item.subscribe(re=>{
     let u = { value: {id: re[0].id}, label: re[0].label }
+    console.log(u);
     this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
     if (this.selectedItems !== undefined){
       for (let i=0; i<this.selectedItems.length; i++){

@@ -24,7 +24,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   clickedArray:string[]=["",""];
   
   selectedItem:Observable<any>;
-  subscription:Subscription;
+  subscription1:Subscription;
   subscription2:Subscription;
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
@@ -122,6 +122,13 @@ onClick2(sparqlList){ //handling click for sparql query
   this.clickedItem.emit(this.clickedArray);
   }
 
+/*onClick3(backList){ //handling click for backList
+    this.clickedArray[2]=backList;
+    console.log(backList);
+    this.clickedItem.emit(this.clickedArray);
+    }
+*/
+
  ngOnInit(): void {
 
   this.subscription2 = this.sharedService.list.pipe(first()).subscribe(sparql => {  
@@ -141,10 +148,11 @@ onClick2(sparqlList){ //handling click for sparql query
     }
   );
 
-  this.subscription = this.sharedService.item.pipe(first()).subscribe(item=>{
+  this.subscription1 = this.sharedService.item.pipe(first()).subscribe(item=>{
   //  if (this.isList = false)  this.list=[];
     //this.changeDetector.detectChanges();
     if (item !==undefined){
+    console.log(item);
     this.item = item;
     this.place = item[0].claims.P2.place;
     this.org = item[0].claims.P2.org;
@@ -901,7 +909,7 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
 
 
 ngOnDestroy(): void {
-   this.subscription.unsubscribe();
+   this.subscription1.unsubscribe();
    this.subscription2.unsubscribe();
   }
 }

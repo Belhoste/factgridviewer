@@ -49,6 +49,9 @@
           <span class="percent3"><a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
           </span>
           </div> 
+  <!--      <div *ngIf="id" class="percent2">
+            <span  class="property">items linked to this item:&nbsp;&nbsp;</span><span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick3(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   
+            </div> -->
           <div class="title2"></div>
           <div *ngIf="P2"  class="percent2">
             <span class="property">{{P2.label}}:&nbsp;</span><span *ngFor='let P of P2'>{{ P.mainsnak.label }},&nbsp;<span class="description-text">{{P.mainsnak.description}}</span>
@@ -328,7 +331,7 @@
                              fxLayoutGap="5px">
           <div class="details"  *ngFor="let L of list">
             <div flex-shrink flex-basis="auto">
-                <label class="details">{{L.itemLabel.value}}<span *ngIf="L.itemDescription.value">, {{L.itemDescription.value}}</span><span *ngIf="L.itemLabel.value"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(L.item.id)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+              <label>{{L.itemLabel.value}}<span class="description-text" *ngIf="L.itemDescription.value">, {{L.itemDescription.value}}</span><span *ngIf="L.itemLabel.value"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(L.item.id)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
           </div>
           <hr>
         </div>

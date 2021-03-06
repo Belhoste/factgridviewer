@@ -6,6 +6,7 @@ import { SetItemToDisplayService } from './set-item-to-display.service';
 import { ItemDetailsService } from './item-details.service';
 import { forkJoin, BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { BackListService } from './back-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +17,19 @@ export class CreateItemToDisplayService {
   private subject : BehaviorSubject <any> = new BehaviorSubject(null);
 
   constructor(private setLanguage:SetLanguageService, private details:DetailsService, private setItem:SetItemToDisplayService, 
-    private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService) { }
+    private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private backList:BackListService) { }
 
     createItemToDisplay(re, selectedLang) {
       let values = Object.values(re.claims);
       let propertyIds = Object.keys(re.claims);
+      (console.log(propertyIds));
       let u;
+      let backList;
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
-          map(res =>{     
+          map(res =>{    
+          //backList=this.backList.backList(re.id);
           let qualifierProperties=[];
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
           this.addItemDetails.addSidelinksDetails(re);
@@ -42,7 +46,7 @@ export class CreateItemToDisplayService {
           this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
           u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
-          return [u, propertyIds, qualifierProperties, referenceProperties]
+          return [u, propertyIds, qualifierProperties, referenceProperties, backList]
            }) 
         )
         return observedItem

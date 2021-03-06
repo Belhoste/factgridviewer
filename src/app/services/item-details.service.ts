@@ -98,7 +98,7 @@ export class ItemDetailsService {
                 if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
                  let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
                    for  (let k=0; k<props.length; k++){
-                     for (let l=0; l<items.length; l++){      
+                     for (let l=0; l<items.length; l++){    
                         if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.id !== items[l].id){ continue }
                           if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "wikibase-item"){
                             re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.label = items[l].label;
