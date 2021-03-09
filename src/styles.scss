@@ -56,9 +56,10 @@ $theming-material-components-theme: mat-light-theme(
 
   
 html, body {
-  
+  background-color: rgb(250, 245, 236);
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  
 }
 
 .mat-button-focus-overlay {
@@ -67,6 +68,5 @@ html, body {
 
 .mat-sidenav {
   min-width: 100px ;
-  max-width: 200px ;
 }
 

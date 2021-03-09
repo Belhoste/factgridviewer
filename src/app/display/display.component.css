@@ -31,6 +31,14 @@ mat-card img{
   margin-left: 2px;
 }
 
+.ground-div{
+  background-color:grey ;
+}
+
+.white-button{
+color:blanchedalmond;
+}
+
 .linksToItem-mat-card{
   height: fit-content;
   background-color:#e1f5fe !important;
