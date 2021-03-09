@@ -21,14 +21,19 @@ export class DisplayComponent implements OnInit, OnDestroy {
   
   constructor(private changeDetector:ChangeDetectorRef, private request:RequestService, private sharedService:AppAndDisplaySharedService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService){}
 
+  
+  
   clickedArray:string[]=["",""];
   
   selectedItem:Observable<any>;
   subscription1:Subscription;
   subscription2:Subscription;
+  subscription3:Subscription;
+
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
   selectedItems: any[];
+
 
   private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
   private getUrlSuffix= '&format=json' ; 
@@ -36,6 +41,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
   item:any[];
+  linkedItems:any[]; //backList
+  linkedItem:any //backList
   id:string = "";
   factGridUrl:string;
   urlId:string;
@@ -57,7 +64,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
   sources:string;
   other:string;
   list:any[];
-
 
  
  // properties for the header
@@ -131,16 +137,24 @@ onClick2(sparqlList){ //handling click for sparql query
 
  ngOnInit(): void {
 
-  this.subscription2 = this.sharedService.list.pipe(first()).subscribe(sparql => {  
-    console.log(sparql);
-    if (sparql !== undefined) {
-      this.list=sparql.results.bindings;
-      console.log(this.list);
-      
-   //   setTimeout(this.list = sparql.results.bindings,2000);
-    for(let i=0;i<this.list.length;i++){
-      this.list[i]["item"].id = this.list[i]["item"].value.replace(	
-        "https://database.factgrid.de/entity/", "")
+  this.subscription1 = this.sharedService.backList.subscribe(backList=>{
+    if (backList !== undefined){
+      this.linkedItems = backList;
+          } 
+    if (backList === undefined){
+      this.linkedItems = [{id:"Q220375", label:"none"}]
+         }
+       }
+    )
+
+  this.subscription2 = this.sharedService.list.subscribe(sparql => {  
+    if (sparql !== undefined){
+      if(sparql.results !== undefined){
+          this.list=sparql.results.bindings;  
+            for(let i=0;i<this.list.length;i++){
+               this.list[i]["item"].id = this.list[i]["item"].value.replace(	
+              "https://database.factgrid.de/entity/", "")
+          }
         }
       }
        this.delayDisplayList();
@@ -148,9 +162,7 @@ onClick2(sparqlList){ //handling click for sparql query
     }
   );
 
-  this.subscription1 = this.sharedService.item.pipe(first()).subscribe(item=>{
-  //  if (this.isList = false)  this.list=[];
-    //this.changeDetector.detectChanges();
+  this.subscription3 = this.sharedService.item.subscribe(item=>{
     if (item !==undefined){
     console.log(item);
     this.item = item;
@@ -159,9 +171,6 @@ onClick2(sparqlList){ //handling click for sparql query
     this.event =  item[0].claims.P2.event;
     this.sources = item[0].claims.P2.sources;
     this.main = item[0].claims.P2.main;
-    
- 
-    //this.itemContent = item[0];
 
     this.urlId = this.factGridUrl+this.id;
    
@@ -878,14 +887,12 @@ onClick2(sparqlList){ //handling click for sparql query
 
      if (this.wikis.length > 0) {   this.isWikis = true };
 
-
-      }
-    
-    }
-  )
-
-
+        }  
+       }
+    )
+  
 }
+
 
 qualifiersList(u){ //setting the list of qualifiers for a mainsnak
   for (let i=0;i<u.length;i++){
@@ -911,6 +918,7 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
 ngOnDestroy(): void {
    this.subscription1.unsubscribe();
    this.subscription2.unsubscribe();
+   this.subscription3.unsubscribe();
   }
 }
 

@@ -195,30 +195,24 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     }
 
   getBackList(item) : Observable<any> {  
-    let u;
-    let itemString:string;
-    itemString = "gbltitle=Item%3A"+item;
-    let gblTitle = { "item": itemString };
-    itemString = gblTitle.item;
-    console.log(gblTitle);
-    console.log(itemString);
+    item="Item:"+item;
+    console.log(item);
     const prefix = `https://database.factgrid.de/w/api.php?`
     const params = new HttpParams()
        .set('action',"query")
        .set('format',"json")
-       .set('useLang',"en")
+     //  .set('useLang',"en")
        .set('prop',"entityterms")
        .set('generator', "backlinks")
        .set('formatversion',"2")
        .set('wbetterms',"label")
        .set('gbllimit',"500")
        .set('gblnamespace',"120")
-       .set('gbltitle',itemString)
+       .set('gbltitle',item)
        .set('origin',"*")
 
-      u= this.http.get(prefix, {
+      return this.http.get(prefix, {
         params: params}).pipe(catchError((err)=> {return of(undefined)}))  
-        return u
        
       }
 

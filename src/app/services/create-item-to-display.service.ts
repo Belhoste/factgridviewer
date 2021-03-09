@@ -20,16 +20,16 @@ export class CreateItemToDisplayService {
     private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private backList:BackListService) { }
 
     createItemToDisplay(re, selectedLang) {
+      console.log(re);
       let values = Object.values(re.claims);
       let propertyIds = Object.keys(re.claims);
       (console.log(propertyIds));
       let u;
-      let backList;
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
           map(res =>{    
-          //backList=this.backList.backList(re.id);
+          let backList=this.backList.backList(re.id);
           let qualifierProperties=[];
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
           this.addItemDetails.addSidelinksDetails(re);
@@ -46,7 +46,7 @@ export class CreateItemToDisplayService {
           this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
           u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
-          return [u, propertyIds, qualifierProperties, referenceProperties, backList]
+          return [u, propertyIds, backList, qualifierProperties, referenceProperties]
            }) 
         )
         return observedItem
@@ -58,7 +58,3 @@ export class CreateItemToDisplayService {
     }
 }
   
-
- 
-  
-

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, tap, filter, takeWhile, mergeMap, exhaustMap, distinctUntilChanged, startWith } from 'rxjs/operators';
-import { Observable, EMPTY, pipe, from, of } from 'rxjs';
+import { Observable, EMPTY, pipe, from, of, forkJoin } from 'rxjs';
 import { HttpClient, HttpHeaders, JsonpClientBackend} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
@@ -9,6 +9,8 @@ import { CreateItemToDisplayService} from './services/create-item-to-display.ser
 import { AppAndDisplaySharedService} from './services/app-and-display-shared.service';
 import { stringify } from '@angular/compiler/src/util';
 import { ListDetailsService } from './services/list-details.service';
+import { BackListService } from './services/back-list.service';
+
 
 @Component({
   selector: 'app-root',
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy
   labels
   items = [];
   newItem;
+ 
 
 private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
 private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
@@ -50,7 +53,7 @@ private getUrlSuffix= '&format=json&origin=*' ;
 displayClickedItem: string;
 
   constructor( private changeDetector: ChangeDetectorRef, public sharedService:AppAndDisplaySharedService, private http: HttpClient, 
-    private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService, private setList:ListDetailsService) {}
+    private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService, private setList:ListDetailsService, private backList:BackListService) {}
 
   ngOnInit(): void {
 
@@ -87,8 +90,9 @@ displayClickedItem: string;
   }
 
   onItemSelect(item){ 
-  console.log(item);
+  this.sharedService.backList = this.backList.backList(item.id);
   this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
+  let itemToDisplay=this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
   this.sharedService.item.subscribe(re=>{
     let u = { value: {id: re[0].id}, label: re[0].label }
     console.log(u);
@@ -112,10 +116,22 @@ displayClickedItem: string;
   this.searchToken = "off";
   this.changeDetector.detectChanges();
   this.sharedService.list = of([{item:{}, itemLabel:{}}]);
-   return [this.sharedService.item, this.sharedService.list]
+ // let list=of([{item:{}, itemLabel:{}}]);
+//  let backList=this.backList.backList(item.id);
+  this.sharedService.backList.subscribe(res=>console.log(res));
+//  this.sharedService.item= forkJoin({itemToDisplay,list,backList})
+ // return this.sharedService.item
+   return this.sharedService
+   //[
+   // this.sharedService.item, 
+  //  this.sharedService.list, 
+  //  this.sharedService.backList]
      }
 
+  
+
   clickedItemHandler(item: any[]){ 
+    console.log(item[0]);
     this.searchToken= "on";
     this.changeDetector.detectChanges();
     let url = this.baseGetURL+item[0]+this.getUrlSuffix;
@@ -146,10 +162,12 @@ displayClickedItem: string;
     
   //  if (item[0] === undefined){ 
   //    if (item[1] ==! undefined) {  //handle sparql queries
-      this.sparql = this.newSparqlAdress(item[1]);
+      this.sparql = this.newSparqlAdress(item[1],this.selectedLang);
       this.sharedService.list =this.request.getList(this.sparql);     
   //        }
   //     }
+    this.sharedService.backList=this.backList.backList(item[0]);
+    this.sharedService.backList.subscribe(res=>console.log(res));
     this.searchToken = "off";
     return [this.sharedService.item, this.sharedService.list]
   };
@@ -220,10 +238,13 @@ displayClickedItem: string;
       ]
     }
 
-    newSparqlAdress(address:string) : string { 
+    newSparqlAdress(address:string, lang) : string { 
       const newPrefix = "https://database.factgrid.de/sparql?query=";
       const oldPrefix = "https://database.factgrid.de/query/#";
       address = address.replace(oldPrefix, newPrefix);
+     // lang="%2C"+lang+"%22";
+   //  address= address.replace("%2Cen%22",lang);
+      console.log(address);
       return address
       }
 

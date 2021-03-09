@@ -1,15 +1,20 @@
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { Injectable } from '@angular/core';
 import { RequestService } from './request.service'  ;
+import { map, tap } from 'rxjs/operators';
+import { BackListDetailsService} from './back-list-details.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackListService {
 
-  constructor(private requestService:RequestService) { }
+  constructor(private requestService:RequestService, private backListDetails:BackListDetailsService) { }
 
-  backList(item:string) { 
-    let list = this.requestService.getBackList(item).subscribe(re=>console.log(re))
-    return list
+  backList(item) { 
+    let list:any[];
+    let u = this.requestService.getBackList(item).pipe(
+    map(res=> {if(res.query ==! undefined) {this.backListDetails.setBackList(res.query.pages)}}))
+    return u
     }
 }

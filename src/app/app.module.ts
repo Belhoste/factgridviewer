@@ -29,6 +29,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
 import { MapComponent } from './display/map/map.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 
 
@@ -65,6 +66,7 @@ import { MapComponent } from './display/map/map.component';
     FlexLayoutModule,
     MatTooltipModule,
     MatDividerModule,
+    MatSidenavModule,
     TranslateModule.forRoot()
   ],
   bootstrap: [AppComponent]

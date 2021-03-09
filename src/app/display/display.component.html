@@ -10,14 +10,35 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
-  
+
   <div class = "parent" 
       fxLayout = "row"
       fxLayout.md="column"
       fxLayout.sm="column"
-      fxLayout.xs="column">   
+      fxLayout.xs="column">  
+
+    <div fxFlex="100%">
+      <mat-drawer-container class="example-container">
+      <mat-drawer  #drawer mode="push">
+        <div class="icon" class="mat-button.mat-small" fxLayoutAlign="start stretch">
+          <button mat-icon-button (click)="drawer.toggle()"><mat-icon color="primary">view_list</mat-icon></button>
+        </div>
+        <label class="property"><strong>&nbsp;&nbsp;linked pages&nbsp;&nbsp;</strong></label>
+        <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
+          {{linkedItem}}
+          <mat-list  *ngFor="let item of linkedItems">
+            <span mat-list-item class="percent2">
+              &nbsp;&nbsp;{{ item.label }}
+              <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(item.id)"><mat-icon [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;
+            </span>
+          </mat-list>
+        </mat-card-content>
+
+      </mat-drawer>
+      <mat-drawer-content>
+   
     
-    <div fxFlex="90%">
+    
    
     <div class = "parent" 
          fxLayout = "row"
@@ -32,7 +53,7 @@
         <div fxFlex.gt-sm="100%" fxFlex>
         <mat-card-title-group>
           <mat-card-title>
-            <p class="item-title-text">{{ label }}</p>
+            <p class="item-title-text">{{ label }}&nbsp;&nbsp;</p>
             <p class="percent">
               {{ aliases | join }}
             </p>
@@ -41,17 +62,14 @@
             <p>
                {{ description }}
             </p>
-          </mat-card-subtitle>         
-       
+          </mat-card-subtitle>  
+          
         </mat-card-title-group>
           <div *ngIf="id" class="percent2">
           <span  class="property">FactGrid ID:&nbsp;&nbsp;</span>
-          <span class="percent3"><a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
+          <span class="property"><a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
           </span>
           </div> 
-  <!--      <div *ngIf="id" class="percent2">
-            <span  class="property">items linked to this item:&nbsp;&nbsp;</span><span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick3(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>   
-            </div> -->
           <div class="title2"></div>
           <div *ngIf="P2"  class="percent2">
             <span class="property">{{P2.label}}:&nbsp;</span><span *ngFor='let P of P2'>{{ P.mainsnak.label }},&nbsp;<span class="description-text">{{P.mainsnak.description}}</span>
@@ -75,9 +93,17 @@
   
           <p *ngIf="P97" class="percent2">
             <span class="property">{{P97.label}}:&nbsp;</span><span *ngFor='let P of P97'>&nbsp;{{ P.mainsnak.label }},&nbsp;<span class="description-text">{{P.mainsnak.description}}</span>
-            <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
-          </p> 
+            <mat-icon-button color="primary" #content (click)="onClick(P.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;</span>
+          </p>
         </div>
+        <div fxLayout="column" fxLayoutAling="center">
+          
+        <div class="icon" class="mat-button.mat-small" >
+          <button mat-icon-button (click)="drawer.toggle()"><mat-icon color="primary">view_list</mat-icon></button>
+        </div>
+        
+      </div>
+
       </mat-card>
     </div>
     <div>
@@ -339,8 +365,6 @@
       </div>
 
        </mat-card>
-
-  
      
       <div [ngClass]="isSources ? 'show-division':'hide-division'">
        <mat-card  class= mat-elevation-z8>
@@ -389,7 +413,9 @@
        </div>
       </mat-card>
     </div>
+  
   </div>
+  
   
       <div fxFlex="20%">
     <div [ngClass]="isPicture ? 'show-division':'hide-division'"> 
@@ -436,6 +462,9 @@
       </div>
     </div> 
     </div>
+  
+  </mat-drawer-content>
+</mat-drawer-container>
   </div>
   <div fxFlex="10%">
     <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
@@ -456,9 +485,8 @@
       </div>
     </mat-card>
   </div>
-  </div>  
- 
     
-  
+
+</div>
   </body>
   
