@@ -7,7 +7,7 @@ import { Observable, Subject, concat, BehaviorSubject } from 'rxjs';
 })
 export class AppAndDisplaySharedService {
 
-  item: Observable<any>
+  data: Observable<any>
   list: Observable<any>
   backList: Observable<any>
  // clickedItem:Observable<any>;
@@ -22,7 +22,7 @@ export class AppAndDisplaySharedService {
   //set item(value:Observable<any>) { this.sharedService.next(value)};
  // get item(): Observable<any> { return this.sharedService.asObservable()};
 
-  constructor() { this.item = this.subject.asObservable(), this.list = this.subject2.asObservable(), this.backList = this.subject3.asObservable()
+  constructor() { this.data = this.subject.asObservable(), this.list = this.subject2.asObservable(), this.backList = this.subject3.asObservable()
  }
 
 }

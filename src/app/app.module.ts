@@ -30,6 +30,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
 import { MapComponent } from './display/map/map.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { BackListIdPipe } from './back-list-id.pipe';
 
 
 
@@ -47,6 +48,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     CustomDatePipe,
     ChangeUndefinedItemPipe,
     MapComponent,
+    BackListIdPipe,
   //  Display2Component
   ],
   imports: [

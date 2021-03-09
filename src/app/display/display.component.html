@@ -25,10 +25,10 @@
         </div>
         <label class="property"><strong>&nbsp;&nbsp;linked pages&nbsp;&nbsp;</strong></label>
         <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
-          {{linkedItem}}
+         
           <mat-list  *ngFor="let item of linkedItems">
             <span mat-list-item class="percent2">
-              &nbsp;&nbsp;{{ item.label }}
+              &nbsp;&nbsp;{{ item.label }} ({{ item.id }})
               <mat-icon-button color="primary" class="internalLink" #content (click)="onClick(item.id)"><mat-icon [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;
             </span>
           </mat-list>

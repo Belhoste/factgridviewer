@@ -211,8 +211,11 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
        .set('gbltitle',item)
        .set('origin',"*")
 
-      return this.http.get(prefix, {
+      let u= this.http.get(prefix, {
         params: params}).pipe(catchError((err)=> {return of(undefined)}))  
+      u.subscribe(res=>console.log(res));
+
+      return u
        
       }
 

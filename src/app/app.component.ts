@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy
 
   selectedItems:any[] = [];
 
-  sparql:string;
+  
 
 
   selectedResearchField: string = localStorage['selectedResearchField'];
@@ -90,10 +90,14 @@ displayClickedItem: string;
   }
 
   onItemSelect(item){ 
-  this.sharedService.backList = this.backList.backList(item.id);
-  this.sharedService.item = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
-  let itemToDisplay=this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
-  this.sharedService.item.subscribe(re=>{
+  let sparql = of([{item:{}, itemLabel:{}}]);
+  let backList = this.backList.backList(item.id);
+  backList.subscribe(res =>  console.log(res));
+  let itemToDisplay = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
+//  let itemToDisplay=this.createItemToDisplay.createItemToDisplay(item,this.selectedLang);
+  this.sharedService.data = forkJoin({ sparql,backList,itemToDisplay });
+  this.sharedService.data.subscribe(res => console.log(res.list));
+  itemToDisplay.subscribe(re=>{
     let u = { value: {id: re[0].id}, label: re[0].label }
     console.log(u);
     this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
@@ -115,17 +119,10 @@ displayClickedItem: string;
   this.items = [];
   this.searchToken = "off";
   this.changeDetector.detectChanges();
-  this.sharedService.list = of([{item:{}, itemLabel:{}}]);
- // let list=of([{item:{}, itemLabel:{}}]);
-//  let backList=this.backList.backList(item.id);
-  this.sharedService.backList.subscribe(res=>console.log(res));
-//  this.sharedService.item= forkJoin({itemToDisplay,list,backList})
+ // this.sharedService.backList.subscribe(res=>console.log(res));
+//  this.sharedService = forkJoin({this.sharedService.item, this.sharedService.list,this.sharedService.backList})
  // return this.sharedService.item
-   return this.sharedService
-   //[
-   // this.sharedService.item, 
-  //  this.sharedService.list, 
-  //  this.sharedService.backList]
+   return this.sharedService.data
      }
 
   
@@ -135,13 +132,14 @@ displayClickedItem: string;
     this.searchToken= "on";
     this.changeDetector.detectChanges();
     let url = this.baseGetURL+item[0]+this.getUrlSuffix;
+    let itemToDisplay;
     if(url!=="https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"){
-    this.sharedService.item=this.request.getItem(url).pipe(
+    itemToDisplay=this.request.getItem(url).pipe(
     map(res => res=Object.values(res.entities)),
-    switchMap(res =>this.sharedService.item= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
+    switchMap(res =>itemToDisplay= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
     );
-    };
-    this.sharedService.item.subscribe(re=>{
+    
+    itemToDisplay.subscribe(re=>{
       let u = { value: {id: re[0].id}, label: re[0].label }
       this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
       if (this.selectedItems !== undefined){
@@ -158,18 +156,20 @@ displayClickedItem: string;
       if (this.selectedItems.length=51) {
          this.selectedItems.pop()};
          localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
-        });
+        })
+        ;
+      };
     
   //  if (item[0] === undefined){ 
   //    if (item[1] ==! undefined) {  //handle sparql queries
-      this.sparql = this.newSparqlAdress(item[1],this.selectedLang);
-      this.sharedService.list =this.request.getList(this.sparql);     
+      let selectedSparql = this.newSparqlAdress(item[1],this.selectedLang);
+      let sparql =this.request.getList(selectedSparql);     
   //        }
   //     }
-    this.sharedService.backList=this.backList.backList(item[0]);
-    this.sharedService.backList.subscribe(res=>console.log(res));
+     let backList=this.backList.backList(item[0]);
+     this.sharedService.data = forkJoin({ sparql,backList,itemToDisplay }); 
     this.searchToken = "off";
-    return [this.sharedService.item, this.sharedService.list]
+    return this.sharedService.data
   };
 
   researchFieldSelect(researchField){
