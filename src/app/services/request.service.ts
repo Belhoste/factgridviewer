@@ -196,7 +196,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   getBackList(item) : Observable<any> {  
     item="Item:"+item;
-    console.log(item);
     const prefix = `https://database.factgrid.de/w/api.php?`
     const params = new HttpParams()
        .set('action',"query")
@@ -213,8 +212,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
       let u= this.http.get(prefix, {
         params: params}).pipe(catchError((err)=> {return of(undefined)}))  
-      u.subscribe(res=>console.log(res));
-
       return u
        
       }

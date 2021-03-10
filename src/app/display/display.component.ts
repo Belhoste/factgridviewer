@@ -117,11 +117,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isList:boolean = false;
 
  onClick(item){ //handling click
-  if(item.value !== undefined){
-  item = item.value.id; };
-  this.isList=true;
-  this.clickedArray[0] = item;
-  this.clickedItem.emit(this.clickedArray);
+    if(item.value !== undefined){
+      item = item.value.id; };
+    this.isList=true;
+    this.clickedArray[0] = item;
+    this.clickedItem.emit(this.clickedArray);
   }
 
 onClick2(sparqlList){ //handling click for sparql query
@@ -129,38 +129,19 @@ onClick2(sparqlList){ //handling click for sparql query
   this.clickedItem.emit(this.clickedArray);
   }
 
-/*onClick3(backList){ //handling click for backList
-    this.clickedArray[2]=backList;
-    console.log(backList);
-    this.clickedItem.emit(this.clickedArray);
-    }
-*/
-
  ngOnInit(): void {
 
-  this.subscription1 = this.sharedService.data.pipe(map(res=> { 
-    if( res.backList.query !== undefined) {
-    this.linkedItems= this.backListDetails.setBackList(res.backList.query.pages); console.log(res) }
+  this.subscription1 = this.sharedService.data.
+    pipe(map(res=> { 
+    if (res.backList.query !== undefined) {
+    this.linkedItems= this.backListDetails.setBackList(res.backList.query.pages) }
     if ( res.backList.query === undefined ) {
       this.linkedItems = [{id:"Q220375", label:"none"}]
     }
-    })).subscribe(res =>{ this.linkedItems;
-      console.log(this.linkedItems) }
+    })).
+    subscribe(res =>{ this.linkedItems ; }
       );
- /*   if (data.backList !== undefined){
-    
-         v.subscribe(u => console.log(u));
-      this.linkedItems = data.backList.query.pages;
-      console.log(this.linkedItems);
-    console.log(data.backList.query.pages.title)
-          } 
-    if (data.backList === undefined){
-      this.linkedItems = [{id:"Q220375", label:"none"}]
-         }
-         */
        
-    
-
   this.subscription2 = this.sharedService.data.subscribe(data => {  
     if (data.sparql !== undefined){
       if(data.sparql.results !== undefined){
@@ -178,7 +159,6 @@ onClick2(sparqlList){ //handling click for sparql query
 
   this.subscription3 = this.sharedService.data.subscribe(data=>{
     if (data.itemToDisplay !==undefined){
-    console.log(data);
     this.item = data.itemToDisplay;
     this.place = this.item[0].claims.P2.place;
     this.org = this.item[0].claims.P2.org;
@@ -471,7 +451,6 @@ onClick2(sparqlList){ //handling click for sparql query
         this.picture = this.item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value ;
     
      }
-     console.log(this.picture);
     }
   
   if (this.picture !==undefined) this.isPicture = true;

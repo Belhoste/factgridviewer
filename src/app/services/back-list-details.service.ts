@@ -16,7 +16,6 @@ setBackList(list:any[]) {
   if(list[i]['entityterms']===undefined){continue};
   backList[i].label=list[i]['entityterms']['label'][0];
   }
-  console.log(backList)
   return backList
 }
 

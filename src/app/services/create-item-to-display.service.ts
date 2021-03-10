@@ -20,10 +20,8 @@ export class CreateItemToDisplayService {
     private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private backList:BackListService) { }
 
     createItemToDisplay(re, selectedLang) {
-      console.log(re);
       let values = Object.values(re.claims);
       let propertyIds = Object.keys(re.claims);
-      (console.log(propertyIds));
       let u;
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
