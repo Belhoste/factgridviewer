@@ -459,31 +459,33 @@
           </mat-list>
         </mat-card>
       </div>
+      
+      <div>
+        <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
+          <div fxLayout="column">
+            <div class="percent" fxLayout="row wrap">
+               <mat-card-subtitle class="pink-text">you have visited</mat-card-subtitle>
+              </div>
+              <div>
+                 <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+                    <mat-list  *ngFor="let selectedItem of selectedItems">
+                      <span *ngIf="selectedItem" mat-list-item class="percent2" class="white-text">
+                         {{selectedItem.label}}&nbsp;
+                        <mat-icon-button class="internalLink" #content (click)="onClick(selectedItem)"><mat-icon [inline]="true">open_in_new</mat-icon></mat-icon-button>
+                      </span>
+                    </mat-list>
+                  </mat-card-content>
+                </div>
+              </div>
+            </mat-card>
+          </div>
     </div> 
     </div>
   
   </mat-drawer-content>
 </mat-drawer-container>
   </div>
-  <div fxFlex="10%">
-    <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
-      <div fxLayout="column">
-        <div class="percent" fxLayout="row wrap">
-          <mat-card-subtitle class="pink-text">you have visited</mat-card-subtitle>
-        </div>
-        <div>
-          <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
-            <mat-list  *ngFor="let selectedItem of selectedItems">
-              <span *ngIf="selectedItem" mat-list-item class="percent2" class="white-text">
-                 {{selectedItem.label}}&nbsp;
-                <mat-icon-button class="internalLink" #content (click)="onClick(selectedItem)"><mat-icon [inline]="true">open_in_new</mat-icon></mat-icon-button>
-              </span>
-            </mat-list>
-          </mat-card-content>
-        </div>
-      </div>
-    </mat-card>
-  </div>
+  
     
 
 </div>
