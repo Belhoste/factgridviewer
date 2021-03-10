@@ -31,6 +31,20 @@ mat-card img{
   margin-left: 2px;
 }
 
+.external-links {
+  height: fit-content;
+  background-color:rgb(250, 235, 187);
+  margin-bottom: 4px;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+
 .ground-div{
   background-color:grey ;
 }
@@ -107,6 +121,12 @@ color:blanchedalmond;
   color:#283593;
   }
 
+.blue-text2 {
+    color:#283593;
+    font-size: 120%;
+    font-weight: 600;
+    }
+
 .pink-text {
   color:#FF4081;
 }
@@ -128,7 +148,7 @@ color:blanchedalmond;
 }
 
 .title2 {
-  padding-top: 14px;
+  padding-top: 8px;
 }
 
 .details {

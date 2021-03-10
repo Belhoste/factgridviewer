@@ -433,12 +433,12 @@
       </div>  
       <div>	
   <!--      [ngClass]="isExternalLinks || isWikis ? 'show-division':'hide-division'"--->
-        <mat-card class= mat-elevation-z8>
-          <div class="title">
+        <mat-card class= mat-elevation-z8  class="external-links">
+          <div>
           <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
           <hr>
           </div>
-          <div>
+          
           <mat-list  *ngFor="let externalLink of externalLinks">
             <span mat-list-item >
                 <span>{{externalLink.label}}: </span><a href ="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
@@ -446,8 +446,8 @@
             <hr>
           </mat-list>
           <div></div>
-         </div>
-        <div class="title2">
+         
+        <div>
           <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
           <hr>
         </div>

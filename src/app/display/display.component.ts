@@ -448,8 +448,7 @@ onClick2(sparqlList){ //handling click for sparql query
     if (this.item[0].claims.P189[0].references !==undefined){
      if (this.item[0].claims.P189[0].references[0].snaks.P55 !==undefined)
 //      this.picture = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png'
-        this.picture = this.item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value ;
-    
+       this.picture = this.item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value ;
      }
     }
   
