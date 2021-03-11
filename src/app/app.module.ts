@@ -31,7 +31,6 @@ import { MapComponent } from './display/map/map.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { BackListIdPipe } from './back-list-id.pipe';
 import { SlashJoinPipe } from './slash-join.pipe';
-import { SpinnerComponent } from './spinner/spinner.component';
 import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
 
 
@@ -52,8 +51,6 @@ import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-s
     MapComponent,
     BackListIdPipe,
     SlashJoinPipe,
-    SpinnerComponent,
-  //  Display2Component
   ],
   imports: [
     BrowserModule,

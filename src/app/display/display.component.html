@@ -18,7 +18,7 @@
       fxLayout.xs="column">  
     
   <div class = "spinner">
-       <mat-spinner *ngIf="isSpinner" color=accent diameter=50 mode="indeterminate"></mat-spinner>
+       <mat-spinner *ngIf="isSpinner" diameter=50 mode="indeterminate"></mat-spinner>
   </div>
 
     <div  *ngIf="!isSpinner" fxFlex="100%">
@@ -61,11 +61,13 @@
 	    <div>
       <mat-card  class= mat-elevation-z8>
         <div fxFlex.gt-sm="100%" fxFlex>
-          <div fxLayoutAlign= "end" fxLayout ="row wrap" fxLayoutGap="22px"> 
+          <div>
+          <div fxLayoutAlign= "end" fxLayout ="row wrap" fxLayoutGap="22px grid"> 
             <div *ngFor="let lang of langs">
               <div  color="primary" class="internalLink" (click)="changeLang($any($event.target).textContent)">{{ lang.lang }}/</div>
           </div>
-        </div>
+         </div>
+      </div>
         <mat-card-title-group>
           <mat-card-title>
             <p class="item-title-text">{{ label }}&nbsp;&nbsp;</p>

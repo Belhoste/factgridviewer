@@ -6,9 +6,6 @@
     <body>
   
     <mat-toolbar color="primary" fxLayout="row">
-    <!---    <div>FactGrid 
-          <span fxFlex fxHide.xs>: a database for historians</span>
-        </div>-->
         <span class="example-spacer"></span>
         <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Example icon-button with a menu">
             <mat-icon>language</mat-icon>
@@ -30,11 +27,8 @@
         </mat-menu>
     </mat-toolbar>
     
-   <!-- <div class = "parent" 
-    fxLayout = "column">
-    -->
     <div>
-      <div class="FactGrid-div">
+      <div class="FactGrid-div" [@slideUp]="isDown ? 'down' :'up'">
       <div class="FactGridTitle-div">
             <p>FactGrid</p>
       </div>
@@ -46,21 +40,7 @@
       </mat-form-field>
     </div>
   </div>
-  <app-spinner  [ngClass]="isSpinner ? 'show-division':'hide-division'"></app-spinner>
 
-  
-  
- <!---     <div>
-        <ul style="list-style: none;" >
-            <li *ngFor="let item of items" >
-                  <button mat-raised-button color="primary" style="height:25px;width:90%"  (click)="onItemSelect(item)">
-                    {{item.label}}, {{item.description }}
-                </button>
-            </li>
-        </ul>
-     </div>
-
---->
     <div  *ngIf="searchToken === 'on'" fxLayout="row" fxLayoutAlign="space-around center">
       <div class="search-div">
       <mat-card  fxFlex class= mat-elevation-z8fx>  
@@ -75,24 +55,7 @@
     </div>
     </div>
 
- 
-     <!-- 
-   </div>
-
-     
-  
-  
- 
-  
-  <display-component *ngIf="searchToken === 'off'" [item]="selectedItem"></display-component> -->
- 
-<!-- <display-component *ngIf="searchToken === 'off'"></display-component>-->
-
 <display-component *ngIf="searchToken === 'off'" (clickedItem)="clickedItemHandler($event)"></display-component>
-
-<!--- <display2-component *ngIf="searchToken === 'off'"></display2-component>-->
-
-
 
 </body>
 

@@ -10,12 +10,14 @@ import { AppAndDisplaySharedService} from './services/app-and-display-shared.ser
 import { stringify } from '@angular/compiler/src/util';
 import { ListDetailsService } from './services/list-details.service';
 import { BackListService } from './services/back-list.service';
+import { SlideUpAnimation} from './slide-up-animation';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [SlideUpAnimation]
 })
 export class AppComponent implements OnInit, OnDestroy 
 {
@@ -39,7 +41,12 @@ export class AppComponent implements OnInit, OnDestroy
  public selectedItem:Observable<any>;
 
  searchToken:string = "on";  //initialization of the token used to hide/display the display component
- isSpinner:boolean = false;
+
+ //animationState = 'in';
+
+ public isDown: boolean = true;
+ //state:string = 'down';
+
   labels
   items = [];
   newItem;
@@ -89,12 +96,8 @@ displayClickedItem: string;
     })
   }
 
-  onItemSelect(item){  
-
-  this.isSpinner=true;
-  this.changeDetector.detectChanges();
-  console.log(this.isSpinner);
-  //handle the selected item in the search engine
+  onItemSelect(item){  //handle the selected item in the search engine
+  if(this.isDown = true) {this.isDown = !this.isDown;} // slide up the title FactGrid
   let sparql = of([{item:{}, itemLabel:{}}]); //initialization of the sparql list
   let backList = this.backList.backList(item.id); //back list of the selected item
   let itemToDisplay = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang); //selected item ready to display
@@ -119,17 +122,12 @@ displayClickedItem: string;
     });
   this.items = [];
   this.searchToken = "off"; //to display the display component
-  this.isSpinner = false;
-  console.log(this.isSpinner);
   this.changeDetector.detectChanges(); //to detect the change without delay
    return this.sharedService.data
      }
 
-  
-
      clickedItemHandler(item: any[]){ 
       this.searchToken= "on"; //to hide the display component
-      this.isSpinner=true;
       this.changeDetector.detectChanges()
       let url;
       let itemToDisplay;
@@ -177,7 +175,6 @@ displayClickedItem: string;
         let sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display    
         this.sharedService.data = forkJoin({ backList,sparql,itemToDisplay }); 
         this.searchToken = "off";
-        this.isSpinner = false;
       return this.sharedService
     };
 
@@ -253,7 +250,7 @@ displayClickedItem: string;
       address = address.replace(oldPrefix, newPrefix);
       return address
       }
-
+      
      ngOnDestroy(): void {
        this.labels.unsubscribe()
        }

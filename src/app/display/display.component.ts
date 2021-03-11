@@ -40,7 +40,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
-  langs =[{lang:"en"}, {lang:"de"}, {lang:"fr"}, {lang:"..."}]
+  langs =[{lang:"en"}, {lang:"de"}, {lang:"fr"}, {lang:"  "}]
 
   item:any[];
   linkedItems:any[]; //backList
