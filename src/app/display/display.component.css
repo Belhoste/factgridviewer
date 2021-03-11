@@ -164,24 +164,24 @@ color:blanchedalmond;
 .subdivision-title {
   color:rgb(158, 155, 155);
   ;
-  font-size: 20px !important;
-  font-weight: 600;
+  font-size: 25px !important;
+  font-weight: 321;
   padding: 12 px;
   margin: 6 px;
 }
 
 .externalLinks-title {
   color:#AD1457;
-  font-size: 20px !important;
-  font-weight: 600;
+  font-size: 25px !important;
+  font-weight: 321;
   padding: 12 px;
   margin: 6 px;
 }
 
 .selectedList-title {
   color:white;
-  font-size: 20px !important;
-  font-weight: 600;
+  font-size: 25px !important;
+  font-weight: 321;
   padding: 12 px;
   margin: 6 px;
 }
