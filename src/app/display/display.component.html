@@ -121,8 +121,10 @@
 
     <div [ngClass]="isMain ? 'show-division':'hide-division'"></div>
         <mat-card  class= mat-elevation-z8>
-          <div>   
-          <mat-card-subtitle class="percent3" *ngIf='"main"!==undefined'>{{main}}</mat-card-subtitle>
+          <div> 
+          <div>  
+          <div class="subdivision-title" *ngIf='"main"!==undefined'>{{main}}</div>
+          </div>
           <hr>      
           <mat-card-content fxLayout="column wrap" 
                              fxLayoutAlign="start stretch"
@@ -186,7 +188,7 @@
           </div>
           
         <div [ngClass]="isTraining ? 'show-division':'hide-division'">
-          <mat-card-subtitle class="percent3">{{training}}</mat-card-subtitle> 
+          <div class="subdivision-title">{{training}}</div> 
           <hr>
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
             <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of education">
@@ -228,7 +230,7 @@
       </div>
        
         <div [ngClass]="isCareer ? 'show-division':'hide-division'">
-        <mat-card-subtitle class="percent3">{{career}}</mat-card-subtitle>
+        <div class="subdivision-title">{{career}}</div>
         <hr>
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">
@@ -270,7 +272,7 @@
       </div>
 
       <div [ngClass]="isSociability ? 'show-division':'hide-division'">
-        <mat-card-subtitle class="percent3">{{sociability}}</mat-card-subtitle>
+        <div class="subdivision-title">{{sociability}}</div>
         <hr>
         <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sociabilityAndCulture">
@@ -312,7 +314,7 @@
         </div>
     
         <div [ngClass]="isOther ? 'show-division':'hide-division'">     
-          <mat-card-subtitle class="percent3">{{other}}</mat-card-subtitle>   
+          <div class="subdivision-title">{{other}}</div>   
           <hr>    
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
@@ -372,7 +374,7 @@
        <mat-card  class= mat-elevation-z8>
         <div>
          <hr>
-         <mat-card-subtitle class="percent3">{{sources}}</mat-card-subtitle>
+         <div class="subdivision-title">{{sources}}</div>
          <hr>
          <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
           <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sourcesList">
@@ -438,7 +440,7 @@
   <!--      [ngClass]="isExternalLinks || isWikis ? 'show-division':'hide-division'"--->
         <mat-card class= mat-elevation-z8  class="external-links">
           <div>
-          <mat-card-subtitle class="percent3">external links</mat-card-subtitle>
+            <div class="externalLinks-title">external links</div>
           <hr>
           </div>
           
@@ -451,7 +453,7 @@
           <div></div>
          
         <div>
-          <mat-card-subtitle class="percent3">Wikis</mat-card-subtitle>
+          <div class="externalLinks-title">Wikis</div>
           <hr>
         </div>
           <mat-list  *ngFor="let wiki of wikis">
@@ -467,7 +469,7 @@
         <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
           <div fxLayout="column">
             <div class="percent" fxLayout="row wrap">
-               <mat-card-subtitle class="pink-text">you have visited</mat-card-subtitle>
+               <div class="selectedList-title">you have visited</div>
               </div>
               <div>
                  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
