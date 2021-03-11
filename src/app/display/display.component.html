@@ -16,8 +16,12 @@
       fxLayout.md="column"
       fxLayout.sm="column"
       fxLayout.xs="column">  
+    
+  <div class = "spinner">
+       <mat-spinner *ngIf="isSpinner" color=accent diameter=50 mode="indeterminate"></mat-spinner>
+  </div>
 
-    <div fxFlex="100%">
+    <div  *ngIf="!isSpinner" fxFlex="100%">
       <mat-drawer-container class="example-container">
       <mat-drawer  #drawer mode="push">
         <div class="ground-div" fxLayoutAlign="end stretch">
@@ -26,7 +30,6 @@
         </div>
       </div>
         <mat-card>
-        
         <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
           <label class="property"><strong>&nbsp;&nbsp;linked pages&nbsp;&nbsp;</strong></label>
           <mat-list  *ngFor="let item of linkedItems">
@@ -45,6 +48,7 @@
             <button mat-icon-button (click)="drawer.toggle()"><mat-icon class="white-button">chevron_left</mat-icon></button>
           </div>
         </div>
+
    
     <div class = "parent" 
          fxLayout = "row"
@@ -57,7 +61,11 @@
 	    <div>
       <mat-card  class= mat-elevation-z8>
         <div fxFlex.gt-sm="100%" fxFlex>
- 
+          <div fxLayoutAlign= "end" fxLayout ="row wrap" fxLayoutGap="22px"> 
+            <div *ngFor="let lang of langs">
+              <div  color="primary" class="internalLink" (click)="changeLang($any($event.target).textContent)">{{ lang.lang }}/</div>
+          </div>
+        </div>
         <mat-card-title-group>
           <mat-card-title>
             <p class="item-title-text">{{ label }}&nbsp;&nbsp;</p>
@@ -108,13 +116,6 @@
     <div>
       
     </div>
-
-   
-    
-    
-
-
-
 
     <div [ngClass]="isMain ? 'show-division':'hide-division'"></div>
         <mat-card  class= mat-elevation-z8>

@@ -87,7 +87,16 @@ color:blanchedalmond;
   width: 40%; 
   height:100px;
   margin: 10px;
-  
+}
+
+.spinner {
+  background-color: rgb(250, 245, 236);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%); 
 }
 
 .hide-division {

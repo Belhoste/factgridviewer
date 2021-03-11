@@ -30,9 +30,6 @@ export class AppComponent implements OnInit, OnDestroy
 
   selectedItems:any[] = []; //initialization of the array of selected items
 
-  
-
-
   selectedResearchField: string = localStorage['selectedResearchField']; //storage of the selected research field
 
   title = 'factgrid';
@@ -42,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy
  public selectedItem:Observable<any>;
 
  searchToken:string = "on";  //initialization of the token used to hide/display the display component
+ isSpinner:boolean = false;
   labels
   items = [];
   newItem;
@@ -91,7 +89,12 @@ displayClickedItem: string;
     })
   }
 
-  onItemSelect(item){  //handle the selected item in the search engine
+  onItemSelect(item){  
+
+  this.isSpinner=true;
+  this.changeDetector.detectChanges();
+  console.log(this.isSpinner);
+  //handle the selected item in the search engine
   let sparql = of([{item:{}, itemLabel:{}}]); //initialization of the sparql list
   let backList = this.backList.backList(item.id); //back list of the selected item
   let itemToDisplay = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang); //selected item ready to display
@@ -116,6 +119,8 @@ displayClickedItem: string;
     });
   this.items = [];
   this.searchToken = "off"; //to display the display component
+  this.isSpinner = false;
+  console.log(this.isSpinner);
   this.changeDetector.detectChanges(); //to detect the change without delay
    return this.sharedService.data
      }
@@ -124,6 +129,7 @@ displayClickedItem: string;
 
      clickedItemHandler(item: any[]){ 
       this.searchToken= "on"; //to hide the display component
+      this.isSpinner=true;
       this.changeDetector.detectChanges()
       let url;
       let itemToDisplay;
@@ -171,6 +177,7 @@ displayClickedItem: string;
         let sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display    
         this.sharedService.data = forkJoin({ backList,sparql,itemToDisplay }); 
         this.searchToken = "off";
+        this.isSpinner = false;
       return this.sharedService
     };
 

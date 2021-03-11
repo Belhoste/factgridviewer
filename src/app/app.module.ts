@@ -16,7 +16,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 import { AppComponent } from './app.component';
-import { ItemSelectComponent } from './item-select/item-select.component';
 import { DisplayComponent } from './display/display.component';
 import { JoinPipe } from './join.pipe';
 import { CommaJoinPipe } from './comma-join.pipe';
@@ -31,6 +30,10 @@ import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
 import { MapComponent } from './display/map/map.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { BackListIdPipe } from './back-list-id.pipe';
+import { SlashJoinPipe } from './slash-join.pipe';
+import { SpinnerComponent } from './spinner/spinner.component';
+import {MatProgressSpinnerModule, MatSpinner} from '@angular/material/progress-spinner';
+
 
 
 
@@ -42,13 +45,14 @@ import { BackListIdPipe } from './back-list-id.pipe';
   declarations: [
     AppComponent,
     DisplayComponent,
-    ItemSelectComponent,
     JoinPipe,
     CommaJoinPipe,
     CustomDatePipe,
     ChangeUndefinedItemPipe,
     MapComponent,
     BackListIdPipe,
+    SlashJoinPipe,
+    SpinnerComponent,
   //  Display2Component
   ],
   imports: [
@@ -69,6 +73,7 @@ import { BackListIdPipe } from './back-list-id.pipe';
     MatTooltipModule,
     MatDividerModule,
     MatSidenavModule,
+    MatProgressSpinnerModule,
     TranslateModule.forRoot()
   ],
   bootstrap: [AppComponent]

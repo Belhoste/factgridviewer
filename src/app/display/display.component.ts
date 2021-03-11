@@ -22,8 +22,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   
   constructor(private changeDetector:ChangeDetectorRef, private request:RequestService, private sharedService:AppAndDisplaySharedService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService, private backListDetails:BackListDetailsService){}
 
-  
-  
+  isSpinner:boolean = false;
   clickedArray:string[]=["",""];
   
   selectedItem:Observable<any>;
@@ -40,6 +39,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   private getUrlSuffix= '&format=json' ; 
 
   factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
+
+  langs =[{lang:"en"}, {lang:"de"}, {lang:"fr"}, {lang:"..."}]
 
   item:any[];
   linkedItems:any[]; //backList
@@ -130,6 +131,9 @@ onClick2(sparqlList){ //handling click for sparql query
   }
 
  ngOnInit(): void {
+  
+  this.langs;
+  this.isSpinner = true;
 
   this.subscription1 = this.sharedService.data.
     pipe(map(res=> { 
@@ -880,8 +884,11 @@ onClick2(sparqlList){ //handling click for sparql query
      if (this.wikis.length > 0) {   this.isWikis = true };
 
         }  
+
+        this.isSpinner = false;
+
        }
-    )
+   )
   
 }
 
@@ -906,8 +913,13 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
        }
       }
 
+  changeLang(lang:string){
+    
+  }
 
-ngOnDestroy(): void {
+
+
+  ngOnDestroy(): void {
    this.subscription1.unsubscribe();
    this.subscription2.unsubscribe();
    this.subscription3.unsubscribe();
