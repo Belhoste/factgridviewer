@@ -83,7 +83,7 @@ displayClickedItem: string;
 
    
     this.subtitle = "a database for historians"
-    if (this.selectedLang === "de") { this.subtitle = "eine Databank for historiker" }
+    if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker" }
     if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historiens"}
     
     
