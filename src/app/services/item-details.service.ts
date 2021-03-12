@@ -29,6 +29,7 @@ export class ItemDetailsService {
         else if ( lang === "fr") {re.claims[propertyIds[i]].sources = "sources"};
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q7") {
+        re.claims[propertyIds[i]].person = "person";
         if ( lang === "en") {re.claims[propertyIds[i]].main = "life and family"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Leben und Familie"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "vie et famille"};
@@ -43,6 +44,7 @@ export class ItemDetailsService {
         else if ( lang === "fr") {re.claims[propertyIds[i]].sociability = "sociabilité et culture"};
             }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q8") {
+        re.claims[propertyIds[i]].place = "place";
         if ( lang === "en") {re.claims[propertyIds[i]].main = "location and situation"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Standort und Lage"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "localisation et situation"};
@@ -57,11 +59,13 @@ export class ItemDetailsService {
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q140806" ||
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q11214" ||
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q164344") {
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "organisation"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Organisation"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "organisation"};
+            re.claims[propertyIds[i]].org = "org";
+            if ( lang === "en") {re.claims[propertyIds[i]].main = "organisation"}
+            else if ( lang === "de") {re.claims[propertyIds[i]].main = "Organisation"}
+            else if ( lang === "fr") {re.claims[propertyIds[i]].main = "organisation"};
       }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q20") {
+        re.claims[propertyIds[i]].document = "publication";
         if ( lang === "en") {re.claims[propertyIds[i]].main = "print publication"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Druckpublikation"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "publication imprimée"};
@@ -69,11 +73,13 @@ export class ItemDetailsService {
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q146602" ||
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21909" ||
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q37073") {
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
+            re.claims[propertyIds[i]].activity = "activity";
+            if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
+            else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
+            else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
       }
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q10671") {
+        re.claims[propertyIds[i]].document = "document";
         if ( lang === "en") {re.claims[propertyIds[i]].main = "document"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Dokument"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "document"};

@@ -30,8 +30,8 @@
         </div>
       </div>
         <mat-card>
+        <div class="subdivision-title" *ngIf='"main"!==undefined'>linked pages</div>
         <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
-          <label class="property"><strong>&nbsp;&nbsp;linked pages&nbsp;&nbsp;</strong></label>
           <mat-list  *ngFor="let item of linkedItems">
             <mat-divider></mat-divider>
             <span mat-list-item class="percent2">
@@ -434,7 +434,7 @@
   <!--      [ngClass]="isExternalLinks || isWikis ? 'show-division':'hide-division'"--->
         <mat-card class= mat-elevation-z8  class="external-links">
           <div>
-            <div class="externalLinks-title">external links</div>
+            <div class="subdivision-title">external links</div>
           <hr>
           </div>
           
@@ -447,7 +447,7 @@
           <div></div>
          
         <div>
-          <div class="externalLinks-title">Wikis</div>
+          <div class="subdivision-title">Wikis</div>
           <hr>
         </div>
           <mat-list  *ngFor="let wiki of wikis">
@@ -462,9 +462,9 @@
       <div>
         <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
           <div fxLayout="column">
-            <div class="percent" fxLayout="row wrap">
+            
                <div class="selectedList-title">you have visited</div>
-              </div>
+              <hr>
               <div>
                  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
                     <mat-list  *ngFor="let selectedItem of selectedItems">

@@ -92,7 +92,7 @@ color:white;
 .spinner {
   background-color: rgb(250, 245, 236);
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   -moz-transform: translateX(-50%) translateY(-50%);
   -webkit-transform: translateX(-50%) translateY(-50%);
@@ -162,12 +162,12 @@ color:white;
 }
 
 .subdivision-title {
-  color:black;
+  color:#AD1457;
   font-size: 25px !important;
   font-weight: 360;
   padding: 5 px;
   margin-left: auto;
-  height:50px;
+  height:40px;
   display:flex;
   align-items: center;
 }
@@ -175,17 +175,19 @@ color:white;
 .externalLinks-title {
   color:#AD1457;
   font-size: 25px !important;
-  font-weight: 321;
-  padding: 12 px;
-  margin: 6 px;
+  font-weight: 360;
+  padding: 5 px;
+  margin-left: auto;
+  height:40px;
 }
 
 .selectedList-title {
   color:white;
   font-size: 25px !important;
-  font-weight: 321;
-  padding: 12 px;
-  margin: 6 px;
+  font-weight: 360;
+  padding: 5 px;
+  margin: 0px;
+  height:40px;
 }
 
 .details {
