@@ -299,12 +299,7 @@ onClick2(sparqlList){ //handling click for sparql query
   ///picture
  
   if (this.item[0].claims.P189 !==undefined) {
- //   if (this.item[0].claims.P189[0].references !==undefined){
-//     if (this.item[0].claims.P189[0].references[0].snaks.P55 !==undefined)
-//      this.picture = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png'
-//       this.picture = this.item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value ;
          this.picture = this.baseWikimediaURL+this.item[0].claims.P189[0].mainsnak.datavalue.value 
-//     }
     }
   
   if (this.picture !==undefined) this.isPicture = true;
@@ -359,7 +354,7 @@ if(this.item[0].claims.P2.org !== undefined) {
 
     this.externalLinks = [];
      
-    this.externalLinksDisplay.setExternalLinksDisplay(this.item,this.sourcesList); 
+    this.externalLinksDisplay.setExternalLinksDisplay(this.item,this.externalLinks); 
                      
     if (this.externalLinks.length > 0) {  this.isExternalLinks = true };  
     

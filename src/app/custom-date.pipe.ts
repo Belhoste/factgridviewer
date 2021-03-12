@@ -15,6 +15,7 @@ export class CustomDatePipe extends DatePipe implements PipeTransform { //transf
   transform(value: any): any {
     if (value !== undefined)
     value = value.substring(1);
+    console.log(value);
  //   return super.transform(value, pattern ='mediumDate', this.translateService.currentLang)
     return super.transform(value)
     ;
