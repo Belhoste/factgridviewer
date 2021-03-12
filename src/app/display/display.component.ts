@@ -46,6 +46,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
   linkedPagesTitle:string;
+  mainPage:string;
   externalLinksTitle:string;
   formerVisitsTitle:string;
 
@@ -155,6 +156,10 @@ onClick2(sparqlList){ //handling click for sparql query
   this.linkedPagesTitle = "linked pages"
   if(this.selectedLang === "de") {this.linkedPagesTitle = "verlinkte Seiten"};
   if(this.selectedLang === "fr") {this.linkedPagesTitle = "pages liées"}
+
+  this.mainPage = "main page"
+  if(this.selectedLang === "de") {this.mainPage = "HauptSeite"};
+  if(this.selectedLang === "fr") {this.mainPage = "page principale"}
 
   this.externalLinksTitle = "external links"
   if(this.selectedLang === "de") {this.externalLinksTitle = "externe Links"};
