@@ -46,11 +46,11 @@ mat-card img{
   }
 
 .ground-div{
-  background-color:grey ;
+  background-color: grey ;
 }
 
 .white-button{
-color:blanchedalmond;
+color:white;
 }
 
 .linksToItem-mat-card{
@@ -162,12 +162,14 @@ color:blanchedalmond;
 }
 
 .subdivision-title {
-  color:rgb(158, 155, 155);
-  ;
+  color:black;
   font-size: 25px !important;
-  font-weight: 321;
-  padding: 12 px;
-  margin: 6 px;
+  font-weight: 360;
+  padding: 5 px;
+  margin-left: auto;
+  height:50px;
+  display:flex;
+  align-items: center;
 }
 
 .externalLinks-title {
