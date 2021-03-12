@@ -53,8 +53,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   selectedItems: any[];
 
 
+
   private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
   private getUrlSuffix= '&format=json' ; 
+
+  private baseWikimediaURL ='http://commons.wikimedia.org/wiki/Special:FilePath/';
 
   factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
@@ -296,11 +299,12 @@ onClick2(sparqlList){ //handling click for sparql query
   ///picture
  
   if (this.item[0].claims.P189 !==undefined) {
-    if (this.item[0].claims.P189[0].references !==undefined){
-     if (this.item[0].claims.P189[0].references[0].snaks.P55 !==undefined)
+ //   if (this.item[0].claims.P189[0].references !==undefined){
+//     if (this.item[0].claims.P189[0].references[0].snaks.P55 !==undefined)
 //      this.picture = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png'
-       this.picture = this.item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value ;
-     }
+//       this.picture = this.item[0].claims.P189[0].references[0].snaks.P55[0].datavalue.value ;
+         this.picture = this.baseWikimediaURL+this.item[0].claims.P189[0].mainsnak.datavalue.value 
+//     }
     }
   
   if (this.picture !==undefined) this.isPicture = true;
