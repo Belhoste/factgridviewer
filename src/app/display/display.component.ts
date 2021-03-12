@@ -45,6 +45,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
+  linkedPagesTitle:string;
+  externalLinksTitle:string;
+  formerVisitsTitle:string;
+
   selectedItems: any[];
 
 
@@ -147,6 +151,22 @@ onClick2(sparqlList){ //handling click for sparql query
  ngOnInit(): void {
   
   this.langs;
+  
+  this.linkedPagesTitle = "linked pages"
+  if(this.selectedLang === "de") {this.linkedPagesTitle = "verlinkte Seiten"};
+  if(this.selectedLang === "fr") {this.linkedPagesTitle = "pages liées"}
+
+  this.externalLinksTitle = "external links"
+  if(this.selectedLang === "de") {this.externalLinksTitle = "externe Links"};
+  if(this.selectedLang === "fr") {this.externalLinksTitle = "liens externes"}
+
+  this.formerVisitsTitle = "you have visited"
+  if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht"};
+  if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité"}
+
+
+
+
   this.isSpinner = true;
 
   this.subscription1 = this.sharedService.data.

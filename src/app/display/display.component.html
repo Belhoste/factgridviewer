@@ -30,7 +30,7 @@
         </div>
       </div>
         <mat-card>
-        <div class="subdivision-title" *ngIf='"main"!==undefined'>linked pages</div>
+        <div class="subdivision-title" *ngIf='"main"!==undefined'>{{linkedPagesTitle}}</div>
         <mat-card-content fxLayout="column wrap" fxLayoutAlign="start stretch">
           <mat-list  *ngFor="let item of linkedItems">
             <mat-divider></mat-divider>
@@ -434,7 +434,7 @@
   <!--      [ngClass]="isExternalLinks || isWikis ? 'show-division':'hide-division'"--->
         <mat-card class= mat-elevation-z8  class="external-links">
           <div>
-            <div class="subdivision-title">external links</div>
+            <div class="subdivision-title">{{externalLinksTitle}}</div>
           <hr>
           </div>
           
@@ -463,7 +463,7 @@
         <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
           <div fxLayout="column">
             
-               <div class="selectedList-title">you have visited</div>
+               <div class="selectedList-title">{{formerVisitsTitle}}</div>
               <hr>
               <div>
                  <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">

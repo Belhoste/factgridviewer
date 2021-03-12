@@ -35,6 +35,10 @@ export class AppComponent implements OnInit, OnDestroy
   selectedResearchField: string = localStorage['selectedResearchField']; //storage of the selected research field
 
   title = 'factgrid';
+
+  subtitle:string;
+
+  
   
   searchInput = new FormControl();
 
@@ -64,6 +68,11 @@ displayClickedItem: string;
 
   ngOnInit(): void {
 
+
+    if (localStorage['selectedLang']===undefined) {
+      localStorage.setItem("selectedLang", "en");
+    }
+
     if (localStorage['selectedItems']===undefined){    //initialization of the storage of selected items
       localStorage.setItem("selectedItems", JSON.stringify([{ value: {id: "Q152233"}, label:"FactGrid" }]));
     }
@@ -71,6 +80,12 @@ displayClickedItem: string;
     if (localStorage['selectedResearchField']===undefined){  //initialization of the storage of the research field
       localStorage.setItem("selectedResearchField", "all");
     }
+
+   
+    this.subtitle = "a database for historians"
+    if (this.selectedLang === "de") { this.subtitle = "eine Databank for historiker" }
+    if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historiens"}
+    
     
     this.labels = this.searchInput.valueChanges   //search engine
     .pipe(
