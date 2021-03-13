@@ -20,6 +20,7 @@ export class RequestService {
   private getUrlSuffix= '&format=json&origin=*' ; 
  // private res:string;
 
+
   constructor(private http: HttpClient) { }
 
 requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesList3, propertiesList4, propertiesList5, propertiesList6)
@@ -194,26 +195,27 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     address = address.replace(oldPrefix, newPrefix);
     }
 
-  getBackList(item) : Observable<any> {  
+  getBackList(item, lang) : Observable<any> {  
+    console.log(lang); // it gives en, de or fr depending of the selection;
+    let selectedLang:string = lang;
     item="Item:"+item;
     const prefix = `https://database.factgrid.de/w/api.php?`
     const params = new HttpParams()
        .set('action',"query")
        .set('format',"json")
-     //  .set('useLang',"en")
        .set('prop',"entityterms")
        .set('generator', "backlinks")
        .set('formatversion',"2")
        .set('wbetterms',"label")
        .set('gbllimit',"500")
        .set('gblnamespace',"120")
+       .set('useLang',selectedLang)  //uselang
        .set('gbltitle',item)
        .set('origin',"*")
-
       let u= this.http.get(prefix, {
-        params: params}).pipe(catchError((err)=> {return of(undefined)}))  
+        params: params}).pipe(catchError((err)=> {return of(undefined)})) 
+      u.subscribe( u => console.log(u)); //always labels in english
       return u
-       
       }
 
 }

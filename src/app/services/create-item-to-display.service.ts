@@ -27,7 +27,7 @@ export class CreateItemToDisplayService {
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
           map(res =>{    
-          let backList=this.backList.backList(re.id);
+          let backList=this.backList.backList(re.id, selectedLang);
           let qualifierProperties=[];
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
           this.addItemDetails.addSidelinksDetails(re);

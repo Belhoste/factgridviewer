@@ -114,7 +114,7 @@ displayClickedItem: string;
   onItemSelect(item){  //handle the selected item in the search engine
   if(this.isDown = true) {this.isDown = !this.isDown;} // slide up the title FactGrid
   let sparql = of([{item:{}, itemLabel:{}}]); //initialization of the sparql list
-  let backList = this.backList.backList(item.id); //back list of the selected item
+  let backList = this.backList.backList(item.id, this.selectedLang); //back list of the selected item
   let itemToDisplay = this.createItemToDisplay.createItemToDisplay(item,this.selectedLang); //selected item ready to display
   this.sharedService.data = forkJoin({ sparql,backList,itemToDisplay }); //collect the data to display in one observable 
   itemToDisplay.subscribe(re=>{  //add the selected item in the storage of previous selected items
@@ -184,7 +184,7 @@ displayClickedItem: string;
        //       };
           
         
-        backList=this.backList.backList(item[0]); //handle backList
+        backList=this.backList.backList(item[0],this.selectedLang); //handle backList
    
         selectedSparql = this.newSparqlAdress(item[1],this.selectedLang); //handle sparql queries 1. create the address
         let sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display    

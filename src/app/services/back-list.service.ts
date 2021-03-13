@@ -11,8 +11,8 @@ export class BackListService {
 
   constructor(private requestService:RequestService) { }
 
-  backList(item) { 
-    let u = this.requestService.getBackList(item)
+  backList(item, lang) { 
+    let u = this.requestService.getBackList(item, lang)
     return u
     }
 }
