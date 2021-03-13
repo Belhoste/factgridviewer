@@ -196,7 +196,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     }
 
   getBackList(item, lang) : Observable<any> {  
-    console.log(lang); // it gives en, de or fr depending of the selection;
     item="Item:"+item;
     const prefix = `https://database.factgrid.de/w/api.php?`
     const params = new HttpParams()
@@ -213,7 +212,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
        .set('origin',"*")
       let u= this.http.get(prefix, {
         params: params}).pipe(catchError((err)=> {return of(undefined)})) 
-      u.subscribe( u => console.log(u)); //always labels in english
       return u
       }
 

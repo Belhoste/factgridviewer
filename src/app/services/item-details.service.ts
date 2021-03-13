@@ -9,7 +9,7 @@ import { PropertyDetailsService } from './property-details.service';
 })
 export class ItemDetailsService {
 
-  
+  private baseWikimediaURL ='http://commons.wikimedia.org/wiki/Special:FilePath/';
 
   constructor() { }
 
@@ -19,6 +19,9 @@ export class ItemDetailsService {
     
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
+        if(propertyIds[i] === "P189"){
+          re.claims[propertyIds[i]][j].picture = this.baseWikimediaURL+re.claims[propertyIds[i]][j].mainsnak.datavalue.value
+        }
         if ( propertyIds[i] === "P320")
         { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql" };
         if ( lang === "en") {re.claims[propertyIds[i]].other = "further"}

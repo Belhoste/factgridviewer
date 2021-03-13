@@ -72,7 +72,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   label:string;
   description:string;
   aliases:string[];
-  picture:string ;
+  
   //="https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png";
   map:any;
   coords:any;
@@ -124,6 +124,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   otherClaims:any[];
   locationAndContext:any[]; //for organisations, societies and institutions
   mainList:any[]; //main list for persons, places, organisations
+  pictures:any[] ;//for pictures
 
   //display the elements
   isMain:boolean = false;
@@ -296,13 +297,16 @@ onClick2(sparqlList){ //handling click for sparql query
     this.isSociability = true}
    }
 
-  ///picture
- 
-  if (this.item[0].claims.P189 !==undefined) {
-         this.picture = this.baseWikimediaURL+this.item[0].claims.P189[0].mainsnak.datavalue.value 
-    }
+  ///pictures
+
+  this.pictures =[];
+
+  if (this.item[0].claims.P189 !==undefined){ //pictures
+    this.item[1].splice(this.item[1].indexOf("P189"),1);
+    this.pictures = this.item[0].claims.P189
+  } 
   
-  if (this.picture !==undefined) this.isPicture = true;
+  if (this.pictures !==undefined) this.isPicture = true;
 
   ///org
 

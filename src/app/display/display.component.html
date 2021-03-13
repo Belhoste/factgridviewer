@@ -417,10 +417,11 @@
   
       <div fxFlex="25%"  fxFlex.xl ="20%">
     <div [ngClass]="isPicture ? 'show-division':'hide-division'"> 
+      <div *ngFor ="let picture of pictures">
 	      <mat-card class= mat-elevation-z8>
-	        <img mat-card-image fxFlex="100%" src={{picture}}>  
+	        <img mat-card-image fxFlex="100%" src={{picture.picture}}>  
         </mat-card>
-  
+      </div>
       </div>  
       <div>	
         <mat-card class= mat-elevation-z8  class="external-links">
