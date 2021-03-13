@@ -197,7 +197,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   getBackList(item, lang) : Observable<any> {  
     console.log(lang); // it gives en, de or fr depending of the selection;
-    let selectedLang:string = lang;
     item="Item:"+item;
     const prefix = `https://database.factgrid.de/w/api.php?`
     const params = new HttpParams()
@@ -209,7 +208,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
        .set('wbetterms',"label")
        .set('gbllimit',"500")
        .set('gblnamespace',"120")
-       .set('useLang',selectedLang)  //uselang
+       .set('uselang',lang)  //uselang
        .set('gbltitle',item)
        .set('origin',"*")
       let u= this.http.get(prefix, {
