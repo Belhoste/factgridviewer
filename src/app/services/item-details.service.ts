@@ -3,6 +3,7 @@ import { DefinitionMap } from '@angular/compiler/src/render3/view/util';
 import { Injectable } from '@angular/core';
 import { PropertySignature } from 'typescript';
 import { PropertyDetailsService } from './property-details.service';
+import { SetDateService} from './set-date.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ItemDetailsService {
 
   private baseWikimediaURL ='http://commons.wikimedia.org/wiki/Special:FilePath/';
 
-  constructor() { }
+  constructor(private setDate:SetDateService) { }
 
   qualifiers2:any[];
 
@@ -19,6 +20,11 @@ export class ItemDetailsService {
     
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
+        if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
+          let value= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time.substring(1);
+          value = value.substring(0,value.length-10);
+          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.date = this.setDate.setDate(value,lang);
+        }
         if(propertyIds[i] === "P189"){
           re.claims[propertyIds[i]][j].picture = this.baseWikimediaURL+re.claims[propertyIds[i]][j].mainsnak.datavalue.value
         }
@@ -81,12 +87,15 @@ export class ItemDetailsService {
             else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
             else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
       }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q10671") {
+      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q10671" ||
+      re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21407") {
         re.claims[propertyIds[i]].document = "document";
         if ( lang === "en") {re.claims[propertyIds[i]].main = "document"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Dokument"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].main = "document"};
       }
+
+        
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
          re.claims[propertyIds[i]][j].mainsnak.label = items[k].label;
@@ -101,13 +110,23 @@ export class ItemDetailsService {
     return re
   }
 
- addQualifierItemDetails(items, re, propertyIds){  //add labels, definitions and aliases of items in the qualifiers/* 
+ addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
        for (let i=0; i<propertyIds.length; i++){  
             for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
                 if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
                  let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
                    for  (let k=0; k<props.length; k++){
                      for (let l=0; l<items.length; l++){    
+                        if(re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time"){
+                          let value =re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time.substring(1)
+                            value = value.substring(0,value.length-10);
+                            re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.date = this.setDate.setDate(value,lang);
+                          }
+   //                       console.log(value);
+             //             re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.monthAndYear = this.setDate.setDate(value,lang);
+                //          if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
+                    //        let value = re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time;
+                       //     re.claims[propertyIds[i]][j].mainsnak.datavalue.value.monthAndYear = this.setDate.setDate(value,lang);
                         if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.id !== items[l].id){ continue }
                           if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "wikibase-item"){
                             re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.label = items[l].label;
@@ -137,6 +156,7 @@ export class ItemDetailsService {
                     re.claims[propertyIds[i]][j].qualifiers2[k].datatype = qualifiersArray[k][0].datatype;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.id = qualifiersArray[k][0].datavalue.value.id;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.time = qualifiersArray[k][0].datavalue.value.time;
+                    re.claims[propertyIds[i]][j].qualifiers2[k].value.date = qualifiersArray[k][0].datavalue.value.date; 
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value.label;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.description = qualifiersArray[k][0].datavalue.value.description;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.aliases = qualifiersArray[k][0].datavalue.value.aliases; 
@@ -149,7 +169,7 @@ export class ItemDetailsService {
           return re
       }
 
-      addReferenceItemDetails(items, re, propertyIds){  //add labels, definitions and aliases of items in the references
+      addReferenceItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the references
         for (let i=0; i<propertyIds.length; i++){  
           for (let j=0; j<re.claims[propertyIds[i]].length; j++) {           
             if (re.claims[propertyIds[i]][j].references === undefined) {continue}
@@ -157,8 +177,13 @@ export class ItemDetailsService {
                let props = Object.keys(re.claims[propertyIds[i]][j].references[k].snaks);
                   for(let a=0;a<props.length;a++){
                     for (let l=0; l<items.length; l++){  
-                        if (re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datatype !== "wikibase-item"){continue}
-                        if (re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.id === items[l].id ){
+                      if(re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datatype === "time"){
+                        let value = re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.time.substring(1);
+                        value = value.substring(0,value.length-10);
+                        re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.date = this.setDate.setDate(value,lang);
+                      }
+                      if (re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datatype !== "wikibase-item"){continue}
+                      if (re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.id === items[l].id ){
                           if (re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0] !==undefined) { 
                            re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.label = items[l].label;
                         if (items[l].description !== undefined) 
@@ -189,6 +214,8 @@ export class ItemDetailsService {
                           { re.claims[propertyIds[i]][j].references2[m].value.label === referencesArray[l][0].datavalue.value.label ;
                             re.claims[propertyIds[i]][j].references2[m].value.id === referencesArray[l][0].datavalue.value.id
                             re.claims[propertyIds[i]][j].references2[m].value.time = referencesArray[l][0].datavalue.value.time;
+                            re.claims[propertyIds[i]][j].references2[m].value.date = referencesArray[l][0].datavalue.value.date; 
+                            re.claims[propertyIds[i]][j].references2[m].value.month = referencesArray[l][0].datavalue.value.month; 
                             if (referencesArray[l][0].datatype === "string"){
                             re.claims[propertyIds[i]][j].references2[m].value.string = referencesArray[l][0].datavalue.value };
                             if (referencesArray[l][0].datatype === "url"){

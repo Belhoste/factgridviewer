@@ -61,6 +61,10 @@ setDocumentDisplay(item, documentDetail){
     item[1].splice(item[1].indexOf("P28"),1);
     documentDetail.push(item[0].claims.P28);
   }
+  if (item[0].claims.P410 !==undefined){ //was co-signed by
+    item[1].splice(item[1].indexOf("P410"),1);
+    documentDetail.push(item[0].claims.P410);
+  }
   if (item[0].claims.P33 !==undefined){ //persons mentioned
     item[1].splice(item[1].indexOf("P33"),1);
     documentDetail.push(item[0].claims.P33);
@@ -72,6 +76,10 @@ setDocumentDisplay(item, documentDetail){
   if (item[0].claims.P72 !==undefined){ // digest in German
     item[1].splice(item[1].indexOf("P72"),1);
     documentDetail.push(item[0].claims.P72);
+  }
+  if (item[0].claims.P204 !==undefined){ // extract
+    item[1].splice(item[1].indexOf("P204"),1);
+    documentDetail.push(item[0].claims.P204);
   }
    if (item[0].claims.P144 !==undefined){ //literature
     item[1].splice(item[1].indexOf("P144"),1);
@@ -105,6 +113,10 @@ setDocumentDisplay(item, documentDetail){
   if (item[0].claims.P126 !==undefined){ //owner
     item[1].splice(item[1].indexOf("P126"),1);
     documentDetail.push(item[0].claims.P126);
+  }
+  if (item[0].claims.P47 !==undefined){ //localisation
+    item[1].splice(item[1].indexOf("P47"),1);
+    documentDetail.push(item[0].claims.P47);
   }
   if (item[0].claims.P329 !==undefined){ //holding institution
     item[1].splice(item[1].indexOf("P329"),1);

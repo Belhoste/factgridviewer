@@ -19,13 +19,6 @@ import { AppComponent } from './app.component';
 import { DisplayComponent } from './display/display.component';
 import { JoinPipe } from './join.pipe';
 import { CommaJoinPipe } from './comma-join.pipe';
-import { CustomDatePipe } from './custom-date.pipe';
-import { registerLocaleData } from '@angular/common';
-import localeEn from '@angular/common/locales/en';
-import localeFr from '@angular/common/locales/fr';
-import localeDe from '@angular/common/locales/de';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
 import { MapComponent } from './display/map/map.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,7 +33,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     DisplayComponent,
     JoinPipe,
     CommaJoinPipe,
-    CustomDatePipe,
     ChangeUndefinedItemPipe,
     MapComponent,
     BackListIdPipe,
@@ -65,16 +57,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDividerModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
-    TranslateModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 
   constructor(){
-    registerLocaleData(localeEn, 'en'); 
-    registerLocaleData(localeFr, 'fr');
-    registerLocaleData(localeDe, 'de');
   }
 
  }

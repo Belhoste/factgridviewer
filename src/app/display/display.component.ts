@@ -23,7 +23,7 @@ import { WikiDisplayService} from './services/wiki-display.service';
 @Component({
   selector: 'display-component',
   templateUrl: 'display.component.html',
-  styleUrls: ['./display.component.css'],
+  styleUrls: ['./display.component.css']
 })
 
 export class DisplayComponent implements OnInit, OnDestroy {
@@ -56,8 +56,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
   private getUrlSuffix= '&format=json' ; 
-
-  private baseWikimediaURL ='http://commons.wikimedia.org/wiki/Special:FilePath/';
 
   factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 

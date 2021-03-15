@@ -144,8 +144,8 @@
                 <div class="title">
                   <label class="property2">{{P.label}}:</label>
                 </div>
-                <div class="details" *ngFor="let M of P">    
-                  <label *ngIf="M.mainsnak.datatype === 'time'">{{M.mainsnak.datavalue.value.time|customDate}}</label>  
+                <div class="details" *ngFor="let M of P"> 
+                  <label *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</label> 
                   <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label>         
                   <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value}}</label>
                   <label class="value-text" *ngIf="M.mainsnak.datatype === 'wikibase-property'">{{M.mainsnak.datavalue.value.id}}</label>
@@ -159,8 +159,8 @@
                       <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
                   <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
                     <span *ngFor="let Q of M.qualifiers2">
-                      <label class="property"><em>&nbsp;{{Q.label}}:</em>&nbsp;</label>
-                      <label>{{Q.value.time |customDate }}&nbsp;&nbsp;&nbsp;</label>
+                      <label class="property"><em>&nbsp;{{Q.label}}:</em>&nbsp;</label> 
+                      <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                       <label *ngIf="Q.datatype==='string'">{{Q.value.string}}</label>
                       <label>{{Q.value.amount}}</label>
                       <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, {{Q.value.description}}
@@ -173,8 +173,7 @@
  <!---   -->           
               <label>{{M.references2[0].value.label}}, {{M.references2[0].value.description}}
                 <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-             
-              <label>{{M.references2[0].value.time |customDate }}</label>
+              <label>{{M.references2[0].value.date}}</label> 
               <label class="break-word-container">{{M.references2[0].value.string }}</label>
               
               <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
@@ -194,7 +193,7 @@
             <label class="property2">{{P.label}}:</label>
           </div>
           <div class="details" *ngFor="let M of P">    
-            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</label> 
             <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
@@ -206,7 +205,7 @@
               <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
                 <span *ngFor="let Q of M.qualifiers2">
                   <label class="property"><em>&nbsp;{{Q.label}}:&nbsp;&nbsp;</em></label>
-                  <label>{{Q.value.time |customDate}}</label>
+                  <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                   <label>{{Q.value.string}}</label>
                   <label>{{Q.value.amount}}</label>
                   <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span> 
@@ -217,7 +216,7 @@
                  <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
                  <label>{{M.references2[0].value.label}}
                   <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-                <label>{{M.references2[0].value.time |customDate }}</label>
+                <label>{{M.references2[0].value.date }}</label>
                 <label class="break-word-container">{{M.references2[0].value.string }}</label>
                 <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
               </div> 
@@ -235,7 +234,7 @@
             <label class="property2">{{P.label}}:</label>
           </div>
           <div class="details" *ngFor="let M of P">    
-            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</label>     
             <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
@@ -247,7 +246,7 @@
             <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
               <span *ngFor="let Q of M.qualifiers2">
                 <label class="property"><em>&nbsp;{{Q.label}}:&nbsp;&nbsp;</em></label>
-                <label>{{Q.value.time |customDate}}</label>
+                <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                 <label>{{Q.value.string}}</label>
                 <label>{{Q.value.amount}}</label>
                 <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span>
@@ -258,7 +257,7 @@
               <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
               <label>{{M.references2[0].value.label}}
                 <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-              <label>{{M.references2[0].value.time |customDate }}</label>
+              <label>{{M.references2[0].value.date }}</label>
               <label>{{M.references2[0].value.string }}</label>
               <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
             </div> 
@@ -276,7 +275,7 @@
             <label class="property2">{{P.label}}:</label>
           </div>
           <div class="details" *ngFor="let M of P">    
-            <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+            <label *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</label> 
             <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
@@ -288,7 +287,7 @@
               <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
                 <span *ngFor="let Q of M.qualifiers2">
                   <label class="property"><em>&nbsp;{{Q.label}}:&nbsp;&nbsp;</em></label>
-                  <label>{{Q.value.time |customDate}}</label>
+                  <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                   <label>{{Q.value.string}}</label>
                   <label>{{Q.value.amount}}</label>
                   <label *ngIf="Q.datatype === 'wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span> 
@@ -299,7 +298,7 @@
               <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
               <label>{{M.references2[0].value.label}}
                 <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-              <label>{{M.references2[0].value.time |customDate }}</label>
+              <label>{{M.references2[0].value.date }}</label>
               <label class="break-word-container">{{M.references2[0].value.string }}</label>
               <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
              </div>               
@@ -310,15 +309,15 @@
         </div>
     
         <div [ngClass]="isOther ? 'show-division':'hide-division'">     
-          <div class="subdivision-title">{{other}}</div>   
+          <div class="subdivision-title" *ngIf="main">{{other}}</div>   
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
              <div class="title">
               <label class="property2">{{P.label}}:</label>
              </div>
              <div class="details" *ngFor="let M of P">    
-               <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
-               <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
+               <label *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</label>      
+               <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}},{{M.mainsnak.datavalue.value.language}}</label> 
                <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
                <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
                 <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
@@ -329,7 +328,7 @@
                <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
                 <span *ngFor="let Q of M.qualifiers2">
                   <label class="property"><em>&nbsp;{{Q.label}}:&nbsp;&nbsp;</em></label>
-                  <label>{{Q.value.time |customDate}}</label>
+                  <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                   <label>{{Q.value.string}}</label>
                   <label>{{Q.value.amount}}</label>
                   <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span> 
@@ -340,7 +339,7 @@
                <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
                <label>{{M.references2[0].value.label}}
                  <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-               <label>{{M.references2[0].value.time |customDate }}</label>
+               <label>{{M.references2[0].value.date }}</label>
                <label class="break-word-container" >{{M.references2[0].value.string }}</label>
                <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
              </div>      
@@ -376,7 +375,7 @@
               <label class="property"><strong>{{P.label}}:</strong></label>
             </div>
             <div class="details" *ngFor="let M of P">    
-              <label *ngIf="M.mainsnak.datavalue.value.time">{{M.mainsnak.datavalue.value.time|customDate}}</label>      
+              <label *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</label> 
               <label *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
               <label>{{M.mainsnak.datavalue.value.amount}}</label>
               <label *ngIf="M.mainsnak.datavalue.value.text">{{M.mainsnak.datavalue.value.text}}</label> 
@@ -385,20 +384,20 @@
                 <span *ngIf="M.mainsnak.datatype ==='string'">{{M.mainsnak.datavalue.value}}</span>
                 <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
                 <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
-                  <span *ngFor="let Q of M.qualifiers2">
-                  <label class="property"><em>&nbsp;{{Q.label}}:</em>&nbsp;&nbsp;</label>
-                    <label>{{Q.value.time |customDate}}</label>
-                    <label>{{Q.value.string}}</label>
-                    <label>{{Q.value.amount}}</label>
-                    <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span>
-                      <span *ngIf="Q.value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(Q)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+              <span *ngFor="let Q of M.qualifiers2">
+                <label class="property"><em>&nbsp;{{Q.label}}:</em>&nbsp;&nbsp;</label>
+                <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
+                <label>{{Q.value.string}}</label>
+                <label>{{Q.value.amount}}</label>
+                <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span>
+                  <span *ngIf="Q.value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(Q)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
                   </span>
                 </span>
                <div class="details" class="percent2" *ngIf="M['references2']">
               <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
               <label>{{M.references2[0].value.label}}
                 <span *ngIf="M.references2[0].value.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.references2[0])"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;</span></label>
-              <label>{{M.references2[0].value.time |customDate}}</label>
+              <label>{{M.references2[0].value.date}}</label>
               <label>{{M.references2[0].value.string }}</label>
               <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
             </div> 
