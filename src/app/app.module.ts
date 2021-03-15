@@ -23,7 +23,6 @@ import { ChangeUndefinedItemPipe } from './change-undefined-item.pipe';
 import { MapComponent } from './display/map/map.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BackListIdPipe } from './back-list-id.pipe';
-import { SlashJoinPipe } from './slash-join.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
@@ -35,8 +34,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommaJoinPipe,
     ChangeUndefinedItemPipe,
     MapComponent,
-    BackListIdPipe,
-    SlashJoinPipe,
+    BackListIdPipe
   ],
   imports: [
     BrowserModule,
@@ -63,6 +61,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class AppModule {
 
   constructor(){
+
   }
 
  }

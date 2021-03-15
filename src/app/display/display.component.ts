@@ -422,9 +422,6 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
        }
       }
 
-  changeLang(lang:string){
-    
-  }
 
   ngOnDestroy(): void {
    this.subscription1.unsubscribe();
