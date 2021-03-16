@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin, of } from 'rxjs';
 //import { SetLanguageService } from './set-language.service';
 import { tap, map, catchError } from 'rxjs/operators';
+import { saveAs } from 'file-saver-es';
 
 @Injectable({
   providedIn: 'root'
@@ -186,6 +187,13 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
         return u
        }
 
+       downLoadList(sparql:string) {   
+        let u
+        let params = new HttpParams()
+          u= this.http.get(sparql, {responseType:'arraybuffer',
+            params: params}).pipe(catchError((err)=> {return of(undefined)})).subscribe(response => this.downLoadFile(response) ) ;    
+           }
+
  // selectUrl(url:string) {  let selectUrl = re => re == "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
   //   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : re  };
  
@@ -194,6 +202,14 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     const oldPrefix = "https://database.factgrid.de/query/#";
     address = address.replace(oldPrefix, newPrefix);
     }
+
+  downLoadFile(data: any){
+    const blob = new Blob([data], { type: 'text/csv'});
+    let url = window.URL.createObjectURL(blob);
+    saveAs(blob, "list.csv");
+    return window.open(url)
+  }
+
 
   getBackList(item, lang) : Observable<any> {  
     item="Item:"+item;

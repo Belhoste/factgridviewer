@@ -52,7 +52,6 @@
    
     <div class = "parent" 
          fxLayout = "row"
-         fxLayout.md="column"
          fxLayout.sm="column"
          fxLayout.xs="column"
          >
@@ -154,7 +153,9 @@
                   <label>{{M.mainsnak.datavalue.value.amount}}</label>
                   <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
                   <label *ngIf="M.mainsnak.datatype === 'sparql'">click to display the list
-                      <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick2(M.mainsnak.datavalue.value)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
+                      <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick2(M.mainsnak.datavalue.value)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <span>click to download the list</span>
+                      <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick3(M.mainsnak.datavalue.value)"><mat-icon color ="primary" [inline]="true">download</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
                   <label *ngIf="M.mainsnak.datatype === 'wikibase-item'">{{M.mainsnak.label}}, <span class="description-text">{{M.mainsnak.description}}</span>
                       <span *ngIf="M.mainsnak.label"><mat-icon-button color="primary" class="internalLink" #content (click)="onClick(M.mainsnak.datavalue)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
                   <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">

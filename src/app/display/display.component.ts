@@ -36,7 +36,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private wikiDisplay:WikiDisplayService){}
 
   isSpinner:boolean = false;
-  clickedArray:string[]=["",""];
+  clickedArray:string[]=["","",""];
   
   selectedItem:Observable<any>;
   subscription1:Subscription;
@@ -150,6 +150,13 @@ onClick2(sparqlList){ //handling click for sparql query
   this.clickedArray[1]=sparqlList;
   this.clickedItem.emit(this.clickedArray);
   }
+
+onClick3(sparqlList2){ //handling click for sparql query
+    this.clickedArray[2]=sparqlList2;
+    this.clickedItem.emit(this.clickedArray);
+    }
+
+
 
  ngOnInit(): void {
   

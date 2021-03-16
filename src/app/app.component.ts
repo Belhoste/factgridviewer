@@ -61,8 +61,6 @@ private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentiti
 private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
 private getUrlSuffix= '&format=json&origin=*' ; 
 
-displayClickedItem: string;
-
   constructor( private changeDetector: ChangeDetectorRef, public sharedService:AppAndDisplaySharedService, private http: HttpClient, 
     private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService, private setList:ListDetailsService, private backList:BackListService) {}
 
@@ -148,6 +146,7 @@ displayClickedItem: string;
       let itemToDisplay;
       let backList;
       let selectedSparql;
+      let downloadSparql;
       if (item[1] === undefined){
         item[1]=""
       }
@@ -187,7 +186,9 @@ displayClickedItem: string;
         backList=this.backList.backList(item[0],this.selectedLang); //handle backList
    
         selectedSparql = this.newSparqlAdress(item[1],this.selectedLang); //handle sparql queries 1. create the address
-        let sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display    
+        downloadSparql = this.newSparqlAdress(item[2], this.selectedLang);
+        let sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display  
+        this.request.downLoadList(downloadSparql);
         this.sharedService.data = forkJoin({ backList,sparql,itemToDisplay }); 
         this.searchToken = "off";
       return this.sharedService
