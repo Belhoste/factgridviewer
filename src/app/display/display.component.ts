@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output }
 import { Observable, Subscription, Subject, from, forkJoin, of, EMPTY } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import {SetDataService} from '../services/set-data.service'
-import { AppAndDisplaySharedService } from '../services/app-and-display-shared.service';
 import {map } from 'rxjs/operators';
 import { ActivatedRoute} from '@angular/router';
 import { BackListDetailsService } from '../services/back-list-details.service';
@@ -34,7 +33,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   @Output() clickedItem = new EventEmitter<any>();
   
-  constructor(private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, private sharedService:AppAndDisplaySharedService,  
+  constructor(private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, 
     private backList:BackListService, private backListDetails:BackListDetailsService, private headerDisplay:HeaderDisplayService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
     private personDisplay:PersonDisplayService, private educationDisplay:EducationDisplayService, private careerDisplay:CareerDisplayService, private sociabilityDisplay:SociabilityDisplayService,
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private wikiDisplay:WikiDisplayService){}
@@ -216,8 +215,6 @@ setItemId(event){
     console.log(item);
     if (item !==undefined){
     this.item = item;
-  //ici insérer l'item dans la liste des selectedItems
-    
     this.setList.addToSelectedItemsList(item[0]);
     this.event =  this.item[0].claims.P2.event;
     this.sources = this.item[0].claims.P2.sources;

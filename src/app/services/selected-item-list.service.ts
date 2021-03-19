@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { Observable, forkJoin, pipe } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -81,8 +80,9 @@ for (const val of mainsnaks) { //array of objects {P:Q}
   let propertiesList = this.createList(properties).slice(1); // create a string list of properties and remove the first |
   //let totalList = propertiesList + itemsList;  // create the string list of all the items and properties 
   
-  let valuesUrl = baseGetURL+itemsList+getUrlSuffix;
+ /* let valuesUrl = baseGetURL+itemsList+getUrlSuffix;
   let propertiesUrl = baseGetURL+propertiesList+getUrlSuffix;
+  */
 
 //  let result =this.requestItems(valuesUrl, propertiesUrl) ;
   

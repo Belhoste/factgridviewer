@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { RequestService } from './request.service'  ;
 import { SetLanguageService} from './set-language.service';
-import { tap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { SelectedItemListService } from './selected-item-list.service';
 
 @Injectable({
@@ -61,18 +61,16 @@ setPropertiesList(u) { //create the list of properties in the statements
  
  properties = properties.concat(qualifierProperties).concat(referenceProperties) // get items in the statements
  properties = this.uniq(properties); // remove the duplicates
- 
  properties = this.lessThanFifty(properties); //create several arrays of at most fifty properties
 
 let propertiesList0 = this.createList(properties[0]).slice(1); // create a array of string lists of properties and remove the first |
 let propertiesList1 = this.createList(properties[1]).slice(1); // create a array of string lists of properties and remove the first |
-let propertiesList2 = this.createList(properties[2]).slice(1);
+let propertiesList2 = this.createList(properties[2]).slice(1); // id
 let propertiesList3 = this.createList(properties[3]).slice(1); // create a array of string lists of properties and remove the first |
-let propertiesList4 = this.createList(properties[4]).slice(1);
-let propertiesList5 = this.createList(properties[5]).slice(1);
-let propertiesList6 = this.createList(properties[6]).slice(1);
+let propertiesList4 = this.createList(properties[4]).slice(1); // id
+let propertiesList5 = this.createList(properties[5]).slice(1); // id
+let propertiesList6 = this.createList(properties[6]).slice(1); // id
 if ( properties[7] !== undefined) { alert("too many statements") };
-// create a array of string lists of properties and remove the first |
 
 let result = this.requestService.requestProperties(propertiesList0,propertiesList1,propertiesList2,propertiesList3,propertiesList4,propertiesList5,propertiesList6)
 .pipe

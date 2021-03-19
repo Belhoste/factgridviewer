@@ -1,9 +1,6 @@
-import { keyframes } from '@angular/animations';
-import { DefinitionMap } from '@angular/compiler/src/render3/view/util';
 import { Injectable } from '@angular/core';
-import { PropertySignature } from 'typescript';
-import { PropertyDetailsService } from './property-details.service';
-import { SetDateService} from './set-date.service';
+import { SetTimeService} from './set-time.service';
+import {FactgridSubtitlesService} from './factgrid-subtitles.service'
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +9,7 @@ export class ItemDetailsService {
 
   private baseWikimediaURL ='http://commons.wikimedia.org/wiki/Special:FilePath/';
 
-  constructor(private setDate:SetDateService) { }
+  constructor(private setDate:SetTimeService, private factgrid:FactgridSubtitlesService) { }
 
   qualifiers2:any[];
 
@@ -30,14 +27,19 @@ export class ItemDetailsService {
         }
         if ( propertyIds[i] === "P320")
         { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql" };
-        if ( lang === "en") {re.claims[propertyIds[i]].other = "further"}
+        this.factgrid.setSubtitle1(re,propertyIds[i],lang);
+        
+  /*      if ( lang === "en") {re.claims[propertyIds[i]].other = "further"}
         else if ( lang === "de") {re.claims[propertyIds[i]].other = "weiteren"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].other = "autres"};
         if ( lang === "en") {re.claims[propertyIds[i]].sources = "sources"}
         else if ( lang === "de") {re.claims[propertyIds[i]].sources = "Quellen"}
         else if ( lang === "fr") {re.claims[propertyIds[i]].sources = "sources"};
+*/
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q7") {
+      let number:number = j;
+      this.factgrid.setSubtitle2(re,propertyIds[i],number,lang)
+ /*     if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q7") {
         re.claims[propertyIds[i]].person = "person";
         if ( lang === "en") {re.claims[propertyIds[i]].main = "life and family"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Leben und Familie"}
@@ -87,6 +89,7 @@ export class ItemDetailsService {
             else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
             else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
       }
+      */
       if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q10671" ||
       re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21407") {
         re.claims[propertyIds[i]].document = "document";

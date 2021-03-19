@@ -1,17 +1,11 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
-import { Observable, EMPTY, pipe, from, of, forkJoin } from 'rxjs';
-import { HttpClient, HttpHeaders, JsonpClientBackend} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient} from '@angular/common/http';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
-import { CreateItemToDisplayService} from '../services/create-item-to-display.service';
-import { AppAndDisplaySharedService} from '../services/app-and-display-shared.service';
-import { stringify } from '@angular/compiler/src/util';
-import { ListDetailsService } from '../services/list-details.service';
-import { BackListService } from '../services/back-list.service';
 import { SlideUpAnimation} from '../slide-up-animation';
-import { Router, ActivatedRoute, ParamMap} from '@angular/router';
 
 
 @Component({
@@ -54,15 +48,10 @@ private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*
 private getUrlSuffix= '&format=json&origin=*' ; 
 
   constructor( 
-  // private route: ActivatedRoute,  //shift to DisplayComponent
   private changeDetector: ChangeDetectorRef, 
-  //public sharedService:AppAndDisplaySharedService, //shift to DisplayComponent (with a new name) 
   private http: HttpClient, 
   private request:RequestService, 
-  private setLanguage:SetLanguageService, 
- // private createItemToDisplay:CreateItemToDisplayService, //shift to DisplayCompoenent
-  private setList:ListDetailsService, 
-  private backList:BackListService) 
+  private setLanguage:SetLanguageService) 
   {}
 
   ngOnInit(): void {
@@ -105,13 +94,9 @@ private getUrlSuffix= '&format=json&origin=*' ;
        }
      
 
-  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix
-//   , { headers : { 'Access-Control-Allow-Origin':'*'}}
-    )}
+  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix)}
 
-  getItem(url:string): Observable<any> { return this.http.get(url
-//   , { headers : { 'Access-Control-Allow-Origin':'*'}}
-    ) };
+  getItem(url:string): Observable<any> { return this.http.get(url) };
 
   createList(re) {  //create an url whith the elements of an array
     let list = "";
@@ -133,7 +118,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
          if (items[i].claims.P97!==undefined){
            for (let j=0; j<items[i].claims.P97.length; j++) {
            let id = items[i].claims.P97[j].mainsnak.datavalue.value.id;
-  //           if (project == "all") { selectedItems = items };
              if (researchField == id){
               selectedItems.push(items[i]);
                }
@@ -152,12 +136,13 @@ private getUrlSuffix= '&format=json&origin=*' ;
         });
     }
 
-    removeDuplicates(data, key){
+ /*   removeDuplicates(data, key){
          return [ ...new Map(
              data.map(x => [key(x), x])
          ).values()
       ]
     }
+    */
   
       
      ngOnDestroy(): void {
