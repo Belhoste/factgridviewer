@@ -58,6 +58,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
+  newSearch:string;
   linkedPagesTitle:string;
   mainPage:string;
   externalLinksTitle:string;
@@ -173,6 +174,10 @@ setItemId(event){
  ngOnInit(): void {
 
   this.isSpinner = true;
+
+  this.newSearch = "new search"
+  if(this.selectedLang === "de") {this.newSearch = "neue Suche"};
+  if(this.selectedLang === "fr") {this.newSearch = "nouvelle recherche"}
 
   this.linkedPagesTitle = "linked pages"
   if(this.selectedLang === "de") {this.linkedPagesTitle = "verlinkte Seiten"};
