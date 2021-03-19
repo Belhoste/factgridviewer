@@ -190,14 +190,17 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
        }
 
        downLoadList(sparql:string) {   
+        console.log(sparql);
         let u
         if (sparql !==undefined){
         let headers = new HttpHeaders().set("Accept", "text/csv")
         let params = new HttpParams()
    //     .set('format', 'csv')
           u= this.http.get(sparql, { headers: headers,
-   //        responseType:'arraybuffer',
-            params: params}).pipe(catchError((err)=> {return of(undefined)})).subscribe(response => this.downLoadFile(response) ) ;    
+           responseType:'arraybuffer',
+            params: params})
+   //         .pipe(catchError((err)=> {return of(undefined)}))
+            .subscribe(response => this.downLoadFile(response) ) ;    
            }
           }
 
@@ -213,9 +216,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   downLoadFile(data: any){
     const blob = new Blob([data], { type: 'text/csv'});
-    let url = window.URL.createObjectURL(blob);
     saveAs(blob, "list.csv");
-    return window.open(url)
   }
 
 

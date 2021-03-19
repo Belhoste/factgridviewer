@@ -41,6 +41,14 @@ sparqlToDisplay(sparql){
     return sparql
   }
 
+  sparqlToDownload(sparql){
+    console.log(sparql);
+    let selectedSparql = this.newSparqlAdress(sparql, this.selectedLang);//handle sparql queries 1. create the address
+    this.request.downLoadList(selectedSparql);     //handle sparql queries 2. list ready to download  
+   // this.request.downLoadList(downloadSparql);
+   // return sparql
+  }
+
     newSparqlAdress(address:string, lang) : string { 
       const newPrefix = "https://database.factgrid.de/sparql?query=";
       const oldPrefix = "https://database.factgrid.de/query/#";

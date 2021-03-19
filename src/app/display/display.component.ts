@@ -30,8 +30,6 @@ import {SetSelectedItemsListService} from '../services/set-selected-items-list.s
 })
 
 export class DisplayComponent implements OnInit, OnDestroy {
-
-  @Output() clickedItem = new EventEmitter<any>();
   
   constructor(private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, 
     private backList:BackListService, private backListDetails:BackListDetailsService, private headerDisplay:HeaderDisplayService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
@@ -62,6 +60,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   mainPage:string;
   externalLinksTitle:string;
   formerVisitsTitle:string;
+  clickToDisplay:string;
+  clickToDownload:string;
 
   selectedItems: any[]; 
 
@@ -139,10 +139,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isList:boolean = false;
 
 onClick2(query){ //handling click for sparql query
- this.sparqlQuery = query;
- let sparql = this.setData.sparqlToDisplay(this.sparqlQuery);
-  console.log(sparql);
-  sparql.subscribe(res => { if (res !== undefined){
+ query = this.setData.sparqlToDisplay(query);
+  console.log(query);
+  query.subscribe(res => { if (res !== undefined){
     console.log(res);
     if(res.results !== undefined){
         this.list=res.results.bindings;  
@@ -160,9 +159,8 @@ onClick2(query){ //handling click for sparql query
 }
 
 
-onClick3(sparqlList2){ //handling click for sparql query
-    this.clickedArray[2]=sparqlList2;
-    this.clickedItem.emit(this.clickedArray);
+onClick3(query){ //handling click for sparql query (download)
+  this.setData.sparqlToDownload(query);
     }
 
 setItemId(event){
@@ -192,7 +190,16 @@ setItemId(event){
 
   this.formerVisitsTitle = "you have visited"
   if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht"};
-  if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité"}
+  if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité"};
+
+  this.clickToDisplay = "click to display"
+  if(this.selectedLang === "de") {this.clickToDisplay = "Klicken Sie zum Anzeigen"};
+  if(this.selectedLang === "fr") {this.clickToDisplay = "cliquez pour afficher"}
+
+  this.clickToDownload = "click to download"
+  if(this.selectedLang === "de") {this.clickToDownload = "Klicken Sie zum Download"};
+  if(this.selectedLang === "fr") {this.clickToDownload = "cliquez pour télécharger"}
+
 
   this.subscription0 = this.route.paramMap.subscribe(
     params => { this.itemId = params.get('id'),

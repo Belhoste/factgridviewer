@@ -112,8 +112,8 @@
               <label>{{M.references2[0].value.label}}
                 <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </label>
-              <label>{{M.references2[0].value.date }}</label>
-              <label>{{M.references2[0].value.string }}</label>
+              <label>{{M.references2[0].value.date}}</label>
+              <label>{{M.references2[0].value.string}}</label>
               <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
             </div>   
           </div>      
@@ -159,9 +159,9 @@
                     <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
                   <label>{{M.mainsnak.datavalue.value.amount}}</label>
                   <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
-                  <label *ngIf="M.mainsnak.datatype === 'sparql'">click to display the list
+                  <label *ngIf="M.mainsnak.datatype === 'sparql'">{{clickToDisplay}}
                       <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick2(M.mainsnak.datavalue.value)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                      <span>click to download the list</span>
+                      <span>{{clickToDownload}}</span>
                       <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick3(M.mainsnak.datavalue.value)"><mat-icon color ="primary" [inline]="true">download</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
                   <label *ngIf="M.mainsnak.datatype === 'wikibase-item'">{{M.mainsnak.label}}, <span class="description-text">{{M.mainsnak.description}}</span>
                     <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
