@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
-import { debounceTime, switchMap, map, tap, filter, takeWhile, mergeMap, exhaustMap, distinctUntilChanged, startWith } from 'rxjs/operators';
+import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
 import { Observable, EMPTY, pipe, from, of, forkJoin } from 'rxjs';
 import { HttpClient, HttpHeaders, JsonpClientBackend} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
@@ -11,6 +11,7 @@ import { stringify } from '@angular/compiler/src/util';
 import { ListDetailsService } from './services/list-details.service';
 import { BackListService } from './services/back-list.service';
 import { SlideUpAnimation} from './slide-up-animation';
+import { Router, ActivatedRoute, ParamMap} from '@angular/router';
 
 
 @Component({
@@ -37,14 +38,12 @@ export class AppComponent implements OnInit, OnDestroy
   title = 'factgrid';
 
   subtitle:string;
-
-  
   
   searchInput = new FormControl();
 
  public selectedItem:Observable<any>;
 
- searchToken:string = "on";  //initialization of the token used to hide/display the display component
+ searchToken:string = "on";  //initialization of the token used to hide/display the display component   todo: change into public isDisplay:boolean = "false"
 
  //animationState = 'in';
 
@@ -54,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy
   labels
   items = [];
   newItem;
+  itemId:string;
  
 
 private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
@@ -61,8 +61,17 @@ private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentiti
 private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
 private getUrlSuffix= '&format=json&origin=*' ; 
 
-  constructor( private changeDetector: ChangeDetectorRef, public sharedService:AppAndDisplaySharedService, private http: HttpClient, 
-    private request:RequestService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService, private setList:ListDetailsService, private backList:BackListService) {}
+  constructor( 
+  // private route: ActivatedRoute,  //shift to DisplayComponent
+  private changeDetector: ChangeDetectorRef, 
+  //public sharedService:AppAndDisplaySharedService, //shift to DisplayComponent (with a new name) 
+  private http: HttpClient, 
+  private request:RequestService, 
+  private setLanguage:SetLanguageService, 
+ // private createItemToDisplay:CreateItemToDisplayService, //shift to DisplayCompoenent
+  private setList:ListDetailsService, 
+  private backList:BackListService) 
+  {}
 
   ngOnInit(): void {
 
@@ -107,9 +116,15 @@ private getUrlSuffix= '&format=json&origin=*' ;
     this.searchToken="on";
     this.changeDetector.detectChanges();
     })
+
   }
+  
+ 
+ 
+/* replace this onItemSelect(item) by a new one with navigation
 
   onItemSelect(item){  //handle the selected item in the search engine
+  console.log(item);
   if(this.isDown = true) {this.isDown = !this.isDown;} // slide up the title FactGrid
   let sparql = of([{item:{}, itemLabel:{}}]); //initialization of the sparql list
   let backList = this.backList.backList(item.id, this.selectedLang); //back list of the selected item
@@ -136,10 +151,17 @@ private getUrlSuffix= '&format=json&origin=*' ;
   this.items = [];
   this.searchToken = "off"; //to display the display component
   this.changeDetector.detectChanges(); //to detect the change without delay
+ // this.sharedService.data.subscribe(res => console.log(res));
    return this.sharedService.data
+   return this.sharedService
      }
+	 
+*/
 
-     clickedItemHandler(item: any[]){ 
+
+/* this clickedItemHandler go to DisplayComponent with a new code (navigation)
+      clickedItemHandler(item: any[]){ 
+      console.log(item[0]);
       this.searchToken= "on"; //to hide the display component
       this.changeDetector.detectChanges()
       let url;
@@ -153,13 +175,14 @@ private getUrlSuffix= '&format=json&origin=*' ;
       let formerItem = JSON.parse(localStorage.getItem('selectedItems'))[0].value.id;
       ;
       url = this.baseGetURL+item[0]+this.getUrlSuffix;
+        { url == 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*' };
       if(url === 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*'){
       url = this.baseGetURL+formerItem+this.getUrlSuffix; item[0]=formerItem } 
    //   if(item[0] !== undefined){
     //  if(url!=="https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"){ //item ready to display
         itemToDisplay=this.request.getItem(url).pipe(
                       map(res => res=Object.values(res.entities)),
-                      switchMap(res =>itemToDisplay= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
+                      switchMap(res =>  itemToDisplay= this.createItemToDisplay.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
                       );
       
         itemToDisplay.subscribe(re=>{ //add this item in the storage of the previous selected item
@@ -181,6 +204,7 @@ private getUrlSuffix= '&format=json&origin=*' ;
               localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
                 });
        //       };
+	  
           
         
         backList=this.backList.backList(item[0],this.selectedLang); //handle backList
@@ -190,9 +214,11 @@ private getUrlSuffix= '&format=json&origin=*' ;
         let sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display  
         this.request.downLoadList(downloadSparql);
         this.sharedService.data = forkJoin({ backList,sparql,itemToDisplay }); 
+        console.log(this.sharedService.data);
         this.searchToken = "off";
       return this.sharedService
     };
+	 */
 
   researchFieldSelect(researchField){
       if (researchField === undefined) {this.selectedResearchField = "all"};
@@ -260,12 +286,14 @@ private getUrlSuffix= '&format=json&origin=*' ;
       ]
     }
 
-    newSparqlAdress(address:string, lang) : string { 
+ /*  newSparqlAdress(address:string, lang) : string { 
       const newPrefix = "https://database.factgrid.de/sparql?query=";
       const oldPrefix = "https://database.factgrid.de/query/#";
       address = address.replace(oldPrefix, newPrefix);
       return address
       }
+*/	  
+	  
       
      ngOnDestroy(): void {
        this.labels.unsubscribe()

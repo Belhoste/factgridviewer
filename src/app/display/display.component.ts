@@ -1,12 +1,13 @@
 
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
-import { Observable, Subscription, Subject, from } from 'rxjs';
+import { Observable, Subscription, Subject, from, forkJoin, of, EMPTY } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import {SetDataService} from '../services/set-data.service'
 import { AppAndDisplaySharedService } from '../services/app-and-display-shared.service';
-import { CreateItemToDisplayService } from '../services/create-item-to-display.service';
-import { SetLanguageService } from '../services/set-language.service';
-import { RequestService } from '../services/request.service';
-import {map} from 'rxjs/operators';
+import {map } from 'rxjs/operators';
+import { ActivatedRoute} from '@angular/router';
 import { BackListDetailsService } from '../services/back-list-details.service';
+import { HeaderDisplayService} from './services/header-display.service';
 import { PlaceDisplayService} from './services/place-display.service';
 import { OrgDisplayService} from './services/org-display.service';
 import { DocumentDisplayService } from './services/document-display.service';
@@ -19,6 +20,9 @@ import { SourcesDisplayService} from './services/sources-display.service';
 import { EventDisplayService} from './services/event-display.service';
 import { ExternalLinksDisplayService} from './services/external-links-display.service';
 import { WikiDisplayService} from './services/wiki-display.service';
+import { BackListService} from '../services/back-list.service';
+import {SetSelectedItemsListService} from '../services/set-selected-items-list.service';
+//import { Router } from 
 
 @Component({
   selector: 'display-component',
@@ -30,18 +34,27 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   @Output() clickedItem = new EventEmitter<any>();
   
-  constructor(private changeDetector:ChangeDetectorRef, private request:RequestService, private sharedService:AppAndDisplaySharedService, private setLanguage:SetLanguageService, private createItemToDisplay:CreateItemToDisplayService, 
-    private backListDetails:BackListDetailsService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
+  constructor(private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, private sharedService:AppAndDisplaySharedService,  
+    private backList:BackListService, private backListDetails:BackListDetailsService, private headerDisplay:HeaderDisplayService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
     private personDisplay:PersonDisplayService, private educationDisplay:EducationDisplayService, private careerDisplay:CareerDisplayService, private sociabilityDisplay:SociabilityDisplayService,
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private wikiDisplay:WikiDisplayService){}
 
+  sparqlQuery
+
+  data:Observable<any>; //for routing
+  itemId; //for routing
+  itemObject;//for routing
+  
   isSpinner:boolean = false;
   clickedArray:string[]=["","",""];
   
-  selectedItem:Observable<any>;
+  selectedItemsList:Observable<any>;
+
+  subscription0:Subscription;
   subscription1:Subscription;
   subscription2:Subscription;
   subscription3:Subscription;
+  subscription4:Subscription;
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
@@ -50,12 +63,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   externalLinksTitle:string;
   formerVisitsTitle:string;
 
-  selectedItems: any[];
-
-
-
-  private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-  private getUrlSuffix= '&format=json' ; 
+  selectedItems: any[]; 
 
   factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
@@ -87,15 +95,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
   publication:string;
   list:any[];
 
- 
- // properties for the header
-
-  P2:any[];// instance of
-  P3:any[];// subclass of
-  P8:any[];//part of
-  P97:any[];//field of research
-  P131:any[]; //research projects that contributed to this data set
-
  //wiki
 
   commonswiki:any;
@@ -109,6 +108,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   // arrays to display the properties
 
+  headerDetail:any[];//for header
   lifeAndFamily:any[];//for persons
   education:any[];
   careerAndActivities:any[];
@@ -138,30 +138,42 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isEvent:boolean = false;
   isList:boolean = false;
 
- onClick(item){ //handling click
-    if(item.value !== undefined){
-      item = item.value.id; };
-    this.isList=true;
-    this.clickedArray[0] = item;
-    this.clickedItem.emit(this.clickedArray);
-  }
+onClick2(query){ //handling click for sparql query
+ this.sparqlQuery = query;
+ let sparql = this.setData.sparqlToDisplay(this.sparqlQuery);
+  console.log(sparql);
+  sparql.subscribe(res => { if (res !== undefined){
+    console.log(res);
+    if(res.results !== undefined){
+        this.list=res.results.bindings;  
+          for(let i=0;i<this.list.length;i++){
+             this.list[i]["item"].id = this.list[i]["item"].value.replace(	
+            "https://database.factgrid.de/entity/", "")      
+        }
+        console.log(this.list);
+      }
+    }
+    this.isList = true;
+     }
+  //   this.delayDisplayList();
+  )
+}
 
-onClick2(sparqlList){ //handling click for sparql query
-  this.clickedArray[1]=sparqlList;
-  this.clickedItem.emit(this.clickedArray);
-  }
 
 onClick3(sparqlList2){ //handling click for sparql query
     this.clickedArray[2]=sparqlList2;
     this.clickedItem.emit(this.clickedArray);
     }
 
+setItemId(event){
+  this.itemObject = event
+}
 
 
  ngOnInit(): void {
-  
-  this.langs;
-  
+
+  this.isSpinner = true;
+
   this.linkedPagesTitle = "linked pages"
   if(this.selectedLang === "de") {this.linkedPagesTitle = "verlinkte Seiten"};
   if(this.selectedLang === "fr") {this.linkedPagesTitle = "pages liées"}
@@ -178,55 +190,39 @@ onClick3(sparqlList2){ //handling click for sparql query
   if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht"};
   if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité"}
 
+  this.subscription0 = this.route.paramMap.subscribe(
+    params => { this.itemId = params.get('id'),
+      this.subscription2 = this.backList.backList(this.itemId,this.selectedLang). //handle backList
+      pipe(
+      tap(res => console.log(res)),
+      map(res=> { 
+      if (res.query !== undefined) {
+      this.linkedItems= this.backListDetails.setBackList(res.query.pages) }
+      if ( res.query === undefined ) {
+        this.linkedItems = [{id:"Q220375", label:"none"}]
+         }})).
+      subscribe(res =>{ this.linkedItems ; }
+        );
+  
+  console.log(this.list);
 
-
-
-  this.isSpinner = true;
-
-  this.subscription1 = this.sharedService.data.
-    pipe(map(res=> { 
-    if (res.backList.query !== undefined) {
-    this.linkedItems= this.backListDetails.setBackList(res.backList.query.pages) }
-    if ( res.backList.query === undefined ) {
-      this.linkedItems = [{id:"Q220375", label:"none"}]
-    }
-    })).
-    subscribe(res =>{ this.linkedItems ; }
-      );
-       
-  this.subscription2 = this.sharedService.data.subscribe(data => {  
-    if (data.sparql !== undefined){
-      if(data.sparql.results !== undefined){
-          this.list=data.sparql.results.bindings;  
-            for(let i=0;i<this.list.length;i++){
-               this.list[i]["item"].id = this.list[i]["item"].value.replace(	
-              "https://database.factgrid.de/entity/", "")
-          }
-        }
-      }
-       this.delayDisplayList();
-       this.isList = true;
-    }
-  );
-
-  this.subscription3 = this.sharedService.data.subscribe(data=>{
-    if (data.itemToDisplay !==undefined){
-    this.item = data.itemToDisplay;
-    //this.place = this.item[0].claims.P2.place;
-   // this.org = this.item[0].claims.P2.org;
+  this.data = this.setData.itemToDisplay(this.itemId)
+  this.subscription3= this.data.subscribe(item=>{
+    console.log(item);
+    if (item !==undefined){
+    this.item = item;
+  //ici insérer l'item dans la liste des selectedItems
+    
+    this.setList.addToSelectedItemsList(item[0]);
     this.event =  this.item[0].claims.P2.event;
     this.sources = this.item[0].claims.P2.sources;
     this.main = this.item[0].claims.P2.main;
-
     this.urlId = this.factGridUrl+this.id;
-
-    console.log(this.item);
-  
     if (this.item[0].claims.P48 !== undefined) {
     this.coords = this.item[0].claims.P48[0].mainsnak;
-    }
-    
-    this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
+    } 
+    this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
+    console.log(this.selectedItemsList)
    
     ///header
 
@@ -235,27 +231,9 @@ onClick3(sparqlList2){ //handling click for sparql query
     this.description = this.item[0].description;
     this.aliases = this.item[0].aliases;
 
-    this.P2 = this.item[0].claims.P2;
-    this.P3 = this.item[0].claims.P3; 
-    this.P8 = this.item[0].claims.P8;
-    this.P97 = this.item[0].claims.P97;
-    this.P131 = this.item[0].claims.P131;
+    this.headerDetail = [];
 
-    if (this.item[0].claims.P2 !==undefined){ //instance of
-      this.item[1].splice(this.item[1].indexOf("P2"),1);
-    }
-    if (this.item[0].claims.P3 !==undefined){ //subclass of
-      this.item[1].splice(this.item[1].indexOf("P3"),1);
-    }
-    if (this.item[0].claims.P8 !==undefined){ //part of
-      this.item[1].splice(this.item[1].indexOf("P8"),1);
-    }
-    if (this.item[0].claims.P97 !==undefined){ //field of research
-      this.item[1].splice(this.item[1].indexOf("P97"),1);
-    }
-    if (this.item[0].claims.P131 !==undefined){ //research projects that contributed to this data set
-      this.item[1].splice(this.item[1].indexOf("P131"),1); 
-    }
+    this.headerDisplay.setHeaderDisplay(this.item,this.headerDetail); 
 
     ///place
 
@@ -315,11 +293,10 @@ onClick3(sparqlList2){ //handling click for sparql query
 
   ///org
 
-    this.locationAndContext = [];
+  this.locationAndContext = [];
 
-if(this.item[0].claims.P2.org !== undefined) {
-  this.orgDisplay.setOrgDisplay(this.item,this.locationAndContext); 
-  console.log(this.orgDisplay.setOrgDisplay(this.item,this.locationAndContext));
+  if(this.item[0].claims.P2.org !== undefined) {
+    this.orgDisplay.setOrgDisplay(this.item,this.locationAndContext); 
 }
   
   ///activity
@@ -399,14 +376,13 @@ if(this.item[0].claims.P2.org !== undefined) {
      this.wikiDisplay.setWikiDisplay(this.item,this.wikis); 
        if (this.wikis.length > 0) {   this.isWikis = true };
 
-        
     //spinner
         this.isSpinner = false;
-
-      }
+         }
+        }
+      )
     }
-   )
-  
+  )
 }
 
 qualifiersList(u){ //setting the list of qualifiers for a mainsnak
@@ -429,9 +405,8 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
        }
       }
 
-
   ngOnDestroy(): void {
-   this.subscription1.unsubscribe();
+   this.subscription0.unsubscribe();
    this.subscription2.unsubscribe();
    this.subscription3.unsubscribe();
   }

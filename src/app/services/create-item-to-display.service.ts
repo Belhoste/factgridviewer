@@ -19,7 +19,9 @@ export class CreateItemToDisplayService {
   constructor(private setLanguage:SetLanguageService, private details:DetailsService, private setItem:SetItemToDisplayService, 
     private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private backList:BackListService) { }
 
+    
     createItemToDisplay(re, selectedLang) {
+      console.log(re);
       let values = Object.values(re.claims);
       let propertyIds = Object.keys(re.claims);
       let u;
@@ -27,7 +29,7 @@ export class CreateItemToDisplayService {
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
           map(res =>{    
-          let backList=this.backList.backList(re.id, selectedLang);
+          //let backList=this.backList.backList(re.id, selectedLang);
           let qualifierProperties=[];
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
           this.addItemDetails.addSidelinksDetails(re);
@@ -44,11 +46,14 @@ export class CreateItemToDisplayService {
           this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds, selectedLang); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
           u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
-          return [u, propertyIds, backList, qualifierProperties, referenceProperties]
-           }) 
-        )
+          return [u, propertyIds, 
+     //       backList, 
+            qualifierProperties, referenceProperties]     
+            }
+          )    
+        )  
         return observedItem
-    }
+      }
 
     createListToDisplay(re, selectedLang){
        let observedList 

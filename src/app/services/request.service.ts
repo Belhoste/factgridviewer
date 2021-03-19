@@ -179,20 +179,28 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   
   getList(sparql:string): Observable<any> {   
-    let u
+    let u;
+    if(sparql !== undefined){
     let params = new HttpParams()
        .set('format',"json")
       u= this.http.get(sparql, {
-        params: params}).pipe(catchError((err)=> {return of(undefined)}))  
+        params: params}).pipe(catchError((err)=> {return of(undefined)})) 
+      } 
         return u
        }
 
        downLoadList(sparql:string) {   
         let u
+        if (sparql !==undefined){
+        let headers = new HttpHeaders().set("Accept", "text/csv")
         let params = new HttpParams()
-          u= this.http.get(sparql, {responseType:'arraybuffer',
+   //     .set('format', 'csv')
+          u= this.http.get(sparql, { headers: headers,
+   //        responseType:'arraybuffer',
             params: params}).pipe(catchError((err)=> {return of(undefined)})).subscribe(response => this.downLoadFile(response) ) ;    
            }
+          }
+
 
  // selectUrl(url:string) {  let selectUrl = re => re == "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
   //   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : re  };

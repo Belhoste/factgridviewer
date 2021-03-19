@@ -24,6 +24,8 @@ import { MapComponent } from './display/map/map.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BackListIdPipe } from './back-list-id.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AppRoutingModule } from './app-routing.module';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
 
@@ -34,7 +36,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     CommaJoinPipe,
     ChangeUndefinedItemPipe,
     MapComponent,
-    BackListIdPipe
+    BackListIdPipe,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDividerModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
+    AppRoutingModule,
   ],
   bootstrap: [AppComponent]
 })

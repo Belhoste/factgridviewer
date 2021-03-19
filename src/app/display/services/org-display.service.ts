@@ -29,7 +29,7 @@ export class OrgDisplayService {
     item[1].splice(item[1].indexOf("P6"),1);
     locationAndContext.push(item[0].claims.P6); 
   }
-  if (item[0].claims.P50 !==undefined){  //end date 
+ if (item[0].claims.P50 !==undefined){  //end date 
     item[1].splice(item[1].indexOf("P50"),1);
     locationAndContext.push(item[0].claims.P50); 
   }

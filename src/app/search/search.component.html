@@ -1,0 +1,43 @@
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+    rel="stylesheet">
+    <body>
+    
+    <div>
+      <div class="FactGrid-div" [@slideUp]="isDown ? 'down' :'up'">
+      <div class="FactGridTitle-div">
+            <p>FactGrid</p>
+      </div>
+        <span>{{subtitle}}</span>
+    </div>
+       <div class="select-bar" class="center" style="font-size: 15px">
+      <mat-form-field color=primary appearance="standard" class="mat-headline">
+            <input matInput placeholder="Ex. Item" value="Goethe" [formControl] = "searchInput">
+      </mat-form-field>
+    </div>
+  </div>
+
+    <div  *ngIf="searchToken === 'on'" fxLayout="row" fxLayoutAlign="space-around center"> <!-- change "searchToken === 'on'" into isDisplay === false -->
+      <div class="search-div">
+      <mat-card  fxFlex class= mat-elevation-z8fx>  
+        <div flex-shrink flex-basis="auto">
+            <div *ngFor="let item of items">
+            {{item.label}} 
+    <!--                  <mat-icon-button class="internalLink" #content (click)="onItemSelect(item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button> 
+                  [routerLink]="{'/item/itemId,']<mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button> 
+				  <a [routerLink]=['/item', item.id]' routerLinkActive ="activate-link">{{item.label}}, <span class="description-text">{{item.description }}</span>({{item.id}})</a><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon>
+		-->		  <a [routerLink]="['/item', item.id]" routerLinkActive ="activate-link">{{item.id}}</a>, <span class="description-text">{{item.description }}</span>	
+				  
+   				  
+				  
+            <hr>
+        </div>
+      </div>
+      </mat-card>
+    </div>
+    </div>
+
+
+</body>
+
+

@@ -185,9 +185,9 @@ color:white;
   color:white;
   font-size: 20px !important;
   font-weight: 360;
-  padding: 5 px;
-  margin: 0px;
-  height:40px;
+  
+  margin: 10px;
+  height:8px;
 }
 
 .details {
@@ -229,6 +229,8 @@ color:white;
 .center {
     display: flex;
     justify-content: center;
+    padding:15px;
+    background-color: rgb(250, 245, 236);
   }
 
 .example-spacer {
