@@ -10,9 +10,6 @@ export class SetSelectedItemsListService {
 
   addToSelectedItemsList(item) {let u = { value: {id: item.id}, label: item.label }
   let selectedItemsList:any[] = JSON.parse(localStorage.getItem('selectedItems'));
-  console.log(item);
-  console.log(u);
-  console.log(selectedItemsList);
   if (selectedItemsList !== undefined){   //remove duplicates
     for (let i=0; i<selectedItemsList.length; i++){
       if (selectedItemsList[i] !== null) {

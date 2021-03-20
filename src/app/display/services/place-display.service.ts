@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { MapService} from './map.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaceDisplayService {
 
-  constructor() { }
+  constructor(private mapDisplay:MapService) { }
 
   ///place
 

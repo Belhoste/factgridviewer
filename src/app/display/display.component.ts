@@ -1,4 +1,3 @@
-
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { Observable, Subscription, Subject, from, forkJoin, of, EMPTY } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -264,6 +263,7 @@ setItemId(event){
     //person:education
 
    this.education = [];
+   this.training= "";
 
    if(this.item[0].claims.P2.person !== undefined) {
     this.educationDisplay.setEducationDisplay(this.item,this.education);
@@ -273,6 +273,7 @@ setItemId(event){
     //person:career and activities
     
     this.careerAndActivities = [];
+    this.career = "";
 
     if(this.item[0].claims.P2.person !== undefined) {
       this.careerDisplay.setCareerDisplay(this.item,this.careerAndActivities);
@@ -282,6 +283,7 @@ setItemId(event){
     //person: sociability and culture
 
   this.sociabilityAndCulture = [];
+  this.sociability = "";
 
   if(this.item[0].claims.P2.person !== undefined) {
     this.sociabilityDisplay.setSociabilityDisplay(this.item,this.sociabilityAndCulture);
@@ -420,12 +422,3 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
    this.subscription3.unsubscribe();
   }
 }
-
-
-
-
-  
-
-    
-         
-                        

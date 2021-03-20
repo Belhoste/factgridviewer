@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import * as Leaflet from 'leaflet';
 
 
@@ -16,7 +16,7 @@ export class MapComponent implements OnInit {
   lng:number;
   map
 
-  constructor() { 
+  constructor(private changeDetector:ChangeDetectorRef) { 
   }
 
   ngOnInit(): void {
@@ -36,5 +36,15 @@ export class MapComponent implements OnInit {
       map.setView(itemLocation.coords, itemLocation.zoom);
  
    }
+  
 
+   ngOnDestroy(): void {
+    
+   }
+  
+ 
+ 
+ 
+ 
+ 
 }

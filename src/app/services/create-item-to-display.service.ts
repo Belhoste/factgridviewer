@@ -5,7 +5,7 @@ import { PropertyDetailsService } from './property-details.service';
 import { SetItemToDisplayService } from './set-item-to-display.service';
 import { ItemDetailsService } from './item-details.service';
 import { forkJoin, BehaviorSubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { BackListService } from './back-list.service';
 
 @Injectable({
@@ -21,7 +21,6 @@ export class CreateItemToDisplayService {
 
     
     createItemToDisplay(re, selectedLang) {
-      console.log(re);
       let values = Object.values(re.claims);
       let propertyIds = Object.keys(re.claims);
       let u;
