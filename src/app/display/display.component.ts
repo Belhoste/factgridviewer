@@ -20,7 +20,7 @@ import { ExternalLinksDisplayService} from './services/external-links-display.se
 import { WikiDisplayService} from './services/wiki-display.service';
 import { BackListService} from '../services/back-list.service';
 import {SetSelectedItemsListService} from '../services/set-selected-items-list.service';
-//import { Router } from 
+import { Router }   from '@angular/router';
 
 @Component({
   selector: 'display-component',
@@ -30,7 +30,7 @@ import {SetSelectedItemsListService} from '../services/set-selected-items-list.s
 
 export class DisplayComponent implements OnInit, OnDestroy {
   
-  constructor(private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, 
+  constructor(private router:Router, private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, 
     private backList:BackListService, private backListDetails:BackListDetailsService, private headerDisplay:HeaderDisplayService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
     private personDisplay:PersonDisplayService, private educationDisplay:EducationDisplayService, private careerDisplay:CareerDisplayService, private sociabilityDisplay:SociabilityDisplayService,
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private wikiDisplay:WikiDisplayService){}
@@ -80,7 +80,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   
   //="https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png";
   map:any;
-  coords:any;
+  coords:any = undefined;
+  latitude:number;
+  longitude:number;
+ // lat:string;
+ // lng:string;
   main:string;
   training:string;
   career:string;
@@ -197,8 +201,7 @@ setItemId(event){
 
   this.clickToDownload = "click to download"
   if(this.selectedLang === "de") {this.clickToDownload = "Klicken Sie zum Download"};
-  if(this.selectedLang === "fr") {this.clickToDownload = "cliquez pour télécharger"}
-
+  if(this.selectedLang === "fr") {this.clickToDownload = "cliquez pour télécharger"};
 
   this.subscription0 = this.route.paramMap.subscribe(
     params => { this.itemId = params.get('id'),
@@ -218,8 +221,10 @@ setItemId(event){
 
   this.data = this.setData.itemToDisplay(this.itemId)
   this.subscription3= this.data.subscribe(item=>{
-    console.log(item);
+    
     if (item !==undefined){
+  //  console.log(this.coords);
+  console.log(item);
     this.item = item;
     this.setList.addToSelectedItemsList(item[0]);
     this.event =  this.item[0].claims.P2.event;
@@ -227,10 +232,23 @@ setItemId(event){
     this.main = this.item[0].claims.P2.main;
     this.urlId = this.factGridUrl+this.id;
     if (this.item[0].claims.P48 !== undefined) {
-    this.coords = this.item[0].claims.P48[0].mainsnak;
-    } 
+    this.coords = this.item[0].claims.P48[0].mainsnak.datavalue.value;
+    console.log(this.item[0].claims.P48[0].mainsnak.datavalue)
+    
+   //map 
+  //  console.log(this.coords);
+    this.latitude= this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
+    this.longitude =this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
+    let lat = this.latitude.toString(); let lng = this.longitude;
+    //let coords:string;
+    //this.gotoMap(url,this.lat,this.lng);
+    
+    this.router.navigate([lat, lng], { relativeTo:this.route });
+    }
+   
+    
     this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
-    console.log(this.selectedItemsList)
+  //  console.log(this.selectedItemsList)
    
     ///header
 
@@ -391,10 +409,12 @@ setItemId(event){
         this.isSpinner = false;
          }
         }
-      )
+       
+      )   
     }
   )
 }
+
 
 qualifiersList(u){ //setting the list of qualifiers for a mainsnak
   for (let i=0;i<u.length;i++){
@@ -415,7 +435,7 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
          document.getElementById("listing").style.visibility = 'visible';}, 1800);
        }
       }
-
+ 
   ngOnDestroy(): void {
    this.subscription0.unsubscribe();
    this.subscription2.unsubscribe();

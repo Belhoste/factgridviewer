@@ -143,7 +143,8 @@
               fxLayout.sm="column" 
               fxLayout.xs="column">
           </div> 
-            <app-map *ngIf="coords" id="leaflet-map" [coords]="coords.datavalue.value"></app-map>
+           <router-outlet></router-outlet>
+   <!--     <app-map *ngIf="coords" id="leaflet-map" [coords]="coords"></app-map> -->
             
             <div *ngFor="let P of mainList">
               <div flex-shrink flex-basis="auto">
