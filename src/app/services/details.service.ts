@@ -243,8 +243,6 @@ setQualifierItems(values,arr){ // create an array of the items in the qualifiers
     }
 
 }
-
-
  
 
 

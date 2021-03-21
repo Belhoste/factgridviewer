@@ -54,6 +54,10 @@ export class OrgDisplayService {
     item[1].splice(item[1].indexOf("P465"),1);
     locationAndContext.push(item[0].claims.P465); 
   }
+  if (item[0].claims.P297 !==undefined){  //territorial affiliation
+    item[1].splice(item[1].indexOf("P297"),1);
+    locationAndContext.push(item[0].claims.P297); 
+  }
   if (item[0].claims.P9 !==undefined){  //includes
     item[1].splice(item[1].indexOf("P9"),1);
     locationAndContext.push(item[0].claims.P9); 

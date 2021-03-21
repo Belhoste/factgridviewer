@@ -48,6 +48,7 @@ return c
 
 item2(res,lang) {//create an array of items with id, label and description in the selected language for the properties and items in the statements
   let arr = []; 
+  if (res === undefined){ res = []};
   for (let i = 0; i < res.length; i++) { 
     let aliases = [];
     let propertiesLang=this.changeLang(lang,res[i]);

@@ -21,6 +21,7 @@ import { WikiDisplayService} from './services/wiki-display.service';
 import { BackListService} from '../services/back-list.service';
 import {SetSelectedItemsListService} from '../services/set-selected-items-list.service';
 import { Router }   from '@angular/router';
+import { ifStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'display-component',
@@ -96,7 +97,9 @@ export class DisplayComponent implements OnInit, OnDestroy {
   sources:string;
   other:string;
   publication:string;
-  list:any[];
+  listTitle:string;
+  
+  list:any[]=[];
 
  //wiki
 
@@ -140,12 +143,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isActivity:boolean = false;
   isEvent:boolean = false;
   isList:boolean = false;
+  isPlace:boolean = false;
 
 onClick2(query){ //handling click for sparql query
  query = this.setData.sparqlToDisplay(query);
   console.log(query);
   query.subscribe(res => { if (res !== undefined){
-    console.log(res);
     if(res.results !== undefined){
         this.list=res.results.bindings;  
           for(let i=0;i<this.list.length;i++){
@@ -156,6 +159,8 @@ onClick2(query){ //handling click for sparql query
       }
     }
     this.isList = true;
+
+
      }
   //   this.delayDisplayList();
   )
@@ -174,6 +179,9 @@ setItemId(event){
  ngOnInit(): void {
 
   this.isSpinner = true;
+  this.list=[];
+  this.isList = false;
+
 
   this.newSearch = "new search"
   if(this.selectedLang === "de") {this.newSearch = "neue Suche"};
@@ -221,14 +229,17 @@ setItemId(event){
 
   this.data = this.setData.itemToDisplay(this.itemId)
   this.subscription3= this.data.subscribe(item=>{
-    
+    this.isMain=false;
+    this.isOther=false;
     if (item !==undefined){
-  //  console.log(this.coords);
   console.log(item);
     this.item = item;
     this.setList.addToSelectedItemsList(item[0]);
+    if(this.item[0].claims.P2 === undefined){ alert("property P2 undefined")};
+    if(this.item[0].claims.P320 === undefined) { this.hideList()};
     this.event =  this.item[0].claims.P2.event;
     this.sources = this.item[0].claims.P2.sources;
+    this.listTitle = this.item[0].claims.P2.listTitle;
     this.main = this.item[0].claims.P2.main;
     this.urlId = this.factGridUrl+this.id;
     if (this.item[0].claims.P48 !== undefined) {
@@ -236,13 +247,9 @@ setItemId(event){
     console.log(this.item[0].claims.P48[0].mainsnak.datavalue)
     
    //map 
-  //  console.log(this.coords);
     this.latitude= this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
     this.longitude =this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
     let lat = this.latitude.toString(); let lng = this.longitude;
-    //let coords:string;
-    //this.gotoMap(url,this.lat,this.lng);
-    
     this.router.navigate([lat, lng], { relativeTo:this.route });
     }
    
@@ -267,6 +274,8 @@ setItemId(event){
     
      if(this.item[0].claims.P2.place !== undefined) {
      this.placeDisplay.setPlaceDisplay(this.item,this.locationAndSituation); }
+
+     if (this.locationAndSituation.length > 0) {  this.isPlace = true};
 
     ///person
 
@@ -395,8 +404,13 @@ setItemId(event){
         this.otherClaims.push(this.item[0].claims[P]); 
       }
 
+    console.log(this.otherClaims);
+
     if (this.otherClaims.length > 0) {  this.other = this.item[0].claims.P2.other ; 
-                                        this.isOther = true };
+                                        this.isOther = true
+                                           };
+   console.log(this.isOther);
+   console.log(this.isMain);
 
     //wikis
 
@@ -404,11 +418,13 @@ setItemId(event){
 
      this.wikiDisplay.setWikiDisplay(this.item,this.wikis); 
        if (this.wikis.length > 0) {   this.isWikis = true };
-
+                                          }
+     console.log(this.isSociability)
     //spinner
         this.isSpinner = false;
          }
-        }
+   //     }
+   
        
       )   
     }
@@ -428,13 +444,11 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
      }
   }
 
- delayDisplayList(){
+ hideList(){
      if (document.getElementById("listing") != null) {  
        document.getElementById("listing").style.visibility = 'hidden';
-       setTimeout(function() { 
-         document.getElementById("listing").style.visibility = 'visible';}, 1800);
-       }
       }
+    }
  
   ngOnDestroy(): void {
    this.subscription0.unsubscribe();

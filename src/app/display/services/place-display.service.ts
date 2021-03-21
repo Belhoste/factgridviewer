@@ -40,6 +40,19 @@ export class PlaceDisplayService {
     item[1].splice(item[1].indexOf("P461"),1);
       locationAndSituation.push(item[0].claims.P461); 
     }  
+    if (item[0].claims.P140 !==undefined){ //Illuminati code name 
+      item[1].splice(item[1].indexOf("P140"),1);
+      locationAndSituation.push(item[0].claims.P140);
+    }
+    if (item[0].claims.P139 !==undefined){ //Illuminati code name of 
+      item[1].splice(item[1].indexOf("P139"),1);
+      locationAndSituation.push(item[0].claims.P139);
+    }
+    if (item[0].claims.P267 !==undefined){ //organisational context
+        item[1].splice(item[1].indexOf("P267"),1);
+        locationAndSituation.push(item[0].claims.P267);
+      }
+
     return locationAndSituation
   }
 }

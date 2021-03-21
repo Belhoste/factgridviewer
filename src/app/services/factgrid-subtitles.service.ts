@@ -8,6 +8,11 @@ export class FactgridSubtitlesService {
   constructor() { }
 
   setSubtitle1(re,propertyId,lang){  //to add a subtitle with a condition on the property
+  if (propertyId === "P320"){
+   re.claims[propertyId].sparql = "list of members";
+   if ( lang === "de") {re.claims[propertyId].sparql = "Mitgliederverzeichnis "}
+   else if ( lang === "fr") {re.claims[propertyId].sparql = "liste des membres"};
+  }
   if ( lang === "en") {re.claims[propertyId].other = "further"}
   else if ( lang === "de") {re.claims[propertyId].other = "weiteren"}
   else if ( lang === "fr") {re.claims[propertyId].other = "autres"};
@@ -44,11 +49,22 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
        } ;
 */
 
-    if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q8") { //place
+    if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q8" || 
+    re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11174") { //place
       re.claims[propertyId].place = "place";
-      if ( lang === "en") {re.claims[propertyId].place = "place"}
-      else if ( lang === "de") {re.claims[propertyId].place = "Ort"}
-      else if ( lang === "fr") {re.claims[propertyId].place = "lieu"};
+      re.claims[propertyId].main = "place";
+      if ( lang === "en") {re.claims[propertyId].main = "place"}
+      else if ( lang === "de") {re.claims[propertyId].main = "Ort"}
+      else if ( lang === "fr") {re.claims[propertyId].main = "lieu"};
+        };
+
+    if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q8" || 
+    re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11174") { //place
+      re.claims[propertyId].place = "place";
+      re.claims[propertyId].main = "place";
+      if ( lang === "en") {re.claims[propertyId].main = "place"}
+      else if ( lang === "de") {re.claims[propertyId].main = "Ort"}
+      else if ( lang === "fr") {re.claims[propertyId].main = "lieu"};
         };
  //   if (re.claims[propertyId][j].mainsnak.datavalue.value.id !== "Q8") { //place
  //     re.claims[propertyId].place = undefined; }
