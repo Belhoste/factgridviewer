@@ -17,6 +17,22 @@ setDocumentDisplay(item, documentDetail){
     item[1].splice(item[1].indexOf("P20"),1);
     documentDetail.push(item[0].claims.P20);
   }
+  if (item[0].claims.P561 !==undefined){ //quality of author identification
+    item[1].splice(item[1].indexOf("P561"),1);
+    documentDetail.push(item[0].claims.P561);
+  }
+  if (item[0].claims.P24 !==undefined){ //translated by
+    item[1].splice(item[1].indexOf("P24"),1);
+    documentDetail.push(item[0].claims.P24);
+  }
+  if (item[0].claims.P583 !==undefined){ //translator as (misleading) stated
+    item[1].splice(item[1].indexOf("P583"),1);
+    documentDetail.push(item[0].claims.P583);
+  }
+  if (item[0].claims.P584 !==undefined){ //quality of translator identification
+    item[1].splice(item[1].indexOf("P584"),1);
+    documentDetail.push(item[0].claims.P584);
+  }
   if (item[0].claims.P25 !==undefined){ //handwritten by
     item[1].splice(item[1].indexOf("P25"),1);
     documentDetail.push(item[0].claims.P25);
@@ -28,6 +44,10 @@ setDocumentDisplay(item, documentDetail){
   if (item[0].claims.P5 !==undefined){ //title page transcript
     item[1].splice(item[1].indexOf("P5"),1);
     documentDetail.push(item[0].claims.P5);
+  }
+  if (item[0].claims.P572 !==undefined){ //focus title
+    item[1].splice(item[1].indexOf("P572"),1);
+    documentDetail.push(item[0].claims.P572);
   }
   if (item[0].claims.P39 !==undefined){ //begin of composition
     item[1].splice(item[1].indexOf("P39"),1);
@@ -89,6 +109,14 @@ setDocumentDisplay(item, documentDetail){
     item[1].splice(item[1].indexOf("P115"),1);
     documentDetail.push(item[0].claims.P115);
   }
+  if (item[0].claims.P578 !==undefined){ //original publication
+    item[1].splice(item[1].indexOf("P578"),1);
+    documentDetail.push(item[0].claims.P578);
+  }
+  if (item[0].claims.P233 !==undefined){ //preceding in stemma
+    item[1].splice(item[1].indexOf("P233"),1);
+    documentDetail.push(item[0].claims.P233);
+  }
   if (item[0].claims.P222 !==undefined){ //date of publication according to imprint
     item[1].splice(item[1].indexOf("P222"),1);
     documentDetail.push(item[0].claims.P222);
@@ -105,6 +133,18 @@ setDocumentDisplay(item, documentDetail){
   if (item[0].claims.P122 !==undefined){ //wider field of genres
     item[1].splice(item[1].indexOf("P122"),1);
     documentDetail.push(item[0].claims.P122);
+  }
+  if (item[0].claims.P576 !==undefined){ //genre/sujet
+    item[1].splice(item[1].indexOf("P576"),1);
+    documentDetail.push(item[0].claims.P576);
+  }
+  if (item[0].claims.P568 !==undefined){ //plot ingredient
+    item[1].splice(item[1].indexOf("P568"),1);
+    documentDetail.push(item[0].claims.P568);
+  }
+  if (item[0].claims.P565 !==undefined){ //self-statement on historicity / fictionality
+    item[1].splice(item[1].indexOf("P565"),1);
+    documentDetail.push(item[0].claims.P565);
   }
   if (item[0].claims.P18 !==undefined){ //language
     item[1].splice(item[1].indexOf("P18"),1);

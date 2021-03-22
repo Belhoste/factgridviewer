@@ -61,7 +61,7 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P370 !==undefined){//id VD18
       item[1].splice(item[1].indexOf("P370"),1);
-      item[0].claims.P370.url = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18'+item[0].claims.P369[0].mainsnak.datavalue.value
+      item[0].claims.P370.url = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18'+item[0].claims.P370[0].mainsnak.datavalue.value
            externalLinks.push(item[0].claims.P370) };
 
     if (item[0].claims.P424 !==undefined){ //id Harmonia Universalis
@@ -83,6 +83,11 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P414"),1);
       item[0].claims.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-'+item[0].claims.P414[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P414) };
+    
+    if (item[0].claims.P502 !==undefined){  // Complet BIble Genealogy ID
+      item[1].splice(item[1].indexOf("P502"),1);
+      item[0].claims.P502.url = 'http://www.complete-bible-genealogy.com/names/'+item[0].claims.P502[0].mainsnak.datavalue.value
+                  externalLinks.push(item[0].claims.P502) };
   return externalLinks
   }
 

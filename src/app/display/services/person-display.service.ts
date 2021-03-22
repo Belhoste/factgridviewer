@@ -64,6 +64,10 @@ export class PersonDisplayService {
       item[1].splice(item[1].indexOf("P186"),1);
       lifeAndFamily.push(item[0].claims.P186);
     }
+    if (item[0].claims.P580 !==undefined){ //escape/emigration to
+      item[1].splice(item[1].indexOf("P580"),1);
+      lifeAndFamily.push(item[0].claims.P580);
+    }
     if (item[0].claims.P38 !==undefined){ //deathday
       item[1].splice(item[1].indexOf("P38"),1);
       lifeAndFamily.push(item[0].claims.P38);

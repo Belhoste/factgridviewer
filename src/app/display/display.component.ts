@@ -156,6 +156,8 @@ onClick2(query){ //handling click for sparql query
             "https://database.factgrid.de/entity/", "")      
         }
         console.log(this.list);
+        this.isList = true
+        console.log(this.isList);
       }
     }
     this.isList = true;
@@ -181,7 +183,10 @@ setItemId(event){
   this.isSpinner = true;
   this.list=[];
   this.isList = false;
-
+  
+  if(this.list !== []){ this.isList = true };
+  console.log(this.list);
+  console.log(this.isList);
 
   this.newSearch = "new search"
   if(this.selectedLang === "de") {this.newSearch = "neue Suche"};
@@ -231,6 +236,8 @@ setItemId(event){
   this.subscription3= this.data.subscribe(item=>{
     this.isMain=false;
     this.isOther=false;
+    console.log(this.isList);
+    console.log(this.list);
     if (item !==undefined){
   console.log(item);
     this.item = item;
@@ -404,13 +411,9 @@ setItemId(event){
         this.otherClaims.push(this.item[0].claims[P]); 
       }
 
-    console.log(this.otherClaims);
-
     if (this.otherClaims.length > 0) {  this.other = this.item[0].claims.P2.other ; 
                                         this.isOther = true
                                            };
-   console.log(this.isOther);
-   console.log(this.isMain);
 
     //wikis
 
@@ -419,7 +422,6 @@ setItemId(event){
      this.wikiDisplay.setWikiDisplay(this.item,this.wikis); 
        if (this.wikis.length > 0) {   this.isWikis = true };
                                           }
-     console.log(this.isSociability)
     //spinner
         this.isSpinner = false;
          }
