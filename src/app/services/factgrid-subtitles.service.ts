@@ -57,15 +57,6 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
       else if ( lang === "de") {re.claims[propertyId].main = "Ort"}
       else if ( lang === "fr") {re.claims[propertyId].main = "lieu"};
         };
-
-    if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q8" || 
-    re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11174") { //place
-      re.claims[propertyId].place = "place";
-      re.claims[propertyId].main = "place";
-      if ( lang === "en") {re.claims[propertyId].main = "place"}
-      else if ( lang === "de") {re.claims[propertyId].main = "Ort"}
-      else if ( lang === "fr") {re.claims[propertyId].main = "lieu"};
-        };
  //   if (re.claims[propertyId][j].mainsnak.datavalue.value.id !== "Q8") { //place
  //     re.claims[propertyId].place = undefined; }
     if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q9") { //event

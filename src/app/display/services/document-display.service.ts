@@ -170,6 +170,10 @@ setDocumentDisplay(item, documentDetail){
     item[1].splice(item[1].indexOf("P101"),1);
     documentDetail.push(item[0].claims.P101);
   }
+  if (item[0].claims.P30 !==undefined){ //old shelf mark
+    item[1].splice(item[1].indexOf("P30"),1);
+    documentDetail.push(item[0].claims.P30);
+  }
   if (item[0].claims.P125 !==undefined){ //document accessibility
     item[1].splice(item[1].indexOf("P125"),1);
     documentDetail.push(item[0].claims.P125);

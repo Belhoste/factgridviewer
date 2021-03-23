@@ -216,7 +216,7 @@ setItemId(event){
   if(this.selectedLang === "de") {this.clickToDownload = "Klicken Sie zum Download"};
   if(this.selectedLang === "fr") {this.clickToDownload = "cliquez pour télécharger"};
 
-  this.subscription0 = this.route.paramMap.subscribe(
+  this.subscription0 = this.route.paramMap.subscribe(   
     params => { this.itemId = params.get('id'),
       this.subscription2 = this.backList.backList(this.itemId,this.selectedLang). //handle backList
       pipe(
@@ -232,7 +232,7 @@ setItemId(event){
   
   console.log(this.list);
 
-  this.data = this.setData.itemToDisplay(this.itemId)
+  this.data = this.setData.itemToDisplay(this.itemId)   //handle item
   this.subscription3= this.data.subscribe(item=>{
     this.isMain=false;
     this.isOther=false;
@@ -241,7 +241,7 @@ setItemId(event){
     if (item !==undefined){
   console.log(item);
     this.item = item;
-    this.setList.addToSelectedItemsList(item[0]);
+    this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
     if(this.item[0].claims.P2 === undefined){ alert("property P2 undefined")};
     if(this.item[0].claims.P320 === undefined) { this.hideList()};
     this.event =  this.item[0].claims.P2.event;
@@ -342,6 +342,7 @@ setItemId(event){
 
   if(this.item[0].claims.P2.org !== undefined) {
     this.orgDisplay.setOrgDisplay(this.item,this.locationAndContext); 
+ //   if (this.locationAndContext.length > 0) {  this.isOrg = true};
 }
   
   ///activity
