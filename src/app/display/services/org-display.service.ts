@@ -102,6 +102,10 @@ export class OrgDisplayService {
     item[1].splice(item[1].indexOf("P430"),1);
     locationAndContext.push(item[0].claims.P430); 
   }
+  if (item[0].claims.P422 !==undefined){  //subclass   
+    item[1].splice(item[1].indexOf("P422"),1);
+    locationAndContext.push(item[0].claims.P422); 
+  }
 
   return locationAndContext
  } 

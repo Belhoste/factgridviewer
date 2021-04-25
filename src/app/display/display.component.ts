@@ -185,8 +185,6 @@ setItemId(event){
   this.isList = false;
   
   if(this.list !== []){ this.isList = true };
-  console.log(this.list);
-  console.log(this.isList);
 
   this.newSearch = "new search"
   if(this.selectedLang === "de") {this.newSearch = "neue Suche"};
@@ -220,7 +218,6 @@ setItemId(event){
     params => { this.itemId = params.get('id'),
       this.subscription2 = this.backList.backList(this.itemId,this.selectedLang). //handle backList
       pipe(
-      tap(res => console.log(res)),
       map(res=> { 
       if (res.query !== undefined) {
       this.linkedItems= this.backListDetails.setBackList(res.query.pages) }
@@ -229,30 +226,26 @@ setItemId(event){
          }})).
       subscribe(res =>{ this.linkedItems ; }
         );
-  
-  console.log(this.list);
 
   this.data = this.setData.itemToDisplay(this.itemId)   //handle item
   this.subscription3= this.data.subscribe(item=>{
     this.isMain=false;
     this.isOther=false;
-    console.log(this.isList);
-    console.log(this.list);
     if (item !==undefined){
-  console.log(item);
     this.item = item;
+//    console.log(this.item[0].claims)
     this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
     if(this.item[0].claims.P2 === undefined){ alert("property P2 undefined")};
     if(this.item[0].claims.P320 === undefined) { this.hideList()};
+ //   if (this.item[0].claims.P2 !== undefined) {
     this.event =  this.item[0].claims.P2.event;
     this.sources = this.item[0].claims.P2.sources;
     this.listTitle = this.item[0].claims.P2.listTitle;
     this.main = this.item[0].claims.P2.main;
+ // }
     this.urlId = this.factGridUrl+this.id;
     if (this.item[0].claims.P48 !== undefined) {
     this.coords = this.item[0].claims.P48[0].mainsnak.datavalue.value;
-    console.log(this.item[0].claims.P48[0].mainsnak.datavalue)
-    
    //map 
     this.latitude= this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
     this.longitude =this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
@@ -275,6 +268,8 @@ setItemId(event){
 
     this.headerDisplay.setHeaderDisplay(this.item,this.headerDetail); 
 
+ //  if (this.item[0].claims.P2 !== undefined) {
+   
     ///place
 
     this.locationAndSituation =[];
@@ -382,6 +377,8 @@ setItemId(event){
        if (this.sourcesList.length > 0) {  this.isSources = true };
     }
 
+//  }
+
   ///externalLinks
 
     this.externalLinks = [];
@@ -389,6 +386,21 @@ setItemId(event){
     this.externalLinksDisplay.setExternalLinksDisplay(this.item,this.externalLinks); 
                      
     if (this.externalLinks.length > 0) {  this.isExternalLinks = true };  
+
+    //others
+
+       this.otherClaims = [];
+      
+       for (let i=0; i<this.item[1].length; i++){
+           let P:string = this.item[1][i];
+           this.otherClaims.push(this.item[0].claims[P]); 
+         }
+       
+       console.log(this.otherClaims);
+   
+       if (this.otherClaims.length > 0) {  this.other = this.item[0].claims.P2.other ; 
+                                           this.isOther = true
+                                              };
     
     //mainList
     
@@ -397,24 +409,27 @@ setItemId(event){
     if (this.item[0].claims.P2 ===undefined){  // no definition of instance
       this.mainList.push(this.item[0].claims.P2) };
 
-    this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.documentDetail);
+    if (this.item[0].claims.P2 !== undefined){
+    this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.documentDetail, this.otherClaims
+      );
+    }
+
+   // console.log(this.mainList.length);
+
+  //if (this.mainList.length =0){this.mainList= this.mainList.concat(this.otherClaims)};
+
+    //this.mainList=[]? this.mainList=this.otherClaims : this.mainList=this.mainList.concat(this.otherClaims);
     
+
     if (this.mainList.length > 0) { 
            this.isMain = true ;
       }
 
-    //others
+  //  if (this.mainList =[]) {  this.mainList.concat(this.otherClaims)}
 
-    this.otherClaims = [];
-      
-    for (let i=0; i<this.item[1].length; i++){
-        let P:string = this.item[1][i];
-        this.otherClaims.push(this.item[0].claims[P]); 
-      }
+    console.log(this.mainList);
 
-    if (this.otherClaims.length > 0) {  this.other = this.item[0].claims.P2.other ; 
-                                        this.isOther = true
-                                           };
+ 
 
     //wikis
 

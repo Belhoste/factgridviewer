@@ -88,7 +88,18 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P502"),1);
       item[0].claims.P502.url = 'http://www.complete-bible-genealogy.com/names/'+item[0].claims.P502[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P502) };
-  return externalLinks
-  }
 
+    if (item[0].claims.P462 !==undefined){ // Catholic Hierarchy ID
+      item[1].splice(item[1].indexOf("P462"),1);
+      item[0].claims.P462.url = 'http://www.catholic-hierarchy.org/diocese/'+item[0].claims.P462[0].mainsnak.datavalue.value
+                  externalLinks.push(item[0].claims.P462) };
+
+    if (item[0].claims.P601 !==undefined){ // Catholic Hierarchy ID
+      item[1].splice(item[1].indexOf("P601"),1);
+      item[0].claims.P601.url = 'https://wiag-vocab.adw-goe.de/id/'+item[0].claims.P601[0].mainsnak.datavalue.value
+                  externalLinks.push(item[0].claims.P601) };
+                              
+  return externalLinks
+  };
+  
 }
