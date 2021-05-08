@@ -98,6 +98,10 @@ export class OrgDisplayService {
     item[1].splice(item[1].indexOf("P319"),1);
     locationAndContext.push(item[0].claims.P319); 
   }
+  if (item[0].claims.P267 !==undefined){  //organisational context  
+    item[1].splice(item[1].indexOf("P267"),1);
+    locationAndContext.push(item[0].claims.P267); 
+  }
   if (item[0].claims.P430 !==undefined){  //grand lodge (masonic lodge)   
     item[1].splice(item[1].indexOf("P430"),1);
     locationAndContext.push(item[0].claims.P430); 

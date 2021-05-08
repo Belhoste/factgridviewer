@@ -1,7 +1,6 @@
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 import { Injectable } from '@angular/core';
 import { RequestService } from './request.service'  ;
-import { map, tap } from 'rxjs/operators';
+import { BackListDetailsService} from './back-list-details.service'
 
 
 @Injectable({
@@ -9,10 +8,13 @@ import { map, tap } from 'rxjs/operators';
 })
 export class BackListService {
 
-  constructor(private requestService:RequestService) { }
+  constructor(private requestService:RequestService, private backListDetails:BackListDetailsService) { }
+
+  linkedItems:any[]; //backList
 
   backList(item, lang) { 
-    let u = this.requestService.getBackList(item, lang)
+    let u = this.requestService.getBackList(item, lang);
     return u
     }
-}
+    
+  }

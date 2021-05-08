@@ -330,7 +330,7 @@
         <div 
         [ngClass]="isOther ? 'show-division':'hide-division'"
         >    
-          <div class="subdivision-title" *ngIf="main">{{other}}</div>   
+        <div class="subdivision-title" *ngIf="main">{{other}}</div>   
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
              <div class="title">

@@ -190,7 +190,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
        }
 
        downLoadList(sparql:string) {   
-        console.log(sparql);
         let u
         if (sparql !==undefined){
         let headers = new HttpHeaders().set("Accept", "text/csv")
@@ -223,7 +222,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
   getBackList(item, lang) : Observable<any> {  
     item="Item:"+item;
     const prefix = `https://database.factgrid.de/w/api.php?`
-    const params = new HttpParams()
+    const params1 = new HttpParams()
        .set('action',"query")
        .set('format',"json")
        .set('prop',"entityterms")
@@ -235,10 +234,47 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
        .set('uselang',lang)  //uselang
        .set('gbltitle',item)
        .set('origin',"*")
-      let u= this.http.get(prefix, {
-        params: params}).pipe(catchError((err)=> {return of(undefined)})) 
-      return u
+
+       const params2 = new HttpParams()
+       .set('action',"query")
+       .set('format',"json")
+       .set('prop',"entityterms")
+       .set('generator', "backlinks")
+       .set('formatversion',"2")
+       .set('wbetterms',"label")
+       .set('gbllimit',"500")
+       .set('gblnamespace',"120")
+       .set('uselang',"en")  //english
+       .set('gbltitle',item)
+       .set('origin',"*")
+
+      let u1= this.http.get(prefix, {
+        params: params1}).pipe(catchError((err)=> {return of(undefined)})); 
+      let u2= this.http.get(prefix, {
+          params: params2}).pipe(catchError((err)=> {return of(undefined)})) ;
+      let result=forkJoin([u1,u2])
+      return result
       }
+
+      getBackList2(item) : Observable<any> {  
+        item="Item:"+item;
+        const prefix = `https://database.factgrid.de/w/api.php?`
+        const params = new HttpParams()
+           .set('action',"query")
+           .set('format',"json")
+           .set('prop',"entityterms")
+           .set('generator', "backlinks")
+           .set('formatversion',"2")
+           .set('wbetterms',"label")
+           .set('gbllimit',"500")
+           .set('gblnamespace',"120")
+           .set('uselang',"en")  //uselang
+           .set('gbltitle',item)
+           .set('origin',"*")
+          let u= this.http.get(prefix, {
+            params: params}).pipe(catchError((err)=> {return of(undefined)})) 
+          return u
+          }
 
 }
 

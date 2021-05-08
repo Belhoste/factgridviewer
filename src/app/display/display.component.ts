@@ -32,7 +32,7 @@ import { ifStmt } from '@angular/compiler/src/output/output_ast';
 export class DisplayComponent implements OnInit, OnDestroy {
   
   constructor(private router:Router, private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, 
-    private backList:BackListService, private backListDetails:BackListDetailsService, private headerDisplay:HeaderDisplayService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
+    private backList:BackListService, private backList2:BackListService, private backListDetails:BackListDetailsService, private headerDisplay:HeaderDisplayService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
     private personDisplay:PersonDisplayService, private educationDisplay:EducationDisplayService, private careerDisplay:CareerDisplayService, private sociabilityDisplay:SociabilityDisplayService,
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private wikiDisplay:WikiDisplayService){}
 
@@ -71,6 +71,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   item:any[];
   linkedItems:any[]; //backList
+  linkedItems2:any[];//backList2 (english)
   linkedItem:any //backList
   id:string = "";
   factGridUrl:string;
@@ -216,16 +217,30 @@ setItemId(event){
 
   this.subscription0 = this.route.paramMap.subscribe(   
     params => { this.itemId = params.get('id'),
-      this.subscription2 = this.backList.backList(this.itemId,this.selectedLang). //handle backList
+      this.subscription1 = this.backList.backList(this.itemId,this.selectedLang). //handle backList
       pipe(
       map(res=> { 
-      if (res.query !== undefined) {
-      this.linkedItems= this.backListDetails.setBackList(res.query.pages) }
-      if ( res.query === undefined ) {
+      if (res[0].query !== undefined) {
+      this.linkedItems= this.backListDetails.setBackList(res[0].query.pages) }
+      if ( res[0].query === undefined ) {
         this.linkedItems = [{id:"Q220375", label:"none"}]
          }})).
-      subscribe(res =>{ this.linkedItems ; }
-        );
+      subscribe(res =>{ this.linkedItems }
+        ),
+      this.subscription2 = this.backList.backList(this.itemId,this.selectedLang). //labels in English in the backList
+        pipe(
+        map(res=> { 
+        if (res[1].query !== undefined) {
+        this.linkedItems2= this.backListDetails.setBackList(res[1].query.pages);
+        for (let i=0; i < this.linkedItems.length; i++){
+          if(this.linkedItems[i].label ===""){ this.linkedItems[i].label= this.linkedItems2[i].label
+            } 
+           }
+          }
+         }
+        )).
+        subscribe(res =>{ this.linkedItems }
+          );
 
   this.data = this.setData.itemToDisplay(this.itemId)   //handle item
   this.subscription3= this.data.subscribe(item=>{
@@ -233,7 +248,6 @@ setItemId(event){
     this.isOther=false;
     if (item !==undefined){
     this.item = item;
-//    console.log(this.item[0].claims)
     this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
     if(this.item[0].claims.P2 === undefined){ alert("property P2 undefined")};
     if(this.item[0].claims.P320 === undefined) { this.hideList()};
@@ -252,10 +266,8 @@ setItemId(event){
     let lat = this.latitude.toString(); let lng = this.longitude;
     this.router.navigate([lat, lng], { relativeTo:this.route });
     }
-   
     
     this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
-  //  console.log(this.selectedItemsList)
    
     ///header
 
@@ -390,6 +402,8 @@ setItemId(event){
     //others
 
        this.otherClaims = [];
+
+       console.log(this.item[1]);
       
        for (let i=0; i<this.item[1].length; i++){
            let P:string = this.item[1][i];
@@ -407,29 +421,20 @@ setItemId(event){
     this.mainList= [];
     
     if (this.item[0].claims.P2 ===undefined){  // no definition of instance
-      this.mainList.push(this.item[0].claims.P2) };
+      this.mainList.push(this.item[0].claims.P3) };
 
     if (this.item[0].claims.P2 !== undefined){
-    this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, this.eventDetail, this.documentDetail, this.otherClaims
-      );
-    }
+    this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, 
+      this.eventDetail, this.documentDetail, this.otherClaims
+      ); }
 
-   // console.log(this.mainList.length);
-
-  //if (this.mainList.length =0){this.mainList= this.mainList.concat(this.otherClaims)};
-
-    //this.mainList=[]? this.mainList=this.otherClaims : this.mainList=this.mainList.concat(this.otherClaims);
+    console.log(this.mainList.length);
     
-
     if (this.mainList.length > 0) { 
            this.isMain = true ;
       }
 
-  //  if (this.mainList =[]) {  this.mainList.concat(this.otherClaims)}
-
     console.log(this.mainList);
-
- 
 
     //wikis
 
@@ -470,7 +475,8 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
  
   ngOnDestroy(): void {
    this.subscription0.unsubscribe();
-   this.subscription2.unsubscribe();
+   this.subscription1.unsubscribe();
+ //  this.subscription2.unsubscribe();
    this.subscription3.unsubscribe();
   }
 }
