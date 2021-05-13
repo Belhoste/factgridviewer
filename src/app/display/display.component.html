@@ -327,9 +327,7 @@
         </mat-card-content>
         </div>
     
-        <div 
-        [ngClass]="isOther ? 'show-division':'hide-division'"
-        >    
+ <!---       <div [ngClass]="isOther ? 'show-division':'hide-division'">    
         <div class="subdivision-title" *ngIf="main">{{other}}</div>   
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
@@ -367,11 +365,15 @@
                <label class="break-word-container" >{{M.references2[0].value.string }}</label>
                <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
              </div>      
-             <hr>         
-           </div>  
+             <hr>   
+                  
+           </div> 
+           
          </div>
+         
        </mat-card-content>
        </div>
+       --->
 
        <div id="listing" [ngClass]="isList ? 'show-division':'hide-division'"> 
         <div class="subdivision-title" *ngIf="listTitle">{{listTitle}}</div>     

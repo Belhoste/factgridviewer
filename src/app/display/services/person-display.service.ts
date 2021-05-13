@@ -35,6 +35,10 @@ export class PersonDisplayService {
       item[1].splice(item[1].indexOf("P363"),1);
       lifeAndFamily.push(item[0].claims.P363);
     }
+    if (item[0].claims.P148 !==undefined){ //Strict Observance order name of
+      item[1].splice(item[1].indexOf("P148"),1);
+      lifeAndFamily.push(item[0].claims.P148);
+    }
     if (item[0].claims.P530 !==undefined){ //Name with the Asiatic Brethren
       item[1].splice(item[1].indexOf("P530"),1);
       lifeAndFamily.push(item[0].claims.P530);

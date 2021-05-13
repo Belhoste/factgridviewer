@@ -24,13 +24,16 @@ export class SearchComponent implements OnInit, OnDestroy
   title = 'factgrid';
 
   subtitle:string;
+  advanced_search:string;
+  projects:string;
+  fields:string;
   
   searchInput = new FormControl();
 
  public selectedItem:Observable<any>;
 
- searchToken:string = "on";  //initialization of the token used to hide/display the display component   todo: change into public isDisplay:boolean = "false"
-
+// searchToken:string = "on";  //initialization of the token used to hide/display the display component   todo: change into public isDisplay:boolean = "false"
+ public isDisplay:boolean = false;
  //animationState = 'in';
 
  public isDown: boolean = true;
@@ -60,6 +63,18 @@ private getUrlSuffix= '&format=json&origin=*' ;
     this.subtitle = "a database for historians"
     if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
     if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
+
+    this.advanced_search = "advanced search"
+    if (this.selectedLang === "de") { this.advanced_search = "erweiterte Suche" }
+    if (this.selectedLang === "fr") { this.advanced_search = "recherche avancée"}
+
+    this.projects = "research projects"
+    if (this.selectedLang === "de") { this.projects = "Forschungsprojekten" }
+    if (this.selectedLang === "fr") { this.projects = "projets de recherche"}
+
+    this.fields = "fields of research"
+    if (this.selectedLang === "de") { this.fields = "Forschungsfelder" }
+    if (this.selectedLang === "fr") { this.fields = "domaines de recherche"}
     
     
     this.labels = this.searchInput.valueChanges   //search engine
@@ -81,7 +96,8 @@ private getUrlSuffix= '&format=json&origin=*' ;
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.selectedLang);
     this.items = this.filterResearchField(this.items, this.selectedResearchField);  
-    this.searchToken="on";
+ //   this.searchToken="on";
+    this.isDisplay=true;
     this.changeDetector.detectChanges();
     })
 

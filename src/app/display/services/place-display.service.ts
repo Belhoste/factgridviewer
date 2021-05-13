@@ -40,7 +40,7 @@ export class PlaceDisplayService {
     item[1].splice(item[1].indexOf("P461"),1);
       locationAndSituation.push(item[0].claims.P461); 
     }  
-    if (item[0].claims.P140 !==undefined){ //Illuminati code name 
+    if (item[0].claims.P140 !==undefined){ //Illuminati code nameng ser 
       item[1].splice(item[1].indexOf("P140"),1);
       locationAndSituation.push(item[0].claims.P140);
     }

@@ -26,6 +26,8 @@ import { BackListIdPipe } from './back-list-id.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { SearchComponent } from './search/search.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { ResearchFieldsComponent } from './research-fields/research-fields.component';
 
 @NgModule({
 
@@ -37,7 +39,9 @@ import { SearchComponent } from './search/search.component';
     ChangeUndefinedItemPipe,
     MapComponent,
     BackListIdPipe,
-    SearchComponent
+    SearchComponent,
+    AdvancedSearchComponent,
+    ResearchFieldsComponent
   ],
   imports: [
     BrowserModule,

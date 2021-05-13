@@ -223,7 +223,12 @@ setItemId(event){
       if (res[0].query !== undefined) {
       this.linkedItems= this.backListDetails.setBackList(res[0].query.pages) }
       if ( res[0].query === undefined ) {
-        this.linkedItems = [{id:"Q220375", label:"none"}]
+        if (this.selectedLang === "de"){
+        this.linkedItems = [{id:"Q21898", label:"keine"}]};
+        if (this.selectedLang === "fr"){
+          this.linkedItems = [{id:"Q21898", label:"aucune"}]};
+        if (this.selectedLang === "en"){
+            this.linkedItems = [{id:"Q21898", label:"none"}]};
          }})).
       subscribe(res =>{ this.linkedItems }
         ),
@@ -399,9 +404,9 @@ setItemId(event){
                      
     if (this.externalLinks.length > 0) {  this.isExternalLinks = true };  
 
-    //others
+  //others
 
-       this.otherClaims = [];
+    this.otherClaims = [];
 
        console.log(this.item[1]);
       
@@ -410,11 +415,15 @@ setItemId(event){
            this.otherClaims.push(this.item[0].claims[P]); 
          }
        
-       console.log(this.otherClaims);
+      console.log(this.otherClaims);
    
        if (this.otherClaims.length > 0) {  this.other = this.item[0].claims.P2.other ; 
                                            this.isOther = true
                                               };
+
+       console.log(this.other);
+       console.log(this.isOther);
+
     
     //mainList
     
@@ -425,7 +434,8 @@ setItemId(event){
 
     if (this.item[0].claims.P2 !== undefined){
     this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, 
-      this.eventDetail, this.documentDetail, this.otherClaims
+      this.eventDetail, this.documentDetail
+      , this.otherClaims
       ); }
 
     console.log(this.mainList.length);

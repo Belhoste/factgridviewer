@@ -98,6 +98,11 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P601"),1);
       item[0].claims.P601.url = 'https://wiag-vocab.adw-goe.de/id/'+item[0].claims.P601[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P601) };
+
+    if (item[0].claims.P585 !==undefined){ // ESTC ID
+        item[1].splice(item[1].indexOf("P585"),1);
+        item[0].claims.P585.url = 'http://estc.bl.uk/'+item[0].claims.P585[0].mainsnak.datavalue.value
+                  externalLinks.push(item[0].claims.P585) };
                               
   return externalLinks
   };

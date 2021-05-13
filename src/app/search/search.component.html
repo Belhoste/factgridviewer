@@ -17,25 +17,26 @@
     </div>
   </div>
 
-    <div  *ngIf="searchToken === 'on'" fxLayout="row" fxLayoutAlign="space-around center"> <!-- change "searchToken === 'on'" into isDisplay === false -->
-      <div class="search-div">
+  <div fxLayout="row" fxLayoutAlign="space-around center"> <!-- change "searchToken === 'on'" into isDisplay === false -->
+    <div *ngIf="isDisplay == true" class="search-div">
       <mat-card  fxFlex class= mat-elevation-z8fx>  
         <div flex-shrink flex-basis="auto">
-            <div *ngFor="let item of items">
+          <div *ngFor="let item of items">
             {{item.label}} 
     <!--                  <mat-icon-button class="internalLink" #content (click)="onItemSelect(item)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button> 
                   [routerLink]="{'/item/itemId,']<mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button> 
 				  <a [routerLink]=['/item', item.id]' routerLinkActive ="activate-link">{{item.label}}, <span class="description-text">{{item.description }}</span>({{item.id}})</a><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon>
 		-->		  <a [routerLink]="['/item', item.id]" routerLinkActive ="activate-link">{{item.id}}</a>, <span class="description-text">{{item.description }}</span>	
-				  
-   				  
-				  
             <hr>
-        </div>
+          </div>
       </div>
       </mat-card>
     </div>
+    <div *ngIf="isDisplay == false" class="search-div">
+      <a [routerLink]="['/advanced_search']">{{advanced_search}}</a>|<a [routerLink]="['/research_fields']">{{fields}}</a>
     </div>
+  </div>
+    
 
 
 </body>

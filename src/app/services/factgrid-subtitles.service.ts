@@ -26,7 +26,8 @@ export class FactgridSubtitlesService {
 
 setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition on the value of a property (in general the property P2)
   let j=number;
-  if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q7") { //person
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q7" || 
+  re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q14") { //person
   re.claims[propertyId].person = "person";
     if ( lang === "en") {re.claims[propertyId].main = "life and family"}
     else if ( lang === "de") {re.claims[propertyId].main = "Leben und Familie"}

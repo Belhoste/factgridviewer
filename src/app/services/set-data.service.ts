@@ -34,7 +34,7 @@ itemToDisplay(id){
 
 sparqlToDisplay(sparql){
     let selectedSparql = this.newSparqlAdress(sparql,this.selectedLang); //handle sparql queries 1. create the address
-    let downloadSparql = this.newSparqlAdress(sparql, this.selectedLang);
+//    let downloadSparql = this.newSparqlAdress(sparql, this.selectedLang);
     sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display  
    // this.request.downLoadList(downloadSparql);
     console.log(sparql);
