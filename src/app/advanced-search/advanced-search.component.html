@@ -11,15 +11,50 @@
                         fxLayoutGap="20px">
     
     <div fxFlex class="left" fxLayoutAlign="end">
+        <div fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>instance of</mat-label>
-            <mat-select [(ngModel)]="selectedClass" name="instanceOf">
+            <mat-select [(ngModel)]="selectedClass" name="class">
                 <mat-option value="">None</mat-option>
-                <mat-option *ngFor="let instanceOf of instanceOfs" [value]="instanceOf.value">
-                    {{instanceOf.viewValue}}
+                <mat-option *ngFor="let class of classes" [value]="class.value">
+                    {{class.viewValue}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        
+        <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
+            <mat-label>position</mat-label>
+            <mat-select [(ngModel)]="selectedPosition" name="position">
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let position of positions" [value]="position.value">
+                    {{position.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
+            <mat-label>membership</mat-label>
+            <mat-select [(ngModel)]="selectedOrganisation" name="organisation">
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let organisation of organisations" [value]="organisation.value">
+                    {{organisation.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
+            <mat-label>membership</mat-label>
+            <mat-select [(ngModel)]="selectedOrganisation" name="organisation">
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let organisation of organisations" [value]="organisation.value">
+                    {{organisation.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+           
+        </div>
+       
+     
     </div>
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <div fxFlex class="center"  fxLayoutAlign="center">
@@ -37,8 +72,12 @@
         <a [routerLink]="['/']">simple search</a>
     </div>
         
-    
    </div> 
+   <div class="parent" fxLayout="row"
+   fxLayout.sm="column"
+   fxLayoutGap="20px">
+
+   </div>
 
 
 </body>

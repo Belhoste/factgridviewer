@@ -1,11 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 
-interface InstanceOf {
+interface Class {
   value: string;
   viewValue: string;
 }
 
 interface ResearchField {
+  value: string;
+  viewValue: string;
+}
+
+interface Activity {
+  value: string;
+  viewValue: string;
+}
+
+interface Position {
+  value: string;
+  viewValue: string;
+}
+
+interface Membership {
   value: string;
   viewValue: string;
 }
@@ -16,10 +31,13 @@ interface ResearchField {
   styleUrls: ['./advanced-search.component.scss']
 })
 export class AdvancedSearchComponent implements OnInit {
-  selectedClass :string;
+  selectedClass :string = 'Q7';
   selectedField:string;
+  selectedActivity:string;
+  selectedPosition:string;
+  selectedOrganisation:string;
 
-  instanceOfs: InstanceOf[] =[
+  classes: Class[] =[
     {value:'Q7', viewValue:'Human'},
     {value:'Q8', viewValue:'Location'},
     {value:'Q12', viewValue:'Organisation'},
@@ -37,9 +55,25 @@ export class AdvancedSearchComponent implements OnInit {
     {value:'Q14239', viewValue:'Work'}
   ];
 
+  activities: Activity[] = [
+    {value:'Q10000', viewValue:'emigration'},
+  ]
+
+  positions: Position[] = [
+    {value:'Q500', viewValue:'councillor'},
+  ]
+
+  organisations: Membership[] = [
+    {value:'Q11000', viewValue:'Court'},
+  ]
+
+
   constructor() { }
 
+  
   ngOnInit(): void {
+
+    console.log(this.selectedClass)
   }
 
 }
