@@ -1,1 +1,44 @@
-<p>advanced-search works!</p>
+<body>
+    
+    <div class="FactGrid-div">
+        <div class="FactGridTitle-div">
+            <p>Advanced Search</p>
+        </div>
+    </div>
+    
+    <div class="parent" fxLayout="row"
+                        fxLayout.sm="column"
+                        fxLayoutGap="20px">
+    
+    <div fxFlex class="left" fxLayoutAlign="end">
+        <mat-form-field appearance="fill">
+            <mat-label>instance of</mat-label>
+            <mat-select [(ngModel)]="selectedClass" name="instanceOf">
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let instanceOf of instanceOfs" [value]="instanceOf.value">
+                    {{instanceOf.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+      <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <div fxFlex class="center"  fxLayoutAlign="center">
+        <mat-form-field appearance="fill">
+            <mat-label>field of research</mat-label>
+            <mat-select [(ngModel)]="selectedField" name="researchField">
+                <mat-option value="">None</mat-option>
+              <mat-option *ngFor="let researchField of researchFields" [value]="researchField.value">
+                  {{researchField.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+    <div fxFlex class="right"   fxLayoutAlign="start">
+        <a [routerLink]="['/']">simple search</a>
+    </div>
+        
+    
+   </div> 
+
+
+</body>

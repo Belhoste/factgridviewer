@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
@@ -46,6 +46,7 @@ import { ResearchFieldsComponent } from './research-fields/research-fields.compo
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
