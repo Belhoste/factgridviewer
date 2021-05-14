@@ -44,21 +44,21 @@ export class AdvancedSearchComponent implements OnInit {
   selectedType:string;
 
   classes: Class[] =[
-    {value:'Q7', viewValue:'Human'},
-    {value:'Q8', viewValue:'Location'},
-    {value:'Q12', viewValue:'Organisation'},
-    {value:'Q9', viewValue:'Event'},
-    {value:'Q20', viewValue:'Publication'},
-    {value:'Q14239', viewValue:'Work'}
+    {value:'Q7', viewValue:'human'},
+    {value:'Q8', viewValue:'location'},
+    {value:'Q12', viewValue:'organisation'},
+    {value:'Q9', viewValue:'event'},
+    {value:'Q20', viewValue:'publication'},
+    {value:'Q14239', viewValue:'work'}
   ];
 
    researchFields: ResearchField[] =[
-    {value:'Q10677', viewValue:'Illuminati'},
-    {value:'Q8', viewValue:'Harmonia Universalis'},
-    {value:'Q12', viewValue:'Fiction Literature'},
-    {value:'Q9', viewValue:'Event'},
-    {value:'Q20', viewValue:'Publication'},
-    {value:'Q14239', viewValue:'Work'}
+    {value:'Q10677', viewValue:'illuminati'},
+    {value:'Q8', viewValue:'harmonia universalis'},
+    {value:'Q12', viewValue:'fiction literature'},
+    {value:'Q9', viewValue:'freemasons'},
+    {value:'Q20', viewValue:'Bible'},
+    {value:'Q14239', viewValue:'Gotha'}
   ];
 
   activities: Activity[] = [
