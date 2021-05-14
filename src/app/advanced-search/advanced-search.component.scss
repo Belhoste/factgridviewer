@@ -4,8 +4,14 @@
     align-items:center;
     justify-content: center;
     padding-bottom: 0 px;
-    margin-bottom: 0 px;
-    
+    margin-bottom: 10 px;
+  }
+
+  .main-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgb(250, 245, 236);
   }
 
 .FactGridTitle-div {
@@ -13,3 +19,13 @@
     font-weight: 600;
     font-size: 24px;
   }
+
+  mat-card{
+    background-color:rgb(250, 245, 236);
+    box-shadow: none !important;
+
+   /*   margin: auto; 
+    color:black;*/
+}
+
+  

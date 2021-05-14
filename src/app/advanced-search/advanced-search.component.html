@@ -5,12 +5,16 @@
             <p>Advanced Search</p>
         </div>
     </div>
+
+    <div fxLayoutAlign="center">
+        <a [routerLink]="['/']">simple search</a>
+    </div>
+
+    <div class="main-div">
     
-    <div class="parent" fxLayout="row"
-                        fxLayout.sm="column"
-                        fxLayoutGap="20px">
-    
-    <div fxFlex class="left" fxLayoutAlign="end">
+    <mat-card id="card" style="text-align: center;">
+    <mat-card-content fxLayout="row" fxLayout.lt-md="column"  fxLayoutGap="10px">
+    <div fxFlex class="left" fxLayoutAlign="center">
         <div fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>instance of</mat-label>
@@ -21,7 +25,6 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        
         <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
             <mat-label>position</mat-label>
             <mat-select [(ngModel)]="selectedPosition" name="position">
@@ -31,13 +34,12 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-
         <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
-            <mat-label>membership</mat-label>
-            <mat-select [(ngModel)]="selectedOrganisation" name="organisation">
+            <mat-label>activity</mat-label>
+            <mat-select [(ngModel)]="selectedActivity" name="activity">
                 <mat-option value="">None</mat-option>
-                <mat-option *ngFor="let organisation of organisations" [value]="organisation.value">
-                    {{organisation.viewValue}}
+                <mat-option *ngFor="let activity of activities" [value]="activity.value">
+                    {{activity.viewValue}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -51,10 +53,31 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-           
-        </div>
-       
-     
+
+    <div *ngIf="selectedClass === 'Q12'" fxLayout="column">
+        <mat-form-field appearance="fill">
+            <mat-label>type d'organisation</mat-label>
+            <mat-select [(ngModel)]="selectedType" name="type">
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let type of types" [value]="type.value">
+                    {{type.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="selectedClass === 'Q20'" fxLayout="column">
+        <mat-form-field appearance="fill">
+            <mat-label>type de publication</mat-label>
+            <mat-select [(ngModel)]="selectedType" name="type">
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let type of types" [value]="type.value">
+                    {{type.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    </div>
     </div>
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     <div fxFlex class="center"  fxLayoutAlign="center">
@@ -68,16 +91,16 @@
             </mat-select>
           </mat-form-field>
     </div>
-    <div fxFlex class="right"   fxLayoutAlign="start">
-        <a [routerLink]="['/']">simple search</a>
-    </div>
-        
-   </div> 
-   <div class="parent" fxLayout="row"
-   fxLayout.sm="column"
-   fxLayoutGap="20px">
+    
+ 
+</mat-card-content>
+<button mat-raised-button color="primary" type="submit" >Submit</button>
 
-   </div>
+</mat-card>
+</div>
+
+   
+
 
 
 </body>

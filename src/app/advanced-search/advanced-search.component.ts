@@ -25,6 +25,11 @@ interface Membership {
   viewValue: string;
 }
 
+interface Type {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
@@ -36,6 +41,7 @@ export class AdvancedSearchComponent implements OnInit {
   selectedActivity:string;
   selectedPosition:string;
   selectedOrganisation:string;
+  selectedType:string;
 
   classes: Class[] =[
     {value:'Q7', viewValue:'Human'},
@@ -66,6 +72,13 @@ export class AdvancedSearchComponent implements OnInit {
   organisations: Membership[] = [
     {value:'Q11000', viewValue:'Court'},
   ]
+
+  types:Type[] = [
+    {value:'Q45', viewValue:'School'},
+    {value:'Q123', viewValue:'Novel'},
+  ]
+
+  
 
 
   constructor() { }
