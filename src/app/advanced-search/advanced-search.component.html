@@ -57,10 +57,10 @@
     <div *ngIf="selectedClass === 'Q12'" fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>type d'organisation</mat-label>
-            <mat-select [(ngModel)]="selectedType" name="type">
+            <mat-select [(ngModel)]="selectedTypeOfOrganisation" name="typeOfOrganisation">
                 <mat-option value="">none</mat-option>
-                <mat-option *ngFor="let type of types" [value]="type.value">
-                    {{type.viewValue}}
+                <mat-option *ngFor="let typeOfOrganisation of typesOfOrganisation" [value]="typeOfOrganisation.value">
+                    {{typeOfOrganisation.viewValue}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -69,14 +69,27 @@
     <div *ngIf="selectedClass === 'Q20'" fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>type de publication</mat-label>
-            <mat-select [(ngModel)]="selectedType" name="type">
+            <mat-select [(ngModel)]="selectedTypeOfPublication" name="typeOfPublication">
                 <mat-option value="">none</mat-option>
-                <mat-option *ngFor="let type of types" [value]="type.value">
-                    {{type.viewValue}}
+                <mat-option *ngFor="let typeOfPublication of typesOfPublication" [value]="typeOfPublication.value">
+                    {{typeOfPublication.viewValue}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </div>
+
+    <div *ngIf="selectedClass === 'Q14239'" fxLayout="column">
+        <mat-form-field appearance="fill">
+            <mat-label>type de work</mat-label>
+            <mat-select [(ngModel)]="selectedTypeOfWork" name="typeOfWork">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let typeOfWork of typesOfWork" [value]="typeOfWork.value">
+                    {{typeOfWork.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+ 
     </div>
     </div>
       <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

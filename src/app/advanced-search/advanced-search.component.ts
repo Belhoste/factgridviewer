@@ -25,7 +25,17 @@ interface Membership {
   viewValue: string;
 }
 
-interface Type {
+interface TypeOfOrganisation {
+  value: string;
+  viewValue: string;
+}
+
+interface TypeOfPublication {
+  value: string;
+  viewValue: string;
+}
+
+interface TypeOfWork {
   value: string;
   viewValue: string;
 }
@@ -36,12 +46,14 @@ interface Type {
   styleUrls: ['./advanced-search.component.scss']
 })
 export class AdvancedSearchComponent implements OnInit {
-  selectedClass :string = 'Q7';
+  selectedClass :string;
   selectedField:string;
   selectedActivity:string;
   selectedPosition:string;
   selectedOrganisation:string;
-  selectedType:string;
+  selectedTypeOfOrganisation:string;
+  selectedTypeOfPublication:string;
+  selectedTypeOfWork:string;
 
   classes: Class[] =[
     {value:'Q7', viewValue:'human'},
@@ -70,12 +82,22 @@ export class AdvancedSearchComponent implements OnInit {
   ]
 
   organisations: Membership[] = [
-    {value:'Q11000', viewValue:'Court'},
+    {value:'Q11000', viewValue:'parliament'},
   ]
 
-  types:Type[] = [
-    {value:'Q45', viewValue:'School'},
-    {value:'Q123', viewValue:'Novel'},
+  typesOfOrganisation:TypeOfOrganisation[] = [
+    {value:'Q45', viewValue:'school'},
+    
+  ]
+
+  typesOfPublication:TypeOfPublication[] = [
+    {value:'Q80', viewValue:'book'},
+    {value:'Q234', viewValue:'journal'},
+  ]
+
+  typesOfWork:TypeOfWork[]= [
+    {value:'Q1300', viewValue:'novel'},
+    {value:'Q2340', viewValue:'painting'},
   ]
 
   
@@ -86,7 +108,9 @@ export class AdvancedSearchComponent implements OnInit {
   
   ngOnInit(): void {
 
-    console.log(this.selectedClass)
+    console.log(this.selectedClass);
+    console.log(this.selectedTypeOfPublication);
+    console.log(this.selectedTypeOfOrganisation);
   }
 
 }
