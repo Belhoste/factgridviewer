@@ -25,7 +25,26 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
+    <div fxLayout="column" *ngIf="selectedClass === 'Q7'">
+        <mat-form-field appearance="fill">
+            <mat-label>family name</mat-label>
+            <mat-select [(ngModel)]="selectedFamilyName" name="familyName">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let familyName of familyNames" [value]="familyName.value">
+                    {{familyName.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>given name</mat-label>
+            <mat-select [(ngModel)]="selectedGivenName" name="givenName">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let givenName of givenNames" [value]="givenName.value">
+                    {{givenName.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
             <mat-label>position</mat-label>
             <mat-select [(ngModel)]="selectedPosition" name="position">
                 <mat-option value="">none</mat-option>
@@ -34,7 +53,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
+        <mat-form-field appearance="fill">
             <mat-label>activity</mat-label>
             <mat-select [(ngModel)]="selectedActivity" name="activity">
                 <mat-option value="">none</mat-option>
@@ -43,8 +62,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        
-        <mat-form-field *ngIf="selectedClass === 'Q7'" appearance="fill">
+        <mat-form-field appearance="fill">
             <mat-label>membership</mat-label>
             <mat-select [(ngModel)]="selectedOrganisation" name="organisation">
                 <mat-option value="">none</mat-option>
@@ -53,10 +71,41 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+    </div>
+
+    <div *ngIf="selectedClass === 'Q8'" fxLayout="column">
+        <mat-form-field appearance="fill">
+            <mat-label>place name</mat-label>
+            <mat-select [(ngModel)]="selectedPlaceName" name="placeName">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let placeName of placeNames" [value]="placeName.value">
+                    {{placeName.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>territorial affiliation</mat-label>
+            <mat-select [(ngModel)]="selectedTerritorialAffiliation" name="territorialAffiliation">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let territorialAffiliation of territorialAffiliations" [value]="territorialAffiliation.value">
+                    {{territorialAffiliation.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 
     <div *ngIf="selectedClass === 'Q12'" fxLayout="column">
         <mat-form-field appearance="fill">
-            <mat-label>type d'organisation</mat-label>
+            <mat-label>organisation name</mat-label>
+            <mat-select [(ngModel)]="selectedOrganisationName" name="organisationName">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let organisationName of organisationNames" [value]="organisationName.value">
+                    {{organisationName.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>type of organisation</mat-label>
             <mat-select [(ngModel)]="selectedTypeOfOrganisation" name="typeOfOrganisation">
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let typeOfOrganisation of typesOfOrganisation" [value]="typeOfOrganisation.value">
@@ -68,7 +117,16 @@
 
     <div *ngIf="selectedClass === 'Q20'" fxLayout="column">
         <mat-form-field appearance="fill">
-            <mat-label>type de publication</mat-label>
+            <mat-label>publication title</mat-label>
+            <mat-select [(ngModel)]="selectedPublicationTitle" name="publicationTitle">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let publicationTitle of publicationTitles" [value]="publicationTitle.value">
+                    {{publicationTitle.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>type of publication</mat-label>
             <mat-select [(ngModel)]="selectedTypeOfPublication" name="typeOfPublication">
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let typeOfPublication of typesOfPublication" [value]="typeOfPublication.value">
@@ -80,11 +138,33 @@
 
     <div *ngIf="selectedClass === 'Q14239'" fxLayout="column">
         <mat-form-field appearance="fill">
-            <mat-label>type de work</mat-label>
+            <mat-label>type of work</mat-label>
             <mat-select [(ngModel)]="selectedTypeOfWork" name="typeOfWork">
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let typeOfWork of typesOfWork" [value]="typeOfWork.value">
                     {{typeOfWork.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    
+    <div *ngIf="selectedClass === 'Q9'" fxLayout="column">
+        <mat-form-field appearance="fill">
+            <mat-label>event name</mat-label>
+            <mat-select [(ngModel)]="selectedEventName" name="eventName">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let eventName of eventNames" [value]="eventName.value">
+                    {{eventName.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>event location</mat-label>
+            <mat-select [(ngModel)]="selectedEventLocation" name="eventLocation">
+                <mat-option value="">none</mat-option>
+                <mat-option *ngFor="let eventLocation of eventLocations" [value]="eventLocation.value">
+                    {{eventLocation.viewValue}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

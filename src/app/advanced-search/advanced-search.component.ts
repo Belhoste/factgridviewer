@@ -10,6 +10,16 @@ interface ResearchField {
   viewValue: string;
 }
 
+interface FamilyName {
+  value: string;
+  viewValue: string;
+}
+
+interface GivenName {
+  value: string;
+  viewValue: string;
+}
+
 interface Activity {
   value: string;
   viewValue: string;
@@ -25,7 +35,27 @@ interface Membership {
   viewValue: string;
 }
 
+interface PlaceName {
+  value: string;
+  viewValue: string;
+}
+
+interface TerritorialAffiliation {
+  value: string;
+  viewValue: string;
+}
+
+interface OrganisationName {
+  value: string;
+  viewValue: string;
+}
+
 interface TypeOfOrganisation {
+  value: string;
+  viewValue: string;
+}
+
+interface PublicationTitle {
   value: string;
   viewValue: string;
 }
@@ -40,6 +70,16 @@ interface TypeOfWork {
   viewValue: string;
 }
 
+interface EventName {
+  value: string;
+  viewValue: string;
+}
+
+interface EventLocation {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
@@ -48,12 +88,20 @@ interface TypeOfWork {
 export class AdvancedSearchComponent implements OnInit {
   selectedClass :string;
   selectedField:string;
+  selectedFamilyName:string;
+  selectedGivenName:string;
   selectedActivity:string;
   selectedPosition:string;
+  selectedPlaceName:string;
+  selectedTerritorialAffiliation:string;
   selectedOrganisation:string;
+  selectedOrganisationName:string;
   selectedTypeOfOrganisation:string;
+  selectedPublicationTitle:string;
   selectedTypeOfPublication:string;
   selectedTypeOfWork:string;
+  selectedEventName:string;
+  selectedEventLocation:string;
 
   classes: Class[] =[
     {value:'Q7', viewValue:'human'},
@@ -73,6 +121,18 @@ export class AdvancedSearchComponent implements OnInit {
     {value:'Q14239', viewValue:'Gotha'}
   ];
 
+  familyNames: FamilyName[] = [
+    {value:'Q1124', viewValue:'Mesmer'},
+    {value:'Q1124', viewValue:'Goethe'},
+    {value:'Q1124', viewValue:'Bonaparte'},
+  ]
+
+  firstNames: GivenName[] = [
+    {value:'Q1124', viewValue:'John'},
+    {value:'Q1124', viewValue:'Michael'},
+    {value:'Q1124', viewValue:'Mary'},
+  ]
+  
   activities: Activity[] = [
     {value:'Q10000', viewValue:'emigration'},
   ]
@@ -85,9 +145,31 @@ export class AdvancedSearchComponent implements OnInit {
     {value:'Q11000', viewValue:'parliament'},
   ]
 
+  placeNames: PlaceName[] = [
+    {value:'Q1124', viewValue:'Paris'},
+    {value:'Q1124', viewValue:'Berlin'},
+    {value:'Q1124', viewValue:'Germany'},
+  ]
+
+  territorialAffiliations: TerritorialAffiliation[] = [
+    {value:'Q1124', viewValue:'Europe'},
+    {value:'Q1124', viewValue:'Bas-Rhin'},
+    {value:'Q1124', viewValue:'Germany'},
+  ]
+
+  organisationNames:OrganisationName[] = [
+    {value:'Q45', viewValue:'Parlement of Paris'},
+    {value:'Q45', viewValue:'Academy of Sciences of Paris'},
+    {value:'Q45', viewValue:'Hofkammerrat'},
+  ]
+  
   typesOfOrganisation:TypeOfOrganisation[] = [
     {value:'Q45', viewValue:'school'},
-    
+  ]
+
+  publicationTitles:PublicationTitle[] = [
+    {value:'Q80', viewValue:'Le Rouge et le Noir'},
+    {value:'Q234', viewValue:'Les Fleurs du Mal'},
   ]
 
   typesOfPublication:TypeOfPublication[] = [
@@ -100,7 +182,16 @@ export class AdvancedSearchComponent implements OnInit {
     {value:'Q2340', viewValue:'painting'},
   ]
 
-  
+  eventNames:EventName[]= [
+    {value:'Q1300', viewValue:'battle of Waterloo'},
+    {value:'Q2340', viewValue:'Bastille Day'},
+  ]
+
+  eventLocations:EventLocation[]= [
+    {value:'Q1300', viewValue:'Waterloo'},
+    {value:'Q2340', viewValue:'Paris'},
+  ]
+
 
 
   constructor() { }
