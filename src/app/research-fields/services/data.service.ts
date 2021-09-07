@@ -4,7 +4,6 @@ import { delay, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { CreateSparqlService } from './create-sparql.service';
 
-
 export interface Class {
     value:string;
     viewValue:string;
@@ -32,7 +31,7 @@ export class DataService {
     
     sparqlClauseLocations: string ="WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ8."  
     sparqlLocations = this.sparqlStart+this.sparqlDescriptionSelect+this.sparqlClauseLocations+this.sparqlLanguageService+this.sparqlEnd; //sparql query all locations
-    
+
     sparqlClauseFamilyNames:string ="WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ24499." 
     sparqlFamilyNames:string =this.sparqlStart+this.sparqlSimpleSelect+this.sparqlClauseFamilyNames+this.sparqlLanguageService+this.sparqlEnd; //sparql query all locations
 

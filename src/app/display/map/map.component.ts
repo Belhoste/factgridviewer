@@ -19,7 +19,7 @@ export class MapComponent implements OnInit {
   longitude:string;
   lat:number;
   lng:number;
-  map;
+ 
 
   constructor(private changeDetector:ChangeDetectorRef, private route:ActivatedRoute) { 
   }
@@ -34,15 +34,17 @@ export class MapComponent implements OnInit {
     const itemLocation = { coords: new Leaflet.LatLng(this.lat, this.lng),
       zoom:12 };
       console.log(itemLocation);
-       
-    let map = Leaflet.map('map');
+                        
+       let map = Leaflet.map('map');
   
         Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
         .addTo(map);
   
         Leaflet.marker([this.lat, this.lng]).addTo(map);
    
-        map.setView(itemLocation.coords, itemLocation.zoom);})
+        map.setView(itemLocation.coords, itemLocation.zoom);
+
+      })
    }
 
    ngOnDestroy(): void {

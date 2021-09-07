@@ -25,7 +25,6 @@ export class ResearchFieldsComponent implements OnInit {
   givenNames;
   activities;
   organisations;
-  
 
   exampleList$;
   exampleList1$
@@ -92,6 +91,7 @@ export class ResearchFieldsComponent implements OnInit {
 
       this.subscription4=this.dataService.getOrganisations().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
       ).subscribe(x=>{ this.organisations = x, this.organisationsBuffer= x.slice(0,this.bufferSize), console.log(this.organisations)});
+
   }
 
 
@@ -133,12 +133,11 @@ if (this.organisationsLoading || this.organisations.length <= this.organisations
 }
 
 
-
-  if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.locationsBuffer.length) {
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.locationsBuffer.length) {
       this.fetchMore();
   }
 
-  if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.familyNamesBuffer.length) {
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.familyNamesBuffer.length) {
     this.fetchMore();
 }
 
@@ -153,6 +152,7 @@ this.fetchMore();
 if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.organisationsBuffer.length) {
   this.fetchMore();
 }
+
 }
 
 
@@ -168,13 +168,14 @@ private fetchMore() {
   const givenNamesMore = this.givenNames.slice(givenNamesLen, this.bufferSize + givenNamesLen);
   const activitiesMore = this.activities.slice(activitiesLen, this.bufferSize + activitiesLen);
   const organisationsMore = this.organisations.slice(organisationsLen, this.bufferSize + organisationsLen);
-  
+
   this.locationsLoading = true;
   this.familyNamesLoading=true;
   this.givenNamesLoading=true;
   this.activitiesLoading=true;
   this.organisationsLoading=true;
-//   using timeout here to simulate backend API delay
+
+  //   using timeout here to simulate backend API delay
  /* setTimeout(() => {
       this.locationsLoading = false;
       this.familyNamesLoading = false;

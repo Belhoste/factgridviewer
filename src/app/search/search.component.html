@@ -32,8 +32,8 @@
    <div *ngIf="isDisplay == false" class="search-div">
  <!---     <a [routerLink]="['/advanced_search']">{{advanced_search}}</a>|--->
     <a [routerLink]="['/research_fields']">{{advanced_search}}</a>
-    |<a href="https://database.factgrid.de/query/"
-        matTooltip='add ?viewer to SELECT and BIND(STRAFTER(STR(?item), STR(wd:)) AS ?itemId) BIND(IRI(CONCAT("https://database.factgrid.de/viewer/item/",?itemId)) AS ?viewer) to the query pattern WHERE'>sparql query
+    |<a href="https://database.factgrid.de/query/#%23model%0A%0ASELECT%20%3Fitem%20%3Fviewer%20%3FitemLabel%20%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP2%20wd%3AQ7%3B%0A%20%20%20%20%20%20%20%20wdt%3AP247%20wd%3AQ24708.%0A%20%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%0A%20%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%0A%7D%0A">
+      sparql query
     </a>  
     </div>
   </div>

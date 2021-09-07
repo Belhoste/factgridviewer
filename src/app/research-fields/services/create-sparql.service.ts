@@ -20,7 +20,7 @@ sparqlJSON:string= "%22%29.%0A%7D&format=json"; // format json
 sparqlWhere:string ="WHERE%20%0A%7B%0A%20%20%3"; // clause WHERE
 sparqlClassSubclass:string="WHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3A"; // search items of a class and its subclasses
 sparqlClass:string="WHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP2%2a%20wd%3A"; //search items of a class
-class:string="";
+class:string=""; // apparently useless
 
 initSearchList(sparql){ //get list from sparql query
   let result=this.request.getList(sparql);
@@ -28,7 +28,7 @@ initSearchList(sparql){ //get list from sparql query
 }
 
 buildQuery(params:string[]){  // build the sparql query
-/*
+/*here is the list of the parameters:
 class=params[0]
 family name=params[1]
 given name=params[2]
@@ -45,9 +45,9 @@ type of work =params[12]
 event name =params[13]
 event location=params[14]
 */
-  let classQuery:string;
-  let classDeepQuery:string;
-  this.class = this.findValue(params,"class");
+  let classQuery:string;//simple query P2
+  let classDeepQuery:string;// query with the subclasses P2/P3*
+  this.class = this.findValue(params,"class");//apparently useless
  // if(this.findValue(params,"class")==!""){ 
    if(params[0] !== undefined){
      if(params[1] !== undefined)
@@ -58,11 +58,11 @@ event location=params[14]
               +params[0]
               +this.sparqlLangFilter+this.sparqlJSON
            }
-    return [classQuery, classDeepQuery]
+    return [classQuery, classDeepQuery] //two variants of the same query, one simple (P2) and one with the subclasses (P2/P3*)
 }
 
 
-findValue(arr,key){  // values from an array of key/value pair objects
+findValue(arr,key){  // values from an array of key/value pair objects; apparently useless
   return arr.find(function(o){ return o.key===key }).value;
 }
 
