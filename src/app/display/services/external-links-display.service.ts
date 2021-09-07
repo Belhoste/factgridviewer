@@ -10,6 +10,7 @@ export class ExternalLinksDisplayService {  // external links
   setExternalLinksDisplay(item, externalLinks){
     if (item[0].claims.P146 !==undefined){  //online information
       item[1].splice(item[1].indexOf("P146"),1);
+      item[0].claims.P146.url=item[0].claims.P146[0].mainsnak.datavalue.value;
        externalLinks.push(item[0].claims.P146) };
 
     if (item[0].claims.P378 !==undefined){ //id viaf

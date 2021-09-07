@@ -7,7 +7,7 @@ export class DocumentDisplayService {
 
   constructor() { }
 
-setDocumentDisplay(item, documentDetail){
+setDocumentDisplay(item, documentDetail){//if P2-
 
   if (item[0].claims.P21 !==undefined){ //author
     item[1].splice(item[1].indexOf("P21"),1);
@@ -101,7 +101,7 @@ setDocumentDisplay(item, documentDetail){
     item[1].splice(item[1].indexOf("P204"),1);
     documentDetail.push(item[0].claims.P204);
   }
-   if (item[0].claims.P144 !==undefined){ //literature
+   if (item[0].claims.P144 !==undefined){ //type of publication
     item[1].splice(item[1].indexOf("P144"),1);
     documentDetail.push(item[0].claims.P144);
   }
@@ -123,7 +123,7 @@ setDocumentDisplay(item, documentDetail){
   }
   if (item[0].claims.P241 !==undefined){ //place of publication (without fictitious information)
     item[1].splice(item[1].indexOf("P241"),1);
-    documentDetail.push(item[0].claims.P222);
+    documentDetail.push(item[0].claims.P241);
   }
 
   if (item[0].claims.P240 !==undefined){ //place of publication as misleadingly stated
@@ -190,7 +190,11 @@ setDocumentDisplay(item, documentDetail){
     item[1].splice(item[1].indexOf("P64"),1);
     documentDetail.push(item[0].claims.P64);
   }
-  if (item[0].claims.P124 !==undefined){ //published in
+  if (item[0].claims.P240 !==undefined){ //place of publication as (misleadingly) stated
+    item[1].splice(item[1].indexOf("P240"),1);
+    documentDetail.push(item[0].claims.P240);
+  }
+  if (item[0].claims.P124 !==undefined){ //listed in
     item[1].splice(item[1].indexOf("P124"),1);
     documentDetail.push(item[0].claims.P124);
   }

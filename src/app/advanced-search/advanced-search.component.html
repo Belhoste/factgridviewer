@@ -18,26 +18,28 @@
         <div fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>instance of</mat-label>
-            <mat-select [(ngModel)]="selectedClass" name="class">
-                <mat-option value="">none</mat-option>
+            <mat-select  [(ngModel)]="selectedClass" (selectionChange)="onClassChange($event)" name="class" >
+                <mat-option [value]="">none</mat-option>
                 <mat-option *ngFor="let class of classes" [value]="class.value">
                     {{class.viewValue}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     <div fxLayout="column" *ngIf="selectedClass === 'Q7'">
-        <mat-form-field appearance="fill">
+        <mat-form-field>
             <mat-label>family name</mat-label>
-            <mat-select [(ngModel)]="selectedFamilyName" name="familyName">
+            <mat-select msInfiniteScroll (infiniteScroll)="getNextBatch()" [complete]="offset === familyNames.length" placeholder="familyName" [multiple]="true" #multiSelect>
+<!---              <mat-select-filter [array]="familyNames" (filteredReturn)="filteredList=$event" [displayMember]="'value'"></mat-select-filter>  --->
                 <mat-option value="">none</mat-option>
-                <mat-option *ngFor="let familyName of familyNames" [value]="familyName.value">
-                    {{familyName.viewValue}}
+                <mat-option *ngFor="let familyName of familyNames" [value]="familyName"
+                    [class.hide]="(isFiltered(familyName))">
+                    {{familyName.itemLabel.value}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>given name</mat-label>
-            <mat-select [(ngModel)]="selectedGivenName" name="givenName">
+            <mat-select [(ngModel)]="selectedGivenName" (selectionChange)="onGivenNameChange($event)" name="givenName" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let givenName of givenNames" [value]="givenName.value">
                     {{givenName.viewValue}}
@@ -46,7 +48,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>position</mat-label>
-            <mat-select [(ngModel)]="selectedPosition" name="position">
+            <mat-select [(ngModel)]="selectedPosition" (selectionChange)="onPositionChange($event)"  name="position" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let position of positions" [value]="position.value">
                     {{position.viewValue}}
@@ -55,7 +57,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>activity</mat-label>
-            <mat-select [(ngModel)]="selectedActivity" name="activity">
+            <mat-select [(ngModel)]="selectedActivity"  (selectionChange)="onActivityChange($event)" name="activity" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let activity of activities" [value]="activity.value">
                     {{activity.viewValue}}
@@ -64,7 +66,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>membership</mat-label>
-            <mat-select [(ngModel)]="selectedOrganisation" name="organisation">
+            <mat-select [(ngModel)]="selectedOrganisation"  (selectionChange)="onOrganisationChange($event)" name="organisation" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let organisation of organisations" [value]="organisation.value">
                     {{organisation.viewValue}}
@@ -76,7 +78,7 @@
     <div *ngIf="selectedClass === 'Q8'" fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>place name</mat-label>
-            <mat-select [(ngModel)]="selectedPlaceName" name="placeName">
+            <mat-select [(ngModel)]="selectedPlaceName"  (selectionChange)="onPlaceNameChange($event)" name="placeName" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let placeName of placeNames" [value]="placeName.value">
                     {{placeName.viewValue}}
@@ -85,7 +87,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>territorial affiliation</mat-label>
-            <mat-select [(ngModel)]="selectedTerritorialAffiliation" name="territorialAffiliation">
+            <mat-select [(ngModel)]="selectedTerritorialAffiliation"  (selectionChange)="onTerritorialAffiliationChange($event)" name="territorialAffiliation" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let territorialAffiliation of territorialAffiliations" [value]="territorialAffiliation.value">
                     {{territorialAffiliation.viewValue}}
@@ -97,7 +99,7 @@
     <div *ngIf="selectedClass === 'Q12'" fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>organisation name</mat-label>
-            <mat-select [(ngModel)]="selectedOrganisationName" name="organisationName">
+            <mat-select [(ngModel)]="selectedOrganisationName"  (selectionChange)="onOrganisationNameChange($event)" name="organisationName" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let organisationName of organisationNames" [value]="organisationName.value">
                     {{organisationName.viewValue}}
@@ -106,7 +108,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>type of organisation</mat-label>
-            <mat-select [(ngModel)]="selectedTypeOfOrganisation" name="typeOfOrganisation">
+            <mat-select [(ngModel)]="selectedTypeOfOrganisation"  (selectionChange)="onTypeOfOrganisationChange($event)" name="typeOfOrganisation" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let typeOfOrganisation of typesOfOrganisation" [value]="typeOfOrganisation.value">
                     {{typeOfOrganisation.viewValue}}
@@ -118,7 +120,7 @@
     <div *ngIf="selectedClass === 'Q20'" fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>publication title</mat-label>
-            <mat-select [(ngModel)]="selectedPublicationTitle" name="publicationTitle">
+            <mat-select [(ngModel)]="selectedPublicationTitle"  (selectionChange)="onPublicationTitleChange($event)" name="publicationTitle" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let publicationTitle of publicationTitles" [value]="publicationTitle.value">
                     {{publicationTitle.viewValue}}
@@ -127,7 +129,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>type of publication</mat-label>
-            <mat-select [(ngModel)]="selectedTypeOfPublication" name="typeOfPublication">
+            <mat-select [(ngModel)]="selectedTypeOfPublication"  (selectionChange)="onTypeOfPublicationChange($event)" name="typeOfPublication" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let typeOfPublication of typesOfPublication" [value]="typeOfPublication.value">
                     {{typeOfPublication.viewValue}}
@@ -139,7 +141,7 @@
     <div *ngIf="selectedClass === 'Q14239'" fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>type of work</mat-label>
-            <mat-select [(ngModel)]="selectedTypeOfWork" name="typeOfWork">
+            <mat-select [(ngModel)]="selectedTypeOfWork"  (selectionChange)="onTypeOfWorkChange($event)" name="typeOfWork" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let typeOfWork of typesOfWork" [value]="typeOfWork.value">
                     {{typeOfWork.viewValue}}
@@ -152,7 +154,7 @@
     <div *ngIf="selectedClass === 'Q9'" fxLayout="column">
         <mat-form-field appearance="fill">
             <mat-label>event name</mat-label>
-            <mat-select [(ngModel)]="selectedEventName" name="eventName">
+            <mat-select [(ngModel)]="selectedEventName"  (selectionChange)="onEventNameChange($event)" name="eventName" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let eventName of eventNames" [value]="eventName.value">
                     {{eventName.viewValue}}
@@ -161,7 +163,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>event location</mat-label>
-            <mat-select [(ngModel)]="selectedEventLocation" name="eventLocation">
+            <mat-select [(ngModel)]="selectedEventLocation"  (selectionChange)="onEventLocationChange($event)" name="eventLocation" multiple>
                 <mat-option value="">none</mat-option>
                 <mat-option *ngFor="let eventLocation of eventLocations" [value]="eventLocation.value">
                     {{eventLocation.viewValue}}

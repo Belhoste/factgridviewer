@@ -37,7 +37,7 @@ sparqlToDisplay(sparql){
 //    let downloadSparql = this.newSparqlAdress(sparql, this.selectedLang);
     sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display  
    // this.request.downLoadList(downloadSparql);
-    console.log(sparql);
+    sparql.subscribe(result => console.log(result));
     return sparql
   }
 

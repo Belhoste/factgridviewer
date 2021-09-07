@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSelectModule } from '@angular/material/select';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -28,6 +29,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { SearchComponent } from './search/search.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { ResearchFieldsComponent } from './research-fields/research-fields.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectFilterModule} from 'mat-select-filter';
+import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
 
@@ -58,12 +64,17 @@ import { ResearchFieldsComponent } from './research-fields/research-fields.compo
     MatGridListModule,
     MatIconModule,
     MatMenuModule,
+    MatFormFieldModule,
+    NgxMatSelectSearchModule,
     FlexLayoutModule,
     MatTooltipModule,
     MatDividerModule,
     MatSidenavModule,
     MatProgressSpinnerModule,
     AppRoutingModule,
+    MatSelectFilterModule,
+    MatSelectInfiniteScrollModule,
+    NgSelectModule
   ],
   bootstrap: [AppComponent]
 })

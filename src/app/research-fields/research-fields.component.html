@@ -5,6 +5,145 @@
             <p>Research Fields</p>
         </div>
     </div>
+    
+    <div fxLayoutAlign="center">
+        <a [routerLink]="['/']">simple search</a>
+    </div>   
+    <br>
+    <div fxLayout="column" class="wrapper">
+     <div fxLayoutAlign="center">
+        <ng-select [items]="class"
+                    placeholder="instance of"
+                    autofocus
+                    bindLabel="viewValue"
+                    bindValue="value"
+                    [(ngModel)]="selectedClassValue">
+        </ng-select>
+     </div>
+     <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'">
+        <ng-select [items]="familyNames"
+                    placeholder="select a family name"
+                    [virtualScroll]="true"
+                    [multiple]="true"
+                    [maxSelectedItems]="5"
+                    [loading]="familyNamesLoading"
+                    autofocus
+                    bindLabel="itemLabel.value"
+                    autofocus
+                    bindValue="item.value"
+                    appendTo="body"
+                    (scroll)="onScroll($event)"
+                    (scrollToEnd)="onScrollToEnd()"
+                    [(ngModel)]="selectedFamilyName">
+                <ng-template ng-header-tmp>
+                        <small class="form-text text-muted">Loaded {{familyNamesBuffer.length}} of {{familyNames.length}}</small>
+                </ng-template>
+        </ng-select>
+     </div>
+     <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'"> 
+     <ng-select [items]="givenNames"
+            placeholder="select a given name"
+            [virtualScroll]="true"
+            [multiple]="true"
+            [maxSelectedItems]="5"
+            [loading]="givenNamesLoading"
+            autofocus
+            bindLabel="itemLabel.value"
+            autofocus
+            bindValue="item.value"
+            appendTo="body"
+            (scroll)="onScroll($event)"
+            (scrollToEnd)="onScrollToEnd()"
+            [(ngModel)]="selectedGivenName">
+        <ng-template ng-header-tmp>
+            <small class="form-text text-muted">Loaded {{givenNamesBuffer.length}} of {{givenNames.length}}</small>
+        </ng-template>
+    </ng-select>
+
+     </div>
+     <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'">
+        <ng-select [items]="activities"
+                placeholder="select activities"
+                [virtualScroll]="true"
+                [multiple]="true"
+                [maxSelectedItems]="5"
+                [loading]="activitiesLoading"
+                autofocus
+                bindLabel="itemLabel.value"
+                autofocus
+                bindValue="item.value"
+                appendTo="body"
+                (scroll)="onScroll($event)"
+                (scrollToEnd)="onScrollToEnd()"
+                [(ngModel)]="selectedActivity">
+            <ng-template ng-header-tmp>
+                <small class="form-text text-muted">Loaded {{activitiesBuffer.length}} of {{activities.length}}</small>
+            </ng-template>
+        </ng-select>
+    </div>
+     <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'">
+        <ng-select [items]="organisations"
+                    placeholder="member of"
+                    [virtualScroll]="true"
+                    [multiple]="true"
+                    [maxSelectedItems]="5"
+                    [loading]="organisationsLoading"
+                    autofocus
+                    bindLabel="itemLabel.value"
+                    autofocus
+                    bindValue="item.value"
+                    appendTo="body"
+                    (scroll)="onScroll($event)"
+                    (scrollToEnd)="onScrollToEnd()"
+                    [(ngModel)]="selectedOrganisation">
+        </ng-select>
+        
+        <ng-template ng-header-tmp>
+            <small class="form-text text-muted">Loaded {{organisationsBuffer.length}} of {{organisations.length}}</small>
+        </ng-template>
+     </div>
+
+     <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q8'">
+      <ng-select [items]="locations"
+                    placeholder="select places"
+                    [virtualScroll]="true"
+                    [multiple]="true"
+                    [maxSelectedItems]="5"
+                    [loading]="locationsLoading"
+                    bindLabel="itemLabel.value"
+                    autofocus
+                    bindValue="item.value"
+                    appendTo="body"
+                    (scroll)="onScroll($event)"
+                    (scrollToEnd)="onScrollToEnd()"
+                    [(ngModel)]="selectedLocation">
+                <ng-template ng-header-tmp>
+                    <small class="form-text text-muted">Loaded {{locationsBuffer.length}} of {{locations.length}}</small>
+                </ng-template>  
+        </ng-select>
+     </div>
+     <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q12'">
+        <ng-select [items]="locations"
+                    placeholder="select places"
+                    [virtualScroll]="true"
+                    [multiple]="true"
+                    [maxSelectedItems]="5"
+                    [loading]="locationsLoading"
+                    bindLabel="itemLabel.value"
+                    autofocus
+                    bindValue="item.value"
+                    appendTo="body"
+                    (scroll)="onScroll($event)"
+                    (scrollToEnd)="onScrollToEnd()"
+                    [(ngModel)]="selectedLocation">
+            <ng-template ng-header-tmp>
+                    <small class="form-text text-muted">Loaded {{locationsBuffer.length}} of {{locations.length}}</small>
+            </ng-template>  
+        </ng-select>
+     </div>
+
+    </div>
+    
 
 
 

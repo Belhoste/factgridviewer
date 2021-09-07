@@ -21,7 +21,6 @@ import { WikiDisplayService} from './services/wiki-display.service';
 import { BackListService} from '../services/back-list.service';
 import {SetSelectedItemsListService} from '../services/set-selected-items-list.service';
 import { Router }   from '@angular/router';
-import { ifStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'display-component',
@@ -148,22 +147,18 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
 onClick2(query){ //handling click for sparql query
  query = this.setData.sparqlToDisplay(query);
-  console.log(query);
   query.subscribe(res => { if (res !== undefined){
     if(res.results !== undefined){
         this.list=res.results.bindings;  
           for(let i=0;i<this.list.length;i++){
              this.list[i]["item"].id = this.list[i]["item"].value.replace(	
-            "https://database.factgrid.de/entity/", "")      
+            "https://database.factgrid.de/entity/", "") 
+            if (this.list[i]["itemDescription"] ===undefined) this.list[i]["itemDescription"]={value:""}    
         }
-        console.log(this.list);
         this.isList = true
-        console.log(this.isList);
       }
     }
     this.isList = true;
-
-
      }
   //   this.delayDisplayList();
   )
@@ -253,6 +248,7 @@ setItemId(event){
     this.isOther=false;
     if (item !==undefined){
     this.item = item;
+    console.log(this.item);
     this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
     if(this.item[0].claims.P2 === undefined){ alert("property P2 undefined")};
     if(this.item[0].claims.P320 === undefined) { this.hideList()};
@@ -407,23 +403,15 @@ setItemId(event){
   //others
 
     this.otherClaims = [];
-
-       console.log(this.item[1]);
       
        for (let i=0; i<this.item[1].length; i++){
            let P:string = this.item[1][i];
            this.otherClaims.push(this.item[0].claims[P]); 
          }
-       
-      console.log(this.otherClaims);
    
        if (this.otherClaims.length > 0) {  this.other = this.item[0].claims.P2.other ; 
                                            this.isOther = true
                                               };
-
-       console.log(this.other);
-       console.log(this.isOther);
-
     
     //mainList
     
@@ -434,17 +422,12 @@ setItemId(event){
 
     if (this.item[0].claims.P2 !== undefined){
     this.mainList= this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail, 
-      this.eventDetail, this.documentDetail
-      , this.otherClaims
+      this.eventDetail, this.documentDetail, this.otherClaims
       ); }
-
-    console.log(this.mainList.length);
     
     if (this.mainList.length > 0) { 
            this.isMain = true ;
       }
-
-    console.log(this.mainList);
 
     //wikis
 
