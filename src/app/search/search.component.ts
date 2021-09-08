@@ -1,3 +1,5 @@
+// this component seems to replace the app component
+
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
@@ -109,7 +111,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
       localStorage['selectedResearchField'] = this.selectedResearchField;
        }
      
-
   searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix)}
 
   getItem(url:string): Observable<any> { return this.http.get(url) };
@@ -128,20 +129,20 @@ private getUrlSuffix= '&format=json&origin=*' ;
     return url
     }
 
-    filterResearchField(items, researchField){        //to only get items of the selectedResearchField (=selectedItems)
-      let selectedItems = []
-        for (let i=0; i<items.length; i++){
-         if (items[i].claims.P97!==undefined){
-           for (let j=0; j<items[i].claims.P97.length; j++) {
-           let id = items[i].claims.P97[j].mainsnak.datavalue.value.id;
-             if (researchField == id){
+  filterResearchField(items, researchField){        //to only get items of the selectedResearchField (=selectedItems)
+    let selectedItems = []
+      for (let i=0; i<items.length; i++){
+        if (items[i].claims.P97!==undefined){
+          for (let j=0; j<items[i].claims.P97.length; j++) {
+          let id = items[i].claims.P97[j].mainsnak.datavalue.value.id;
+            if (researchField == id){
               selectedItems.push(items[i]);
                }
              }
           }
-          if (researchField == "all" ){ selectedItems = items};
+        if (researchField == "all" ){ selectedItems = items};
         }
-         return selectedItems
+        return selectedItems
       }
 
       uniq(arr){  //remove duplicates in an array / it is used in setPropertiesList and setItemsList

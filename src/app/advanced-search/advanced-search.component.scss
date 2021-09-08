@@ -1,19 +1,13 @@
 
 
 .FactGrid-div {
-    height: 100px;
+    height: 150px;
     display: flex; 
     align-items:center;
     justify-content: center;
     padding-bottom: 0 px;
-    margin-bottom: 10 px;
-  }
-
-  .main-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color:rgb(250, 245, 236);
+    margin-bottom: 0 px;
+    
   }
 
 .FactGridTitle-div {
@@ -22,28 +16,12 @@
     font-size: 24px;
   }
 
-  mat-card{
-    background-color:rgb(250, 245, 236);
-    box-shadow: none !important;
+  .wrapper {
+    display: grid;
+    grid-gap: 10px;
+  }
 
-   /*   margin: auto; 
-    color:black;*/
-}
-
-.mat-filter-input {
-  width: calc(100% - 25px) !important;
-}
-
-.mat-filter::after {
-  content: "\e8b6";
-  font-family: material icons;
-  vertical-align: bottom;
-  font-size: 20px;
-  padding-left: 5px;
-}
-
-.mat-option.hide {
-  display: none;
-}
-
+  ng-select {
+    width: 250px;
+  }
   

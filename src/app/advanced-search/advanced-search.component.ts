@@ -1,419 +1,213 @@
-//utiliser selectionChange voir https://www.concretepage.com/angular-material/angular-material-select-change-event
-// ou bien utiliser ngModelChange, mais c'est deprecated  voir https://stackblitz.com/edit/material-select-change-event?file=app%2Fapp.component.html
-import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { SetSparqlService } from './services/set-sparql.service';
-import { FormControl } from '@angular/forms';
-import { MatSelect } from '@angular/material/select';
-import { ReplaySubject, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
-
-interface Class {
-  value: string;
-  viewValue: string;
-}
-
-interface ResearchField {
-  value: string;
-  viewValue: string;
-}
-
-interface GivenName {
-  value: string;
-  viewValue: string;
-}
-
-interface Activity {
-  value: string;
-  viewValue: string;
-}
-
-interface Position {
-  value: string;
-  viewValue: string;
-}
-
-interface Membership {
-  value: string;
-  viewValue: string;
-}
-
-interface PlaceName {
-  value: string;
-  viewValue: string;
-}
-
-interface TerritorialAffiliation {
-  value: string;
-  viewValue: string;
-}
-
-interface OrganisationName {
-  value: string;
-  viewValue: string;
-}
-
-interface TypeOfOrganisation {
-  value: string;
-  viewValue: string;
-}
-
-interface PublicationTitle {
-  value: string;
-  viewValue: string;
-}
-
-interface TypeOfPublication {
-  value: string;
-  viewValue: string;
-}
-
-interface TypeOfWork {
-  value: string;
-  viewValue: string;
-}
-
-interface EventName {
-  value: string;
-  viewValue: string;
-}
-
-interface EventLocation {
-  value: string;
-  viewValue: string;
-}
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { DataService, Class, ExampleList } from './services/data.service';
 
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
-  styleUrls: ['./advanced-search.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./advanced-search.component.scss']
 })
-export class AdvancedSearchComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AdvancedSearchComponent implements OnInit {
 
-  public familyNameMultiCtrl:FormControl = new FormControl();
-  public familyNameMultiFilterCtrl: FormControl = new FormControl();
-  public filteredFamilyNameMulti = new ReplaySubject;
+  selectedResearchFields;
+  selectedClassValue;
+  selectedExampleListValue;
+  selectedLocations=[];
+  selectedFamilyNames=[];
+  selectedGivenNames=[];
+  selectedActivities=[];
+  selectedOrganisations=[];
 
-  @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
+  researchFields;
+  class:Class[];
+  locations;
+  familyNames;
+  givenNames;
+  activities;
+  organisations;
 
-  protected _onDestroy = new Subject<void>();
-
-  selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
-
-  placeList:any;
-  placeSparql:string;
-  placeListSparqlStart: string="https://database.factgrid.de/sparql?query=SELECT%20%3Fitem%20%3FitemLabel%0AWHERE%20%0A%7B%0A%3Fitem%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ8.%0ASERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22"
-  
-  familyNameList: any;
-  familyNameSparql:string;
-  familyNameSparqlStart: string="https://database.factgrid.de/sparql?query=SELECT%20%3Fitem%20%3FitemLabel%0AWHERE%20%0A%7B%0A%3Fitem%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ24499.%0ASERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22"
-  sparqlEnd:string="%2Cen%22.%20%7D%0A%7D&format=json"
-  
-  filteredFamilyNames:any;
-  
-  selectedClass:string
-  selectedField:string;
-  selectedFamilyName:string;
-  selectedGivenName:string;
-  selectedActivity:string;
-  selectedPosition:string;
-  selectedPlaceName:string;
-  selectedTerritorialAffiliation:string;
-  selectedOrganisation:string;
-  selectedOrganisationName:string;
-  selectedTypeOfOrganisation:string;
-  selectedPublicationTitle:string;
-  selectedTypeOfPublication:string;
-  selectedTypeOfWork:string;
-  selectedEventName:string;
-  selectedEventLocation:string;
-
-  sparqlParametersArray:any[] = [];
-  parametersArray:string[]=[];
-
-  classes:Class[] = [
-    {value:'Q7', viewValue:'human'},
-    {value:'Q8', viewValue:'location'},
-    {value:'Q12', viewValue:'organisation'},
-    {value:'Q9', viewValue:'event'},
-    {value:'Q20', viewValue:'publication'},
-    {value:'Q14239', viewValue:'work'}
-  ];;
-  researchFields: ResearchField[];
-  familyNames: any[];
-  givenNames: GivenName[] ;
-  activities: Activity[] ;
-  positions: Position[] ;
-  organisations: Membership[] ;
-  placeNames: PlaceName[];
-  territorialAffiliations: TerritorialAffiliation[] ;
-  organisationNames:OrganisationName[] ;
-  typesOfOrganisation:TypeOfOrganisation[] ;
-  publicationTitles:PublicationTitle[] ;
-  typesOfPublication:TypeOfPublication[] ;
-  typesOfWork:TypeOfWork[];
-  eventNames:EventName[];
-  eventLocations:EventLocation[];
-
-  
-  constructor(private sparql:SetSparqlService) { }
-
-  
-  ngOnInit(): void {
-
-    this.placeSparql= this.placeListSparqlStart+this.selectedLang+this.sparqlEnd;
-    console.log(this.placeSparql); // correct
-    this.familyNameSparql= this.familyNameSparqlStart+this.selectedLang+this.sparqlEnd;
-    
-    this.placeList = this.sparql.initSearchList(this.placeSparql);
-    this.placeList.subscribe(result => console.log(result));
-
-   this.familyNameList = this.sparql.initSearchList(this.familyNameSparql);
-    this.familyNameList.subscribe(result => { this.familyNames = result.results.bindings ;
-      this.filteredFamilyNames= this.familyNames.slice();
-    });
-
-    
-
-
- //   this.placeList.subscribe(result => console.log(result));
-
-  
-
-   this.researchFields =[
-    {value:'Q10677', viewValue:'illuminati'},
-    {value:'Q8', viewValue:'harmonia universalis'},
-    {value:'Q12', viewValue:'fiction literature'},
-    {value:'Q9', viewValue:'freemasons'},
-    {value:'Q20', viewValue:'Bible'},
-    {value:'Q14239', viewValue:'Gotha'}
-  ];
-
- /*   this.familyNames = [
-    {value:'Q1124', viewValue:'Mesmer'},
-    {value:'Q1125', viewValue:'Goethe'},
-    {value:'Q1126', viewValue:'Bonaparte'},
-  ]
-  */
-
-  this.givenNames = [
-    {value:'Q1127', viewValue:'John'},
-    {value:'Q1128', viewValue:'Michael'},
-    {value:'Q1129', viewValue:'Mary'},
-  ]
-  
-  this.activities = [
-    {value:'Q10000', viewValue:'emigration'},
-    {value:'Q10001', viewValue:'physician'}
-  ]
-
-  this.positions = [
-    {value:'Q500', viewValue:'councillor'},
-  ]
-
-  this.organisations = [
-    {value:'Q11000', viewValue:'parliament'},
-  ];
-
-  this.placeNames = [
-    {value:'Q1124', viewValue:'Paris'},
-    {value:'Q1124', viewValue:'Berlin'},
-    {value:'Q1124', viewValue:'Germany'},
-  ];
-
-  this.territorialAffiliations = [
-    {value:'Q1124', viewValue:'Europe'},
-    {value:'Q1124', viewValue:'Bas-Rhin'},
-    {value:'Q1124', viewValue:'Germany'},
-  ]
-
-  this.organisationNames = [
-    {value:'Q45', viewValue:'Parlement of Paris'},
-    {value:'Q45', viewValue:'Academy of Sciences of Paris'},
-    {value:'Q45', viewValue:'Hofkammerrat'},
-  ]
-  
- this.typesOfOrganisation = [
-    {value:'Q45', viewValue:'school'},
-  ]
-
-this.publicationTitles = [
-    {value:'Q80', viewValue:'Le Rouge et le Noir'},
-    {value:'Q234', viewValue:'Les Fleurs du Mal'},
-  ]
-
-this.typesOfPublication = [
-    {value:'Q80', viewValue:'book'},
-    {value:'Q234', viewValue:'journal'},
-  ]
-
-this.typesOfWork = [
-    {value:'Q1300', viewValue:'novel'},
-    {value:'Q2340', viewValue:'painting'},
-  ]
-
-this.eventNames = [
-    {value:'Q1300', viewValue:'battle of Waterloo'},
-    {value:'Q2340', viewValue:'Bastille Day'},
-  ]
-
-this.eventLocations = [
-    {value:'Q1300', viewValue:'Waterloo'},
-    {value:'Q2340', viewValue:'Paris'},
-  ]
-  
-  }
-
-  ngAfterViewInit(){
-    this.setInitialValue();
-  }
-  
-  ngOnDestroy() {
-    this._onDestroy.next();
-    this._onDestroy.complete();
-  }
-
-  onClassChange($event) {       //class=parametersArray[0]
-    this.parametersArray[0]=$event.value;
-  }
-
-  onFamilyNameChange($event) { //family name=parametersArray[1]
-    this.parametersArray[1]=$event.value;
-  }
-
-  onGivenNameChange($event){  //given name=parametersArray[2]
-    this.parametersArray[2]=$event.value;
-  }
-
-  onPositionChange($event){ //position=parametersArray[3]
-    this.parametersArray[3]=$event.value;
-    console.log(this.parametersArray);
-  }
-  
-  onActivityChange($event){ //activity=parametersArray[4]
-    this.parametersArray[4]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "activity":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }  
+  exampleList$;
+  exampleList1$;
+  researchFieldsBuffer;
+  locationsBuffer;
+  familyNamesBuffer;
+  givenNamesBuffer;
+  activitiesBuffer;
+  organisationsBuffer;
+  bufferSize= 100;
+  numberOfItemsFromEndBeforeFetchingMore = 20;
  
-  onOrganisationChange($event){ //organisation=parametersArray[5]
-    this.parametersArray[5]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "organisation":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
+  researchFieldsLoading=false;
+  locationsLoading=false;
+  familyNamesLoading=false;
+  givenNamesLoading=false;
+  activitiesLoading=false;
+  organisationsLoading=false;
+
+  subscription0:Subscription;
+  subscription1:Subscription;
+  subscription2:Subscription;
+  subscription3:Subscription;
+  subscription4:Subscription;
+  subscription5:Subscription;
+
+
+
+  constructor(private dataService: DataService) {
   }
 
-  onPlaceNameChange($event){ //place name=parametersArray[6]
-    this.parametersArray[6]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "placeName":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
-  
-   onTerritorialAffiliationChange($event){ //territorial affiliation=parametersArray[7]
-    this.parametersArray[7]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "territorialAffiliation":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
-  
-   onOrganisationNameChange($event){//name of organisation =parametersArray[8]
-    this.parametersArray[8]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "organisationName":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
-  
-  onTypeOfOrganisationChange($event){ //type of organisation=parametersArray[9]
-    this.parametersArray[9]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "typeOfOrganisation":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
- 
- onPublicationTitleChange($event){ //publication title=parametersArray[10]
-  this.parametersArray[10]=$event.value;
-  console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "publicationTitle":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
-  
-  onTypeOfPublicationChange($event){ //type of publication=parametersArray[11]
-    this.parametersArray[11]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "typeOfPublication":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
-   onTypeOfWorkChange($event){ //type of work =parametersArray[12]
-    this.parametersArray[12]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "typeOfWork":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
-  
-  onEventNameChange($event){ //event name =parametersArray[13]
-    this.parametersArray[13]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "eventName":$event.value };
-    this.sparqlParametersArray.push(u);
-  }
-  
-   onEventLocationChange($event){ //event location=parametersArray[14]
-    this.parametersArray[14]=$event.value;
-    console.log(this.parametersArray);
-    console.log($event.value);
-    let u = { "eventLocation":$event.value };
-    this.sparqlParametersArray.push(u);
-    console.log(this.sparqlParametersArray)
-  }
+  ngOnInit() {
+      this.class = this.dataService.getClass();
+      this.exampleList$ = this.dataService.getExampleList();
 
-  public isFiltered(familyName) {
-    return this.filteredFamilyNames.find(item => item.id === familyName.itemLabel.value)
-  }
+      this.subscription0=this.dataService.getResearchFields().pipe(map(res=> Object.values(res.results.bindings)),
+      ).subscribe(x=>{ this.researchFields = x, this.researchFieldsBuffer= x.slice(0,this.bufferSize), console.log(this.familyNames)});
+     this.subscription1=this.dataService.getLocations().pipe(map(res=>res = Object.values(res.results.bindings))
+     )
+   //   ,map(res=> res= Object.values(Object.values(res)[1])[0])
+      .subscribe(x=>{ 
+      this.locations=x;  
+      this.locationsBuffer= this.locations.slice(0,this.bufferSize); console.log(this.locations[0].itemLabel)});
 
-  protected setInitialValue(){
-    this.filteredFamilyNameMulti.pipe(take(1), takeUntil(this._onDestroy))
-    .subscribe(()=>{this.multiSelect.compareWith = (a, b) => a && b && a.id === b.id});
-  }
+      this.subscription2=this.dataService.getFamilyNames().pipe(map(res=> Object.values(res.results.bindings)),
+      ).subscribe(x=>{ this.familyNames = x, this.familyNamesBuffer= x.slice(0,this.bufferSize), console.log(this.familyNames)});
+     
+      this.subscription3=this.dataService.getGivenNames().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
+      ).subscribe(x=>{ this.givenNames = x, this.givenNamesBuffer= x.slice(0,this.bufferSize)}); 
 
-  protected filterFamilyNameMulti(){
-    if (!this.familyNames) {
-      return;
+      this.subscription4=this.dataService.getActivities().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
+      ).subscribe(x=>{ this.activities = x, this.activitiesBuffer= x.slice(0,this.bufferSize), console.log(this.activities)});
+
+      this.subscription5=this.dataService.getOrganisations().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
+      ).subscribe(x=>{ this.organisations = x, this.organisationsBuffer= x.slice(0,this.bufferSize), console.log(this.organisations)});
+
+  
     }
-    let search = this.familyNameMultiFilterCtrl.value;
-    if (!search) {
-      this.filteredFamilyNameMulti.next(this.familyNames.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-    this.filteredFamilyNameMulti.next( this.familyNames.filter(familyName =>familyName.itemLabel.value.toLowerCase().indexOf(search)>-1))
-  }
-  
 
+
+  clearModel() {
+    this.researchFields = [];
+    this.selectedLocations = [];
+    this.selectedFamilyNames = [];
+    this.selectedGivenNames = [];
+    this.selectedActivities = [];
+    this.selectedOrganisations = [];
+}
+
+  onScrollToEnd() {
+    this.fetchMore();
+} 
+
+onScroll({ end }) {
+
+  if (this.researchFieldsLoading || this.researchFields.length <= this.researchFieldsBuffer.length) {
+    return;
+  }
+
+  if (this.locationsLoading || this.locations.length <= this.locationsBuffer.length) {
+      return;
+  }
+
+  if (this.familyNamesLoading || this.familyNames.length <= this.familyNamesBuffer.length) {
+    return;
+}
+
+if (this.givenNamesLoading || this.givenNames.length <= this.givenNamesBuffer.length) {
+  return;
+}
+
+if (this.activitiesLoading || this.activities.length <= this.activitiesBuffer.length) {
+  return;
+}
+
+if (this.organisationsLoading || this.organisations.length <= this.organisationsBuffer.length) {
+  return;
+}
+
+
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.researchFieldsBuffer.length) {
+  this.fetchMore();
+}
+
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.locationsBuffer.length) {
+      this.fetchMore();
+  }
+
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.familyNamesBuffer.length) {
+    this.fetchMore();
+}
+
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.givenNamesBuffer.length) {
+  this.fetchMore();
+}
+
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.activitiesBuffer.length) {
+this.fetchMore();
+}
+
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.organisationsBuffer.length) {
+  this.fetchMore();
+}
 
 }
 
 
+private fetchMore() {
+  const researchFieldsLen = this.researchFieldsBuffer.length;
+  const locationsLen = this.locationsBuffer.length;
+  const familyNamesLen = this.familyNamesBuffer.length;
+  const givenNamesLen = this.givenNamesBuffer.length;
+  const activitiesLen = this.activitiesBuffer.length;
+  const organisationsLen= this.organisationsBuffer.length;
+
+  const locationsMore = this.locations.slice(locationsLen, this.bufferSize + locationsLen);
+  const familyNamesMore = this.familyNames.slice(familyNamesLen, this.bufferSize + familyNamesLen);
+  const givenNamesMore = this.givenNames.slice(givenNamesLen, this.bufferSize + givenNamesLen);
+  const activitiesMore = this.activities.slice(activitiesLen, this.bufferSize + activitiesLen);
+  const organisationsMore = this.organisations.slice(organisationsLen, this.bufferSize + organisationsLen);
+
+  this.researchFieldsLoading = true;
+  this.locationsLoading = true;
+  this.familyNamesLoading=true;
+  this.givenNamesLoading=true;
+  this.activitiesLoading=true;
+  this.organisationsLoading=true;
+
+}
 
 
+  simplifySelectedItem(selectedArray){
+    for (let i=0; i<selectedArray.length;i++) {
+      selectedArray[i]= selectedArray[i].splice(36);
+    }
+    return selectedArray
+  }
+
+  //   using timeout here to simulate backend API delay
+ /* setTimeout(() => {
+      this.locationsLoading = false;
+      this.familyNamesLoading = false;
+      this.givenNamesLoading = false;
+      this.activitiesLoading = false;
+      this.organisationsLoading = false;
+
+      this.locationsBuffer = this.locationsBuffer.concat(locationsMore);
+      this.familyNamesBuffer = this.familyNamesBuffer.concat(familyNamesMore);
+      this.givenNamesBuffer = this.givenNamesBuffer.concat(givenNamesMore);
+      this.activitiesBuffer = this.activitiesBuffer.concat(activitiesMore);
+      this.organisationsBuffer = this.organisationsBuffer.concat(organisationsMore);
+
+ }, 200)*/
+
+
+ngOnDestroy(): void {
+  if (this.subscription0 != undefined) this.subscription0.unsubscribe() ;
+  if (this.subscription1 != undefined) this.subscription1.unsubscribe();
+  if (this.subscription2 != undefined) this.subscription2.unsubscribe();
+  if (this.subscription3 != undefined) this.subscription3.unsubscribe();
+  if (this.subscription4 != undefined) this.subscription4.unsubscribe();
+  if (this.subscription5 != undefined) this.subscription5.unsubscribe();
+ }
+
+}

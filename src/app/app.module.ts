@@ -28,7 +28,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { SearchComponent } from './search/search.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
-import { ResearchFieldsComponent } from './research-fields/research-fields.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectFilterModule} from 'mat-select-filter';
 import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
@@ -46,8 +45,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MapComponent,
     BackListIdPipe,
     SearchComponent,
-    AdvancedSearchComponent,
-    ResearchFieldsComponent
+    AdvancedSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -75,8 +73,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatSelectFilterModule,
     MatSelectInfiniteScrollModule,
     NgSelectModule
-  ],
-  bootstrap: [AppComponent]
+  ],  
+
+    bootstrap: [AppComponent]
+ 
 })
 export class AppModule {
 

@@ -4,15 +4,12 @@ import { SetLanguageService } from './set-language.service';
 import { RequestService } from './request.service';
 import { switchMap, map } from 'rxjs/operators';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
 export class SetDataService {
 
   constructor(private createItem:CreateItemToDisplayService, private setLanguage:SetLanguageService, private request:RequestService) { }
-
 
 selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
 baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
@@ -27,8 +24,6 @@ itemToDisplay(id){
                       map(res => res=Object.values(res.entities)),
                       switchMap(res =>  itemToDisplay= this.createItem.createItemToDisplay(this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang))
                        );
-
-    
        return itemToDisplay
     }
 

@@ -1,3 +1,5 @@
+//this component 
+
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
@@ -13,7 +15,8 @@ import { SlideUpAnimation} from './slide-up-animation';
   styleUrls: ['./app.component.css'],
   animations: [SlideUpAnimation]
 })
-export class AppComponent implements OnInit, OnDestroy 
+export class AppComponent implements OnInit
+//, OnDestroy 
 {
 
   langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, 
@@ -74,9 +77,10 @@ private getUrlSuffix= '&format=json&origin=*' ;
       localStorage.setItem("selectedResearchField", "all");
     }
    
-    this.subtitle = "a database for historians"
+  /*  this.subtitle = "a database for historians"
     if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
     if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
+    
     
     this.labels = this.searchInput.valueChanges   //search engine
     .pipe(
@@ -100,19 +104,26 @@ private getUrlSuffix= '&format=json&origin=*' ;
  //   this.searchToken="on";
     this.changeDetector.detectChanges();
     })
+    */
+
+    
+
   }
   
+  langSetting(lang){
+    if (lang !== undefined) {
+    this.selectedLang = lang.code; }
+    localStorage['selectedLang'] = this.selectedLang;
+    }
+  
+    /*
   researchFieldSelect(researchField){
       if (researchField === undefined) {this.selectedResearchField = "all"};
       if (researchField !== undefined) {this.selectedResearchField = researchField.id; };
       localStorage['selectedResearchField'] = this.selectedResearchField;
        }
      
-  langSetting(lang){
-     if (lang !== undefined) {
-     this.selectedLang = lang.code; }
-     localStorage['selectedLang'] = this.selectedLang;
-     }
+  
 
   searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix
 //   , { headers : { 'Access-Control-Allow-Origin':'*'}}
@@ -166,8 +177,9 @@ private getUrlSuffix= '&format=json&origin=*' ;
          ).values()
       ]
     }	  
-	       
+	    
      ngOnDestroy(): void {
        this.labels.unsubscribe()
        }
+       */
 }
