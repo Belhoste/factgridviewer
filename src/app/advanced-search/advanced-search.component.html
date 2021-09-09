@@ -15,7 +15,7 @@
     <div fxLayout="column" class="wrapper">
         <div fxLayoutAlign="center">
             <ng-select [items]="researchFields"
-                        placeholder="select a researchField"
+                        placeholder="select fields of research"
                         [virtualScroll]="true"
                         [multiple]="true"
                         [maxSelectedItems]="5"
@@ -44,7 +44,7 @@
      </div>
      <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'">
         <ng-select [items]="familyNames"
-                    placeholder="select a family name"
+                    placeholder="select family names"
                     [virtualScroll]="true"
                     [multiple]="true"
                     [maxSelectedItems]="5"
@@ -64,7 +64,7 @@
      </div>
      <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'"> 
      <ng-select [items]="givenNames"
-            placeholder="select a given name"
+            placeholder="select given names"
             [virtualScroll]="true"
             [multiple]="true"
             [maxSelectedItems]="5"
@@ -105,7 +105,7 @@
     </div>
      <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'">
         <ng-select [items]="organisations"
-                    placeholder="member of"
+                    placeholder="select organisations"
                     [virtualScroll]="true"
                     [multiple]="true"
                     [maxSelectedItems]="5"

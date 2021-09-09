@@ -29,7 +29,7 @@ export class DataService {
     sparqlOrderbyItemLabel:string="%20ORDER%20BY%20%3FitemLabel";
   //  placeListSparqlStart: string="https://database.factgrid.de/sparql?query=SELECT%20%3Fitem%20%3FitemLabel%20WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ8.%20%3Fitem%20wdt%3AP297%20wd%3AQ77184.%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2C";
     
-    sparqlClauseResearchFields:string = "WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ28116." 
+    sparqlClauseResearchFields:string = "WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ272613." 
     sparqlResearchFields = this.sparqlStart+this.sparqlDescriptionSelect+this.sparqlClauseResearchFields+this.sparqlLanguageService+this.sparqlEnd; //sparql query all research fields
 
     sparqlClauseLocations: string ="WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ8."  
