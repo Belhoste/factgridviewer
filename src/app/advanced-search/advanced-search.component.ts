@@ -10,14 +10,16 @@ import { DataService, Class, ExampleList } from './services/data.service';
 })
 export class AdvancedSearchComponent implements OnInit {
 
-  selectedResearchFields;
-  selectedClassValue;
+  selectedResearchFields=[];
+  selectedClassValue:string;
   selectedExampleListValue;
   selectedLocations=[];
   selectedFamilyNames=[];
   selectedGivenNames=[];
   selectedActivities=[];
-  selectedOrganisations=[];
+  selectedMembersOf=[];
+  selectedOrgs=[];
+  selectedOrgPlaces=[];
 
   researchFields;
   class:Class[];
@@ -52,8 +54,6 @@ export class AdvancedSearchComponent implements OnInit {
   subscription4:Subscription;
   subscription5:Subscription;
 
-
-
   constructor(private dataService: DataService) {
   }
 
@@ -62,29 +62,71 @@ export class AdvancedSearchComponent implements OnInit {
       this.exampleList$ = this.dataService.getExampleList();
 
       this.subscription0=this.dataService.getResearchFields().pipe(map(res=> Object.values(res.results.bindings)),
-      ).subscribe(x=>{ this.researchFields = x, this.researchFieldsBuffer= x.slice(0,this.bufferSize), console.log(this.familyNames)});
-     this.subscription1=this.dataService.getLocations().pipe(map(res=>res = Object.values(res.results.bindings))
-     )
-   //   ,map(res=> res= Object.values(Object.values(res)[1])[0])
-      .subscribe(x=>{ 
-      this.locations=x;  
-      this.locationsBuffer= this.locations.slice(0,this.bufferSize); console.log(this.locations[0].itemLabel)});
-
-      this.subscription2=this.dataService.getFamilyNames().pipe(map(res=> Object.values(res.results.bindings)),
-      ).subscribe(x=>{ this.familyNames = x, this.familyNamesBuffer= x.slice(0,this.bufferSize), console.log(this.familyNames)});
+      ).subscribe(x=>{ this.researchFields = x, this.researchFieldsBuffer= x.slice(0,this.bufferSize), console.log(this.researchFields)});
      
+      this.subscription1=this.dataService.getLocations().pipe(map(res=>res = Object.values(res.results.bindings))
+     ).subscribe(x=>{ this.locations=x; this.locationsBuffer= this.locations.slice(0,this.bufferSize)});
+      
+     this.subscription2=this.dataService.getFamilyNames().pipe(map(res=> Object.values(res.results.bindings)),
+      ).subscribe(x=>{ this.familyNames = x, this.familyNamesBuffer= x.slice(0,this.bufferSize), console.log(this.familyNames)});
+      
       this.subscription3=this.dataService.getGivenNames().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
       ).subscribe(x=>{ this.givenNames = x, this.givenNamesBuffer= x.slice(0,this.bufferSize)}); 
-
+      
       this.subscription4=this.dataService.getActivities().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
       ).subscribe(x=>{ this.activities = x, this.activitiesBuffer= x.slice(0,this.bufferSize), console.log(this.activities)});
 
       this.subscription5=this.dataService.getOrganisations().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
       ).subscribe(x=>{ this.organisations = x, this.organisationsBuffer= x.slice(0,this.bufferSize), console.log(this.organisations)});
-
-  
     }
 
+    getResearchFieldValues(){
+      for (let i=0;i<this.selectedResearchFields.length;i++){
+      this.selectedResearchFields[i]=this.selectedResearchFields[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedResearchFields);
+    }
+
+    getFamilyNameValues() {
+      for (let i=0;i<this.selectedFamilyNames.length;i++){
+        this.selectedFamilyNames[i]=this.selectedFamilyNames[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedFamilyNames);
+    }
+
+    getGivenNameValues() {
+      for (let i=0;i<this.selectedGivenNames.length;i++){
+        this.selectedGivenNames[i]=this.selectedGivenNames[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedGivenNames);
+    }
+
+    getActivityValues() {
+      for (let i=0;i<this.selectedActivities.length;i++){
+        this.selectedActivities[i]=this.selectedActivities[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedActivities);
+    }
+
+    getMemberOfValues() {
+      for (let i=0;i<this.selectedMembersOf.length;i++){
+        this.selectedMembersOf[i]=this.selectedMembersOf[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedMembersOf);
+    }
+
+    getOrgValues() {
+      for (let i=0;i<this.selectedOrgs.length;i++){
+        this.selectedOrgs[i]=this.selectedOrgs[i].replace('https://database.factgrid.de/entity/','');}
+        console.log(this.selectedOrgs);
+    }
+
+    getOrgPlaceValues() {
+      for (let i=0;i<this.selectedOrgPlaces.length;i++){
+        this.selectedOrgPlaces[i]=this.selectedOrgPlaces[i].replace('https://database.factgrid.de/entity/','');}
+        console.log(this.selectedOrgPlaces);
+    }
+
+    getLocationValues(){
+      for (let i=0;i<this.selectedLocations.length;i++){
+        this.selectedLocations[i]=this.selectedLocations[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedLocations)
+    }
 
   clearModel() {
     this.researchFields = [];
@@ -92,7 +134,7 @@ export class AdvancedSearchComponent implements OnInit {
     this.selectedFamilyNames = [];
     this.selectedGivenNames = [];
     this.selectedActivities = [];
-    this.selectedOrganisations = [];
+    this.selectedOrgs = [];
 }
 
   onScrollToEnd() {
@@ -161,6 +203,7 @@ private fetchMore() {
   const activitiesLen = this.activitiesBuffer.length;
   const organisationsLen= this.organisationsBuffer.length;
 
+  const researchFieldsMore = this.locations.slice(researchFieldsLen, this.bufferSize + locationsLen);
   const locationsMore = this.locations.slice(locationsLen, this.bufferSize + locationsLen);
   const familyNamesMore = this.familyNames.slice(familyNamesLen, this.bufferSize + familyNamesLen);
   const givenNamesMore = this.givenNames.slice(givenNamesLen, this.bufferSize + givenNamesLen);
@@ -191,13 +234,11 @@ private fetchMore() {
       this.givenNamesLoading = false;
       this.activitiesLoading = false;
       this.organisationsLoading = false;
-
       this.locationsBuffer = this.locationsBuffer.concat(locationsMore);
       this.familyNamesBuffer = this.familyNamesBuffer.concat(familyNamesMore);
       this.givenNamesBuffer = this.givenNamesBuffer.concat(givenNamesMore);
       this.activitiesBuffer = this.activitiesBuffer.concat(activitiesMore);
       this.organisationsBuffer = this.organisationsBuffer.concat(organisationsMore);
-
  }, 200)*/
 
 
