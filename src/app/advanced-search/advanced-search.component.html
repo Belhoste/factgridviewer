@@ -82,7 +82,48 @@
                         <small class="form-text text-muted">Loaded {{givenNamesBuffer.length}} of {{givenNames.length}}</small>
                     </ng-template>
                 </ng-select>
-            </div> 
+            </div>
+            <div fxLayoutAlign="center" class="details">
+                <ng-select [items]="locations"
+                        placeholder="select birth places"
+                        [virtualScroll]="true"
+                        [multiple]="true"
+                        [maxSelectedItems]="5"
+                        [loading]="locationsLoading"
+                        autofocus
+                        bindLabel="itemLabel.value"
+                        bindValue="item.value"
+                        appendTo="body"
+                        (scroll)="onScroll($event)"
+                        (scrollToEnd)="onScrollToEnd()"
+                        (change)="getBirthPlaceValues()"
+                        [(ngModel)]="selectedBirthPlaces">
+                    <ng-template ng-header-tmp>
+                            <small class="form-text text-muted">Loaded {{locationsBuffer.length}} of {{locations.length}}</small>
+                    </ng-template>
+                </ng-select>
+            </div>
+            <div fxLayoutAlign="center" class="details">
+                <ng-select [items]="locations"
+                        placeholder="select death places"
+                        [virtualScroll]="true"
+                        [multiple]="true"
+                        [maxSelectedItems]="5"
+                        [loading]="locationsLoading"
+                        autofocus
+                        bindLabel="itemLabel.value"
+                        bindValue="item.value"
+                        appendTo="body"
+                        (scroll)="onScroll($event)"
+                        (scrollToEnd)="onScrollToEnd()"
+                        (change)="getDeathPlaceValues()"
+                        [(ngModel)]="selectedDeathPlaces">
+                    <ng-template ng-header-tmp>
+                            <small class="form-text text-muted">Loaded {{locationsBuffer.length}} of {{locations.length}}</small>
+                    </ng-template>
+                </ng-select>
+            </div>
+
             <div fxLayoutAlign="center" class="details">
                 <ng-select [items]="activities"
                         placeholder="select activities"
@@ -90,7 +131,6 @@
                         [multiple]="true"
                         [maxSelectedItems]="5"
                         [loading]="activitiesLoading"
-                        autofocus
                         bindLabel="itemLabel.value"
                         autofocus
                         bindValue="item.value"
@@ -128,6 +168,8 @@
             <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'">
                             {{selectedClassValues}}
                             {{selectedFamilyNames}}
+                            {{selectedBirthPlaces}}
+                            {{selectedDeathPlaces}}
                             {{selectedMembersOf}}
             </div>  
         </div>

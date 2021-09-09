@@ -16,6 +16,8 @@ export class AdvancedSearchComponent implements OnInit {
   selectedLocations=[];
   selectedFamilyNames=[];
   selectedGivenNames=[];
+  selectedBirthPlaces=[];
+  selectedDeathPlaces=[];
   selectedActivities=[];
   selectedMembersOf=[];
   selectedOrgs=[];
@@ -96,6 +98,18 @@ export class AdvancedSearchComponent implements OnInit {
       for (let i=0;i<this.selectedGivenNames.length;i++){
         this.selectedGivenNames[i]=this.selectedGivenNames[i].replace('https://database.factgrid.de/entity/','');}
       console.log(this.selectedGivenNames);
+    }
+
+    getBirthPlaceValues() {
+      for (let i=0;i<this.selectedBirthPlaces.length;i++){
+        this.selectedBirthPlaces[i]=this.selectedBirthPlaces[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedBirthPlaces);
+    }
+
+    getDeathPlaceValues() {
+      for (let i=0;i<this.selectedDeathPlaces.length;i++){
+        this.selectedDeathPlaces[i]=this.selectedDeathPlaces[i].replace('https://database.factgrid.de/entity/','');}
+      console.log(this.selectedDeathPlaces);
     }
 
     getActivityValues() {
@@ -194,7 +208,6 @@ if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.organisationsBuffe
 
 }
 
-
 private fetchMore() {
   const researchFieldsLen = this.researchFieldsBuffer.length;
   const locationsLen = this.locationsBuffer.length;
@@ -218,7 +231,6 @@ private fetchMore() {
   this.organisationsLoading=true;
 
 }
-
 
   simplifySelectedItem(selectedArray){
     for (let i=0; i<selectedArray.length;i++) {
