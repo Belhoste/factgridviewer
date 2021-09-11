@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { DataService, Class, ExampleList } from './services/data.service';
+import { DataService, Class } from './services/data.service';
 
 @Component({
   selector: 'app-advanced-search',
@@ -19,22 +19,25 @@ export class AdvancedSearchComponent implements OnInit {
   selectedBirthPlaces=[];
   selectedDeathPlaces=[];
   selectedActivities=[];
+  selectedActivityContexts=[];
   selectedMembersOf=[];
   selectedOrgs=[];
   selectedOrgPlaces=[];
+  selectedPersons=[];
 
   researchFields;
   class:Class[];
   locations;
+  persons;
   familyNames;
   givenNames;
   activities;
   organisations;
 
-  exampleList$;
-  exampleList1$;
+  
   researchFieldsBuffer;
   locationsBuffer;
+  personsBuffer;
   familyNamesBuffer;
   givenNamesBuffer;
   activitiesBuffer;
@@ -44,6 +47,7 @@ export class AdvancedSearchComponent implements OnInit {
  
   researchFieldsLoading=false;
   locationsLoading=false;
+  personsLoading=false;
   familyNamesLoading=false;
   givenNamesLoading=false;
   activitiesLoading=false;
@@ -55,16 +59,16 @@ export class AdvancedSearchComponent implements OnInit {
   subscription3:Subscription;
   subscription4:Subscription;
   subscription5:Subscription;
+  subscription6:Subscription;
 
   constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
       this.class = this.dataService.getClass();
-      this.exampleList$ = this.dataService.getExampleList();
 
       this.subscription0=this.dataService.getResearchFields().pipe(map(res=> Object.values(res.results.bindings)),
-      ).subscribe(x=>{ this.researchFields = x, this.researchFieldsBuffer= x.slice(0,this.bufferSize), console.log(this.researchFields)});
+      ).subscribe(x=>{this.researchFields=x, this.researchFields.push({item:{value:'https://database.factgrid.de/entity/'},itemLabel:{value:'None'}}), this.researchFieldsBuffer= x.slice(0,this.bufferSize), console.log(this.researchFields)});
      
       this.subscription1=this.dataService.getLocations().pipe(map(res=>res = Object.values(res.results.bindings))
      ).subscribe(x=>{ this.locations=x; this.locationsBuffer= this.locations.slice(0,this.bufferSize)});
@@ -80,67 +84,86 @@ export class AdvancedSearchComponent implements OnInit {
 
       this.subscription5=this.dataService.getOrganisations().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
       ).subscribe(x=>{ this.organisations = x, this.organisationsBuffer= x.slice(0,this.bufferSize), console.log(this.organisations)});
+      
+ /*     this.subscription6=this.dataService.getPersons().pipe(map(res=> Object.values(Object.values(res)[1])[0]),
+      ).subscribe(x=>{ this.persons = x, this.personsBuffer= x.slice(0,this.bufferSize), console.log(this.persons)});
+      */
     }
-
+      
     getResearchFieldValues(){
-      for (let i=0;i<this.selectedResearchFields.length;i++){
-      this.selectedResearchFields[i]=this.selectedResearchFields[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedResearchFields);
+      let subject= "researchField";    
+      let researchField = this.subjectCreation(subject,this.selectedResearchFields);
+      console.log(researchField)
+      
     }
 
     getFamilyNameValues() {
-      for (let i=0;i<this.selectedFamilyNames.length;i++){
-        this.selectedFamilyNames[i]=this.selectedFamilyNames[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedFamilyNames);
+      let subject= "familyName";    
+      let familyName = this.subjectCreation(subject,this.selectedFamilyNames);
+      console.log(familyName)
     }
 
     getGivenNameValues() {
-      for (let i=0;i<this.selectedGivenNames.length;i++){
-        this.selectedGivenNames[i]=this.selectedGivenNames[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedGivenNames);
+      let subject= "givenName";    
+      let givenName = this.subjectCreation(subject,this.selectedGivenNames);
+      console.log(givenName);
     }
 
     getBirthPlaceValues() {
-      for (let i=0;i<this.selectedBirthPlaces.length;i++){
-        this.selectedBirthPlaces[i]=this.selectedBirthPlaces[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedBirthPlaces);
+      let subject= "birthPlace";    
+      let birthPlace = this.subjectCreation(subject,this.selectedBirthPlaces);
+      console.log(birthPlace);
     }
 
     getDeathPlaceValues() {
-      for (let i=0;i<this.selectedDeathPlaces.length;i++){
-        this.selectedDeathPlaces[i]=this.selectedDeathPlaces[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedDeathPlaces);
+      let subject= "deathPlace";    
+      let deathPlace = this.subjectCreation(subject,this.selectedDeathPlaces);
+      console.log(deathPlace);
     }
 
     getActivityValues() {
-      for (let i=0;i<this.selectedActivities.length;i++){
-        this.selectedActivities[i]=this.selectedActivities[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedActivities);
+      let subject= "activity";    
+      let activity = this.subjectCreation(subject,this.selectedActivities);
+      console.log(activity);
+    }
+
+    getActivityContextValues(){ 
+     let subject="activityContext";
+     let activityContext = this.subjectCreation(subject,this.selectedActivityContexts);
     }
 
     getMemberOfValues() {
-      for (let i=0;i<this.selectedMembersOf.length;i++){
-        this.selectedMembersOf[i]=this.selectedMembersOf[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedMembersOf);
+      let subject= "memberOf";    
+      let memberOf = this.subjectCreation(subject,this.selectedMembersOf);
+      console.log(memberOf);
     }
 
     getOrgValues() {
-      for (let i=0;i<this.selectedOrgs.length;i++){
-        this.selectedOrgs[i]=this.selectedOrgs[i].replace('https://database.factgrid.de/entity/','');}
-        console.log(this.selectedOrgs);
+      let subject= "Org";    
+      let Org = this.subjectCreation(subject,this.selectedOrgs);
+      console.log(Org);
     }
 
     getOrgPlaceValues() {
-      for (let i=0;i<this.selectedOrgPlaces.length;i++){
-        this.selectedOrgPlaces[i]=this.selectedOrgPlaces[i].replace('https://database.factgrid.de/entity/','');}
-        console.log(this.selectedOrgPlaces);
+      let subject= "OrgPlace";    
+      let OrgPlace = this.subjectCreation(subject,this.selectedOrgPlaces);
+      console.log(OrgPlace);
     }
 
     getLocationValues(){
-      for (let i=0;i<this.selectedLocations.length;i++){
-        this.selectedLocations[i]=this.selectedLocations[i].replace('https://database.factgrid.de/entity/','');}
-      console.log(this.selectedLocations)
+      let subject= "Location";    
+      let Location = this.subjectCreation(subject,this.selectedLocations);
+      console.log(Location);
     }
+
+  subjectCreation(subject:string, a:string[]){ 
+    subject=subject+"%7B";
+    for (let i=0;i<a.length;i++) {
+    a[i]=a[i].replace('https://database.factgrid.de/entity/','%20wd%3A');
+    subject= subject+a[i] };
+    subject= "VALUES%3F"+subject+"%7D";
+    return subject
+  }
 
   clearModel() {
     this.researchFields = [];
@@ -149,6 +172,7 @@ export class AdvancedSearchComponent implements OnInit {
     this.selectedGivenNames = [];
     this.selectedActivities = [];
     this.selectedOrgs = [];
+    this.selectedPersons=[];
 }
 
   onScrollToEnd() {
@@ -164,6 +188,10 @@ onScroll({ end }) {
   if (this.locationsLoading || this.locations.length <= this.locationsBuffer.length) {
       return;
   }
+
+  if (this.personsLoading || this.persons.length <= this.personsBuffer.length) {
+    return;
+}
 
   if (this.familyNamesLoading || this.familyNames.length <= this.familyNamesBuffer.length) {
     return;
@@ -186,9 +214,10 @@ if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.researchFieldsBuff
   this.fetchMore();
 }
 
-if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.locationsBuffer.length) {
-      this.fetchMore();
-  }
+
+if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.personsBuffer.length) {
+  this.fetchMore();
+}
 
 if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.familyNamesBuffer.length) {
     this.fetchMore();
@@ -211,6 +240,7 @@ if (end + this.numberOfItemsFromEndBeforeFetchingMore >= this.organisationsBuffe
 private fetchMore() {
   const researchFieldsLen = this.researchFieldsBuffer.length;
   const locationsLen = this.locationsBuffer.length;
+  const personsLen = this.personsBuffer.length;
   const familyNamesLen = this.familyNamesBuffer.length;
   const givenNamesLen = this.givenNamesBuffer.length;
   const activitiesLen = this.activitiesBuffer.length;
@@ -218,6 +248,7 @@ private fetchMore() {
 
   const researchFieldsMore = this.locations.slice(researchFieldsLen, this.bufferSize + locationsLen);
   const locationsMore = this.locations.slice(locationsLen, this.bufferSize + locationsLen);
+  const personsMore = this.persons.slice(personsLen, this.bufferSize + personsLen);
   const familyNamesMore = this.familyNames.slice(familyNamesLen, this.bufferSize + familyNamesLen);
   const givenNamesMore = this.givenNames.slice(givenNamesLen, this.bufferSize + givenNamesLen);
   const activitiesMore = this.activities.slice(activitiesLen, this.bufferSize + activitiesLen);
@@ -225,6 +256,7 @@ private fetchMore() {
 
   this.researchFieldsLoading = true;
   this.locationsLoading = true;
+  this.personsLoading = true;
   this.familyNamesLoading=true;
   this.givenNamesLoading=true;
   this.activitiesLoading=true;
@@ -261,6 +293,7 @@ ngOnDestroy(): void {
   if (this.subscription3 != undefined) this.subscription3.unsubscribe();
   if (this.subscription4 != undefined) this.subscription4.unsubscribe();
   if (this.subscription5 != undefined) this.subscription5.unsubscribe();
+ // if (this.subscription6!= undefined) this.subscription6.unsubscribe();
  }
 
 }

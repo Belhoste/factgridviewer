@@ -4,13 +4,14 @@ import { DisplayComponent} from './display/display.component';
 import { SearchComponent } from './search/search.component';
 import { MapComponent } from './display/map/map.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { EssaiComponent } from './essai/essai.component';
 
 export const routingConfiguration: ExtraOptions = {
   paramsInheritanceStrategy: 'always'
 }
 
 const routes: Routes = [
-//  { path: '', component:AppComponent},
+
   { path: '', component:SearchComponent},
   { path: 'item/:id',
     component: DisplayComponent,  
@@ -20,9 +21,8 @@ const routes: Routes = [
    ] 
   },
   { path: 'advanced_search',    //component for advanced search 
-     component: AdvancedSearchComponent    },
- // { path: 'research_fields',    //component for research fieds
- //    component: ResearchFieldsComponent   }
+     component: AdvancedSearchComponent},
+  { path: 'essai',  component: EssaiComponent   }
 
 ]
 

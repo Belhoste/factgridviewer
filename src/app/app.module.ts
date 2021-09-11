@@ -32,6 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectFilterModule} from 'mat-select-filter';
 import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EssaiComponent } from './essai/essai.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MapComponent,
     BackListIdPipe,
     SearchComponent,
-    AdvancedSearchComponent
+    AdvancedSearchComponent,
+    EssaiComponent
   ],
   imports: [
     BrowserModule,

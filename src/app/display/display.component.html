@@ -26,8 +26,8 @@
   </div>
 
     <div  *ngIf="!isSpinner" fxFlex="100%">
-      <mat-drawer-container class="example-container">
-      <mat-drawer  #drawer mode="push">
+<mat-drawer-container class="example-container">
+    <mat-drawer  #drawer mode="push">
         <div class="ground-div" fxLayoutAlign="end stretch">
         <div class="icon" class="mat-button.mat-small">
           <button mat-icon-button (click)="drawer.toggle()" class="white-text"><mat-icon class="white-button">chevron_right</mat-icon>{{mainPage}}</button>
@@ -45,7 +45,7 @@
           </mat-list>
         </mat-card-content>
       </mat-card>
-      </mat-drawer>
+    </mat-drawer>
       <mat-drawer-content>
         <div class="ground-div" fxLayoutAlign="start stretch">
           <div class="icon" class="mat-button.mat-small" >
@@ -323,6 +323,7 @@
              </div>               
             <hr> 
           </div>  
+          
           </div> 
         </mat-card-content>
         </div>

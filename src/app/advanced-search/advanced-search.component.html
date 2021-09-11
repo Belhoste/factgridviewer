@@ -42,10 +42,13 @@
                     [(ngModel)]="selectedClassValue">
             </ng-select>
         </div>
-        <div  *ngIf="selectedClassValue === 'Q7'">
-            <div fxLayoutAlign="center" class="details">
+    <div  class="details1"  *ngIf="selectedClassValue === 'Q7'">
+        <div fxLayout="row wrap"
+        fxLayout.sm="column"
+         fxLayoutGap="30px grid" fxLayoutAlign="center center">
+            <div class="details">
                 <ng-select [items]="familyNames"
-                        placeholder="select family names"
+                        placeholder="select family names (optional)"
                         [virtualScroll]="true"
                         [multiple]="true"
                         [maxSelectedItems]="5"
@@ -63,9 +66,9 @@
                     </ng-template>
                 </ng-select>
             </div>
-            <div fxLayoutAlign="center" class="details"> 
+            <div class="details"> 
                 <ng-select [items]="givenNames"
-                        placeholder="select given names"
+                        placeholder="select given names (optional)"
                         [virtualScroll]="true"
                         [multiple]="true"
                         [maxSelectedItems]="5"
@@ -83,9 +86,9 @@
                     </ng-template>
                 </ng-select>
             </div>
-            <div fxLayoutAlign="center" class="details">
+            <div class="details">
                 <ng-select [items]="locations"
-                        placeholder="select birth places"
+                        placeholder="select birth places (optional)"
                         [virtualScroll]="true"
                         [multiple]="true"
                         [maxSelectedItems]="5"
@@ -103,9 +106,9 @@
                     </ng-template>
                 </ng-select>
             </div>
-            <div fxLayoutAlign="center" class="details">
+            <div class="details">
                 <ng-select [items]="locations"
-                        placeholder="select death places"
+                        placeholder="select death places (optional)"
                         [virtualScroll]="true"
                         [multiple]="true"
                         [maxSelectedItems]="5"
@@ -124,9 +127,9 @@
                 </ng-select>
             </div>
 
-            <div fxLayoutAlign="center" class="details">
+            <div class="details">
                 <ng-select [items]="activities"
-                        placeholder="select activities"
+                        placeholder="select activities (optional)"
                         [virtualScroll]="true"
                         [multiple]="true"
                         [maxSelectedItems]="5"
@@ -144,9 +147,29 @@
                     </ng-template>
                 </ng-select>
             </div>
-            <div fxLayoutAlign="center" class="details">
+            <div class="details">
                 <ng-select [items]="organisations"
-                            placeholder="select members of"
+                        placeholder="select contexts of activity (optional)"
+                        [virtualScroll]="true"
+                        [multiple]="true"
+                        [maxSelectedItems]="5"
+                        [loading]="organisationsLoading"
+                        bindLabel="itemLabel.value"
+                        autofocus
+                        bindValue="item.value"
+                        appendTo="body"
+                        (scroll)="onScroll($event)"
+                        (scrollToEnd)="onScrollToEnd()"
+                        (change)="getActivityContextValues()"
+                        [(ngModel)]="selectedActivityContexts">
+                    <ng-template ng-header-tmp>
+                        <small class="form-text text-muted">Loaded {{organisationsBuffer.length}} of {{organisations.length}}</small>
+                    </ng-template>
+                </ng-select>
+            </div>  
+            <div class="details">
+                <ng-select [items]="organisations"
+                            placeholder="select members of (optional)"
                             [virtualScroll]="true"
                             [multiple]="true"
                             [maxSelectedItems]="5"
@@ -165,14 +188,63 @@
                     </ng-template>
                 </ng-select>
             </div>
+        </div>
+            <div fxLayoutAlign="center" class="details">Date Filters (optional)</div>
+            <div fxLayoutAlign="center" class="details2">Birth</div>
+            <div fxLayoutAlign="center" class="details">    
+                <div class="form-group"> 
+                    <label>From&nbsp;</label>
+                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel>&nbsp;&nbsp;
+                    <label>To&nbsp;</label>
+                        <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel>&nbsp;&nbsp; 
+                </div>
+                <button type="submit" class="btn btn-primary" >Submit</button>
+                
+            </div>
+        <div fxLayoutAlign="center" class="details2">Death</div>
+        <div fxLayoutAlign="center" class="details">
+            <div class="form-group"> 
+            <label>From&nbsp;</label>
+            <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel>&nbsp;&nbsp;
+            <label>To&nbsp;</label>
+            <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel>&nbsp;&nbsp; 
+            <button type="submit" class="btn btn-primary" >Submit</button>
+            </div>
+        </div>
+        <div fxLayoutAlign="center" class="details2">Activity</div>
+        <div fxLayoutAlign="center" class="details">
+            <div class="form-group"> 
+            <label>From&nbsp;</label>
+            <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel>&nbsp;&nbsp;
+            <label>To&nbsp;</label>
+            <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel> 
+        </div>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+            
+        </div>
+        <div fxLayoutAlign="center" class="details2">Membership</div>
+        <div fxLayoutAlign="center" class="details">
+            <div class="form-group"> 
+            <label>From&nbsp;</label>
+            <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel>&nbsp;&nbsp;
+            <label>To&nbsp;</label>
+            <input type="text" placeholder="yyyy-mm-dd" class="form-control" name="from" ngModel> 
+        </div>
+            <button type="submit" class="btn btn-primary" >Submit</button>
+            
+        </div>
             <div fxLayoutAlign="center" *ngIf="selectedClassValue === 'Q7'">
                             {{selectedClassValues}}
                             {{selectedFamilyNames}}
                             {{selectedBirthPlaces}}
                             {{selectedDeathPlaces}}
                             {{selectedMembersOf}}
-            </div>  
+                </div> 
+            </div>
         </div>
+        
+    
+        
         <div *ngIf="selectedClassValue === 'Q8'"> 
             <div fxLayoutAlign="center" class="details">
                 <ng-select [items]="locations"
@@ -198,7 +270,7 @@
                 </ng-select>
             </div>
         </div>
-        <div  *ngIf="selectedClassValue === 'Q12'">
+        <div *ngIf="selectedClassValue === 'Q12'">
             <div fxLayoutAlign="center" class="details"> 
                 <ng-select [items]="organisations"
                             placeholder="select names"
@@ -208,7 +280,6 @@
                             [loading]="organisationsLoading"
                             autofocus
                             bindLabel="itemLabel.value"
-                            autofocus
                             bindValue="item.value"
                             appendTo="body"
                             (scroll)="onScroll($event)"
@@ -248,5 +319,5 @@
                 {{selectedOrgPlaces}}
             </div> 
         </div>
-    </div>
+    
 </body>

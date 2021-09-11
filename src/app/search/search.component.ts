@@ -1,10 +1,10 @@
-// this component seems to replace the app component
+
 
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient} from '@angular/common/http';
+//import { HttpClient} from '@angular/common/http';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
 import { SlideUpAnimation} from '../slide-up-animation';
@@ -47,14 +47,14 @@ export class SearchComponent implements OnInit, OnDestroy
   itemId:string;
  
 
-private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
+//private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
 private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
+//private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
 private getUrlSuffix= '&format=json&origin=*' ; 
 
   constructor( 
   private changeDetector: ChangeDetectorRef, 
-  private http: HttpClient, 
+//  private http: HttpClient, 
   private request:RequestService, 
   private setLanguage:SetLanguageService) 
   {}
@@ -111,9 +111,9 @@ private getUrlSuffix= '&format=json&origin=*' ;
       localStorage['selectedResearchField'] = this.selectedResearchField;
        }
      
-  searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix)}
+// searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix)}
 
-  getItem(url:string): Observable<any> { return this.http.get(url) };
+//  getItem(url:string): Observable<any> { return this.http.get(url) };
 
   createList(re) {  //create an url whith the elements of an array
     let list = "";
