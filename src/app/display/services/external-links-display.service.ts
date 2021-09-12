@@ -104,6 +104,12 @@ export class ExternalLinksDisplayService {  // external links
         item[1].splice(item[1].indexOf("P585"),1);
         item[0].claims.P585.url = 'http://estc.bl.uk/'+item[0].claims.P585[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P585) };
+
+    if (item[0].claims.P549 !==undefined){ // YVNG ID
+        item[1].splice(item[1].indexOf("P549"),1);
+        item[0].claims.P549.url = 'https://yvng.yadvashem.org/nameDetails.html?itemId='+item[0].claims.P549[0].mainsnak.datavalue.value
+                  externalLinks.push(item[0].claims.P549) ;
+                };
                               
   return externalLinks
   };

@@ -25,6 +25,9 @@ import { MapComponent } from './display/map/map.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BackListIdPipe } from './back-list-id.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { AppRoutingModule } from './app-routing.module';
 import { SearchComponent } from './search/search.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
@@ -49,6 +52,19 @@ import { EssaiComponent } from './essai/essai.component';
     AdvancedSearchComponent,
     EssaiComponent
   ],
+
+  providers:[
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: {
+          display: {
+              dateInput: 'YYYY-MM-DD',
+          },
+      },
+  }
+
+  ],
+
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -61,6 +77,8 @@ import { EssaiComponent } from './essai/essai.component';
     MatButtonModule,
     MatCardModule,
     MatListModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
     MatGridListModule,
     MatIconModule,
     MatMenuModule,
