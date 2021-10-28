@@ -110,6 +110,12 @@ export class ExternalLinksDisplayService {  // external links
         item[0].claims.P549.url = 'https://yvng.yadvashem.org/nameDetails.html?itemId='+item[0].claims.P549[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P549) ;
                 };
+
+    if (item[0].claims.P656 !==undefined){ // CTHS ID
+        item[1].splice(item[1].indexOf("P656"),1);
+        item[0].claims.P656.url = 'https://cths.fr/an/savant.php?id='+item[0].claims.P656[0].mainsnak.datavalue.value
+                  externalLinks.push(item[0].claims.P656) ;
+                };
                               
   return externalLinks
   };
