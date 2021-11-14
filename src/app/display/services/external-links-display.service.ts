@@ -112,7 +112,7 @@ export class ExternalLinksDisplayService {  // external links
                 };
 
     if (item[0].claims.P655 !==undefined){ // RISM ID
-        item[1].splice(item[1].indexOf("P656"),1);
+        item[1].splice(item[1].indexOf("P655"),1);
         item[0].claims.P655.url = 'https://opac.rism.info/search?id='+item[0].claims.P655[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P655) ;
                 };
