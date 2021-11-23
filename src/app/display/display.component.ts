@@ -23,7 +23,7 @@ import {SetSelectedItemsListService} from '../services/set-selected-items-list.s
 import { Router }   from '@angular/router';
 
 @Component({
-  selector: 'display-component',
+  selector: 'displang y-component',
   templateUrl: 'display.component.html',
   styleUrls: ['./display.component.css']
 })

@@ -33,6 +33,10 @@ export class SociabilityDisplayService {
       item[1].splice(item[1].indexOf("P167"),1);
       sociabilityAndCulture.push(item[0].claims.P167); 
     }
+    if (item[0].claims.P278 !==undefined){ //Subscriptions signed
+      item[1].splice(item[1].indexOf("P278"),1);
+      sociabilityAndCulture.push(item[0].claims.P278); 
+    }
   return sociabilityAndCulture
   }
 }

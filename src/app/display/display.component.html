@@ -172,6 +172,8 @@
                       <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                       <label *ngIf="Q.datatype==='string'">{{Q.value.string}}</label>
                       <label>{{Q.value.amount}}</label>
+                      <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
+                        <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
                       <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, {{Q.value.description}}
                         <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>         
@@ -219,6 +221,8 @@
                   <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                   <label>{{Q.value.string}}</label>
                   <label>{{Q.value.amount}}</label>
+                  <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
+                    <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
                   <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span> 
                     <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     
                   </label>   
@@ -263,6 +267,8 @@
                 <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                 <label>{{Q.value.string}}</label>
                 <label>{{Q.value.amount}}</label>
+                <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
+                  <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
                 <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span>
                   <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </label>
@@ -295,7 +301,7 @@
             <label *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</label> 
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</label>
             <label class="break-word-container" *ngIf="M.mainsnak.datatype === 'url'">
-              <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a></label>
+              <a href ="{{M.mainsnak.datavalue.value}}" target="_blank">link</a></label>
             <label>{{M.mainsnak.datavalue.value.amount}}</label>
             <label *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</label>
             <label *ngIf="M.mainsnak.datatype === 'wikibase-item'">{{M.mainsnak.label}}, <span class="description-text">{{M.mainsnak.description}}</span>
@@ -310,6 +316,8 @@
                   <label *ngIf="Q.datatype === 'wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span> 
                     <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </label>
+                  <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
+                  <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
                 </span>
               </span>            
               <div class="details" class="percent2" *ngIf="M['references2']">

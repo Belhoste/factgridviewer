@@ -110,6 +110,7 @@ export class ItemDetailsService {
         } 
       }
     }
+    console.log(re);
     return re
   }
 
@@ -142,6 +143,7 @@ export class ItemDetailsService {
                   }
               }
            }
+     console.log(re);
       return re
       }
 
@@ -159,16 +161,20 @@ export class ItemDetailsService {
                     re.claims[propertyIds[i]][j].qualifiers2[k].datatype = qualifiersArray[k][0].datatype;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.id = qualifiersArray[k][0].datavalue.value.id;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.time = qualifiersArray[k][0].datavalue.value.time;
+                    re.claims[propertyIds[i]][j].qualifiers2[k].value.url = qualifiersArray[k][0].datavalue.value.url;   
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.date = qualifiersArray[k][0].datavalue.value.date; 
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value.label;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.description = qualifiersArray[k][0].datavalue.value.description;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.aliases = qualifiersArray[k][0].datavalue.value.aliases; 
                     if (qualifiersArray[k][0].datatype === "string"){
-                      re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value };    
+                      re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value }; 
+                    if (qualifiersArray[k][0].datatype === "url"){
+                      re.claims[propertyIds[i]][j].qualifiers2[k].value.url = qualifiersArray[k][0].datavalue.value };       
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.amount = qualifiersArray[k][0].datavalue.value.amount };                    
               }
             }
           }
+          console.log(re);
           return re
       }
 
