@@ -122,6 +122,12 @@ export class ExternalLinksDisplayService {  // external links
         item[0].claims.P656.url = 'https://cths.fr/an/savant.php?id='+item[0].claims.P656[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P656) ;
                 };
+
+    if (item[0].claims.P660 !==undefined){ // Vergue ID
+        item[1].splice(item[1].indexOf("P660"),1);
+        item[0].claims.P660.url = 'http://vergue.com/post/'+item[0].claims.P660[0].mainsnak.datavalue.value
+                  externalLinks.push(item[0].claims.P660) ;
+                };
                               
   return externalLinks
   };
