@@ -128,8 +128,14 @@ export class ExternalLinksDisplayService {  // external links
         item[0].claims.P660.url = 'http://vergue.com/post/'+item[0].claims.P660[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P660) ;
                 };
-                              
-  return externalLinks
+            
+    if (item[0].claims.P672 !==undefined){ // Google Knowledge Graph ID
+                  item[1].splice(item[1].indexOf("P672"),1);
+                  item[0].claims.P672.url = 'https://g.co/kg'+item[0].claims.P672[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P672) ;
+            
+                          };         
+    return externalLinks
   };
   
 }
