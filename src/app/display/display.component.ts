@@ -66,7 +66,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   factGridLogo:string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
-  langs =[{lang:"en"}, {lang:"de"}, {lang:"fr"}, {lang:"  "}]
+  langs =[{lang:"en"}, {lang:"de"}, {lang:"fr"}, {lang:"es"}, {lang:"  "}]
 
   item:any[];
   linkedItems:any[]; //backList
@@ -107,6 +107,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   dewiki:any;
   enwiki:any;
   frwiki:any;
+  eswiki:any;
   wikidatawiki:any;
   wikis:any[];
 
@@ -184,31 +185,40 @@ setItemId(event){
 
   this.newSearch = "new search"
   if(this.selectedLang === "de") {this.newSearch = "neue Suche"};
-  if(this.selectedLang === "fr") {this.newSearch = "nouvelle recherche"}
+  if(this.selectedLang === "fr") {this.newSearch = "nouvelle recherche"};
+  if(this.selectedLang === "es") {this.newSearch = "nueva búsqueda"}
 
   this.linkedPagesTitle = "linked pages"
   if(this.selectedLang === "de") {this.linkedPagesTitle = "verlinkte Seiten"};
-  if(this.selectedLang === "fr") {this.linkedPagesTitle = "pages liées"}
+  if(this.selectedLang === "fr") {this.linkedPagesTitle = "pages liées"};
+  if(this.selectedLang === "es") {this.linkedPagesTitle = "páginas enlazadas"}
+
 
   this.mainPage = "main page"
   if(this.selectedLang === "de") {this.mainPage = "HauptSeite"};
-  if(this.selectedLang === "fr") {this.mainPage = "page principale"}
+  if(this.selectedLang === "fr") {this.mainPage = "page principale"};
+  if(this.selectedLang === "es") {this.mainPage = "página principal"}
 
   this.externalLinksTitle = "external links"
   if(this.selectedLang === "de") {this.externalLinksTitle = "externe Links"};
-  if(this.selectedLang === "fr") {this.externalLinksTitle = "liens externes"}
+  if(this.selectedLang === "fr") {this.externalLinksTitle = "liens externes"};
+  if(this.selectedLang === "es") {this.externalLinksTitle = "enlaces externos"}
 
   this.formerVisitsTitle = "you have visited"
   if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht"};
   if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité"};
+  if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado"}
 
   this.clickToDisplay = "click to display"
   if(this.selectedLang === "de") {this.clickToDisplay = "Klicken Sie zum Anzeigen"};
-  if(this.selectedLang === "fr") {this.clickToDisplay = "cliquez pour afficher"}
+  if(this.selectedLang === "fr") {this.clickToDisplay = "cliquez pour afficher"};
+  if(this.selectedLang === "es") {this.clickToDisplay = "haga clic para mostrar"};
+
 
   this.clickToDownload = "click to download"
   if(this.selectedLang === "de") {this.clickToDownload = "Klicken Sie zum Download"};
   if(this.selectedLang === "fr") {this.clickToDownload = "cliquez pour télécharger"};
+  if(this.selectedLang === "fr") {this.clickToDownload = "haga clic para descargarlo"}
 
   this.subscription0 = this.route.paramMap.subscribe(   
     params => { this.itemId = params.get('id'),
@@ -224,6 +234,8 @@ setItemId(event){
           this.linkedItems = [{id:"Q21898", label:"aucune"}]};
         if (this.selectedLang === "en"){
             this.linkedItems = [{id:"Q21898", label:"none"}]};
+        if (this.selectedLang === "es"){
+            this.linkedItems = [{id:"Q21898", label:"ninguno"}]};
          }})).
       subscribe(res =>{ this.linkedItems }
         ),

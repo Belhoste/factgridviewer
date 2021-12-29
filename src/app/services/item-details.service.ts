@@ -95,7 +95,8 @@ export class ItemDetailsService {
         re.claims[propertyIds[i]].document = "document";
         if ( lang === "en") {re.claims[propertyIds[i]].main = "document"}
         else if ( lang === "de") {re.claims[propertyIds[i]].main = "Dokument"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "document"};
+        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "document"}
+        else if ( lang === "es") {re.claims[propertyIds[i]].main = "documento"};
       }
 
         

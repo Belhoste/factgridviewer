@@ -65,18 +65,22 @@ private getUrlSuffix= '&format=json&origin=*' ;
     this.subtitle = "a database for historians"
     if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
     if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
+    if (this.selectedLang === "es") { this.subtitle = "una base de datos para historiadores"}
 
     this.advanced_search = "advanced search"
     if (this.selectedLang === "de") { this.advanced_search = "erweiterte Suche" }
     if (this.selectedLang === "fr") { this.advanced_search = "recherche avancée"}
+    if (this.selectedLang === "es") { this.advanced_search = "búsqueda avanzada"}
 
     this.projects = "research projects"
     if (this.selectedLang === "de") { this.projects = "Forschungsprojekten" }
     if (this.selectedLang === "fr") { this.projects = "projets de recherche"}
+    if (this.selectedLang === "es") { this.projects = "proyectos de investigación"}
 
     this.fields = "fields of research"
     if (this.selectedLang === "de") { this.fields = "Forschungsfelder" }
     if (this.selectedLang === "fr") { this.fields = "domaines de recherche"}
+    if (this.selectedLang === "es") { this.projects = "campos de investigación"}
     
     
     this.labels = this.searchInput.valueChanges   //search engine

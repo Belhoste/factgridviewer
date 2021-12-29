@@ -106,6 +106,18 @@ changeLang(lang,res) {
         aliasesValue = res.aliases.de[0].value;}
      }
    }
+   if (lang === 'es') {
+    aliasesLang = undefined;
+    if (res.labels.es !== undefined) {
+      labelLang = res.labels.es;
+      labelValue = res.labels.es.value;}
+    if (res.descriptions.es !== undefined) {
+      descriptionLang = res.descriptions.es;
+      descriptionValue = res.descriptions.es.value;}
+    if (res.aliases.es !== undefined) {
+      aliasesLang = res.aliases.es;
+      aliasesValue = res.aliases.es[0].value;}
+  }
     return [labelLang,labelValue,descriptionLang,descriptionValue,aliasesLang,aliasesValue] 
   }
 }
