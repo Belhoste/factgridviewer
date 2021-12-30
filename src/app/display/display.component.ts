@@ -194,15 +194,15 @@ setItemId(event){
   if(this.selectedLang === "es") {this.linkedPagesTitle = "páginas enlazadas"}
 
 
-  this.mainPage = "main page"
+  this.mainPage = "Main page"
   if(this.selectedLang === "de") {this.mainPage = "HauptSeite"};
   if(this.selectedLang === "fr") {this.mainPage = "page principale"};
   if(this.selectedLang === "es") {this.mainPage = "página principal"}
 
-  this.externalLinksTitle = "external links"
-  if(this.selectedLang === "de") {this.externalLinksTitle = "externe Links"};
-  if(this.selectedLang === "fr") {this.externalLinksTitle = "liens externes"};
-  if(this.selectedLang === "es") {this.externalLinksTitle = "enlaces externos"}
+  this.externalLinksTitle = "External links"
+  if(this.selectedLang === "de") {this.externalLinksTitle = "Externe Links"};
+  if(this.selectedLang === "fr") {this.externalLinksTitle = "Liens externes"};
+  if(this.selectedLang === "es") {this.externalLinksTitle = "Enlaces externos"}
 
   this.formerVisitsTitle = "you have visited"
   if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht"};

@@ -1,3 +1,5 @@
+//generate the sparql query
+
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -7,7 +9,7 @@ export class QueriesService {
 
   constructor() { }
 
-selectionGenerator(values:string[]){
+selectionGenerator(values:string[]){ //selected items
   let simpleSelection="SELECT%3F";
   let completeSelection="SELECT%3F" 
   for (let i=0;i<values.length;i++){ 

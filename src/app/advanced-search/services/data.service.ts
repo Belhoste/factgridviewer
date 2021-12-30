@@ -22,7 +22,8 @@ export class DataService {
     selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
     sparqlStart:string="https://database.factgrid.de/sparql?query=";
     sparqlEnd:string="&format=json";
-    sparqlLanguageService:string="%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2C"+this.selectedLang+"%22.%20%7D%7D%20";
+  //  sparqlLanguageService:string="%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2C"+this.selectedLang+"%22.%20%7D%7D%20";
+  sparqlLanguageService:string="SERVICE%20wikibase%3Alabel%7Bbd%3AserviceParam%20wikibase%3Alanguage%22"+this.selectedLang+"%2Cen%22.%7D%7D";
     sparqlSimpleSelect:string="SELECT%20%3Fitem%20%3FitemLabel%20";
     sparqlDescriptionSelect:string="SELECT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20";//label + description of the items
     sparqlDistinctSimpleSelect:string="SELECT%20%3FDISTINCT%20%3Fitem%20%3FitemLabel%20";
@@ -32,6 +33,7 @@ export class DataService {
     sparqlClauseResearchFields:string = "WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ272613." 
     sparqlResearchFields = this.sparqlStart+this.sparqlDescriptionSelect+this.sparqlClauseResearchFields+this.sparqlLanguageService+this.sparqlEnd; //sparql query all research fields
 
+    //ici distinguer le cas où aucun champ de recherche a été selectionné de celui où des champs de recherche ont été sélectionnés
     sparqlClauseLocations: string ="WHERE%20%7B%3Fitem%20wdt%3AP2%20wd%3AQ8."  
     sparqlLocations = this.sparqlStart+this.sparqlDescriptionSelect+this.sparqlClauseLocations+this.sparqlLanguageService+this.sparqlEnd; //sparql query all locations
 
