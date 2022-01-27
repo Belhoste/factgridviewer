@@ -133,8 +133,47 @@ export class ExternalLinksDisplayService {  // external links
                   item[1].splice(item[1].indexOf("P672"),1);
                   item[0].claims.P672.url = 'https://g.co/kg'+item[0].claims.P672[0].mainsnak.datavalue.value
                             externalLinks.push(item[0].claims.P672) ;
-            
-                          };         
+                }; 
+    if (item[0].claims.P624 !==undefined){ // Getty Thesaurus of Geographic Names
+                  item[1].splice(item[1].indexOf("P624"),1);
+                  item[0].claims.P624.url = 'https://www.getty.edu/vow/TGNFullDisplay?find=&place=&nation=&english=Y&subjectid='+item[0].claims.P624[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P624) ;
+                }; 
+    if (item[0].claims.P635 !==undefined){ // Kalliope ID
+                  item[1].splice(item[1].indexOf("P635"),1);
+                  item[0].claims.P635.url = 'http://kalliope-verbund.info/'+item[0].claims.P624[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P635) ;
+                };
+    if (item[0].claims.P652 !==undefined){ // Biblioteca Nacional de España ID
+                  item[1].splice(item[1].indexOf("P652"),1);
+                  item[0].claims.P652.url = 'https://datos.bne.es/resource/'+item[0].claims.P652[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P652) ;
+                }; 
+    if (item[0].claims.P667 !==undefined){ // Frauen in Bewegung 1848–1938 ID
+                  item[1].splice(item[1].indexOf("P667"),1);
+                  item[0].claims.P667.url = 'https://fraueninbewegung.onb.ac.at/node/'+item[0].claims.P667[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P667) ;
+                }; 
+    if (item[0].claims.P668 !==undefined){ // DNB-Info ID
+                  item[1].splice(item[1].indexOf("P668"),1);
+                  item[0].claims.P668.url = 'https://d-nb.info/'+item[0].claims.P668[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P668) ;
+                }; 
+    if (item[0].claims.P671 !==undefined){ // Pleiades ID
+                  item[1].splice(item[1].indexOf("P671"),1);
+                  item[0].claims.P671.url = 'https://pleiades.stoa.org/places/'+item[0].claims.P671[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P671) ;
+                }; 
+    if (item[0].claims.P671 !==undefined){ // Pleiades ID
+                  item[1].splice(item[1].indexOf("P671"),1);
+                  item[0].claims.P671.url = 'https://pleiades.stoa.org/places/'+item[0].claims.P671[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P671) ;
+                }; 
+    if (item[0].claims.P689 !==undefined){ // Persons of Indian Studies ID
+                  item[1].splice(item[1].indexOf("P689"),1);
+                  item[0].claims.P689.url = 'https://whowaswho-indology.info/'+item[0].claims.P689[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P689) ;
+                }; 
     return externalLinks
   };
   

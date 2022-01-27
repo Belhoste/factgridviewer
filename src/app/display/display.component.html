@@ -177,7 +177,7 @@
                       <label>{{Q.value.amount}}</label>
                       <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
                         <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
-                      <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, {{Q.value.description}}
+                      <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span>
                         <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>         
                     </span>
@@ -185,7 +185,8 @@
               
             <div class="details2" class="percent2" *ngIf="M['references2']">
               <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>           
-              <label>{{M.references2[0].value.label}}, {{M.references2[0].value.description}}
+              <label>{{M.references2[0].value.label}}
+  <!--             ,<span class="description-text">{{M.references2[0].value.description}}</span>--->
                 <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </label>
               <label>{{M.references2[0].value.date}}</label> 
