@@ -164,11 +164,6 @@ export class ExternalLinksDisplayService {  // external links
                   item[0].claims.P671.url = 'https://pleiades.stoa.org/places/'+item[0].claims.P671[0].mainsnak.datavalue.value
                             externalLinks.push(item[0].claims.P671) ;
                 }; 
-    if (item[0].claims.P671 !==undefined){ // Pleiades ID
-                  item[1].splice(item[1].indexOf("P671"),1);
-                  item[0].claims.P671.url = 'https://pleiades.stoa.org/places/'+item[0].claims.P671[0].mainsnak.datavalue.value
-                            externalLinks.push(item[0].claims.P671) ;
-                }; 
     if (item[0].claims.P689 !==undefined){ // Persons of Indian Studies ID
                   item[1].splice(item[1].indexOf("P689"),1);
                   item[0].claims.P689.url = 'https://whowaswho-indology.info/'+item[0].claims.P689[0].mainsnak.datavalue.value
