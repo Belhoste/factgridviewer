@@ -13,8 +13,7 @@ export class ItemDetailsService {
 
   qualifiers2:any[];
 
-   addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks 
-    
+   addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks   
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
         let timeOrder = 23000000;
@@ -51,7 +50,6 @@ export class ItemDetailsService {
 
   addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
       for (let i=0; i<propertyIds.length; i++){  
-     
         for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
           if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
           let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
@@ -72,8 +70,8 @@ export class ItemDetailsService {
                     }
                  }
                }
-          for  (let k=0; k<props.length; k++){ //to chronologically order the list of values for a given property
-            if(re.claims[propertyIds[i]][j].qualifiers[props[k]] === undefined) {continue};
+          for  (let k=0; k<props.length; k++){ //to chronologically order the list of values for a given property           
+            if(re.claims[propertyIds[i]][j].qualifiers[props[k]].datatype === undefined) {continue};
             if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time") { 
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
               let era=re.claims[propertyIds[i]][j].mainsnak.timeOrder.charAt(0);
