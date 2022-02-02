@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ControlContainer } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +10,26 @@ export class SetTimeService {
   constructor() { }
 
   setDate(time, lang) {
-
-    let year = time.substring(0, 4);
-    let month = time.substring(5, 7);
-    let day = parseInt(time.substring(8, 10), 10);
+    let era = time.charAt(0);
+    let date=time.substring(1);
+    let year = date.substring(0, 4);
+    let month = date.substring(5, 7);
+    let day = parseInt(date.substring(8, 10), 10);
+    console.log(era);
 
     let firstPart = "";
+
+
+    if (year.charAt(0) == 0){  //case of year<100
+       year = year.substring(1);
+       if(year.charAt(0) == 0)
+       {
+         year = year.substring(1);
+          if(year.charAt(0)== 0){
+            year = year.substring(1);
+          }
+       }
+    }
 
     if (month === "01") {
       if (lang === "en") { month = "January " };
@@ -108,6 +123,21 @@ export class SetTimeService {
     }
 
     time = firstPart + year;
+
+    if (era === "-") {
+      if (lang === "en") { time = time+" BCE " };
+      if (lang === "de") { time = time+" v. d. Z." };
+      if (lang === "fr") { time = time+" AEC" };
+      if (lang === "es") { time = time+" a.e.c." };
+    };
+
+    if (era === "+" && time < 500) {
+      if (lang === "en") { time = time+" CE " };
+      if (lang === "de") { time = time+" n. d. Z." };
+      if (lang === "fr") { time = time+" EC" };
+      if (lang === "es") { time = time+" e.c." };
+    };
+
 
     return time
   }

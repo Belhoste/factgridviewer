@@ -18,8 +18,9 @@ export class ItemDetailsService {
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
         if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
-          let value= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time.substring(1);
+          let value= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time;
           value = value.substring(0,value.length-10);
+          console.log(value);
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.date = this.setDate.setDate(value,lang);
         }
         if(propertyIds[i] === "P189"){
@@ -27,79 +28,11 @@ export class ItemDetailsService {
         }
         if ( propertyIds[i] === "P320")
         { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql" };
-        this.factgrid.setSubtitle1(re,propertyIds[i],lang);
-        
-  /*      if ( lang === "en") {re.claims[propertyIds[i]].other = "further"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].other = "weiteren"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].other = "autres"};
-        if ( lang === "en") {re.claims[propertyIds[i]].sources = "sources"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].sources = "Quellen"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].sources = "sources"};
-*/
+      this.factgrid.setSubtitle1(re,propertyIds[i],lang);
+
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
       let number:number = j;
-      this.factgrid.setSubtitle2(re,propertyIds[i],number,lang)
- /*     if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q7") {
-        re.claims[propertyIds[i]].person = "person";
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "life and family"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Leben und Familie"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "vie et famille"};
-        if ( lang === "en") {re.claims[propertyIds[i]].training = "education"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].training = "Ausbildung"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].training = "éducation"};
-        if ( lang === "en") {re.claims[propertyIds[i]].career = "career and activities"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].career = "Beruf und Aktivitäten"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].career = "carrière et activités"};
-        if ( lang === "en") {re.claims[propertyIds[i]].sociability = "sociability and culture"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].sociability = "Soziabilität und Kultur"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].sociability = "sociabilité et culture"};
-            }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q8") {
-        re.claims[propertyIds[i]].place = "place";
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "location and situation"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Standort und Lage"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "localisation et situation"};
-      }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q9") {
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "event"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Ereignis"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "évènement"};
-      }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q12" || 
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q220833" ||  
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q140806" ||
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q11214" ||
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q164344") {
-            re.claims[propertyIds[i]].org = "org";
-            if ( lang === "en") {re.claims[propertyIds[i]].main = "organisation"}
-            else if ( lang === "de") {re.claims[propertyIds[i]].main = "Organisation"}
-            else if ( lang === "fr") {re.claims[propertyIds[i]].main = "organisation"};
-      }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q20") {
-        re.claims[propertyIds[i]].document = "publication";
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "print publication"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Druckpublikation"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "publication imprimée"};
-      }
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q146602" ||
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21909" ||
-          re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q37073") {
-            re.claims[propertyIds[i]].activity = "activity";
-            if ( lang === "en") {re.claims[propertyIds[i]].main = "activity"}
-            else if ( lang === "de") {re.claims[propertyIds[i]].main = "Aktivität"}
-            else if ( lang === "fr") {re.claims[propertyIds[i]].main = "activité"};
-      }
-      */
-      if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q10671" ||
-      re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id == "Q21407") {
-        re.claims[propertyIds[i]].document = "document";
-        if ( lang === "en") {re.claims[propertyIds[i]].main = "document"}
-        else if ( lang === "de") {re.claims[propertyIds[i]].main = "Dokument"}
-        else if ( lang === "fr") {re.claims[propertyIds[i]].main = "document"}
-        else if ( lang === "es") {re.claims[propertyIds[i]].main = "documento"};
-      }
-
-        
+      this.factgrid.setSubtitle2(re,propertyIds[i],number,lang)     
        for (let k = 0; k< items.length; k++) {   
         if (re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id === items[k].id){
          re.claims[propertyIds[i]][j].mainsnak.label = items[k].label;
@@ -115,38 +48,49 @@ export class ItemDetailsService {
     return re
   }
 
- addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
-       for (let i=0; i<propertyIds.length; i++){  
-            for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
-                if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
-                 let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
-                   for  (let k=0; k<props.length; k++){
-                     for (let l=0; l<items.length; l++){    
-                        if(re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time"){
-                          let value =re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time.substring(1)
-                            value = value.substring(0,value.length-10);
-                            re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.date = this.setDate.setDate(value,lang);
-                          }
-   //                       console.log(value);
-             //             re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.monthAndYear = this.setDate.setDate(value,lang);
-                //          if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
-                    //        let value = re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time;
-                       //     re.claims[propertyIds[i]][j].mainsnak.datavalue.value.monthAndYear = this.setDate.setDate(value,lang);
-                        if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.id !== items[l].id){ continue }
-                          if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "wikibase-item"){
-                            re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.label = items[l].label;
-                           if (items[k].description !== undefined)
-                           re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.description = items[l].description;
-                           if (items[k].aliases !== undefined)
-                           re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.aliases = items[l].aliases;                            
+  addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
+      for (let i=0; i<propertyIds.length; i++){  
+     
+        for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
+          if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
+          let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
+             for  (let k=0; k<props.length; k++){      
+                  if(re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time"){
+                       let value =re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
+                       value = value.substring(0,value.length-10);
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.date = this.setDate.setDate(value,lang);
                        }
+                  for (let l=0; l<items.length; l++){ 
+                     if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.id !== items[l].id){ continue }
+                       if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "wikibase-item"){
+                         re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.label = items[l].label;
+                        if (items[k].description !== undefined)
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.description = items[l].description;
+                        if (items[k].aliases !== undefined)
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.aliases = items[l].aliases;                            
                     }
-                  }
+                 }
+               }
+          for  (let k=0; k<props.length; k++){ //to chronologically order the list of values for a given property
+            if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time") {  
+              re.claims[propertyIds[i]][j].mainsnak.timeOrder = re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
+              let era=re.claims[propertyIds[i]][j].mainsnak.timeOrder.charAt(0);
+              re.claims[propertyIds[i]][j].mainsnak.timeOrder = Number(re.claims[propertyIds[i]][j].mainsnak.timeOrder.replace(/\-/g,"").replace(/\+/g,"").substring(0,8));
+              if (era != "+"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = -Math.abs(re.claims[propertyIds[i]][j].mainsnak.timeOrder)};
+              console.log(re.claims[propertyIds[i]][j].mainsnak.timeOrder);
+                re.claims[propertyIds[i]].sort(function(a,b){
+                  if (a.mainsnak.timeOrder<b.mainsnak.timeOrder)
+                  return -1;
+                  if (a.mainsnak.timeOrder>b.mainsnak.timeOrder)
+                  return 1;
+                  return 0
+                })
               }
            }
-     console.log(re);
-      return re
+          }
       }
+   return re
+    }
 
       addQualifier2ItemDetails(re, propertyIds){ //add the items of the qualifiers to the array qualifiers2
         let qualifierPropertyArray = [];
@@ -166,7 +110,8 @@ export class ItemDetailsService {
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.date = qualifiersArray[k][0].datavalue.value.date; 
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value.label;
                     re.claims[propertyIds[i]][j].qualifiers2[k].value.description = qualifiersArray[k][0].datavalue.value.description;
-                    re.claims[propertyIds[i]][j].qualifiers2[k].value.aliases = qualifiersArray[k][0].datavalue.value.aliases; 
+                    re.claims[propertyIds[i]][j].qualifiers2[k].value.aliases = qualifiersArray[k][0].datavalue.value.aliases;
+                    // for  
                     if (qualifiersArray[k][0].datatype === "string"){
                       re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value }; 
                     if (qualifiersArray[k][0].datatype === "url"){
@@ -175,7 +120,6 @@ export class ItemDetailsService {
               }
             }
           }
-          console.log(re);
           return re
       }
 
@@ -188,7 +132,8 @@ export class ItemDetailsService {
                   for(let a=0;a<props.length;a++){
                     for (let l=0; l<items.length; l++){  
                       if(re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datatype === "time"){
-                        let value = re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.time.substring(1);
+                        console.log(re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value);
+                        let value = re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.time;
                         value = value.substring(0,value.length-10);
                         re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.date = this.setDate.setDate(value,lang);
                       }
