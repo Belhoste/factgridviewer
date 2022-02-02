@@ -17,10 +17,12 @@ export class ItemDetailsService {
     
     for (let i=0; i<propertyIds.length; i++){
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
+        let timeOrder = 23000000;
+        re.claims[propertyIds[i]][j].mainsnak.timeOrder=timeOrder;
+        console.log(re.claims[propertyIds[i]][j].mainsnak.timeOrder);
         if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
           let value= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time;
           value = value.substring(0,value.length-10);
-          console.log(value);
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.date = this.setDate.setDate(value,lang);
         }
         if(propertyIds[i] === "P189"){
@@ -44,7 +46,6 @@ export class ItemDetailsService {
         } 
       }
     }
-    console.log(re);
     return re
   }
 
@@ -72,12 +73,12 @@ export class ItemDetailsService {
                  }
                }
           for  (let k=0; k<props.length; k++){ //to chronologically order the list of values for a given property
-            if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time") {  
+            if(re.claims[propertyIds[i]][j].qualifiers[props[k]] === undefined) {continue};
+            if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time") { 
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
               let era=re.claims[propertyIds[i]][j].mainsnak.timeOrder.charAt(0);
-              re.claims[propertyIds[i]][j].mainsnak.timeOrder = Number(re.claims[propertyIds[i]][j].mainsnak.timeOrder.replace(/\-/g,"").replace(/\+/g,"").substring(0,8));
+              re.claims[propertyIds[i]][j].mainsnak.timeOrder = Number(re.claims[propertyIds[i]][j].mainsnak.timeOrder.replace(/\-/g,"").replace(/\+/g,"").substring(0,8)); 
               if (era != "+"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = -Math.abs(re.claims[propertyIds[i]][j].mainsnak.timeOrder)};
-              console.log(re.claims[propertyIds[i]][j].mainsnak.timeOrder);
                 re.claims[propertyIds[i]].sort(function(a,b){
                   if (a.mainsnak.timeOrder<b.mainsnak.timeOrder)
                   return -1;
