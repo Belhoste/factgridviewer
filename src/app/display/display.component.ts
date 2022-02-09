@@ -425,7 +425,7 @@ setItemId(event){
     this.iframes = [];
 
     this.iframesDisplay.setIframesDisplay(this.item,this.iframes);
-      if(this.iframes[0].iframe)  //only one iframe. TODO  several iframes
+      if(this.iframes[0] !== undefined)  //only one iframe. TODO  several iframes
    { 
      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframes[0].iframe) 
     };
