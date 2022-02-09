@@ -120,6 +120,14 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
         else if ( lang === "fr") {re.claims[propertyId].main = "Document"}
         else if ( lang === "es") {re.claims[propertyId].main = "Documento"};
          }
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q10671" || //FactGrid query
+      re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q21407") {
+      re.claims[propertyId].document = "document";
+        if ( lang === "en") {re.claims[propertyId].main = "Document"}
+        else if ( lang === "de") {re.claims[propertyId].main = "Dokument"}
+        else if ( lang === "fr") {re.claims[propertyId].main = "Document"}
+        else if ( lang === "es") {re.claims[propertyId].main = "Documento"};
+          }
 //  else re.claims[propertyId].document = undefined;
     }
 }

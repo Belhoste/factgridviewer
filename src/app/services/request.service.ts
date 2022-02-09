@@ -189,9 +189,9 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
         return u
        }
 
-       downLoadList(sparql:string) {   
-        let u
-        if (sparql !==undefined){
+  downLoadList(sparql:string) {   
+    let u
+      if (sparql !==undefined){
         let headers = new HttpHeaders().set("Accept", "text/csv")
         let params = new HttpParams()
    //     .set('format', 'csv')
@@ -217,6 +217,21 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     const blob = new Blob([data], { type: 'text/csv'});
     saveAs(blob, "list.csv");
   }
+
+  getExpandedUrl(url){
+    if (url !==undefined){
+      let headers = new HttpHeaders().set("Accept", "text/csv");
+      let params = new HttpParams();
+      let  u= this.http.get(url, { headers: headers,
+         responseType:'arraybuffer',
+          params: params})
+ //         .pipe(catchError((err)=> {return of(undefined)}))
+          .subscribe(response => this.downLoadFile(response) ) ;    
+         }
+        }
+
+
+  
 
 
   getBackList(item, lang) : Observable<any> {  

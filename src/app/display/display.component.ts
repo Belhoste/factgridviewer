@@ -17,10 +17,14 @@ import { SociabilityDisplayService} from './services/sociability-display.service
 import { SourcesDisplayService} from './services/sources-display.service';
 import { EventDisplayService} from './services/event-display.service';
 import { ExternalLinksDisplayService} from './services/external-links-display.service';
+import { IframesDisplayService  } from './services/iframes-display.service';
 import { WikiDisplayService} from './services/wiki-display.service';
 import { BackListService} from '../services/back-list.service';
 import {SetSelectedItemsListService} from '../services/set-selected-items-list.service';
 import { Router }   from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Url } from 'url';
+import { getUrlScheme } from '@angular/compiler';
 
 @Component({
   selector: 'displang y-component',
@@ -33,8 +37,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
   constructor(private router:Router, private route:ActivatedRoute, private setData:SetDataService, private setList:SetSelectedItemsListService, private changeDetector:ChangeDetectorRef, 
     private backList:BackListService, private backList2:BackListService, private backListDetails:BackListDetailsService, private headerDisplay:HeaderDisplayService, private placeDisplay:PlaceDisplayService, private orgDisplay:OrgDisplayService,private documentDisplay:DocumentDisplayService,private activityDisplay:ActivityDisplayService,
     private personDisplay:PersonDisplayService, private educationDisplay:EducationDisplayService, private careerDisplay:CareerDisplayService, private sociabilityDisplay:SociabilityDisplayService,
-    private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private wikiDisplay:WikiDisplayService){}
+    private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private iframesDisplay:IframesDisplayService, private wikiDisplay:WikiDisplayService, private sanitizer:DomSanitizer){}
 
+  
+  urlSafe:SafeResourceUrl;
+  factGridQuery:string;
+  
   sparqlQuery
 
   data:Observable<any>; //for routing
@@ -126,6 +134,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   documentDetail:any[];//for print publications
   sourcesList:any[]; //for sources
   externalLinks:any[];
+  iframes:any[];
   otherClaims:any[];
   locationAndContext:any[]; //for organisations, societies and institutions
   mainList:any[]; //main list for persons, places, organisations
@@ -145,6 +154,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isEvent:boolean = false;
   isList:boolean = false;
   isPlace:boolean = false;
+  isIframes:boolean = false;
 
 onClick2(query){ //handling click for sparql query
  query = this.setData.sparqlToDisplay(query);
@@ -193,11 +203,15 @@ setItemId(event){
   if(this.selectedLang === "fr") {this.linkedPagesTitle = "pages liées"};
   if(this.selectedLang === "es") {this.linkedPagesTitle = "páginas enlazadas"}
 
-
   this.mainPage = "Main page"
   if(this.selectedLang === "de") {this.mainPage = "HauptSeite"};
   if(this.selectedLang === "fr") {this.mainPage = "page principale"};
-  if(this.selectedLang === "es") {this.mainPage = "página principal"}
+  if(this.selectedLang === "es") {this.mainPage = "página principal"};
+
+  this.factGridQuery = "FactGrid query"
+  if(this.selectedLang === "de") {this.factGridQuery = "FactGrid Abfrage"};
+  if(this.selectedLang === "fr") {this.factGridQuery = "Requête FactGrid"};
+  if(this.selectedLang === "es") {this.factGridQuery = "Consulta FactGrid"}
 
   this.externalLinksTitle = "External links"
   if(this.selectedLang === "de") {this.externalLinksTitle = "Externe Links"};
@@ -404,6 +418,20 @@ setItemId(event){
 
 //  }
 
+///iframes
+
+   
+
+    this.iframes = [];
+
+    this.iframesDisplay.setIframesDisplay(this.item,this.iframes);
+      if(this.iframes[0].iframe)  //only one iframe. TODO  several iframes
+   { 
+     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframes[0].iframe) 
+    };
+    if (this.iframes.length > 0) { this.isIframes = true };
+
+
   ///externalLinks
 
     this.externalLinks = [];
@@ -477,6 +505,8 @@ qualifiersList(u){ //setting the list of qualifiers for a mainsnak
        document.getElementById("listing").style.visibility = 'hidden';
       }
     }
+
+getUrl(u) { return this.sanitizer.bypassSecurityTrustUrl(u) }
  
   ngOnDestroy(): void {
    this.subscription0.unsubscribe();

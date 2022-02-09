@@ -47,7 +47,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.2.5",
+    "@angular-devkit/build-angular": "^12.2.16",
     "@angular/localize": "^12.2.5",
     "@types/geojson": "^7946.0.7",
     "@types/jasmine": "~3.6.0",

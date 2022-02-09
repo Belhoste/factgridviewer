@@ -336,9 +336,25 @@
             <hr> 
           </div>  
           
-          </div> 
+      </div> 
         </mat-card-content>
         </div>
+        <div [ngClass]="isIframes ? 'show-division':'hide-division'">
+   <!---    <div class="subdivision-title">{{factGridQuery}}</div>-->
+       <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of iframes">
+          <div class="title">
+            <label class="property2">{{P.label}}:</label>
+          </div>
+          <div>
+          <iframe   
+          style="width: 100%; height: 100vh; border: none;"
+          [src]= "urlSafe"
+          ></iframe>
+        </div>
+        </div>   
+        </mat-card-content>
+      </div>
     
  <!---       <div [ngClass]="isOther ? 'show-division':'hide-division'">    
         <div class="subdivision-title" *ngIf="main">{{other}}</div>   
@@ -387,6 +403,47 @@
        </mat-card-content>
        </div>
        --->
+    <!--     <div [ngClass]="isIframes ? 'show-division':'hide-division'">
+        <div class="subdivision-title">Query FactGrid</div>
+        <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+          <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sociabilityAndCulture">
+     <div class="title">
+            <label class="property2">{{P.label}}:</label>
+          </div>
+          <div class="details" *ngFor="let M of P">   
+				<label class="break-word-container" *ngIf="M.mainsnak.datatype === 'iframe'">
+          <iframe [src]={{M.mainsnak.url}} (safe) referrerpolicy="origin" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+        </label>		  
+              <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
+                <span *ngFor="let Q of M.qualifiers2">
+                  <label class="property"><em>&nbsp;{{Q.label}}:&nbsp;&nbsp;</em></label>
+                  <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
+                  <label>{{Q.value.string}}</label>
+                  <label>{{Q.value.amount}}</label>
+                  <label *ngIf="Q.datatype === 'wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span> 
+                    <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </label>
+                  <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
+                  <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
+                </span>
+              </span>            
+              <div class="details" class="percent2" *ngIf="M['references2']">
+              <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
+              <label>{{M.references2[0].value.label}}
+                <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </label>
+              <label>{{M.references2[0].value.date }}</label>
+              <label class="break-word-container">{{M.references2[0].value.string }}</label>
+              <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
+             </div>               
+            <hr> 
+          </div>  
+          
+          </div> 
+        </mat-card-content>
+      </div>
+      -->
+
 
        <div id="listing" [ngClass]="isList ? 'show-division':'hide-division'"> 
         <div class="subdivision-title" *ngIf="listTitle">{{listTitle}}</div>     
@@ -525,4 +582,3 @@
   </div>
 </div>
 </body>
-  

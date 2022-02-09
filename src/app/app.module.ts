@@ -36,6 +36,8 @@ import { MatSelectFilterModule} from 'mat-select-filter';
 import {MatSelectInfiniteScrollModule} from 'ng-mat-select-infinite-scroll';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EssaiComponent } from './essai/essai.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ShortUrlInterceptor } from './short-url-interceptor.service';
 
 
 @NgModule({
@@ -55,14 +57,18 @@ import { EssaiComponent } from './essai/essai.component';
 
   providers:[
     {
-      provide: MAT_DATE_FORMATS,
+      provide: HTTP_INTERCEPTORS,
+      useClass: ShortUrlInterceptor,
+      multi: true
+    },
+    {
+      provide: MAT_DATE_FORMATS, 
       useValue: {
           display: {
               dateInput: 'YYYY-MM-DD',
           },
-      },
-  }
-
+      }
+    }
   ],
 
   imports: [
