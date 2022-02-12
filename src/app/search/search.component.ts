@@ -23,12 +23,14 @@ export class SearchComponent implements OnInit, OnDestroy
   
   selectedResearchField: string = localStorage['selectedResearchField']; 
 
-  title = 'factgrid';
+  selectedItemsList:any[] = JSON.parse(localStorage.getItem('selectedItems'));
 
+  title = 'factgrid';
   subtitle:string;
   advanced_search:string;
   projects:string;
   fields:string;
+  formerVisitsTitle:string;
   
   searchInput = new FormControl();
 
@@ -60,7 +62,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
   {}
 
   ngOnInit(): void {
-
    
     this.subtitle = "a database for historians"
     if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
@@ -81,8 +82,13 @@ private getUrlSuffix= '&format=json&origin=*' ;
     if (this.selectedLang === "de") { this.fields = "Forschungsfelder" }
     if (this.selectedLang === "fr") { this.fields = "domaines de recherche"}
     if (this.selectedLang === "es") { this.projects = "campos de investigación"}
-    
-    
+      
+    this.formerVisitsTitle = "you have visited:"
+    if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht:"};
+    if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité :"};
+    if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"}
+
+
     this.labels = this.searchInput.valueChanges   //search engine
     .pipe(
     debounceTime(400),

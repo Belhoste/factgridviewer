@@ -39,8 +39,21 @@ export class DisplayComponent implements OnInit, OnDestroy {
     private personDisplay:PersonDisplayService, private educationDisplay:EducationDisplayService, private careerDisplay:CareerDisplayService, private sociabilityDisplay:SociabilityDisplayService,
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private iframesDisplay:IframesDisplayService, private wikiDisplay:WikiDisplayService, private sanitizer:DomSanitizer){}
 
-  
-  urlSafe:SafeResourceUrl;
+  urlSafe:SafeResourceUrl; 
+  urlSafe_0_0:SafeResourceUrl;
+  urlSafe_0_1:SafeResourceUrl;
+  urlSafe_0_2:SafeResourceUrl;
+  urlSafe_1_0:SafeResourceUrl;
+  urlSafe_1_1:SafeResourceUrl;
+  urlSafe_1_2:SafeResourceUrl;
+  urlSafe_2_0:SafeResourceUrl;
+  urlSafe_2_1:SafeResourceUrl;
+  urlSafe_2_2:SafeResourceUrl;
+  urlSafe_3_0:SafeResourceUrl;
+  urlSafe_3_1:SafeResourceUrl;
+  urlSafe_3_2:SafeResourceUrl;
+  unsafeUrls:any[][];
+  iframesNumber:any;
   factGridQuery:string;
   
   sparqlQuery
@@ -218,10 +231,10 @@ setItemId(event){
   if(this.selectedLang === "fr") {this.externalLinksTitle = "Liens externes"};
   if(this.selectedLang === "es") {this.externalLinksTitle = "Enlaces externos"}
 
-  this.formerVisitsTitle = "you have visited"
-  if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht"};
-  if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité"};
-  if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado"}
+  this.formerVisitsTitle = "you have visited:"
+  if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht:"};
+  if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité :"};
+  if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"}
 
   this.clickToDisplay = "click to display"
   if(this.selectedLang === "de") {this.clickToDisplay = "Klicken Sie zum Anzeigen"};
@@ -377,7 +390,7 @@ setItemId(event){
   if(this.item[0].claims.P2.org !== undefined) {
     this.orgDisplay.setOrgDisplay(this.item,this.locationAndContext); 
  //   if (this.locationAndContext.length > 0) {  this.isOrg = true};
-}
+  }
   
   ///activity
 
@@ -420,17 +433,24 @@ setItemId(event){
 
 ///iframes
 
-   
-
-    this.iframes = [];
-
+    this.iframes = []; //list of iframes
+    this.urlSafe;
+    
     this.iframesDisplay.setIframesDisplay(this.item,this.iframes);
-      if(this.iframes[0] !== undefined)  //only one iframe. TODO  several iframes
-   { 
-     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframes[0].iframe) 
-    };
-    if (this.iframes.length > 0) { this.isIframes = true };
+    
+    if (this.iframes.length > 0) {  this.isIframes = true };
+    
+    if(this.item[0].claims.P320 !== undefined) {  
+       this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[0].mainsnak.datavalue.value);
+    }
 
+    if(this.item[0].claims.P679 !== undefined) { 
+      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[0].mainsnak.datavalue.value);
+        }
+
+    if(this.item[0].claims.P693 !== undefined) {   
+      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[0].mainsnak.datavalue.value);  
+        }
 
   ///externalLinks
 
@@ -477,8 +497,10 @@ setItemId(event){
        if (this.wikis.length > 0) {   this.isWikis = true };
                                           }
     //spinner
-        this.isSpinner = false;
-         }
+       
+    this.isSpinner = false;
+         
+  }
    //     }
    
        

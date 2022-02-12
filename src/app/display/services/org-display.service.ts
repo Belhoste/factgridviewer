@@ -82,10 +82,11 @@ export class OrgDisplayService {
     item[1].splice(item[1].indexOf("P521"),1);
     locationAndContext.push(item[0].claims.P521); 
   }
-  if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
+/*  if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
     item[1].splice(item[1].indexOf("P320"),1);
     locationAndContext.push(item[0].claims.P320); 
-  }
+  } */
+
   if (item[0].claims.P338 !==undefined){  //founding members     
     item[1].splice(item[1].indexOf("P338"),1);
     locationAndContext.push(item[0].claims.P338); 

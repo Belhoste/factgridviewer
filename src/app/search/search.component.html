@@ -37,6 +37,27 @@
    <a [routerLink]="['/essai']">essai</a>--->
     </div>
   </div>
+
+    <div fxLayoutAlign="space-around center" class="itemSelected-div" >
+      
+        <mat-card class= mat-elevation-z8  class="itemSelected-mat-card"> 
+      
+          <div class="selectedList-title">{{formerVisitsTitle}}</div>
+            <div>
+              <hr>
+             <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">
+                <mat-list  *ngFor="let selectedItem of selectedItemsList">
+                  <span *ngIf="selectedItem" mat-list-item class="percent2" class="white-text">
+                     {{selectedItem.label}}&nbsp;
+                    <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon class="white-button" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                               
+                  </span>
+                </mat-list>
+              </mat-card-content>
+            </div>
+        </mat-card> 
+      
+     </div>
+    
   
 </body>
 <router-outlet></router-outlet>

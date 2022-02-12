@@ -337,26 +337,28 @@
           </div>  
           
       </div> 
-        </mat-card-content>
-        </div>
-        <div [ngClass]="isIframes ? 'show-division':'hide-division'">
-   <!---    <div class="subdivision-title">{{factGridQuery}}</div>-->
-       <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of iframes">
-          <div class="title">
-            <label class="property2">{{P.label}}:</label>
-          </div>
-          <div>
-          <iframe   
-          style="width: 100%; height: 100vh; border: none;"
-          [src]= "urlSafe"
-          ></iframe>
-        </div>
-        </div>   
-        </mat-card-content>
+      </mat-card-content>
       </div>
+      <div [ngClass]="isIframes ? 'show-division':'hide-division'">
+        <!---    <div class="subdivision-title">{{factGridQuery}}</div>-->
+            <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+             <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of iframes">
+               <div class="title">
+                 <label class="property2">{{P.label}}:</label>
+               </div>
+               <div>
+               <iframe   
+               style="width: 100%; height: 100vh; border: none;"
+               [src]= "urlSafe"
+               ></iframe>
+             </div>
+             </div>   
+             </mat-card-content>
+           </div>
     
- <!---       <div [ngClass]="isOther ? 'show-division':'hide-division'">    
+ <!---               [src]= "urlSafe"  à remettre en haut
+  
+  <div [ngClass]="isOther ? 'show-division':'hide-division'">    
         <div class="subdivision-title" *ngIf="main">{{other}}</div>   
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
            <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of otherClaims">
@@ -557,8 +559,7 @@
       <div>
         <mat-card class= mat-elevation-z8  class="itemSelected-mat-card">
           <div fxLayout="column">
-            
-               <div class="selectedList-title">{{formerVisitsTitle}}</div>
+            <div class="selectedList-title">{{formerVisitsTitle}}</div>
               <hr>
               <div>
                 <hr>
