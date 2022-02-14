@@ -41,7 +41,7 @@ export class CreateItemToDisplayService {
           let itemsDetails = this.setLanguage.item2(res.items,selectedLang) ;
           this.addItemDetails.addClaimItemDetails(itemsDetails, re, propertyIds, selectedLang);// selected item with all the properties and items (with their labels and descriptions) of the mainsnaks
           this.addItemDetails.addQualifierItemDetails(itemsDetails, re, propertyIds, selectedLang);
-          this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
+   //       this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
     //  this.addItemDetails.sortedItemDetails(re);
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds, selectedLang); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
           u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
