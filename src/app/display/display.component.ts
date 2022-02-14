@@ -439,6 +439,10 @@ setItemId(event){
     this.iframesDisplay.setIframesDisplay(this.item,this.iframes);
     
     if (this.iframes.length > 0) {  this.isIframes = true };
+
+    if(this.item[0].claims.P309 !== undefined) {  
+      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P309[0].mainsnak.datavalue.value);
+   }
     
     if(this.item[0].claims.P320 !== undefined) {  
        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[0].mainsnak.datavalue.value);
