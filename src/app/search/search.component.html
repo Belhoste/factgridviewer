@@ -38,6 +38,7 @@
     </div>
   </div>
 
+  <div *ngIf="isDisplay == false" class="search-div">
     <div fxLayoutAlign="space-around center" class="itemSelected-div" >
       
         <mat-card class= mat-elevation-z8  class="itemSelected-mat-card"> 
@@ -55,10 +56,8 @@
               </mat-card-content>
             </div>
         </mat-card> 
-      
+      </div>    
      </div>
-    
-  
 </body>
 <router-outlet></router-outlet>
 
