@@ -51,7 +51,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   urlSafe_2_2:SafeResourceUrl;
   urlSafe_3_0:SafeResourceUrl;
   urlSafe_3_1:SafeResourceUrl;
-  urlSafe_3_2:SafeResourceUrl;
+  familyTree_url:SafeResourceUrl;
   unsafeUrls:any[][];
   iframesNumber:any;
   factGridQuery:string;
@@ -339,7 +339,8 @@ setItemId(event){
 
     if(this.item[0].claims.P2.person !== undefined) {
       this.personDisplay.setPersonDisplay(this.item,this.lifeAndFamily);
-          }
+         
+    }
 
     //person:education
 
@@ -503,7 +504,11 @@ setItemId(event){
     //spinner
        
     this.isSpinner = false;
-         
+
+    //familytree
+
+    this.familyTree_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/"+this.selectedLang+"/1/"+item[0].id);
+      console.log(this.familyTree_url)   ;
   }
    //     }
    

@@ -124,8 +124,8 @@
     </div>
 
     <div [ngClass]="isMain ? 'show-division':'hide-division'">
-        <mat-card  class= mat-elevation-z8>
-          <div> 
+      <mat-card  class= mat-elevation-z8>
+        <div>
           <div>  
           <div class="subdivision-title" *ngIf='"main"!==undefined'>{{main}}</div>
           </div>      
@@ -147,6 +147,11 @@
               <div flex-shrink flex-basis="auto">
                 <div class="title">
                   <label class="property2">{{P.label}}:</label>
+                </div>
+                <div *ngIf="">
+                 <mat-card>
+
+                 </mat-card>
                 </div>
                 <div class="details" *ngFor="let M of P"> 
                   <label *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</label> 
@@ -202,7 +207,16 @@
           </div>
           </mat-card-content>
           </div>
-          
+          <div *ngIf="item[0].claims.P2[0].mainsnak.datavalue.value.id ==='Q7'">
+            <mat-card>
+              {{ item[0].label }}
+                <iframe   
+                style="width: 100%; height: 100vh; border: none;"
+                [src]= "familyTree_url"
+                ></iframe>
+            </mat-card>
+          </div>
+  
         <div [ngClass]="isTraining ? 'show-division':'hide-division'">
           <div class="subdivision-title">{{training}}</div> 
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -254,7 +268,7 @@
                 <label class="break-word-container">{{M.references2[0].value.string }}</label>
                 <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
               </div> 
-              <hr>                   
+              <hr>
           </div>      
           </div> 
         </mat-card-content>
