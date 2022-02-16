@@ -15,10 +15,8 @@ export class SetTimeService {
     let year = date.substring(0, 4);
     let month = date.substring(5, 7);
     let day = parseInt(date.substring(8, 10), 10);
-    console.log(era);
 
     let firstPart = "";
-
 
     if (year.charAt(0) == 0){  //case of year<100
        year = year.substring(1);

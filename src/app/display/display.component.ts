@@ -40,18 +40,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private iframesDisplay:IframesDisplayService, private wikiDisplay:WikiDisplayService, private sanitizer:DomSanitizer){}
 
   urlSafe:SafeResourceUrl; 
-  urlSafe_0_0:SafeResourceUrl;
-  urlSafe_0_1:SafeResourceUrl;
-  urlSafe_0_2:SafeResourceUrl;
-  urlSafe_1_0:SafeResourceUrl;
-  urlSafe_1_1:SafeResourceUrl;
-  urlSafe_1_2:SafeResourceUrl;
-  urlSafe_2_0:SafeResourceUrl;
-  urlSafe_2_1:SafeResourceUrl;
-  urlSafe_2_2:SafeResourceUrl;
-  urlSafe_3_0:SafeResourceUrl;
-  urlSafe_3_1:SafeResourceUrl;
+  
+  //tree
+  stemma_url:SafeResourceUrl;
   familyTree_url:SafeResourceUrl;
+  stemma:string;
+
   unsafeUrls:any[][];
   iframesNumber:any;
   factGridQuery:string;
@@ -70,8 +64,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
   subscription0:Subscription;
   subscription1:Subscription;
   subscription2:Subscription;
-  subscription3:Subscription;
-  subscription4:Subscription;
 
   selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang'];
 
@@ -168,6 +160,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isList:boolean = false;
   isPlace:boolean = false;
   isIframes:boolean = false;
+  isStemma:boolean = false;
+  isFamilyTree:boolean = false;
 
 onClick2(query){ //handling click for sparql query
  query = this.setData.sparqlToDisplay(query);
@@ -241,11 +235,15 @@ setItemId(event){
   if(this.selectedLang === "fr") {this.clickToDisplay = "cliquez pour afficher"};
   if(this.selectedLang === "es") {this.clickToDisplay = "haga clic para mostrar"};
 
-
   this.clickToDownload = "click to download"
   if(this.selectedLang === "de") {this.clickToDownload = "Klicken Sie zum Download"};
   if(this.selectedLang === "fr") {this.clickToDownload = "cliquez pour télécharger"};
   if(this.selectedLang === "fr") {this.clickToDownload = "haga clic para descargarlo"}
+
+  this.stemma = "Preceding_in_stemma"
+  if(this.selectedLang === "de") {this.stemma = "Stemma_aufwärts"};
+  if(this.selectedLang === "fr") {this.stemma = "Précédent_dans_le_stemma"};
+  if(this.selectedLang === "es") {this.stemma = "Precedente_en_el_stemma"}
 
   this.subscription0 = this.route.paramMap.subscribe(   
     params => { this.itemId = params.get('id'),
@@ -282,7 +280,7 @@ setItemId(event){
           );
 
   this.data = this.setData.itemToDisplay(this.itemId)   //handle item
-  this.subscription3= this.data.subscribe(item=>{
+  this.subscription2= this.data.subscribe(item=>{
     this.isMain=false;
     this.isOther=false;
     if (item !==undefined){
@@ -476,7 +474,7 @@ setItemId(event){
    
        if (this.otherClaims.length > 0) {  this.other = this.item[0].claims.P2.other ; 
                                            this.isOther = true
-                                              };
+                                        };
     
     //mainList
     
@@ -498,21 +496,28 @@ setItemId(event){
 
     this.wikis = [];
 
-     this.wikiDisplay.setWikiDisplay(this.item,this.wikis); 
-       if (this.wikis.length > 0) {   this.isWikis = true };
+    this.wikiDisplay.setWikiDisplay(this.item,this.wikis); 
+      if (this.wikis.length > 0) {   this.isWikis = true };
                                           }
     //spinner
        
     this.isSpinner = false;
 
-    //familytree
-
+    //trees
+    
+    this.stemma_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/"+this.selectedLang+"/"+this.stemma+"/"+item[0].id);
     this.familyTree_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/"+this.selectedLang+"/1/"+item[0].id);
-      console.log(this.familyTree_url)   ;
-  }
-   //     }
-   
-       
+
+      if (this.item[0].claims.P150 || this.item[0].claims.P141  ||  this.item[0].claims.P142  )
+          {
+            this.isFamilyTree = true;
+          }
+
+      if (this.item[0].claims.P233)
+          {    
+            this.isStemma = true;
+          }
+        }  
       )   
     }
   )
@@ -542,7 +547,6 @@ getUrl(u) { return this.sanitizer.bypassSecurityTrustUrl(u) }
   ngOnDestroy(): void {
    this.subscription0.unsubscribe();
    this.subscription1.unsubscribe();
- //  this.subscription2.unsubscribe();
-   this.subscription3.unsubscribe();
+   this.subscription2.unsubscribe();
   }
 }

@@ -207,14 +207,16 @@
           </div>
           </mat-card-content>
           </div>
-          <div *ngIf="item[0].claims.P2[0].mainsnak.datavalue.value.id ==='Q7'">
+          <div>
+        <div  [ngClass]="isFamilyTree ? 'show-division':'hide-division'">
             <mat-card>
               {{ item[0].label }}
                 <iframe   
-                style="width: 100%; height: 100vh; border: none;"
+                style="width: 100%; height: 60vh; border: none;"
                 [src]= "familyTree_url"
                 ></iframe>
             </mat-card>
+          </div>
           </div>
   
         <div [ngClass]="isTraining ? 'show-division':'hide-division'">
@@ -374,10 +376,18 @@
               <label class="break-word-container"><a href ="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
              </div>               
             <hr> 
-          </div>  
-          
+          </div>    
       </div> 
       </mat-card-content>
+      </div>
+      <div  [ngClass]="isStemma ? 'show-division':'hide-division'">
+        <mat-card>
+          {{ item[0].label }}
+            <iframe   
+            style="width: 100%; height: 60vh; border: none;"
+            [src]= "stemma_url"
+            ></iframe>
+        </mat-card>
       </div>
       <div [ngClass]="isIframes ? 'show-division':'hide-division'">
         <!---    <div class="subdivision-title">{{factGridQuery}}</div>-->

@@ -19,7 +19,6 @@ export class ItemDetailsService {
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
         let timeOrder = 23000000;
         re.claims[propertyIds[i]][j].mainsnak.timeOrder=timeOrder;
-        console.log(re.claims[propertyIds[i]][j].mainsnak.timeOrder);
         if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
           let value= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time;
           value = value.substring(0,value.length-10);
@@ -50,8 +49,6 @@ export class ItemDetailsService {
   }
 
   addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
-    console.log(items);
-    console.log(re);
     for (let i=0; i<propertyIds.length; i++){  
         for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
           if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}

@@ -16,7 +16,6 @@ export class QualifierDetailsService {
             let qualifiersArray = Object.values(re.claims[propertyIds[i]][j].qualifiers);
             for  (let k=0; k<qualifierPropertyArray.length; k++){
              let prop = qualifierPropertyArray[k];
-             console.log(prop);
               for (let l=0; l<re.claims[propertyIds[i]][j].qualifiers2.length;l++){
                 if (re.claims[propertyIds[i]][j].qualifiers2[k].id !== prop){continue}
                 re.claims[propertyIds[i]][j].qualifiers2[k].datatype = qualifiersArray[k][0].datatype;
