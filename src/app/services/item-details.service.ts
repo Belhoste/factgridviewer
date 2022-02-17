@@ -27,6 +27,9 @@ export class ItemDetailsService {
         if(propertyIds[i] === "P189"){
           re.claims[propertyIds[i]][j].picture = this.baseWikimediaURL+re.claims[propertyIds[i]][j].mainsnak.datavalue.value
         }
+        if(propertyIds[i] === "P188"){
+          re.claims[propertyIds[i]][j].picture = re.claims[propertyIds[i]][j].mainsnak.datavalue.value
+        }
         if ( propertyIds[i] === "P320")
         { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql" };
       this.factgrid.setSubtitle1(re,propertyIds[i],lang);

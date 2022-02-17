@@ -96,7 +96,20 @@
         margin-top: 50px;
       }
 
-  .itemSelected-mat-card{
+.itemSelected-mat-card{
+        height: fit-content;
+        width: 300px;
+        background-color:rgb(99, 98, 98) !important;
+        margin-bottom: 4px;
+        margin-right: 2px;
+        margin-left: 2px;
+      }
+  
+  .white-text {
+      color:white;
+        }
+
+ /*.itemSelected-mat-card{
       width: 300px;
       height: fit-content;
       background-color:rgb(243, 242, 237) !important;
@@ -104,10 +117,10 @@
       margin-right: 2px;
       margin-left: 2px;
       
-      }
+      }*/
 
   .selectedList-title {
-      color:#AD1457;
+      color:white;
       font-size: 20px !important;
       font-weight: 360;
       margin-bottom: 20px;

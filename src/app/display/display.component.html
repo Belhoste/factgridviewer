@@ -176,7 +176,7 @@
                       <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                       <label *ngIf="Q.datatype==='string'">{{Q.value.string}}</label>
                       <label class="details1" class="break-word-container" *ngIf="Q.datatype==='commonsMedia'">
-                        <mat-card class= mat-elevation-z8 fxFlex="300px">
+                        <mat-card class= mat-elevation-z8  fxFlex="40%" fxFlex.lt-sm="80%">
                           {{Q.value.string}}
                           <img mat-card-image  src={{Q.value.string}}>  
                         </mat-card>
@@ -242,7 +242,7 @@
                   <label class="property"><em>&nbsp;{{Q.label}}:&nbsp;&nbsp;</em></label>
                   <label *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</label>
                   <label class="break-word-container" *ngIf="Q.datatype==='commonsMedia'">
-                    <mat-card class= mat-elevation-z8 fxFlex="20%">
+                    <mat-card class= mat-elevation-z8  fxFlex="40%" fxFlex.lt-sm="80%">
                       {{Q.value.string}}
                       <img mat-card-image  src={{Q.value.string}}>  
                     </mat-card>  
@@ -255,7 +255,7 @@
                     <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     
                   </label>   
                   <label class="details1" class="break-word-container" *ngIf="Q.datatype==='commonsMedia'">
-                    <mat-card class= mat-elevation-z8 fxFlex="300px">
+                    <mat-card class= mat-elevation-z8  fxFlex="40%" fxFlex.lt-sm="80%">
                       <img mat-card-image  src={{Q.value.string}}>  
                     </mat-card>
                   </label>
@@ -303,7 +303,7 @@
                 <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
                   <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
                 <label class="details1" class="break-word-container" *ngIf="Q.datatype==='commonsMedia'">
-                    <mat-card class= mat-elevation-z8 fxFlex="300px">
+                    <mat-card class= mat-elevation-z8  fxFlex="40%" fxFlex.lt-sm="80%">
                       {{Q.value.string}}
                       <img mat-card-image  src={{Q.value.string}}>  
                     </mat-card>
@@ -359,7 +359,7 @@
                   <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a>
                  </label>
                  <label class="break-word-container" *ngIf="Q.datatype==='commonsMedia'">
-                  <mat-card class= mat-elevation-z8 fxFlex="300px">
+                  <mat-card class= mat-elevation-z8 fxFlex="40%" fxFlex.lt-sm="80%">
                     {{Q.value.string}} 
                     <img mat-card-image src={{Q.value.string}}> 
                   </mat-card>
