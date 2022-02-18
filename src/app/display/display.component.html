@@ -208,15 +208,6 @@
           </mat-card-content>
           </div>
           <div>
-        <div  [ngClass]="isFamilyTree ? 'show-division':'hide-division'">
-            <mat-card>
-              {{ item[0].label }}
-                <iframe   
-                style="width: 100%; height: 60vh; border: none;"
-                [src]= "familyTree_url"
-                ></iframe>
-            </mat-card>
-          </div>
           </div>
   
         <div [ngClass]="isTraining ? 'show-division':'hide-division'">
@@ -389,6 +380,15 @@
             ></iframe>
         </mat-card>
       </div>
+      <div  [ngClass]="isFamilyTree ? 'show-division':'hide-division'">
+        <mat-card>
+          {{ item[0].label }}
+            <iframe   
+            style="width: 100%; height: 60vh; border: none;"
+            [src]= "familyTree_url"
+            ></iframe>
+        </mat-card>
+      </div>
       <div [ngClass]="isIframes ? 'show-division':'hide-division'">
         <!---    <div class="subdivision-title">{{factGridQuery}}</div>-->
             <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
@@ -494,7 +494,7 @@
           <hr>
           </div>
           
-          <mat-list  *ngFor="let externalLink of externalLinks">
+          <mat-list  *ngFor="let externalLink of externalLinks">  
             <span mat-list-item >
                 <span>{{externalLink.label}}: </span><a href ="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
             </span>

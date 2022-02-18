@@ -28,7 +28,13 @@ export class ItemDetailsService {
           re.claims[propertyIds[i]][j].picture = this.baseWikimediaURL+re.claims[propertyIds[i]][j].mainsnak.datavalue.value
         }
         if(propertyIds[i] === "P188"){
-          re.claims[propertyIds[i]][j].picture = re.claims[propertyIds[i]][j].mainsnak.datavalue.value
+          let u= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.substring(0,5);
+          console.log(u);
+          if(u !== "http:") {
+            re.claims[propertyIds[i]][j].picture = re.claims[propertyIds[i]][j].mainsnak.datavalue.value 
+            console.log(re.claims[propertyIds[i]][j].picture)
+          }
+          console.log(re.claims[propertyIds[i]][j].picture)
         }
         if ( propertyIds[i] === "P320")
         { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql" };

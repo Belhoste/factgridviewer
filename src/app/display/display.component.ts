@@ -381,9 +381,11 @@ setItemId(event){
   } 
 
   if (this.item[0].claims.P188 !==undefined){ //pictures
+    if (this.item[0].claims.P188.picture !==undefined){
     this.item[1].splice(this.item[1].indexOf("P188"),1);
     this.pictures = this.item[0].claims.P188
     console.log(this.pictures);
+    }
   }
   
   if (this.pictures !==undefined) this.isPicture = true;

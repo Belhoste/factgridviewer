@@ -125,6 +125,7 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P660 !==undefined){ // Vergue ID
         item[1].splice(item[1].indexOf("P660"),1);
+        console.log(item[0].claims.P660.length);
         item[0].claims.P660.url = 'http://vergue.com/post/'+item[0].claims.P660[0].mainsnak.datavalue.value
                   externalLinks.push(item[0].claims.P660) ;
                 };
