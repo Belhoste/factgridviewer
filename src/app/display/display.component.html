@@ -495,7 +495,7 @@
           </div>
           
           <mat-list  *ngFor="let externalLink of externalLinks">  
-            <span mat-list-item >
+            <span class="break-word-container"  mat-list-item >
                 <span>{{externalLink.label}}: </span><a href ="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
             </span>
             <hr>

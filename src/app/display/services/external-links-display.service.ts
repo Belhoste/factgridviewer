@@ -170,6 +170,11 @@ export class ExternalLinksDisplayService {  // external links
                   item[0].claims.P689.url = 'https://whowaswho-indology.info/'+item[0].claims.P689[0].mainsnak.datavalue.value
                             externalLinks.push(item[0].claims.P689) ;
                 }; 
+    if (item[0].claims.P471 !==undefined){ // Klosterdatenbank ID
+                  item[1].splice(item[1].indexOf("P471"),1);
+                  item[0].claims.P471.url = 'http://klosterdatenbank.germania-sacra.de/gsn/'+item[0].claims.P471[0].mainsnak.datavalue.value
+                            externalLinks.push(item[0].claims.P471) ;
+                }; 
     return externalLinks
   };
   

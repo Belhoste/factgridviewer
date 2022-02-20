@@ -269,10 +269,12 @@ setItemId(event){
         map(res=> { 
         if (res[1].query !== undefined) {
         this.linkedItems2= this.backListDetails.setBackList(res[1].query.pages);
+        if (this.linkedItems !== undefined){
         for (let i=0; i < this.linkedItems.length; i++){
           if(this.linkedItems[i].label ===""){ this.linkedItems[i].label= this.linkedItems2[i].label
             } 
            }
+          }
           }
          }
         )).
@@ -378,10 +380,11 @@ setItemId(event){
   if (this.item[0].claims.P189 !==undefined){ //pictures
     this.item[1].splice(this.item[1].indexOf("P189"),1);
     this.pictures = this.item[0].claims.P189
+    console.log(this.pictures);
   } 
 
   if (this.item[0].claims.P188 !==undefined){ //pictures
-    if (this.item[0].claims.P188.picture !==undefined){
+    if (this.item[0].claims.P188[0].picture !==undefined){
     this.item[1].splice(this.item[1].indexOf("P188"),1);
     this.pictures = this.item[0].claims.P188
     console.log(this.pictures);
@@ -389,6 +392,8 @@ setItemId(event){
   }
   
   if (this.pictures !==undefined) this.isPicture = true;
+
+  console.log(this.pictures);
 
   ///org
 
