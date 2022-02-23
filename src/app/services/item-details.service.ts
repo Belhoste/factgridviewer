@@ -32,9 +32,7 @@ export class ItemDetailsService {
           console.log(u);
           if(u !== "http:") {
             re.claims[propertyIds[i]][j].picture = re.claims[propertyIds[i]][j].mainsnak.datavalue.value 
-            console.log(re.claims[propertyIds[i]][j].picture)
           }
-          console.log(re.claims[propertyIds[i]][j].picture)
         }
         if ( propertyIds[i] === "P320")
         { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql" };
