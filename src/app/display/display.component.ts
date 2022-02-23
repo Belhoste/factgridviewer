@@ -23,8 +23,8 @@ import { BackListService} from '../services/back-list.service';
 import {SetSelectedItemsListService} from '../services/set-selected-items-list.service';
 import { Router }   from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Url } from 'url';
-import { getUrlScheme } from '@angular/compiler';
+
+
 
 @Component({
   selector: 'displang y-component',
