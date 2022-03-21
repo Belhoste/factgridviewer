@@ -157,8 +157,11 @@ export class ExternalLinksDisplayService {  // external links
     if (item[0].claims.P650 !== undefined) { // INE ID (Spain)
       item[1].splice(item[1].indexOf("P650"), 1);
       let province = item[0].claims.P650[0].mainsnak.datavalue.value.slice(0,2);
-      let municipality = item[0].claims.P650[0].mainsnak.datavalue.value.substring(2);
-      item[0].claims.P650.url = 'https://www.ine.es/nomen2/inicio_a.do?accion=busquedaAvanzada&inicio=inicio_a&subaccion=&botonBusquedaAvanzada=Consultar+selecci%C3%B3n&numPag=0&ordenAnios=ASC&comunidad=00&entidad_amb=no&poblacion_amb=T&poblacion_op=%3D&poblacion_txt=&denominacion_op=like&denominacion_txt=&codProv='+province+'&codMuni='+municipality+'&codEC=00&codES=00&codNUC=00'
+      let municipality = item[0].claims.P650[0].mainsnak.datavalue.value.slice(2,5);
+      let parish = item[0].claims.P650[0].mainsnak.datavalue.value.slice(5,7);
+      console.log(municipality);
+      console.log(parish);
+      item[0].claims.P650.url = 'https://www.ine.es/nomen2/inicio_a.do?accion=busquedaAvanzada&inicio=inicio_a&subaccion=&botonBusquedaAvanzada=Consultar+selecci%C3%B3n&numPag=0&ordenAnios=ASC&comunidad=00&entidad_amb=no&poblacion_amb=T&poblacion_op=%3D&poblacion_txt=&denominacion_op=like&denominacion_txt=&codProv='+province+'&codMuni='+municipality+'&codEC='+parish+'&codES=00&codNUC=00'
       externalLinks.push(item[0].claims.P650);
     };
 
