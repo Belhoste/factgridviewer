@@ -24,8 +24,6 @@ import {SetSelectedItemsListService} from '../services/set-selected-items-list.s
 import { Router }   from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
-
-
 @Component({
   selector: 'displang y-component',
   templateUrl: 'display.component.html',
@@ -121,6 +119,8 @@ export class DisplayComponent implements OnInit, OnDestroy {
   enwiki:any;
   frwiki:any;
   eswiki:any;
+  nlwiki:any;
+  itwiki:any;
   wikidatawiki:any;
   wikis:any[];
 
@@ -510,8 +510,8 @@ setItemId(event){
     this.wikis = [];
 
     this.wikiDisplay.setWikiDisplay(this.item,this.wikis); 
-      if (this.wikis.length > 0) {   this.isWikis = true };
-                                          }
+      if (this.wikis.length > 0) { this.isWikis = true };
+       }
     //spinner
        
     this.isSpinner = false;

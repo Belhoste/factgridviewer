@@ -23,6 +23,15 @@ export class WikiDisplayService {
     if (item[0].sitelinks.frwiki !== undefined) {
       wikis.push(item[0].sitelinks.frwiki);
     }
+    if (item[0].sitelinks.itwiki !== undefined) {
+      wikis.push(item[0].sitelinks.itwiki);
+    }
+    if (item[0].sitelinks.nlwiki !== undefined) {
+      wikis.push(item[0].sitelinks.nlwiki);
+    }
+    if (item[0].sitelinks.eswiki !== undefined) {
+      wikis.push(item[0].sitelinks.eswiki);
+    }
     if (item[0].sitelinks.wikidatawiki !== undefined) {
       wikis.push(item[0].sitelinks.wikidatawiki);
     }

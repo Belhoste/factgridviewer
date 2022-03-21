@@ -85,9 +85,10 @@ export class ItemDetailsService {
                  }
                }
           for  (let k=0; k<props.length; k++){ //to chronologically order the list of values for a given property           
-            if(re.claims[propertyIds[i]][j].qualifiers[props[k]].datatype === undefined) {continue};
+            if(re.claims[propertyIds[i]][j].qualifiers[props[k]] === undefined) {continue};    
             if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time") { 
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
+              console.log(re.claims[propertyIds[i]][j].mainsnak.timeOrder);
               let era=re.claims[propertyIds[i]][j].mainsnak.timeOrder.charAt(0);
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = Number(re.claims[propertyIds[i]][j].mainsnak.timeOrder.replace(/\-/g,"").replace(/\+/g,"").substring(0,8)); 
               if (era != "+"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = -Math.abs(re.claims[propertyIds[i]][j].mainsnak.timeOrder)};
@@ -106,8 +107,8 @@ export class ItemDetailsService {
   return re
     }
 
-      addReferenceItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the references
-        for (let i=0; i<propertyIds.length; i++){  
+  addReferenceItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the references
+    for (let i=0; i<propertyIds.length; i++){  
           for (let j=0; j<re.claims[propertyIds[i]].length; j++) {           
             if (re.claims[propertyIds[i]][j].references === undefined) {continue}
              for  (let k=0; k<re.claims[propertyIds[i]][j].references.length; k++){
@@ -115,7 +116,6 @@ export class ItemDetailsService {
                   for(let a=0;a<props.length;a++){
                     for (let l=0; l<items.length; l++){  
                       if(re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datatype === "time"){
-                        console.log(re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value);
                         let value = re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.time;
                         value = value.substring(0,value.length-10);
                         re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.date = this.setDate.setDate(value,lang);
@@ -139,7 +139,7 @@ export class ItemDetailsService {
           }
 
 
-        addReference2ItemDetails(items, re, propertyIds){ //add the items of the qualifiers to the array qualifiers          
+    addReference2ItemDetails(items, re, propertyIds){ //add the items of the qualifiers to the array qualifiers          
             for (let i=0; i<propertyIds.length; i++){  
               for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
                  if (re.claims[propertyIds[i]][j].references === undefined) {continue}
