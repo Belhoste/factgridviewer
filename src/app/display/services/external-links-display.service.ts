@@ -14,6 +14,12 @@ export class ExternalLinksDisplayService {  // external links
       externalLinks.push(item[0].claims.P146)
     };
 
+    if (item[0].claims.P138 !== undefined) { //Online digitalisation
+      item[1].splice(item[1].indexOf("P138"), 1);
+      item[0].claims.P138.url = item[0].claims.P138[0].mainsnak.datavalue.value;
+      externalLinks.push(item[0].claims.P138)
+    };
+
     if (item[0].claims.P378 !== undefined) { //id viaf
       item[1].splice(item[1].indexOf("P378"), 1);
       item[0].claims.P378.url = "https://viaf.org/viaf/" + item[0].claims.P378[0].mainsnak.datavalue.value;
@@ -160,9 +166,6 @@ export class ExternalLinksDisplayService {  // external links
       let municipality = item[0].claims.P650[0].mainsnak.datavalue.value.slice(2,5);
       let parish = item[0].claims.P650[0].mainsnak.datavalue.value.slice(5,7);
       let es = item[0].claims.P650[0].mainsnak.datavalue.value.slice(7,9);
-      console.log(municipality);
-      console.log(parish);
-      console.log(es);
       item[0].claims.P650.url = 'https://www.ine.es/nomen2/inicio_a.do?accion=busquedaAvanzada&inicio=inicio_a&subaccion=&botonBusquedaAvanzada=Consultar+selecci%C3%B3n&numPag=0&ordenAnios=ASC&comunidad=00&entidad_amb=no&poblacion_amb=T&poblacion_op=%3D&poblacion_txt=&denominacion_op=like&denominacion_txt=&codProv='+province+'&codMuni='+municipality+'&codEC='+parish+'&codES='+es+'&codNUC=00'
       externalLinks.push(item[0].claims.P650);
     };
@@ -197,81 +200,92 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P672.url = 'https://g.co/kg' + item[0].claims.P672[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P672);
     };
+ 
     if (item[0].claims.P624 !== undefined) { // Getty Thesaurus of Geographic Names
       item[1].splice(item[1].indexOf("P624"), 1);
       item[0].claims.P624.url = 'https://www.getty.edu/vow/TGNFullDisplay?find=&place=&nation=&english=Y&subjectid=' + item[0].claims.P624[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P624);
     };
+
     if (item[0].claims.P635 !== undefined) { // Kalliope ID
       item[1].splice(item[1].indexOf("P635"), 1);
       item[0].claims.P635.url = 'http://kalliope-verbund.info/' + item[0].claims.P624[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P635);
     };
+
     if (item[0].claims.P652 !== undefined) { // Biblioteca Nacional de España ID
       item[1].splice(item[1].indexOf("P652"), 1);
       item[0].claims.P652.url = 'https://datos.bne.es/resource/' + item[0].claims.P652[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P652);
     };
+
     if (item[0].claims.P667 !== undefined) { // Frauen in Bewegung 1848–1938 ID
       item[1].splice(item[1].indexOf("P667"), 1);
       item[0].claims.P667.url = 'https://fraueninbewegung.onb.ac.at/node/' + item[0].claims.P667[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P667);
     };
+
+
     if (item[0].claims.P668 !== undefined) { // DNB-Info ID
       item[1].splice(item[1].indexOf("P668"), 1);
       item[0].claims.P668.url = 'https://d-nb.info/' + item[0].claims.P668[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P668);
     };
+ 
     if (item[0].claims.P671 !== undefined) { // Pleiades ID
       item[1].splice(item[1].indexOf("P671"), 1);
       item[0].claims.P671.url = 'https://pleiades.stoa.org/places/' + item[0].claims.P671[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P671);
     };
+ 
     if (item[0].claims.P689 !== undefined) { // Persons of Indian Studies ID
       item[1].splice(item[1].indexOf("P689"), 1);
       item[0].claims.P689.url = 'https://whowaswho-indology.info/' + item[0].claims.P689[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P689);
     };
+
     if (item[0].claims.P471 !== undefined) { // Klosterdatenbank ID
       item[1].splice(item[1].indexOf("P471"), 1);
       item[0].claims.P471.url = 'http://klosterdatenbank.germania-sacra.de/gsn/' + item[0].claims.P471[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P471);
     };
+
     if (item[0].claims.P476 !== undefined) { // PhiloBiblon ID
       item[1].splice(item[1].indexOf("P476"), 1);
       item[0].claims.P476.url = 'http://philobiblon/' + item[0].claims.P476[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P476);
     };
+ 
     if (item[0].claims.P692 !== undefined) { // CDLI ID
       item[1].splice(item[1].indexOf("P692"), 1);
       item[0].claims.P692.url = 'https://cdli.ucla.edu/search/archival_view.php?ObjectID/' + item[0].claims.P692[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P692);
     };
+
     if (item[0].claims.P699 !== undefined) { // Edvard Munch's correspondance person ID
       item[1].splice(item[1].indexOf("P699"), 1);
       item[0].claims.P699.url = 'https://www.emunch.no/person.xhtml?id=pe' + item[0].claims.P699[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P699);
     };
+ 
     if (item[0].claims.P707 !== undefined) { // Spanish Biograpical Dictionary ID
       item[1].splice(item[1].indexOf("P707"), 1);
       item[0].claims.P707.url = 'https://dbe.rah.es/biografias/' + item[0].claims.P707[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P707);
     };
+ 
     if (item[0].claims.P710 !== undefined) { // Art & Architecture Thesaurus ID
       item[1].splice(item[1].indexOf("P710"), 1);
       item[0].claims.P710.url = 'https://www.getty.edu/vow/AATFullDisplay?find=&logic=AND&note=&subjectid=/' + item[0].claims.P710[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P710);
     };
+ 
     if (item[0].claims.P712 !== undefined) { // ResearchGate profile ID
       item[1].splice(item[1].indexOf("P712"), 1);
       item[0].claims.P712.url = 'https://www.researchgate.net/profile/' + item[0].claims.P712[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P712);
     };
-    if (item[0].claims.P138 !== undefined) { //Online digitalisation
-      item[1].splice(item[1].indexOf("P138"), 1);
-      item[0].claims.P138.url = item[0].claims.P138[0].mainsnak.datavalue.value
-      externalLinks.push(item[0].claims.P138)
-    };
+ 
     if (item[0].claims.P541 !== undefined) { //Recording, online information
       item[1].splice(item[1].indexOf("P541"), 1);
       item[0].claims.P541.url = item[0].claims.P541[0].mainsnak.datavalue.value

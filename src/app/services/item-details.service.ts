@@ -88,7 +88,6 @@ export class ItemDetailsService {
             if(re.claims[propertyIds[i]][j].qualifiers[props[k]] === undefined) {continue};    
             if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time") { 
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
-              console.log(re.claims[propertyIds[i]][j].mainsnak.timeOrder);
               let era=re.claims[propertyIds[i]][j].mainsnak.timeOrder.charAt(0);
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = Number(re.claims[propertyIds[i]][j].mainsnak.timeOrder.replace(/\-/g,"").replace(/\+/g,"").substring(0,8)); 
               if (era != "+"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = -Math.abs(re.claims[propertyIds[i]][j].mainsnak.timeOrder)};

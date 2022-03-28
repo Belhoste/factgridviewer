@@ -393,8 +393,6 @@ setItemId(event){
   
   if (this.pictures !==undefined) this.isPicture = true;
 
-  console.log(this.pictures);
-
   ///org
 
   this.locationAndContext = [];

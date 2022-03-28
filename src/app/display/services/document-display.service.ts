@@ -198,10 +198,6 @@ setDocumentDisplay(item, documentDetail){//if P2-
     item[1].splice(item[1].indexOf("P124"),1);
     documentDetail.push(item[0].claims.P124);
   }
-  if (item[0].claims.P138 !==undefined){ //online digitalisation
-    item[1].splice(item[1].indexOf("P138"),1);
-    documentDetail.push(item[0].claims.P138);
-  }
   if (item[0].claims.P251 !==undefined){ //FactGrid transcript
     item[1].splice(item[1].indexOf("P251"),1);
     documentDetail.push(item[0].claims.P251);
