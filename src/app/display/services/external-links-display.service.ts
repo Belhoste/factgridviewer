@@ -8,16 +8,10 @@ export class ExternalLinksDisplayService {  // external links
   constructor() { }
 
   setExternalLinksDisplay(item, externalLinks) {
-    if (item[0].claims.P146 !== undefined) {  //online information
+    if (item[0].claims.P146 !== undefined) {  //Online information
       item[1].splice(item[1].indexOf("P146"), 1);
       item[0].claims.P146.url = item[0].claims.P146[0].mainsnak.datavalue.value;
       externalLinks.push(item[0].claims.P146)
-    };
-
-    if (item[0].claims.P138 !== undefined) { //Online digitalisation
-      item[1].splice(item[1].indexOf("P138"), 1);
-      item[0].claims.P138.url = item[0].claims.P138[0].mainsnak.datavalue.value;
-      externalLinks.push(item[0].claims.P138)
     };
 
     if (item[0].claims.P378 !== undefined) { //id viaf
@@ -106,7 +100,7 @@ export class ExternalLinksDisplayService {  // external links
       externalLinks.push(item[0].claims.P414)
     };
 
-    if (item[0].claims.P502 !== undefined) {  // Complet BIble Genealogy ID
+    if (item[0].claims.P502 !== undefined) {  // Complet Bible Genealogy ID
       item[1].splice(item[1].indexOf("P502"), 1);
       item[0].claims.P502.url = 'http://www.complete-bible-genealogy.com/names/' + item[0].claims.P502[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P502)

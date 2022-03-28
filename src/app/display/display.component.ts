@@ -428,6 +428,7 @@ setItemId(event){
   if(this.item[0].claims.P2.document !== undefined) {
     this.documentDisplay.setDocumentDisplay(this.item,this.documentDetail); 
     ;
+    console.log(this.documentDetail);
   }
   
   ///sources

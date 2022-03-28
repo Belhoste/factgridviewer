@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PubDisplayService } from './document-display.service';
+import { DocumentDisplayService } from './document-display.service';
 
-describe('PubDisplayService', () => {
-  let service: PubDisplayService;
+describe('DocumentDisplayService', () => {
+  let service: DocumentDisplayService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PubDisplayService);
+    service = TestBed.inject(DocumentDisplayService);
   });
 
   it('should be created', () => {

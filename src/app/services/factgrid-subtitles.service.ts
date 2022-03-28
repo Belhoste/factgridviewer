@@ -94,7 +94,8 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
         else if ( lang === "es") {re.claims[propertyId].main = "Organización"};
           }
   //  else re.claims[propertyId].org = undefined;
-  if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q20") { //publication
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q20" ||
+      re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q257227") { //publication
       re.claims[propertyId].document = "publication";
         if ( lang === "en") {re.claims[propertyId].main = "Print publication"}
         else if ( lang === "de") {re.claims[propertyId].main = "Druckpublikation"}

@@ -206,7 +206,11 @@ setDocumentDisplay(item, documentDetail){//if P2-
     item[1].splice(item[1].indexOf("P226"),1);
     documentDetail.push(item[0].claims.P226);
   }
-
+  if (item[0].claims.P138 !== undefined) { //Online digitalisation
+    item[1].splice(item[1].indexOf("P138"), 1);
+    documentDetail.push(item[0].claims.P138);
+  };
+  console.log(documentDetail);
   return documentDetail
 
 }
