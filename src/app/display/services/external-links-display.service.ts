@@ -267,6 +267,17 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P712.url = 'https://www.researchgate.net/profile/' + item[0].claims.P712[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P712);
     };
+    if (item[0].claims.P138 !== undefined) { //Online digitalisation
+      item[1].splice(item[1].indexOf("P138"), 1);
+      item[0].claims.P138.url = item[0].claims.P138[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P138)
+    };
+    if (item[0].claims.P541 !== undefined) { //Recording, online information
+      item[1].splice(item[1].indexOf("P541"), 1);
+      item[0].claims.P541.url = item[0].claims.P541[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P541)
+      console.log(externalLinks)
+    };
     return externalLinks
   };
 
