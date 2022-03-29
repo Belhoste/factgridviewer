@@ -24,7 +24,7 @@ export class RequestService {
 
   constructor(private http: HttpClient) { }
 
-requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesList3, propertiesList4, propertiesList5, propertiesList6)
+requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesList3, propertiesList4, propertiesList5, propertiesList6, propertiesList7)
   {  
     let response0$
     let response1$;
@@ -33,8 +33,10 @@ requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesLi
     let response4$;
     let response5$;
     let response6$;
+    let response7$;
     let result;
    
+    if(propertiesList7 === undefined) {
     if (propertiesList6 === undefined) { 
       if (propertiesList5 === undefined) {
         if (propertiesList4 === undefined) { 
@@ -42,32 +44,32 @@ requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesLi
             if (propertiesList2 === undefined) {
               if (propertiesList1 === undefined) {
                 if (propertiesList0 === undefined) {
-                  response0$ =undefined, response1$=undefined, response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined
+                  response0$ =undefined, response1$=undefined, response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined
                   }
                response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
-                response1$=undefined, response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined  
+                response1$=undefined, response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined  
                 }
               response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
               response1$ = this.http.get(this.baseGetURL+propertiesList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
-              response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined  
+              response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined  
               }
             response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
             response1$ = this.http.get(this.baseGetURL+propertiesList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
             response2$ = this.http.get(this.baseGetURL+propertiesList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-            response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined  
+            response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined  
             }
           response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
           response1$ = this.http.get(this.baseGetURL+propertiesList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
           response2$ = this.http.get(this.baseGetURL+propertiesList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
           response3$ = this.http.get(this.baseGetURL+propertiesList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),  
-          response4$=undefined, response5$=undefined, response6$=undefined
+          response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined
           }
         response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
         response1$ = this.http.get(this.baseGetURL+propertiesList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
         response2$ = this.http.get(this.baseGetURL+propertiesList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
         response3$ = this.http.get(this.baseGetURL+propertiesList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
         response4$ = this.http.get(this.baseGetURL+propertiesList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-        response5$ = undefined, response6$=undefined
+        response5$ = undefined, response6$=undefined, response7$=undefined
         }
       response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
       response1$ = this.http.get(this.baseGetURL+propertiesList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
@@ -75,8 +77,17 @@ requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesLi
       response3$ = this.http.get(this.baseGetURL+propertiesList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
       response4$ = this.http.get(this.baseGetURL+propertiesList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
       response5$ = this.http.get(this.baseGetURL+propertiesList5+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-      response6$ = undefined 
+      response6$ = undefined, response7$ = undefined 
         }
+      response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
+      response1$ = this.http.get(this.baseGetURL+propertiesList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
+      response2$ = this.http.get(this.baseGetURL+propertiesList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+      response3$ = this.http.get(this.baseGetURL+propertiesList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+      response4$ = this.http.get(this.baseGetURL+propertiesList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+      response5$ = this.http.get(this.baseGetURL+propertiesList5+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+      response6$ = this.http.get(this.baseGetURL+propertiesList6+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+      response7$ = undefined
+      }
     else {
     response0$ = this.http.get(this.baseGetURL+propertiesList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
     response1$ = this.http.get(this.baseGetURL+propertiesList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
@@ -84,15 +95,16 @@ requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesLi
     response3$ = this.http.get(this.baseGetURL+propertiesList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
     response4$ = this.http.get(this.baseGetURL+propertiesList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
     response5$ = this.http.get(this.baseGetURL+propertiesList5+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-    response6$=  this.http.get(this.baseGetURL+propertiesList6+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})) 
+    response6$=  this.http.get(this.baseGetURL+propertiesList6+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
+    response7$=  this.http.get(this.baseGetURL+propertiesList7+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)}))  
     } 
     
-    result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$])
+    result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$,response7$])
     return result
   
   }
   
-requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,itemsList6)
+requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,itemsList6,itemsList7)
 {
   let response0$
   let response1$;
@@ -101,8 +113,10 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
   let response4$;
   let response5$;
   let response6$;
+  let response7$;
   let result;
  
+  if (itemsList7 === undefined) { 
   if (itemsList6 === undefined) { 
     if (itemsList5 === undefined) {
       if (itemsList4 === undefined) { 
@@ -110,29 +124,29 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
           if (itemsList2 === undefined) {
             if (itemsList1 === undefined) {
               response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
-              response1$=undefined, response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined  
+              response1$=undefined, response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined  
               }
             response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
             response1$ = this.http.get(this.baseGetURL+itemsList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
-            response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined  
+            response2$=undefined, response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined
             }
           response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
           response1$ = this.http.get(this.baseGetURL+itemsList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
           response2$ = this.http.get(this.baseGetURL+itemsList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-          response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined  
+          response3$=undefined, response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined
           }
         response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
         response1$ = this.http.get(this.baseGetURL+itemsList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
         response2$ = this.http.get(this.baseGetURL+itemsList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
         response3$ = this.http.get(this.baseGetURL+itemsList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),  
-        response4$=undefined, response5$=undefined, response6$=undefined
+        response4$=undefined, response5$=undefined, response6$=undefined, response7$=undefined
         }
       response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
       response1$ = this.http.get(this.baseGetURL+itemsList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
       response2$ = this.http.get(this.baseGetURL+itemsList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
       response3$ = this.http.get(this.baseGetURL+itemsList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
       response4$ = this.http.get(this.baseGetURL+itemsList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-      response5$ = undefined, response6$=undefined
+      response5$ = undefined, response6$=undefined, response7$=undefined
       }
     response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
     response1$ = this.http.get(this.baseGetURL+itemsList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
@@ -140,8 +154,17 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     response3$ = this.http.get(this.baseGetURL+itemsList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
     response4$ = this.http.get(this.baseGetURL+itemsList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
     response5$ = this.http.get(this.baseGetURL+itemsList5+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-    response6$ = undefined 
+    response6$ = undefined, response7$=undefined
       }
+    response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
+    response1$ = this.http.get(this.baseGetURL+itemsList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
+    response2$ = this.http.get(this.baseGetURL+itemsList2+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+    response3$ = this.http.get(this.baseGetURL+itemsList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+    response4$ = this.http.get(this.baseGetURL+itemsList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+    response5$ = this.http.get(this.baseGetURL+itemsList5+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+    response6$ = this.http.get(this.baseGetURL+itemsList6+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+    response7$=undefined
+    }
   else {
   response0$ = this.http.get(this.baseGetURL+itemsList0+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
   response1$ = this.http.get(this.baseGetURL+itemsList1+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})),
@@ -149,9 +172,10 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
   response3$ = this.http.get(this.baseGetURL+itemsList3+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
   response4$ = this.http.get(this.baseGetURL+itemsList4+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
   response5$ = this.http.get(this.baseGetURL+itemsList5+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
-  response6$=  this.http.get(this.baseGetURL+itemsList6+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})) 
+  response6$=  this.http.get(this.baseGetURL+itemsList6+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
+  response7$=  this.http.get(this.baseGetURL+itemsList7+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})) 
   } 
-  result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$])
+  result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$, response7$])
   return result
 }
   

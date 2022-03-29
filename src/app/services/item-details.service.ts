@@ -85,6 +85,7 @@ export class ItemDetailsService {
                  }
                }
           for  (let k=0; k<props.length; k++){ //to chronologically order the list of values for a given property           
+            if(re.claims[propertyIds[i]][j].qualifiers === undefined) {continue};
             if(re.claims[propertyIds[i]][j].qualifiers[props[k]] === undefined) {continue};    
             if (re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time") { 
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time

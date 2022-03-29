@@ -70,9 +70,10 @@ let propertiesList3 = this.createList(properties[3]).slice(1); // create a array
 let propertiesList4 = this.createList(properties[4]).slice(1); // id
 let propertiesList5 = this.createList(properties[5]).slice(1); // id
 let propertiesList6 = this.createList(properties[6]).slice(1); // id
-if ( properties[7] !== undefined) { alert("too many statements") };
+let propertiesList7 = this.createList(properties[7]).slice(1); // id
+if ( properties[8] !== undefined) { alert("too many statements") };
 
-let result = this.requestService.requestProperties(propertiesList0,propertiesList1,propertiesList2,propertiesList3,propertiesList4,propertiesList5,propertiesList6)
+let result = this.requestService.requestProperties(propertiesList0,propertiesList1,propertiesList2,propertiesList3,propertiesList4,propertiesList5,propertiesList6,propertiesList7)
 .pipe
 (
 map(res => this.mergeObjects(res)),
@@ -136,9 +137,10 @@ let itemsList3 = this.createList(items[3]).slice(1); //create an arrray of  stri
 let itemsList4 = this.createList(items[4]).slice(1); //create an arrray of  string lists of items
 let itemsList5 = this.createList(items[5]).slice(1); //create an arrray of  string lists of items
 let itemsList6 = this.createList(items[6]).slice(1); //create an arrray of  string lists of items
-if ( items[7] !== undefined) { alert("too many statements") };
+let itemsList7 = this.createList(items[7]).slice(1); //create an arrray of  string lists of items
+if ( items[8] !== undefined) { alert("too many statements") };
 
-let result = this.requestService.requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,itemsList6)
+let result = this.requestService.requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,itemsList6,itemsList7)
 .pipe(map(res => this.mergeObjects(res)),
 map(res =>Object.values(res))
 );
