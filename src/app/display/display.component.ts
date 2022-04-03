@@ -37,7 +37,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
     private personDisplay:PersonDisplayService, private educationDisplay:EducationDisplayService, private careerDisplay:CareerDisplayService, private sociabilityDisplay:SociabilityDisplayService,
     private sourcesDisplay:SourcesDisplayService, private eventDisplay:EventDisplayService, private externalLinksDisplay:ExternalLinksDisplayService, private iframesDisplay:IframesDisplayService, private wikiDisplay:WikiDisplayService, private sanitizer:DomSanitizer){}
 
-  urlSafe:SafeResourceUrl; 
+  //iframe
+  urlSafe1:SafeResourceUrl;
+  urlSafe2:SafeResourceUrl; 
+  urlSafe3:SafeResourceUrl;
   
   //tree
   stemma_url:SafeResourceUrl;
@@ -445,26 +448,27 @@ setItemId(event){
 ///iframes
 
     this.iframes = []; //list of iframes
-    this.urlSafe;
     
     this.iframesDisplay.setIframesDisplay(this.item,this.iframes);
     
     if (this.iframes.length > 0) {  this.isIframes = true };
 
     if(this.item[0].claims.P309 !== undefined) {  
-      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P309[0].mainsnak.datavalue.value);
-   }
+      this.urlSafe1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P309[0].mainsnak.datavalue.value);
+    }
     
     if(this.item[0].claims.P320 !== undefined) {  
-       this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[0].mainsnak.datavalue.value);
+       this.urlSafe1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[0].mainsnak.datavalue.value);
     }
 
     if(this.item[0].claims.P679 !== undefined) { 
-      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[0].mainsnak.datavalue.value);
-        }
+      this.urlSafe1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[0].mainsnak.datavalue.value);
+      if(this.item[0].claims.P679[1] !== undefined) {  this.urlSafe2 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[1].mainsnak.datavalue.value);}
+      if(this.item[0].claims.P679[2] !== undefined) { this.urlSafe3 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[2].mainsnak.datavalue.value);}
+    }
 
     if(this.item[0].claims.P693 !== undefined) {   
-      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[0].mainsnak.datavalue.value);  
+      this.urlSafe1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[0].mainsnak.datavalue.value);  
         }
 
   ///externalLinks

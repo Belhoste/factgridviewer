@@ -397,12 +397,33 @@
                <div class="title">
                  <label class="property2">{{P.label}}:</label>
                </div>
-               <div>
-               <iframe   
+               <div *ngIf="item[0].claims.P679[0]">
+                <div *ngIf="item[0].claims.P679[0].qualifiers2">
+                  <span class="details2" class="percent2" *ngIf="item[0].claims.P679[0].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
+                </div>
+              <iframe   
                style="width: 100%; height: 100vh; border: none;"
-               [src]= "urlSafe"
+               [src]= "urlSafe1"
                ></iframe>
              </div>
+             <div *ngIf="item[0].claims.P679[1]">
+              <div *ngIf="item[0].claims.P679[1].qualifiers2">
+              <span class="details2" class="percent2" *ngIf="item[0].claims.P679[1].qualifiers2[0].value.label"><label *ngIf="item[0].claims.P679[1].qualifiers2">{{item[0].claims.P679[1].qualifiers2[0].value.label}}</label></span>
+              </div>
+              <iframe   
+              style="width: 100%; height: 100vh; border: none;"
+              [src]= "urlSafe2"
+              ></iframe>
+            </div>
+            <div *ngIf="item[0].claims.P679[2]">
+              <div *ngIf="item[0].claims.P679[2].qualifiers2">
+              <span class="details2" class="percent2" *ngIf="item[0].claims.P679[2].qualifiers2[0].value.label"><label *ngIf="item[0].claims.P679[2].qualifiers2">{{item[0].claims.P679[2].qualifiers2[0].value.label}}</label></span>
+              </div>
+              <iframe   
+              style="width: 100%; height: 100vh; border: none;"
+              [src]= "urlSafe3"
+              ></iframe>
+            </div>
              </div>   
              </mat-card-content>
            </div>
