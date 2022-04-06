@@ -64,7 +64,9 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
    };
 
     if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q8" || 
-    re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11174") { //place
+    re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11174" ||
+    re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q21925" ||
+    re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q164344") { //place
       re.claims[propertyId].place = "place";
       re.claims[propertyId].main = "Place";
       if ( lang === "en") {re.claims[propertyId].main = "Place"}
@@ -85,8 +87,7 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
     if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q12" || //org
       re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q220833" ||  
       re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q140806" ||
-      re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11214" ||
-      re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q164344") {
+      re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11214" ) {
       re.claims[propertyId].org = "org";
         if ( lang === "en") {re.claims[propertyId].main = "Organisation"}
         else if ( lang === "de") {re.claims[propertyId].main = "Organisation"}

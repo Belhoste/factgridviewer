@@ -168,6 +168,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
 onClick2(query){ //handling click for sparql query
  query = this.setData.sparqlToDisplay(query);
+ console.log(query);
   query.subscribe(res => { if (res !== undefined){
     if(res.results !== undefined){
         this.list=res.results.bindings;  

@@ -182,6 +182,12 @@ export class ExternalLinksDisplayService {  // external links
       externalLinks.push(item[0].claims.P656);
     };
 
+    if (item[0].claims.P678 !== undefined) { // CTHS ID Society
+      item[1].splice(item[1].indexOf("P678"), 1);
+      item[0].claims.P678.url = 'http://cths.fr/an/societe.php?id=' + item[0].claims.P678[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P678);
+    };
+
     if (item[0].claims.P660 !== undefined) { // Vergue ID
       item[1].splice(item[1].indexOf("P660"), 1);
       console.log(item[0].claims.P660.length);

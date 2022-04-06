@@ -18,12 +18,13 @@ setIframesDisplay(item, iframes){
     iframes.push(item[0].claims.P309);
   }
 
-  if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
+ /* if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
       item[1].splice(item[1].indexOf("P320"),1);
       item[0].claims.P320[0].mainsnak.datatype=item[0].claims.P320[0].mainsnak.datavalue.value;
       item[0].claims.P320.iframe[0]= item[0].claims.P320[0].mainsnak.datavalue.value ;
       iframes.push(item[0].claims.P320);
     }
+  */
     
     if (item[0].claims.P679 !==undefined){ //house numbers
       console.log(item[0].claims.P679);

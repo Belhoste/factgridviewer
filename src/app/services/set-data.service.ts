@@ -28,8 +28,11 @@ itemToDisplay(id){
     }
 
 sparqlToDisplay(sparql){
+    console.log(sparql);
+    console.log(sparql.charAt(8));
     let selectedSparql = this.newSparqlAdress(sparql,this.selectedLang); //handle sparql queries 1. create the address
 //    let downloadSparql = this.newSparqlAdress(sparql, this.selectedLang);
+console.log(selectedSparql);
     sparql = this.request.getList(selectedSparql);     //handle sparql queries 2. list ready to display  
    // this.request.downLoadList(downloadSparql);
     sparql.subscribe(result => console.log(result));
@@ -45,8 +48,10 @@ sparqlToDisplay(sparql){
   }
 
     newSparqlAdress(address:string, lang) : string { 
+     
       const newPrefix = "https://database.factgrid.de/sparql?query=";
-      const oldPrefix = "https://database.factgrid.de/query/#";
+      let oldPrefix = "https://database.factgrid.de/query/#";
+      if (address.includes('embed.html')){oldPrefix ="https://database.factgrid.de/query/embed.html#"}
       if (address !== undefined) address = address.replace(oldPrefix, newPrefix);
       return address
       }
