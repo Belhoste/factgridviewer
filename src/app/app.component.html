@@ -5,20 +5,24 @@
   
     <mat-toolbar color="primary" fxLayout="row">
         <span class="example-spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menuInfo" aria-label="Example icon-button with a menu">
+          <mat-icon>info</mat-icon>
+        </button>
+        <mat-menu #menuInfo="matMenu">
+          <a href="https://blog.factgrid.de/archives/2684" mat-menu-item>Info</a>
+        </mat-menu> 
         <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Example icon-button with a menu">
-            <mat-icon>language</mat-icon>
-            </button>
-            <mat-menu #menuLanguage="matMenu">
-              <button (click)="langSetting(lang)" *ngFor = "let lang of langs" mat-menu-item>
-                <span>{{lang.name}}</span><mat-icon *ngIf="selectedLang===lang.code">done</mat-icon>
-              </button>
-    
-            </mat-menu>
-            
-      <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Example icon-button with a menu">
-         <mat-icon>settings</mat-icon>
-            </button>
-         <mat-menu #menuResearchField="matMenu">
+          <mat-icon>language</mat-icon>
+        </button>
+        <mat-menu #menuLanguage="matMenu">
+          <button (click)="langSetting(lang)" *ngFor = "let lang of langs" mat-menu-item>
+              <span>{{lang.name}}</span><mat-icon *ngIf="selectedLang===lang.code">done</mat-icon>
+          </button>
+        </mat-menu>        
+        <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Example icon-button with a menu">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <mat-menu #menuResearchField="matMenu">
             <button (click)="researchFieldSelect(researchField)" *ngFor = "let researchField of researchFields" mat-menu-item>
                <span>{{researchField.name}}</span><mat-icon *ngIf="selectedResearchField===researchField.id">done</mat-icon>
             </button>
