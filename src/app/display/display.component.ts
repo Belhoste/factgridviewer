@@ -242,7 +242,7 @@ setItemId(event){
   this.clickToDownload = "click to download"
   if(this.selectedLang === "de") {this.clickToDownload = "Klicken Sie zum Download"};
   if(this.selectedLang === "fr") {this.clickToDownload = "cliquez pour télécharger"};
-  if(this.selectedLang === "fr") {this.clickToDownload = "haga clic para descargarlo"}
+  if(this.selectedLang === "es") {this.clickToDownload = "haga clic para descargarlo"}
 
   this.stemma = "Preceding_in_stemma"
   if(this.selectedLang === "de") {this.stemma = "Stemma_aufwärts"};
