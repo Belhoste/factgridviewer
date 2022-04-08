@@ -29,13 +29,16 @@ export class ItemDetailsService {
         }
         if(propertyIds[i] === "P188"){
           let u= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.substring(0,5);
-          console.log(u);
           if(u !== "http:") {
             re.claims[propertyIds[i]][j].picture = re.claims[propertyIds[i]][j].mainsnak.datavalue.value 
           }
         }
         if ( propertyIds[i] === "P320")
-        { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql" };
+        { re.claims[propertyIds[i]][j].mainsnak.datatype = "sparql";
+     //   if(re.claims[propertyIds[i]][j].mainsnak.datavalue.value.includes("item")===false){ re.claims[propertyIds[i]][j].mainsnak.datavalue.value="undefined"};
+    //    if(re.claims[propertyIds[i]][j].mainsnak.datavalue.includes("item")) {console.log(re.claims[propertyIds[i]][j].mainsnak)};
+      };
+       
       this.factgrid.setSubtitle1(re,propertyIds[i],lang);
 
       if (re.claims[propertyIds[i]][j].mainsnak.datatype !== "wikibase-item") {continue}

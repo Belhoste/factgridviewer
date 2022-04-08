@@ -12,19 +12,23 @@ export class IframesDisplayService {
 setIframesDisplay(item, iframes){
 
   if (item[0].claims.P309 !==undefined){  //FactGrid table of contents     
+    console.log(item[0].claims.P309[0].mainsnak.datavalue.value);
     item[1].splice(item[1].indexOf("P309"),1);
-    item[0].claims.P309[0].mainsnak.datatype=item[0].claims.P309[0].mainsnak.datavalue.value;
-    item[0].claims.P309.iframe[0]= item[0].claims.P309[0].mainsnak.datavalue.value ;
-    iframes.push(item[0].claims.P309);
+    for (let i=0; i<item[0].claims.P309[i].length; i++){
+      item[0].claims.P309[i].mainsnak.datatype=item[0].claims.P309[i].mainsnak.datavalue.value;
+      item[0].claims.P309.iframe[i]= item[0].claims.P309[i].mainsnak.datavalue.value ;}
+      iframes.push(item[0].claims.P309);
+      console.log(iframes);
   }
 
- /* if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
-      item[1].splice(item[1].indexOf("P320"),1);
-      item[0].claims.P320[0].mainsnak.datatype=item[0].claims.P320[0].mainsnak.datavalue.value;
-      item[0].claims.P320.iframe[0]= item[0].claims.P320[0].mainsnak.datavalue.value ;
+  if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
+    item[1].splice(item[1].indexOf("P320"),1);
+    for (let i=0; i<item[0].claims.P320[i].length; i++){
+      item[0].claims.P320[i].mainsnak.datatype=item[0].claims.P320[i].mainsnak.datavalue.value;
+      item[0].claims.P320.iframe[i]= item[0].claims.P320[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P320);
     }
-  */
+  
     
     if (item[0].claims.P679 !==undefined){ //house numbers
       console.log(item[0].claims.P679);
