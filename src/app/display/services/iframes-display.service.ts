@@ -50,12 +50,10 @@ setIframesDisplay(item, iframes){
 
   if (item[0].claims.P720 !==undefined){ //FactGrid list
     item[1].splice(item[1].indexOf("P720"),1);    
-    console.log(item[0].claims.P720[0].mainsnak.datavalue.value);
     for (let i=0; i<item[0].claims.P720[i].length; i++){
       item[0].claims.P720[i].mainsnak.datatype=item[0].claims.P720[i].mainsnak.datavalue.value;
       item[0].claims.P720.iframe[i]= item[0].claims.P720[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P720);
-      console.log(iframes)
     } 
     }
   }

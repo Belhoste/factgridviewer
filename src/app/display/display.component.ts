@@ -491,7 +491,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
             }
 
             if (this.item[0].claims.P320 !== undefined) {
-              console.log(item[0].claims.P320[0]);
               if (this.item[0].claims.P320[0] !== undefined) {  this.urlSafe4 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[0].mainsnak.datavalue.value);}
               if (this.item[0].claims.P320[1] !== undefined) { this.urlSafe5 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[1].mainsnak.datavalue.value);}
               if (this.item[0].claims.P320[2] !== undefined) { this.urlSafe6 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[2].mainsnak.datavalue.value); }
@@ -507,14 +506,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
               if (this.item[0].claims.P693[0] !== undefined){ this.urlSafe10 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[0].mainsnak.datavalue.value);}
               if (this.item[0].claims.P693[1] !== undefined){ this.urlSafe11 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[1].mainsnak.datavalue.value);}
               if (this.item[0].claims.P693[2] !== undefined){ this.urlSafe12 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[2].mainsnak.datavalue.value);}
-            console.log(this.urlSafe10)
             }
 
             if (this.item[0].claims.P720 !== undefined) {
               if (this.item[0].claims.P720[0] !== undefined) {  this.urlSafe13 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[0].mainsnak.datavalue.value);}
               if (this.item[0].claims.P720[1] !== undefined) { this.urlSafe14 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[1].mainsnak.datavalue.value);}
               if (this.item[0].claims.P720[2] !== undefined) { this.urlSafe15 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[2].mainsnak.datavalue.value); }
-            console.log(this.urlSafe13)
             }
 
             ///externalLinks

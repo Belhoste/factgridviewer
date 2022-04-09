@@ -380,23 +380,11 @@
             ></iframe>
         </mat-card>
       </div>
- <!--     <div  [ngClass]="isFamilyTree ? 'show-division':'hide-division'">
-        <mat-card>
-          {{ item[0].label }}
-            <iframe   
-            style="width: 100%; height: 60vh; border: none;"
-            [src]= "familyTree_url"
-            ></iframe>
-        </mat-card>
-      </div>
-      -->
       <div [ngClass]="isIframes ? 'show-division':'hide-division'">
-        <!---    <div class="subdivision-title">{{factGridQuery}}</div>-->
-        <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-			<div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of iframes">
+      <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">		
 				<div *ngIf="item[0].claims.P309">
 					<div class="title">
-						<label class="property2">{{P.label}}:</label>
+						<label class="property2">{{item[0].claims.P309.label}}:</label>
 					</div>
 					<div *ngIf="item[0].claims.P309[0]">
 						<div *ngIf="item[0].claims.P309[0].qualifiers2">
@@ -426,9 +414,9 @@
 						></iframe>
 					</div>
 				</div>
-				<div *ngIf="item[0].claims.P320">
+        <div *ngIf="item[0].claims.P320">
 					<div class="title">
-						<label class="property2">{{P.label}}:</label>
+						<label class="property2">				<label class="property2">{{item[0].claims.P320.label}}:</label>:</label>
 					</div>
 					<div *ngIf="item[0].claims.P320[0]">
 						<div *ngIf="item[0].claims.P320[0].qualifiers2">
@@ -458,10 +446,9 @@
 						></iframe>
 					</div>				
 				</div>
-
 				<div *ngIf="item[0].claims.P679"> 
 					<div class="title">
-						<label class="property2">{{P.label}}:</label>
+						<label class="property2">				<label class="property2">{{item[0].claims.P679.label}}:</label></label>
 					</div>
 					<div *ngIf="item[0].claims.P679[0]">
 						<div *ngIf="item[0].claims.P679[0].qualifiers2">
@@ -490,11 +477,10 @@
 						   [src]= "urlSafe9"
 						></iframe>
 					</div>
-				</div>  
-      
+				</div>     
 				<div *ngIf="item[0].claims.P693">
 					<div class="title">
-						<label class="property2">{{P.label}}:</label>
+						<label class="property2">{{item[0].claims.P693.label}}:</label>
 					</div>
 					<div *ngIf="item[0].claims.P693[0]">
 						<div *ngIf="item[0].claims.P693[0].qualifiers2">
@@ -524,48 +510,41 @@
 						></iframe>
 						</div>
 					</div>
-			</div>
-			
-			<div>			
-				<div *ngIf="item[0].claims.P720">
-					<div *ngIf="item[0].claims.P720[0]">
-						<div *ngIf="item[0].claims.P720[0].qualifiers2" class="title">
-							<label class="property2">{{item[0].claims.P720[0].qualifiers2[0].value.label}}:</label>
-						</div>
-  <!---------          	<div *ngIf="item[0].claims.P720[0].qualifiers2">
-							<span class="details2" class="percent2" *ngIf="item[0].claims.P720[0].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
-						</div>  ---->
-						<iframe   
-							style="width: 100%; height: 100vh; border: none;"
-							[src]= "urlSafe13"
-						></iframe>
-					</div>
-					<div *ngIf="item[0].claims.P720[1]">
-						<div *ngIf="item[0].claims.P720[1].qualifiers2">
-							<span class="details2" class="percent2" *ngIf="item[0].claims.P720[1].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
-						</div>
-						<iframe   
-							style="width: 100%; height: 100vh; border: none;"
-							[src]= "urlSafe14"
-						></iframe>
-					</div>
-					<div *ngIf="item[0].claims.P720[2]">
-						<div *ngIf="item[0].claims.P720[2].qualifiers2">
-							<span class="details2" class="percent2" *ngIf="item[0].claims.P720[2].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
-						</div>
-						<iframe   
-							style="width: 100%; height: 100vh; border: none;"
-							[src]= "urlSafe15"
-						></iframe>
-					</div>
-				</div>
-			</div>
-		</mat-card-content>
-	</div>
-  
-
-    
-       <div id="listing" [ngClass]="isList ? 'show-division':'hide-division'"> 
+          <div *ngIf="item[0].claims.P720">
+            <div class="title">
+              <label class="property2">{{item[0].claims.P720.label}}:</label>
+            </div>
+            <div *ngIf="item[0].claims.P720[0]">
+              <div *ngIf="item[0].claims.P720[0].qualifiers2">
+                <span class="details2" class="percent2" *ngIf="item[0].claims.P693[0].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
+              </div>
+              <iframe   
+                style="width: 100%; height: 100vh; border: none;"
+                [src]= "urlSafe13"
+              ></iframe>
+            </div>
+            <div *ngIf="item[0].claims.P720[1]">
+              <div *ngIf="item[0].claims.P720[1].qualifiers2">
+                <span class="details2" class="percent2" *ngIf="item[0].claims.P720[1].qualifiers2[0].value.label"><label>{{item[0].claims.P720[1].qualifiers2[0].value.label}}</label></span>             
+              </div>
+              <iframe   
+                style="width: 100%; height: 100vh; border: none;"
+                [src]= "urlSafe14"
+              ></iframe>
+            </div>
+            <div *ngIf="item[0].claims.P720[2]">
+              <div *ngIf="item[0].claims.P720[2].qualifiers2">
+                <span class="details2" class="percent2" *ngIf="item[0].claims.P720[2].qualifiers2[0].value.label"><label>{{item[0].claims.P720[2].qualifiers2[0].value.label}}</label></span>             
+              </div>
+              <iframe   
+                style="width: 100%; height: 100vh; border: none;"
+                [src]= "urlSafe15"
+              ></iframe>
+              </div>
+            </div>
+		  </mat-card-content>
+	    </div>
+        <div id="listing" [ngClass]="isList ? 'show-division':'hide-division'"> 
         <div class="subdivision-title" *ngIf="listTitle">{{listTitle}}</div>     
           <mat-card-content fxLayout="column wrap" 
                              fxLayoutAlign="start stretch"
@@ -579,7 +558,7 @@
           </div>
           <hr>
         </div>
-          </mat-card-content>     
+        </mat-card-content>     
       </div>
 
     </mat-card>
