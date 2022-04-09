@@ -30,21 +30,32 @@ setIframesDisplay(item, iframes){
     }
   
     
-    if (item[0].claims.P679 !==undefined){ //house numbers
-      console.log(item[0].claims.P679);
-      item[1].splice(item[1].indexOf("P679"),1);
-      for (let i=0; i<item[0].claims.P679[i].length; i++){
+  if (item[0].claims.P679 !==undefined){ //house numbers
+    console.log(item[0].claims.P679);
+    item[1].splice(item[1].indexOf("P679"),1);
+    for (let i=0; i<item[0].claims.P679[i].length; i++){
       item[0].claims.P679[i].mainsnak.datatype=item[0].claims.P679[i].mainsnak.datavalue.value;
       item[0].claims.P679.iframe[i]= item[0].claims.P679[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P679);
       console.log(iframes);
     }
     
-   if (item[0].claims.P693 !==undefined){ //FactGrid map visualisation
-      item[1].splice(item[1].indexOf("P693"),1);    
-      item[0].claims.P693[0].mainsnak.datatype=item[0].claims.P693[0].mainsnak.datavalue.value;
-      item[0].claims.P693.iframe[0]= item[0].claims.P693[0].mainsnak.datavalue.value ;
+  if (item[0].claims.P693 !==undefined){ //FactGrid map visualisation
+    item[1].splice(item[1].indexOf("P693"),1); 
+    for (let i=0; i<item[0].claims.P693[i].length; i++){   
+      item[0].claims.P693[i].mainsnak.datatype=item[0].claims.P693[i].mainsnak.datavalue.value;
+      item[0].claims.P693.iframe[i]= item[0].claims.P693[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P693);
+    } 
+
+  if (item[0].claims.P720 !==undefined){ //FactGrid list
+    item[1].splice(item[1].indexOf("P720"),1);    
+    console.log(item[0].claims.P720[0].mainsnak.datavalue.value);
+    for (let i=0; i<item[0].claims.P720[i].length; i++){
+      item[0].claims.P720[i].mainsnak.datatype=item[0].claims.P720[i].mainsnak.datavalue.value;
+      item[0].claims.P720.iframe[i]= item[0].claims.P720[i].mainsnak.datavalue.value ;}
+      iframes.push(item[0].claims.P720);
+      console.log(iframes)
     } 
     }
   }

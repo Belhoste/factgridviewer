@@ -124,12 +124,12 @@
     </div>
 
     <div [ngClass]="isMain ? 'show-division':'hide-division'">
-      <mat-card  class= mat-elevation-z8>
-        <div>
-          <div>  
+    <mat-card  class= mat-elevation-z8>
+      <div>
+        <div>  
           <div class="subdivision-title" *ngIf='"main"!==undefined'>{{main}}</div>
-          </div>      
-          <mat-card-content fxLayout="column wrap" 
+        </div>      
+        <mat-card-content fxLayout="column wrap" 
                              fxLayoutAlign="start stretch"
                              fxLayoutGap="5px">
             <div fxFlex="80%" 
@@ -205,10 +205,10 @@
             </div>
           </div>
           </div>
-          </mat-card-content>
-          </div>
-          <div>
-          </div>
+        </mat-card-content>
+        </div>
+        <div>
+        </div>
   
         <div [ngClass]="isTraining ? 'show-division':'hide-division'">
           <div class="subdivision-title">{{training}}</div> 
@@ -392,160 +392,178 @@
       -->
       <div [ngClass]="isIframes ? 'show-division':'hide-division'">
         <!---    <div class="subdivision-title">{{factGridQuery}}</div>-->
-            <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-             <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of iframes">
-               <div class="title">
-                 <label class="property2">{{P.label}}:</label>
-               </div>
-               <div *ngIf="item[0].claims.P309">
-               <div *ngIf="item[0].claims.P309[0]">
-                <div *ngIf="item[0].claims.P309[0].qualifiers2">
-                  <span class="details2" class="percent2" *ngIf="item[0].claims.P309[0].qualifiers2[0].value.label"><label>{{item[0].claims.P309[0].qualifiers2[0].value.label}}</label></span>             
-                </div>
-              <iframe   
-               style="width: 100%; height: 100vh; border: none;"
-               [src]= "urlSafe1"
-               ></iframe>
-             </div>
-             <div *ngIf="item[0].claims.P309[1]">
-              <div *ngIf="item[0].claims.P309[1].qualifiers2">
-                <span class="details2" class="percent2" *ngIf="item[0].claims.P309[1].qualifiers2[0].value.label"><label>{{item[0].claims.P309[1].qualifiers2[0].value.label}}</label></span>             
-              </div>
-            <iframe   
-             style="width: 100%; height: 100vh; border: none;"
-             [src]= "urlSafe2"
-             ></iframe>
-           </div>
-           <div *ngIf="item[0].claims.P309[2]">
-            <div *ngIf="item[0].claims.P309[2].qualifiers2">
-              <span class="details2" class="percent2" *ngIf="item[0].claims.P309[2].qualifiers2[0].value.label"><label>{{item[0].claims.P309[2].qualifiers2[0].value.label}}</label></span>             
-            </div>
-          <iframe   
-           style="width: 100%; height: 100vh; border: none;"
-           [src]= "urlSafe3"
-           ></iframe>
-         </div>
-        </div>
-        <div *ngIf="item[0].claims.P320">
-              <div *ngIf="item[0].claims.P320[0]">
-                <div *ngIf="item[0].claims.P320[0].qualifiers2">
-                  <span class="details2" class="percent2" *ngIf="item[0].claims.P320[0].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
-                </div>
-              <iframe   
-               style="width: 100%; height: 100vh; border: none;"
-               [src]= "urlSafe4"
-               ></iframe>
-             </div>
-             <div *ngIf="item[0].claims.P320[1]">
-              <div *ngIf="item[0].claims.P320[1].qualifiers2">
-                <span class="details2" class="percent2" *ngIf="item[0].claims.P320[1].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
-              </div>
-            <iframe   
-             style="width: 100%; height: 100vh; border: none;"
-             [src]= "urlSafe5"
-             ></iframe>
-           </div>
-           <div *ngIf="item[0].claims.P320[2]">
-            <div *ngIf="item[0].claims.P320[2].qualifiers2">
-              <span class="details2" class="percent2" *ngIf="item[0].claims.P320[2].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
-            </div>
-          <iframe   
-           style="width: 100%; height: 100vh; border: none;"
-           [src]= "urlSafe6"
-           ></iframe>
-         </div>
-         </div>
-         <div *ngIf="item[0].claims.P679"> 
-               <div *ngIf="item[0].claims.P679[0]">
-                <div *ngIf="item[0].claims.P679[0].qualifiers2">
-                  <span class="details2" class="percent2" *ngIf="item[0].claims.P679[0].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
-                </div>
-              <iframe   
-               style="width: 100%; height: 100vh; border: none;"
-               [src]= "urlSafe7"
-               ></iframe>
-            
-            </div>
-             <div *ngIf="item[0].claims.P679[1]">
-              <div *ngIf="item[0].claims.P679[1].qualifiers2">
-              <span class="details2" class="percent2" *ngIf="item[0].claims.P679[1].qualifiers2[0].value.label"><label *ngIf="item[0].claims.P679[1].qualifiers2">{{item[0].claims.P679[1].qualifiers2[0].value.label}}</label></span>
-              </div>
-              <iframe   
-              style="width: 100%; height: 100vh; border: none;"
-              [src]= "urlSafe8"
-              ></iframe>
-            </div>
-            <div *ngIf="item[0].claims.P679[2]">
-              <div *ngIf="item[0].claims.P679[2].qualifiers2">
-              <span class="details2" class="percent2" *ngIf="item[0].claims.P679[2].qualifiers2[0].value.label"><label *ngIf="item[0].claims.P679[2].qualifiers2">{{item[0].claims.P679[2].qualifiers2[0].value.label}}</label></span>
-              </div>
-              <iframe   
-              style="width: 100%; height: 100vh; border: none;"
-              [src]= "urlSafe9"
-              ></iframe>
-            </div>
-          </div>
-             </div>   
-             </mat-card-content>
-           </div>
-           <div *ngIf="item[0].claims.P309">
-            <div *ngIf="item[0].claims.P309[0]">
-             <div *ngIf="item[0].claims.P309[0].qualifiers2">
-               <span class="details2" class="percent2" *ngIf="item[0].claims.P309[0].qualifiers2[0].value.label"><label>{{item[0].claims.P309[0].qualifiers2[0].value.label}}</label></span>             
-             </div>
-           <iframe   
-            style="width: 100%; height: 100vh; border: none;"
-            [src]= "urlSafe10"
-            ></iframe>
-          </div>
-          <div *ngIf="item[0].claims.P309[1]">
-           <div *ngIf="item[0].claims.P309[1].qualifiers2">
-             <span class="details2" class="percent2" *ngIf="item[0].claims.P309[1].qualifiers2[0].value.label"><label>{{item[0].claims.P309[1].qualifiers2[0].value.label}}</label></span>             
-           </div>
-         <iframe   
-          style="width: 100%; height: 100vh; border: none;"
-          [src]= "urlSafe11"
-          ></iframe>
-        </div>
-        <div *ngIf="item[0].claims.P309[2]">
-         <div *ngIf="item[0].claims.P309[2].qualifiers2">
-           <span class="details2" class="percent2" *ngIf="item[0].claims.P309[2].qualifiers2[0].value.label"><label>{{item[0].claims.P309[2].qualifiers2[0].value.label}}</label></span>             
-         </div>
-       <iframe   
-        style="width: 100%; height: 100vh; border: none;"
-        [src]= "urlSafe12"
-        ></iframe>
-      </div>
-     </div>
-     <div *ngIf="item[0].claims.P720">
-           <div *ngIf="item[0].claims.P720[0]">
-             <div *ngIf="item[0].claims.P720[0].qualifiers2">
-               <span class="details2" class="percent2" *ngIf="item[0].claims.P720[0].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
-             </div>
-           <iframe   
-            style="width: 100%; height: 100vh; border: none;"
-            [src]= "urlSafe13"
-            ></iframe>
-          </div>
-          <div *ngIf="item[0].claims.P720[1]">
-           <div *ngIf="item[0].claims.P720[1].qualifiers2">
-             <span class="details2" class="percent2" *ngIf="item[0].claims.P720[1].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
-           </div>
-         <iframe   
-          style="width: 100%; height: 100vh; border: none;"
-          [src]= "urlSafe14"
-          ></iframe>
-        </div>
-        <div *ngIf="item[0].claims.P720[2]">
-         <div *ngIf="item[0].claims.P720[2].qualifiers2">
-           <span class="details2" class="percent2" *ngIf="item[0].claims.P720[2].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
-         </div>
-       <iframe   
-        style="width: 100%; height: 100vh; border: none;"
-        [src]= "urlSafe15"
-        ></iframe>
-      </div>
-      </div>
+        <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
+			<div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of iframes">
+				<div *ngIf="item[0].claims.P309">
+					<div class="title">
+						<label class="property2">{{P.label}}:</label>
+					</div>
+					<div *ngIf="item[0].claims.P309[0]">
+						<div *ngIf="item[0].claims.P309[0].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P309[0].qualifiers2[0].value.label"><label>{{item[0].claims.P309[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe1"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P309[1]">
+						<div *ngIf="item[0].claims.P309[1].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P309[1].qualifiers2[0].value.label"><label>{{item[0].claims.P309[1].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe2"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P309[2]">
+						<div *ngIf="item[0].claims.P309[2].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P309[2].qualifiers2[0].value.label"><label>{{item[0].claims.P309[2].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe3"
+						></iframe>
+					</div>
+				</div>
+				<div *ngIf="item[0].claims.P320">
+					<div class="title">
+						<label class="property2">{{P.label}}:</label>
+					</div>
+					<div *ngIf="item[0].claims.P320[0]">
+						<div *ngIf="item[0].claims.P320[0].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P320[0].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe4"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P320[1]">
+						<div *ngIf="item[0].claims.P320[1].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P320[1].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe5"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P320[2]">
+						<div *ngIf="item[0].claims.P320[2].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P320[2].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe6"
+						></iframe>
+					</div>				
+				</div>
+
+				<div *ngIf="item[0].claims.P679"> 
+					<div class="title">
+						<label class="property2">{{P.label}}:</label>
+					</div>
+					<div *ngIf="item[0].claims.P679[0]">
+						<div *ngIf="item[0].claims.P679[0].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P679[0].qualifiers2[0].value.label"><label>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe7"
+						></iframe>          
+					</div>
+					<div *ngIf="item[0].claims.P679[1]">
+						<div *ngIf="item[0].claims.P679[1].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P679[1].qualifiers2[0].value.label"><label *ngIf="item[0].claims.P679[1].qualifiers2">{{item[0].claims.P679[1].qualifiers2[0].value.label}}</label></span>
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe8"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P679[2]">
+						<div *ngIf="item[0].claims.P679[2].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P679[2].qualifiers2[0].value.label"><label *ngIf="item[0].claims.P679[2].qualifiers2">{{item[0].claims.P679[2].qualifiers2[0].value.label}}</label></span>
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+						   [src]= "urlSafe9"
+						></iframe>
+					</div>
+				</div>  
+      
+				<div *ngIf="item[0].claims.P693">
+					<div class="title">
+						<label class="property2">{{P.label}}:</label>
+					</div>
+					<div *ngIf="item[0].claims.P693[0]">
+						<div *ngIf="item[0].claims.P693[0].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P693[0].qualifiers2[0].value.label"><label>{{item[0].claims.P693[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe10"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P693[1]">
+						<div *ngIf="item[0].claims.P693[1].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P693[1].qualifiers2[0].value.label"><label>{{item[0].claims.P693[1].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe11"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P693[2]">
+						<div *ngIf="item[0].claims.P693[2].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P693[2].qualifiers2[0].value.label"><label>{{item[0].claims.P693[2].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe12"
+						></iframe>
+						</div>
+					</div>
+			</div>
+			
+			<div>			
+				<div *ngIf="item[0].claims.P720">
+					<div *ngIf="item[0].claims.P720[0]">
+						<div *ngIf="item[0].claims.P720[0].qualifiers2" class="title">
+							<label class="property2">{{item[0].claims.P720[0].qualifiers2[0].value.label}}:</label>
+						</div>
+  <!---------          	<div *ngIf="item[0].claims.P720[0].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P720[0].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
+						</div>  ---->
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe13"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P720[1]">
+						<div *ngIf="item[0].claims.P720[1].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P720[1].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe14"
+						></iframe>
+					</div>
+					<div *ngIf="item[0].claims.P720[2]">
+						<div *ngIf="item[0].claims.P720[2].qualifiers2">
+							<span class="details2" class="percent2" *ngIf="item[0].claims.P720[2].qualifiers2[0].value.label"><label>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</label></span>             
+						</div>
+						<iframe   
+							style="width: 100%; height: 100vh; border: none;"
+							[src]= "urlSafe15"
+						></iframe>
+					</div>
+				</div>
+			</div>
+		</mat-card-content>
+	</div>
+  
+
     
        <div id="listing" [ngClass]="isList ? 'show-division':'hide-division'"> 
         <div class="subdivision-title" *ngIf="listTitle">{{listTitle}}</div>     
@@ -564,7 +582,7 @@
           </mat-card-content>     
       </div>
 
-       </mat-card>
+    </mat-card>
     </div>
      
     <div [ngClass]="isSources ? 'show-division':'hide-division'">
