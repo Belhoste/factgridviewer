@@ -30,7 +30,10 @@ export class QualifierDetailsService {
                 if (qualifiersArray[k][0].datatype === "commonsMedia"){
                   re.claims[propertyIds[i]][j].qualifiers2[k].value.string = "http://commons.wikimedia.org/wiki/Special:FilePath/"+qualifiersArray[k][0].datavalue.value };   
                 if (qualifiersArray[k][0].datatype === "string"){
-                  re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value }; 
+                  re.claims[propertyIds[i]][j].qualifiers2[k].value.string = qualifiersArray[k][0].datavalue.value ;
+                  re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value
+                };
+                   
                 if (qualifiersArray[k][0].datatype === "url"){
                   re.claims[propertyIds[i]][j].qualifiers2[k].value.url = qualifiersArray[k][0].datavalue.value };       
                 re.claims[propertyIds[i]][j].qualifiers2[k].value.amount = qualifiersArray[k][0].datavalue.value.amount };                    

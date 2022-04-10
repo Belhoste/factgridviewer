@@ -512,6 +512,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
               if (this.item[0].claims.P720[0] !== undefined) {  this.urlSafe13 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[0].mainsnak.datavalue.value);}
               if (this.item[0].claims.P720[1] !== undefined) { this.urlSafe14 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[1].mainsnak.datavalue.value);}
               if (this.item[0].claims.P720[2] !== undefined) { this.urlSafe15 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[2].mainsnak.datavalue.value); }
+              console.log(item[0].claims.P720[0].qualifiers2[0].value.label)
             }
 
             ///externalLinks
