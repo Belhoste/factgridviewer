@@ -38,6 +38,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { EssaiComponent } from './essai/essai.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ShortUrlInterceptor } from './short-url-interceptor.service';
+import { UnitPipe } from './unit.pipe';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { ShortUrlInterceptor } from './short-url-interceptor.service';
     BackListIdPipe,
     SearchComponent,
     AdvancedSearchComponent,
-    EssaiComponent
+    EssaiComponent,
+    UnitPipe
   ],
 
   providers:[

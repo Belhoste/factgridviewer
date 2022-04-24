@@ -2,7 +2,7 @@
 
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
-import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
+import { debounceTime, switchMap, tap, map, filter, takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 //import { HttpClient} from '@angular/common/http';
 import { SetLanguageService } from '../services/set-language.service';
@@ -104,6 +104,7 @@ private getUrlSuffix= '&format=json&origin=*' ;
     filter (res => res.entities !== undefined),
     filter (res => res.entities !== null),
     map(res => Object.values(res.entities)),
+    tap(res =>console.log(res))
    )
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.selectedLang);

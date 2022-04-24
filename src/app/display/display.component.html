@@ -170,6 +170,7 @@
   <!---                  , <span class="description-text">{{M.mainsnak.description}}</span>-->
                     <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </label>
+                  <label *ngIf="M.mainsnak.datavalue.value.unit"><em>&nbsp;({{M.mainsnak.datavalue.value.unit | unit |async}})</em>&nbsp;</label> 
                   <span class="details2" class="percent2" *ngIf="M['qualifiers-order']">
                     <span *ngFor="let Q of M.qualifiers2">
                       <label class="property"><em>&nbsp;{{Q.label}}:</em>&nbsp;</label> 

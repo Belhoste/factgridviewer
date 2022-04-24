@@ -318,7 +318,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
           this.isOther = false;
           if (item !== undefined) {
             this.item = item;
-            console.log(this.item);
             this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
             if (this.item[0].claims.P2 === undefined) { alert("property P2 undefined") };
             if (this.item[0].claims.P320 === undefined) { this.hideList() };
@@ -462,7 +461,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
             if (this.item[0].claims.P2.document !== undefined) {
               this.documentDisplay.setDocumentDisplay(this.item, this.documentDetail);
               ;
-              console.log(this.documentDetail);
             }
 
             ///sources
