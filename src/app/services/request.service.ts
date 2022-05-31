@@ -204,6 +204,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
   
   getList(sparql:string): Observable<any> {   
     let u;
+    let v;
     if(sparql !== undefined){
     let params = new HttpParams()
        .set('format',"json")

@@ -335,25 +335,6 @@ button-content{
   margin: 0px;
   border: 1px solid #555;
 }
-/*
-
-button-content{
-  text-overflow: ellipsis;
-}
-
-button{
- font-size:8px;
- height auto;
- width:100%
-  }
-
-mat-card{
-  height: fit-content;
-}
-    
-*/
-
-
 
 .example-additional-selection {
     font-size: 0.5em;

@@ -63,6 +63,13 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
       else if ( lang === "es") {re.claims[propertyId].main = "Objeto básico"};
    };
 
+   if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q147829") { //basic object
+    if ( lang === "en") {re.claims[propertyId].main = "Database"}
+    else if ( lang === "de") {re.claims[propertyId].main = "Datenbank"}
+    else if ( lang === "fr") {re.claims[propertyId].main = "Base de données"}
+    else if ( lang === "es") {re.claims[propertyId].main = "Base de datos"};
+ };
+
     if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q8" || 
     re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q11174" ||
     re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q21925" ||

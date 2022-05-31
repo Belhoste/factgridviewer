@@ -39,6 +39,7 @@ import { EssaiComponent } from './essai/essai.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ShortUrlInterceptor } from './short-url-interceptor.service';
 import { UnitPipe } from './unit.pipe';
+import { SparqlDisplayComponent } from './display/sparql-display.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { UnitPipe } from './unit.pipe';
     SearchComponent,
     AdvancedSearchComponent,
     EssaiComponent,
-    UnitPipe
+    UnitPipe,
+    SparqlDisplayComponent
   ],
 
   providers:[

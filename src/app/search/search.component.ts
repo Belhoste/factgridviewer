@@ -103,8 +103,7 @@ private getUrlSuffix= '&format=json&origin=*' ;
     takeWhile (res => res !== undefined),
     filter (res => res.entities !== undefined),
     filter (res => res.entities !== null),
-    map(res => Object.values(res.entities)),
-    tap(res =>console.log(res))
+    map(res => Object.values(res.entities))
    )
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.selectedLang);

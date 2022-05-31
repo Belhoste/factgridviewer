@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
-import { Observable, Subscription, Subject, from, forkJoin, of, EMPTY } from 'rxjs';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Observable, Subscription, Subject, from, forkJoin, of, EMPTY, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SetDataService } from '../services/set-data.service'
 import { map } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { PersonDisplayService } from './services/person-display.service';
 import { CareerDisplayService } from './services/career-display.service';
 import { SociabilityDisplayService } from './services/sociability-display.service';
 import { SourcesDisplayService } from './services/sources-display.service';
+import { SparqlService } from './services/sparql.service';
 import { EventDisplayService } from './services/event-display.service';
 import { ExternalLinksDisplayService } from './services/external-links-display.service';
 import { IframesDisplayService } from './services/iframes-display.service';
@@ -23,21 +24,22 @@ import { BackListService } from '../services/back-list.service';
 import { SetSelectedItemsListService } from '../services/set-selected-items-list.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SparqlDisplayComponent } from './sparql-display.component';
 
 @Component({
-  selector: 'displang y-component',
+  selector: 'app-display',
   templateUrl: 'display.component.html',
   styleUrls: ['./display.component.css']
 })
 
-export class DisplayComponent implements OnInit, OnDestroy {
+export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private router: Router, private route: ActivatedRoute, private setData: SetDataService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
     private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
     private personDisplay: PersonDisplayService, private educationDisplay: EducationDisplayService, private careerDisplay: CareerDisplayService, private sociabilityDisplay: SociabilityDisplayService,
-    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sanitizer: DomSanitizer) { }
+    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sparql:SparqlService, private sanitizer: DomSanitizer) { }
 
-  //iframe
+    //iframe
   urlSafe1: SafeResourceUrl;
   urlSafe2: SafeResourceUrl;
   urlSafe3: SafeResourceUrl;
@@ -64,10 +66,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   iframesNumber: any;
   factGridQuery: string;
 
-  sparqlQuery
+  sparqlData:any//data for a sparql query
+  query:Observable<any>; //sparql query
 
   data: Observable<any>; //for routing
-  itemId; //for routing
+  itemId = ""; //for routing
   itemObject;//for routing
 
   isSpinner: boolean = false;
@@ -88,6 +91,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   formerVisitsTitle: string;
   clickToDisplay: string;
   clickToDownload: string;
+  bearingFamilyName: string;
 
   selectedItems: any[];
 
@@ -127,6 +131,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   listTitle: string;
 
   list: any[] = [];
+  sparqlList:any[];
 
   //wiki
 
@@ -178,6 +183,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
   isIframes: boolean = false;
   isStemma: boolean = false;
   isFamilyTree: boolean = false;
+  isSparql:boolean = false;
 
   onClick2(query) { //handling click for sparql query
     query = this.setData.sparqlToDisplay(query);
@@ -205,9 +211,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
   }
 
-
   onClick3(query) { //handling click for sparql query (download)
     this.setData.sparqlToDownload(query);
+  }
+
+  openImage(image){ //handling click for picture (open in new tab) 
+    window.open(image);
   }
 
   setItemId(event) {
@@ -217,11 +226,12 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.isSpinner = true;
-    this.list = [];
-    this.isList = false;
-
-    if (this.list !== []) { this.isList = true };
+    this.isSpinner = true ;
+    this.list = [] ;
+    this.isList = false ;
+    this.sparqlList = [];
+    this.sparqlData = [] ;
+    this.isSparql =false
 
     this.newSearch = "new search"
     if (this.selectedLang === "de") { this.newSearch = "neue Suche" };
@@ -311,14 +321,16 @@ export class DisplayComponent implements OnInit, OnDestroy {
             )).
           subscribe(res => { this.linkedItems }
           );
-
         this.data = this.setData.itemToDisplay(this.itemId)   //handle item
         this.subscription2 = this.data.subscribe(item => {
           this.isMain = false;
           this.isOther = false;
           if (item !== undefined) {
             this.item = item;
+            console.log(this.item);
             this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
+            
+
             if (this.item[0].claims.P2 === undefined) { alert("property P2 undefined") };
             if (this.item[0].claims.P320 === undefined) { this.hideList() };
             //   if (this.item[0].claims.P2 !== undefined) {
@@ -364,6 +376,14 @@ export class DisplayComponent implements OnInit, OnDestroy {
 
             ///person
 
+            if (this.item[0].claims.P2.person !== undefined) {
+              if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
+
+              this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
+            }
+
+            }
+ 
             //person: life and family
 
             this.lifeAndFamily = []
@@ -376,12 +396,7 @@ export class DisplayComponent implements OnInit, OnDestroy {
             //person:education
 
             this.education = [];
-            this.training = "";
-
-            if (this.item[0].claims.P2.person !== undefined) {
-              this.educationDisplay.setEducationDisplay(this.item, this.education);
-              if (this.education.length > 0) { this.training = this.item[0].claims.P2.training; this.isTraining = true }
-            }
+            this.training = "";  
 
             //person:career and activities
 
@@ -406,6 +421,30 @@ export class DisplayComponent implements OnInit, OnDestroy {
               }
             }
 
+            // familyName   
+
+            this.sparqlData=[];
+            if (item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
+              this.isSparql = true;
+              let bearingName = this.sparql.bearingName(this.item[0].id);
+              this.query =this.setData.sparqlToDisplay(bearingName);
+                this.query.subscribe(res => { 
+                  if (res !== undefined) {
+                    if (res.results !== undefined) {
+                      this.sparqlList = res.results.bindings;
+                      for (let i = 0; i < this.sparqlList.length; i++) {
+                        this.sparqlList[i]["item"].id = this.sparqlList[i]["item"].value.replace(
+                          "https://database.factgrid.de/entity/", "")
+                        if (this.sparqlList[i]["itemDescription"] === undefined) this.sparqlList[i]["itemDescription"] = { value: "" }
+                      };
+                      this.sparqlData=this.sparqlList;       
+                    }
+                  }
+                },             
+              )           
+          }
+ //   
+            
             ///pictures
 
             this.pictures = [];
@@ -420,7 +459,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
               if (this.item[0].claims.P188[0].picture !== undefined) {
                 this.item[1].splice(this.item[1].indexOf("P188"), 1);
                 this.pictures = this.item[0].claims.P188
-                console.log(this.pictures);
               }
             }
 
@@ -510,7 +548,6 @@ export class DisplayComponent implements OnInit, OnDestroy {
               if (this.item[0].claims.P720[0] !== undefined) {  this.urlSafe13 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[0].mainsnak.datavalue.value);}
               if (this.item[0].claims.P720[1] !== undefined) { this.urlSafe14 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[1].mainsnak.datavalue.value);}
               if (this.item[0].claims.P720[2] !== undefined) { this.urlSafe15 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[2].mainsnak.datavalue.value); }
-              console.log(item[0].claims.P720[0].qualifiers2[0].value.label)
             }
 
             ///externalLinks
@@ -578,8 +615,10 @@ export class DisplayComponent implements OnInit, OnDestroy {
           }
         }
         )
+  
       }
     )
+
   }
 
 
@@ -602,6 +641,11 @@ export class DisplayComponent implements OnInit, OnDestroy {
   }
 
   getUrl(u) { return this.sanitizer.bypassSecurityTrustUrl(u) }
+
+  ngAfterViewInit(): void {
+    this.list
+  }
+  
 
   ngOnDestroy(): void {
     this.subscription0.unsubscribe();
