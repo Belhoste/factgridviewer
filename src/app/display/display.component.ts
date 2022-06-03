@@ -674,6 +674,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription0.unsubscribe();
     this.subscription1.unsubscribe();
     this.subscription2.unsubscribe();
-    this.subscription3.unsubscribe();
+ //   this.subscription3.unsubscribe();
   }
 }
