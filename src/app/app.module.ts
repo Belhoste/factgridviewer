@@ -41,6 +41,7 @@ import { ShortUrlInterceptor } from './short-url-interceptor.service';
 import { UnitPipe } from './unit.pipe';
 import { SparqlDisplayComponent } from './display/sparql-display.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { TextDisplayComponent } from './display/text-display/text-display.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     EssaiComponent,
     UnitPipe,
     SparqlDisplayComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    TextDisplayComponent
   ],
 
   providers:[

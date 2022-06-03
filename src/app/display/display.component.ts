@@ -608,7 +608,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           // transcription
           
           if (this.item[0].claims.P251 !== undefined) {  
-            this.isTranscription = true;
             if(this.item[0].claims.P251[0].mainsnak.datavalue.value !== undefined){
             let a = this.transcript.transcript(this.item[0].claims.P251[0].mainsnak.datavalue.value);
             this.subscription3 = a.subscribe(res =>{ 
@@ -619,7 +618,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             )
           }  
-          this.isTranscription = true;
         }
 
           //spinner
