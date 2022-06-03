@@ -550,11 +550,6 @@
             </div>
 		      </mat-card-content>
 	      </div>
- <!---       <div [ngClass]="isTranscription ? 'show-division':'hide-division'">
-          <div class="subdivision-title">Transcription</div>
-          <div [innerHtml]="trans"></div>
-        </div> --->
-
         <app-text-display  [trans]="this.trans"></app-text-display>
 
         <div [ngClass]="isSources ? 'show-division':'hide-division'">
