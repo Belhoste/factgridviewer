@@ -228,6 +228,20 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
            }
           }
 
+    getTranscript(id) {
+            let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
+             let params = new HttpParams().set('page',id)
+             .set('format',"json")
+             .set('prop',"text")
+             .set('formatversion',2)
+             .set('origin',"*")
+            return this.http.get('https://database.factgrid.de//w/api.php?action=parse', {
+          //    headers: headers, 
+              params: params})   
+          // return this.http.get('https://www.wikidata.org//w/api.php', {params: params}) 
+             }
+         
+
 
  // selectUrl(url:string) {  let selectUrl = re => re == "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
   //   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : re  };

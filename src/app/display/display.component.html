@@ -549,7 +549,11 @@
               </div>
             </div>
 		      </mat-card-content>
-	      </div> 
+	      </div>
+        <div [ngClass]="isTranscription ? 'show-division':'hide-division'">
+          <div class="subdivision-title">Transcription</div>
+          <div [innerHtml]="trans"></div>
+        </div> 
 
         <div [ngClass]="isSources ? 'show-division':'hide-division'">
           <div class="subdivision-title">{{sources}}</div>
@@ -597,6 +601,8 @@
     </div>
   </mat-card>
   </div>
+
+ 
   
   <app-sparql-display  [sparqlData]="this.sparqlData"></app-sparql-display>
   

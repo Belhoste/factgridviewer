@@ -20,8 +20,10 @@ import { EventDisplayService } from './services/event-display.service';
 import { ExternalLinksDisplayService } from './services/external-links-display.service';
 import { IframesDisplayService } from './services/iframes-display.service';
 import { WikiDisplayService } from './services/wiki-display.service';
+import { TranscriptDisplayService } from '../services/transcript-display.service';
 import { BackListService } from '../services/back-list.service';
 import { SetSelectedItemsListService } from '../services/set-selected-items-list.service';
+import { TranscriptionService } from './services/transcription.service'
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SparqlDisplayComponent } from './sparql-display.component';
@@ -37,7 +39,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private setData: SetDataService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
     private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
     private personDisplay: PersonDisplayService, private educationDisplay: EducationDisplayService, private careerDisplay: CareerDisplayService, private sociabilityDisplay: SociabilityDisplayService,
-    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sparql:SparqlService, private sanitizer: DomSanitizer) { }
+    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript:TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sparql:SparqlService, private sanitizer: DomSanitizer) { }
 
     //iframe
   urlSafe1: SafeResourceUrl;
@@ -56,6 +58,11 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   urlSafe14:SafeResourceUrl;
   urlSafe15:SafeResourceUrl;
 
+  // transcription
+
+  transcription;
+  trans:string="";
+  placeholder;
 
   //tree
   stemma_url: SafeResourceUrl;
@@ -184,6 +191,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   isStemma: boolean = false;
   isFamilyTree: boolean = false;
   isSparql:boolean = false;
+  isTranscription:boolean = false;
 
   onClick2(query) { //handling click for sparql query
     query = this.setData.sparqlToDisplay(query);
@@ -452,7 +460,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.item[0].claims.P189 !== undefined) { //pictures
               this.item[1].splice(this.item[1].indexOf("P189"), 1);
               this.pictures = this.item[0].claims.P189
-              console.log(this.pictures);
             }
 
             if (this.item[0].claims.P188 !== undefined) { //pictures
@@ -470,7 +477,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (this.item[0].claims.P2.org !== undefined) {
               this.orgDisplay.setOrgDisplay(this.item, this.locationAndContext);
-              //   if (this.locationAndContext.length > 0) {  this.isOrg = true};
             }
 
             ///activity
@@ -589,7 +595,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.mainList.length > 0) {
               this.isMain = true;
             }
-
+           
             //wikis
 
             this.wikis = [];
@@ -597,6 +603,24 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.wikiDisplay.setWikiDisplay(this.item, this.wikis);
             if (this.wikis.length > 0) { this.isWikis = true };
           }
+
+          // transcription
+          
+          if (this.item[0].claims.P251 !== undefined) {  
+            this.isTranscription = true;
+            if(this.item[0].claims.P251[0].mainsnak.datavalue.value !== undefined){
+            let a = this.transcript.transcript(this.item[0].claims.P251[0].mainsnak.datavalue.value);
+            a.subscribe(res =>{ 
+             Object.keys(res)[0]=="error"? this.trans="no transcription":
+             this.trans=res.parse.text;
+              this.trans = this.changeTranscript.cleaning(this.trans); 
+              console.log(this.trans);
+              }
+            )
+          }  
+          this.isTranscription = true;
+        }
+
           //spinner
 
           this.isSpinner = false;
