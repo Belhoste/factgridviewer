@@ -88,6 +88,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   subscription0: Subscription;
   subscription1: Subscription;
   subscription2: Subscription;
+  subscription3: Subscription;
 
   selectedLang: string = (localStorage['selectedLang'] === undefined) ? "en" : localStorage['selectedLang'];
 
@@ -610,7 +611,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isTranscription = true;
             if(this.item[0].claims.P251[0].mainsnak.datavalue.value !== undefined){
             let a = this.transcript.transcript(this.item[0].claims.P251[0].mainsnak.datavalue.value);
-            a.subscribe(res =>{ 
+            this.subscription3 = a.subscribe(res =>{ 
              Object.keys(res)[0]=="error"? this.trans="no transcription":
              this.trans=res.parse.text;
               this.trans = this.changeTranscript.cleaning(this.trans); 
@@ -675,5 +676,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription0.unsubscribe();
     this.subscription1.unsubscribe();
     this.subscription2.unsubscribe();
+    this.subscription3.unsubscribe();
   }
 }

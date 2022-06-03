@@ -8,9 +8,10 @@ export class TranscriptionService {
   constructor() { }
 
 cleaning(u){
-console.log(u);
 let regex = /<\s*a[^>]*>/g
 u=u.replace(regex,"");
+let regex1 = /<\s*![^>]*>/g
+u=u.replace(regex1,"");
 u=u.replaceAll("mw-healine","property2");
 u=u.replaceAll(" (talk</a>)","");
 u=u.replaceAll("</p><p>","");

@@ -14,10 +14,7 @@ export class TranscriptDisplayService {
     console.log(u);
     let v= u.replace("https://database.factgrid.de/wiki/","");
     v=v.replace("#Transcript","");
-    console.log(v);
     v=this.request.getTranscript(v);
-    v.subscribe(res =>console.log(res))
-    v.pipe(map(res=>console.log(res)));
    return v
     
     //.pipe(
