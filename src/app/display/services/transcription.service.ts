@@ -8,7 +8,7 @@ export class TranscriptionService {
   constructor() { }
 
 cleaning(u){
-  console.log(u);
+let v="";
 let regex = /<\s*a[^>]*>/g
 u=u.replace(regex,"");
 let regex1 = /<\s*![^>]*>/g
@@ -20,7 +20,7 @@ u=u.replaceAll(">[<");
 u=u.replaceAll(">]<");
 u=u.replaceAll("mw-healine","property2");
 u=u.replaceAll(" (talk</a>)","");
-u=u.replaceAll("</p><p>","");
+v=u.replaceAll("</p><p>","");
 //u=u.replaceAll('<span class="mw-editsection"><span class="mw-editsection-bracket">[</span>edit</a><span class="mw-editsection-bracket">]</span></span>',"");
 
 /*let mapObj = {
@@ -31,7 +31,7 @@ u=u.replaceAll("</p><p>","");
 };
 u=u.replace(/'<span class="mw-editsection"><span class="mw-editsection-bracket">'|"mw-headline"|"talk<\/a>)"|"<\/p><p>"/, function(matched){return mapObj[matched];}); */
 
-return u
+return v
 }
 
 }

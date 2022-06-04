@@ -28,7 +28,7 @@ export class TextDisplayComponent implements OnChanges {
           this.text = currentTrans.currentValue;
           if(this.text !== undefined){ this.isTrans = true };
           if(this.text ==""){ this.isTrans = false };
-
+          console.log(this.text);
           console.log(this.isTrans);
           
     }

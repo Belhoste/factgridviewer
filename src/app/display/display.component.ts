@@ -61,8 +61,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   // transcription
 
   transcription;
-  trans:string="";
-  placeholder;
+  trans;
+  
 
   //tree
   stemma_url: SafeResourceUrl;
@@ -607,17 +607,20 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // transcription
           
-          if (this.item[0].claims.P251 !== undefined) {  
+          if (this.item[0].claims.P251 !== undefined) { 
+            this.trans="";
             if(this.item[0].claims.P251[0].mainsnak.datavalue.value !== undefined){
             let a = this.transcript.transcript(this.item[0].claims.P251[0].mainsnak.datavalue.value);
             this.subscription3 = a.subscribe(res =>{ 
              Object.keys(res)[0]=="error"? this.trans="no transcription":
              this.trans=res.parse.text;
               this.trans = this.changeTranscript.cleaning(this.trans); 
-              console.log(this.trans);
               }
             )
           }  
+        }
+        if (this.item[0].claims.P251 === undefined) {  
+            this.trans=undefined;
         }
 
           //spinner
