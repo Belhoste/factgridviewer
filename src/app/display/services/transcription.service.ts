@@ -9,18 +9,19 @@ export class TranscriptionService {
 
 cleaning(u){
 let v="";
-let regex = /<\s*a[^>]*>/g
-u=u.replace(regex,"");
-let regex1 = /<\s*![^>]*>/g
-u=u.replace(regex1,"");
+let u2;
 let regex2 = /<\s*s[^>]*>/g;
-u=u.replace(regex2,"");
-u=u.replaceAll("span>edit",""),
-u=u.replaceAll(">[<");
-u=u.replaceAll(">]<");
-u=u.replaceAll("mw-healine","property2");
-u=u.replaceAll(" (talk</a>)","");
-v=u.replaceAll("</p><p>","");
+u2=u.replace(regex2,"");
+let regex = /<\s*a[^>]*>/g
+u2=u2.replace(regex,"");
+let regex1 = /<\s*![^>]*>/g
+u2=u2.replace(regex1,"");
+u2=u2.replaceAll("span>edit","");
+u2=u2.replaceAll(">[<");
+u2=u2.replaceAll(">]<");
+u2=u2.replaceAll("mw-healine","property2");
+u2=u2.replaceAll(" (talk</a>)","");
+v=u2.replaceAll("</p><p>","");
 //u=u.replaceAll('<span class="mw-editsection"><span class="mw-editsection-bracket">[</span>edit</a><span class="mw-editsection-bracket">]</span></span>',"");
 
 /*let mapObj = {
