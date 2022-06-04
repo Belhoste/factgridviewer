@@ -621,8 +621,13 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             )
           }  
         }
-  
 
+        if (this.item[0].claims.P251 === undefined) { 
+            this.trans="";
+        }
+
+        
+        
           //spinner
 
           this.isSpinner = false;
