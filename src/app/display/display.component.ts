@@ -241,6 +241,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sparqlList = [];
     this.sparqlData = [] ;
     this.isSparql =false
+    this.trans = "";
 
     this.newSearch = "new search"
     if (this.selectedLang === "de") { this.newSearch = "neue Suche" };
@@ -606,9 +607,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           // transcription
+
+      
           
           if (this.item[0].claims.P251 !== undefined) { 
-            this.trans="";
             if(this.item[0].claims.P251[0].mainsnak.datavalue.value !== undefined){
             let a = this.transcript.transcript(this.item[0].claims.P251[0].mainsnak.datavalue.value);
             this.subscription3 = a.subscribe(res =>{ 
@@ -619,9 +621,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             )
           }  
         }
-        if (this.item[0].claims.P251 === undefined) {  
-            this.trans=undefined;
-        }
+  
 
           //spinner
 

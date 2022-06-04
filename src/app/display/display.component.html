@@ -214,7 +214,7 @@
         </div>
         <div>
         </div>
-        <app-text-display  [trans]="this.trans" *ngIf="this.trans"></app-text-display>
+        <app-text-display  [trans]="this.trans" *ngIf='this.trans !== ""'></app-text-display>
         <div [ngClass]="isTraining ? 'show-division':'hide-division'">
           <div class="subdivision-title">{{training}}</div> 
           <mat-card-content fxLayout="column wrap"  fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
