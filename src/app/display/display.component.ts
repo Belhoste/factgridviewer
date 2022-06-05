@@ -75,7 +75,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   factGridQuery: string;
 
   sparqlData:any[]//data for a sparql query
-  sparqlSubject:string //id of the property to which the sparql is related
+  sparqlSubject:string; //id of the property to which the sparql is related
   query:Observable<any>; //sparql query
 
   data: Observable<any>; //for routing
@@ -406,7 +406,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (this.item[0].claims.P2.person !== undefined) {
               this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
-
             }
 
             //person:education
@@ -439,7 +438,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // sparqlQuery   
 
-            if (this.natureOf == "Q24499"|| "Q37073" || "Q146602" || "Q8") {
+            if (this.natureOf == "Q24499" || "Q37073" || "Q146602" || "Q8") {
               this.isSparql = true;
               let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);
               this.query =this.setData.sparqlToDisplay(sparqlQuery);
