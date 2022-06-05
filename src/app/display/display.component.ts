@@ -28,6 +28,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { SparqlDisplayComponent } from './sparql-display.component';
 
+
 @Component({
   selector: 'app-display',
   templateUrl: 'display.component.html',
@@ -73,7 +74,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   iframesNumber: any;
   factGridQuery: string;
 
-  sparqlData:any//data for a sparql query
+  sparqlData:any[]//data for a sparql query
+  sparqlSubject:string //id of the property to which the sparql is related
   query:Observable<any>; //sparql query
 
   data: Observable<any>; //for routing
@@ -117,6 +119,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   label: string;
   description: string;
   aliases: string[];
+  natureOf: string;
 
   //="https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png";
   map: any;
@@ -240,8 +243,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isList = false ;
     this.sparqlList = [];
     this.sparqlData = [] ;
-    this.isSparql =false
+    this.sparqlSubject = "";
+    this.isSparql = false;
     this.trans = "";
+  
 
     this.newSearch = "new search"
     if (this.selectedLang === "de") { this.newSearch = "neue Suche" };
@@ -344,6 +349,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.item[0].claims.P2 === undefined) { alert("property P2 undefined") };
             if (this.item[0].claims.P320 === undefined) { this.hideList() };
             //   if (this.item[0].claims.P2 !== undefined) {
+            this.natureOf = this.item[0].claims.P2[0].mainsnak.datavalue.value.id;
             this.event = this.item[0].claims.P2.event;
             this.sources = this.item[0].claims.P2.sources;
             this.listTitle = this.item[0].claims.P2.listTitle;
@@ -431,13 +437,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
 
-            // familyName   
+            // sparqlQuery   
 
-            this.sparqlData=[];
-            if (item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
+            if (this.natureOf == "Q24499"|| "Q37073" || "Q146602" || "Q8") {
               this.isSparql = true;
-              let bearingName = this.sparql.bearingName(this.item[0].id);
-              this.query =this.setData.sparqlToDisplay(bearingName);
+              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);
+              this.query =this.setData.sparqlToDisplay(sparqlQuery);
                 this.query.subscribe(res => { 
                   if (res !== undefined) {
                     if (res.results !== undefined) {
@@ -447,10 +452,11 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                           "https://database.factgrid.de/entity/", "")
                         if (this.sparqlList[i]["itemDescription"] === undefined) this.sparqlList[i]["itemDescription"] = { value: "" }
                       };
-                      this.sparqlData=this.sparqlList;       
+                      this.sparqlData = this.sparqlList ; 
+                      this.sparqlSubject = item[0].claims.P2[0].mainsnak.datavalue.value.id ; 
                     }
                   }
-                },             
+                }        
               )           
           }
  //   
