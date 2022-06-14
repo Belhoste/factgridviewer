@@ -26,7 +26,6 @@ import { SetSelectedItemsListService } from '../services/set-selected-items-list
 import { TranscriptionService } from './services/transcription.service'
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { SparqlDisplayComponent } from './sparql-display.component';
 
 
 @Component({
@@ -74,12 +73,25 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   iframesNumber: any;
   factGridQuery: string;
 
+  instancesList:any[]; //
+  subclassesList:any[];
+  classesList:any[];
+  natureOfList:any[];
+  classIds:any[];
+ 
+
+  placeType:string ="";
+
   sparqlData:any[]//data for a sparql query
   sparqlSubject:string; //id of the property to which the sparql is related
-  query:Observable<any>; //sparql query
+  
+  query:Observable<any> | undefined; //sparql query
+  subclassesListQuery:Observable<any> | undefined; //sparql query for list of subclasses
+  instancesListQuery:Observable<any> | undefined; //sparql query for list of instances
+  classesListQuery:Observable<any> | undefined; // sparql query for list of classes
 
   data: Observable<any>; //for routing
-  itemId = ""; //for routing
+  itemId; //for routing
   itemObject;//for routing
 
   isSpinner: boolean = false;
@@ -90,7 +102,11 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   subscription0: Subscription;
   subscription1: Subscription;
   subscription2: Subscription;
-  subscription3: Subscription;
+  subscription3: Subscription | undefined;
+  subscription4: Subscription | undefined;
+  subscription5: Subscription | undefined;
+  subscription6: Subscription | undefined;
+  subscription7: Subscription | undefined;
 
   selectedLang: string = (localStorage['selectedLang'] === undefined) ? "en" : localStorage['selectedLang'];
 
@@ -103,7 +119,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   clickToDownload: string;
   bearingFamilyName: string;
 
-  selectedItems: any[];
+  selectedItems: any[] 
 
   factGridLogo: string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
@@ -119,7 +135,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   label: string;
   description: string;
   aliases: string[];
-  natureOf: string;
+  natureOf: string ="";
+  classId:string="";
 
   //="https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png";
   map: any;
@@ -143,6 +160,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   list: any[] = [];
   sparqlList:any[];
+  superClass:string;
 
   //wiki
 
@@ -194,18 +212,18 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   isIframes: boolean = false;
   isStemma: boolean = false;
   isFamilyTree: boolean = false;
-  isSparql:boolean = false;
+//  isSparql:boolean = false;
   isTranscription:boolean = false;
+  isInfo:boolean = false;
+  
 
   onClick2(query) { //handling click for sparql query
     query = this.setData.sparqlToDisplay(query);
-    console.log(query);
     if(query.includes("item")){
     query.subscribe(res => {
       if (res !== undefined) {
         if (res.results !== undefined) {
           this.list = res.results.bindings;
-          console.log(this.list);
           for (let i = 0; i < this.list.length; i++) {
             this.list[i]["item"].id = this.list[i]["item"].value.replace(
               "https://database.factgrid.de/entity/", "")
@@ -244,9 +262,13 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sparqlList = [];
     this.sparqlData = [] ;
     this.sparqlSubject = "";
-    this.isSparql = false;
+ //   this.isSparql = false;
     this.trans = "";
-  
+    this.instancesList = [];
+    this.subclassesList = [];
+    this.classesList = [];
+    this.natureOfList = [];
+    this.superClass = "";
 
     this.newSearch = "new search"
     if (this.selectedLang === "de") { this.newSearch = "neue Suche" };
@@ -344,12 +366,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.item = item;
             console.log(this.item);
             this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
-            
 
             if (this.item[0].claims.P2 === undefined) { alert("property P2 undefined") };
             if (this.item[0].claims.P320 === undefined) { this.hideList() };
             //   if (this.item[0].claims.P2 !== undefined) {
-            this.natureOf = this.item[0].claims.P2[0].mainsnak.datavalue.value.id;
+            this.superClass = "";
+            this.natureOf=this.item[0].claims.P2[0].mainsnak.datavalue.value.id;
             this.event = this.item[0].claims.P2.event;
             this.sources = this.item[0].claims.P2.sources;
             this.listTitle = this.item[0].claims.P2.listTitle;
@@ -366,7 +388,16 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
+            
+            if(this.item[0].infoList !== undefined){
+            this.instancesList=this.item[0].infoList[0];
+            this.subclassesList=this.item[0].infoList[1];
+            this.classesList=this.item[0].infoList[2];
+            this.natureOfList=this.item[0].infoList[3];
+            }
 
+      if(this.classesList.length !== undefined || this.subclassesList.length !==undefined || this.instancesList.length !== undefined){ this.isInfo = true}
+         
             ///header
 
             this.id = this.item[0].id;
@@ -436,29 +467,25 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
 
-            // sparqlQuery   
-
-            if (this.natureOf == "Q24499" || "Q37073" || "Q146602" || "Q8") {
-              this.isSparql = true;
-              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);
-              this.query =this.setData.sparqlToDisplay(sparqlQuery);
-                this.query.subscribe(res => { 
-                  if (res !== undefined) {
-                    if (res.results !== undefined) {
-                      this.sparqlList = res.results.bindings;
-                      for (let i = 0; i < this.sparqlList.length; i++) {
-                        this.sparqlList[i]["item"].id = this.sparqlList[i]["item"].value.replace(
-                          "https://database.factgrid.de/entity/", "")
-                        if (this.sparqlList[i]["itemDescription"] === undefined) this.sparqlList[i]["itemDescription"] = { value: "" }
-                      };
-                      this.sparqlData = this.sparqlList ; 
-                      this.sparqlSubject = item[0].claims.P2[0].mainsnak.datavalue.value.id ; 
-                    }
-                  }
-                }        
-              )           
-          }
- //   
+            let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
+            for (let i = 0; i < this.natureOfList.length; i++){
+              natureOfIds[i]=this.natureOfList[i].item.id;
+            }
+          
+        if(natureOfIds.includes("Q12")){ this.natureOf = "Q12" };
+        
+          if (this.natureOf == "Q12"|| "Q24499" || "Q37073" || "Q146602" || "Q8") {
+            
+       //     this.isSparql = true;
+            if (this.natureOf == "Q12" && this.item[0].claims.P320){ this.natureOf = "" };
+              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);     
+              this.query = this.setData.sparqlToDisplay(sparqlQuery);
+              this.subscription4 = this.query?.subscribe(res => { this.sparqlData = this.sparql.listFromSparql(res);
+           //   this.sparqlSubject = item[0].claims.P2[0].mainsnak.datavalue.value.id ; 
+           this.sparqlSubject = this.natureOf;
+              }
+                )     
+          }   
             
             ///pictures
 
@@ -612,8 +639,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           }
 
           // transcription
-
-      
           
           if (this.item[0].claims.P251 !== undefined) { 
             if(this.item[0].claims.P251[0].mainsnak.datavalue.value !== undefined){
@@ -630,8 +655,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.item[0].claims.P251 === undefined) { 
             this.trans="";
         }
-
-        
         
           //spinner
 
@@ -657,7 +680,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-
   qualifiersList(u) { //setting the list of qualifiers for a mainsnak
     for (let i = 0; i < u.length; i++) {
       if (u["'qualifiers-order'"] !== undefined) {
@@ -682,11 +704,14 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.list
   }
   
-
   ngOnDestroy(): void {
     this.subscription0.unsubscribe();
     this.subscription1.unsubscribe();
     this.subscription2.unsubscribe();
- //   this.subscription3.unsubscribe();
+    if(this.subscription3 !==undefined){this.subscription3.unsubscribe();}
+    if(this.subscription4 !==undefined){this.subscription4.unsubscribe();}
+    if(this.subscription5 !==undefined){this.subscription5.unsubscribe();}
+    if(this.subscription6 !==undefined){this.subscription6.unsubscribe();}
+    if(this.subscription7 !==undefined){this.subscription7.unsubscribe();}
   }
 }

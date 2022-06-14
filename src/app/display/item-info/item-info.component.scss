@@ -1,0 +1,32 @@
+.property2 {
+    color:#3F51B5;
+    font-weight:550;
+  }
+
+.hide-division {
+    display: none;
+    }
+  
+.show-division {
+    display: block;
+    }
+
+.subdivision-title {
+        color:#AD1457;
+        font-size: 20px !important;
+        font-weight: 360;
+        padding: 5 px;
+        margin-left: auto;
+        margin-bottom: 10px;
+        height:40px;
+        display:flex;
+        align-items: center;
+      }
+      
+.itemInformation-mat-card{
+        height: fit-content;
+        background-color:#f6f8f9 !important;
+        margin-bottom: 2px;
+        margin-right: 2px;
+        margin-left: 2px;
+      }

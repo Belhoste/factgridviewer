@@ -1,19 +1,21 @@
-<div  [ngClass]="isList ? 'show-division':'hide-division'">
+
+
+  <div>
     <mat-card>
-      <div class="property2">{{subTitle}}</div>   
-      <hr>  
-      <mat-card-content fxLayout="column wrap" 
-                        fxLayoutAlign="start stretch"
-                        fxLayoutGap="2px">
-        <div class="details"  *ngFor="let L of list">
-          <div flex-shrink flex-basis="auto">
-            <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
-              <span class="description-text" *ngIf="L.itemDescription.value">, {{L.itemDescription.value}}</span>
-              <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </label>
-          </div>
-          <hr>
+      <div [ngClass]="isList ? 'show-division':'hide-division'">       
+        <div class="property2">{{subTitle}}</div>   
+          <hr>  
+            <mat-card-content fxLayout="column wrap" 
+                              fxLayoutAlign="start stretch"
+                              fxLayoutGap="2px">
+                <div class="details"  *ngFor="let L of list">
+                  <div flex-shrink flex-basis="auto">
+                    <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
+                      <span class="description-text" *ngIf="L.itemDescription">, {{L.itemDescription.value}}</span>
+                      <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
+                  </div>
+                  <hr>
+                </div>
+            </mat-card-content>
         </div>
-      </mat-card-content>     
-    </mat-card>
-  </div>

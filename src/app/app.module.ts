@@ -42,6 +42,7 @@ import { UnitPipe } from './unit.pipe';
 import { SparqlDisplayComponent } from './display/sparql-display.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { TextDisplayComponent } from './display/text-display/text-display.component';
+import { ItemInfoComponent } from './display/item-info/item-info.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { TextDisplayComponent } from './display/text-display/text-display.compon
     UnitPipe,
     SparqlDisplayComponent,
     SafeHtmlPipe,
-    TextDisplayComponent
+    TextDisplayComponent,
+    ItemInfoComponent
   ],
 
   providers:[

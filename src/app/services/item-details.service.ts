@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { SetTimeService} from './set-time.service';
 import {FactgridSubtitlesService} from './factgrid-subtitles.service'
 import { QualifierDetailsService } from './qualifier-details.service';
+import { TypologyService} from './typology.service';
+import { ItemInfoService } from './item-info.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +12,29 @@ export class ItemDetailsService {
 
   private baseWikimediaURL ='http://commons.wikimedia.org/wiki/Special:FilePath/';
 
-  constructor(private setDate:SetTimeService, private factgrid:FactgridSubtitlesService, private qualifier:QualifierDetailsService) { }
+  constructor(private setDate:SetTimeService, private factgrid:FactgridSubtitlesService, private qualifier:QualifierDetailsService, private typology:TypologyService, private itemInfo:ItemInfoService) { }
 
   qualifiers2:any[];
 
    addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks   
     for (let i=0; i<propertyIds.length; i++){
+      let timeOrder = 23000000;
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
-        let timeOrder = 23000000;
+    
         re.claims[propertyIds[i]][j].mainsnak.timeOrder=timeOrder;
         if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
           let value= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time;
           value = value.substring(0,value.length-10);
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.date = this.setDate.setDate(value,lang);
         }
+    //add typology, that is the nature of the nature of the item    
+    if(propertyIds[i] === "P2"){
+      let u ="";
+     re.claims[propertyIds[i]][j].typology = this.typology.getValue(re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id);
+   //  console.log(u);
+   
+    }
+    
         if(propertyIds[i] === "P189"){
           re.claims[propertyIds[i]][j].picture = this.baseWikimediaURL+re.claims[propertyIds[i]][j].mainsnak.datavalue.value
         }
@@ -59,8 +70,9 @@ export class ItemDetailsService {
   }
 
   addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
-    for (let i=0; i<propertyIds.length; i++){  
+    for (let i=0; i<propertyIds.length; i++){ 
         for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
+          if(propertyIds[i] =="P2"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = "0" } ;
           if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
           let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
              for  (let k=0; k<props.length; k++){      
@@ -94,6 +106,7 @@ export class ItemDetailsService {
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
               let era=re.claims[propertyIds[i]][j].mainsnak.timeOrder.charAt(0);
               re.claims[propertyIds[i]][j].mainsnak.timeOrder = Number(re.claims[propertyIds[i]][j].mainsnak.timeOrder.replace(/\-/g,"").replace(/\+/g,"").substring(0,8)); 
+  
               if (era != "+"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = -Math.abs(re.claims[propertyIds[i]][j].mainsnak.timeOrder)};
                 re.claims[propertyIds[i]].sort(function(a,b){
                   if (a.mainsnak.timeOrder<b.mainsnak.timeOrder)
@@ -194,5 +207,11 @@ export class ItemDetailsService {
           re.sitelinks.wikidatawiki.url="https://www.wikidata.org/wiki/"+re.sitelinks.wikidatawiki.title
         }
       }
+
+    addItemInfo(re){ 
+    
+ // re.info = this.itemInfo.infoListBuilding(re)
+
+    }
 
 }

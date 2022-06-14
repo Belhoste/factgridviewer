@@ -123,12 +123,13 @@
       
     </div>
 
-  <div [ngClass]="isMain ? 'show-division':'hide-division'">
-    <mat-card  class= mat-elevation-z8>
+    <div [ngClass]="isMain ? 'show-division':'hide-division'">
+      <mat-card  class= mat-elevation-z8>
        <div>
          <div>  
-          <div class="subdivision-title" *ngIf='"main"!==undefined'>{{main}}</div>
-          <div class="subdivision-title" *ngIf='"main"===undefined'>autres</div>
+          <div class="subdivision-title">{{item[0].claims.P2[0].mainsnak.label}}</div>
+  <!----        <div class="subdivision-title" *ngIf='"main"!==undefined'>{{main}}</div>
+          <div class="subdivision-title" *ngIf='"main"===undefined'>autres</div>  ----->
          </div>      
           <mat-card-content fxLayout="column wrap" 
                              fxLayoutAlign="start stretch"
@@ -600,8 +601,11 @@
 
  
   
-  <app-sparql-display  [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject"></app-sparql-display>
-  
+  <app-sparql-display  [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject" ></app-sparql-display>
+ 
+<div [ngClass]="isInfo ? 'show-division':'hide-division'">
+  <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info> 
+</div>
 </div>
   
   

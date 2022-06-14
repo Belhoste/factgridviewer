@@ -14,8 +14,8 @@ export class SetItemToDisplayService {
     let mainsnaks = [];
     let mainsnaks2 = [];
   
-    const baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-    const getUrlSuffix= '&props=labels|descriptions&format=json' ;
+  //  const baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
+  //  const getUrlSuffix= '&props=labels|descriptions&format=json' ;
     
     for (const val of values) { //mainsnaks
       let i:number;

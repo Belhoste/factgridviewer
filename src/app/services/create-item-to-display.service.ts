@@ -7,6 +7,8 @@ import { ItemDetailsService } from './item-details.service';
 import { forkJoin, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BackListService } from './back-list.service';
+import { TypologyService } from './typology.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class CreateItemToDisplayService {
   private subject : BehaviorSubject <any> = new BehaviorSubject(null);
 
   constructor(private setLanguage:SetLanguageService, private details:DetailsService, private setItem:SetItemToDisplayService, 
-    private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private backList:BackListService) { }
+    private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private backList:BackListService, private typology:TypologyService) { }
 
     
     createItemToDisplay(re, selectedLang) {
@@ -27,7 +29,7 @@ export class CreateItemToDisplayService {
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
-          map(res =>{    
+          map(res =>{   
           let qualifierProperties=[];
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
           this.addItemDetails.addSidelinksDetails(re);
@@ -41,7 +43,9 @@ export class CreateItemToDisplayService {
           let itemsDetails = this.setLanguage.item2(res.items,selectedLang) ;
           this.addItemDetails.addClaimItemDetails(itemsDetails, re, propertyIds, selectedLang);// selected item with all the properties and items (with their labels and descriptions) of the mainsnaks
           this.addItemDetails.addQualifierItemDetails(itemsDetails, re, propertyIds, selectedLang);
-   //       this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
+       //   this.typology.getValue(re)
+
+          //       this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
     //  this.addItemDetails.sortedItemDetails(re);
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds, selectedLang); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
           u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
