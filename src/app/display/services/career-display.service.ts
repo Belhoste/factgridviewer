@@ -31,6 +31,10 @@ export class CareerDisplayService {
       item[1].splice(item[1].indexOf("P119"),1);
       careerAndActivities.push(item[0].claims.P119); 
     }  
+    if (item[0].claims.P776 !==undefined){  //business partner    
+      item[1].splice(item[1].indexOf("P776"),1);
+      careerAndActivities.push(item[0].claims.P776); 
+    }
     return careerAndActivities
   }
 }

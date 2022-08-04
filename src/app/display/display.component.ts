@@ -112,6 +112,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   newSearch: string;
   linkedPagesTitle: string;
+  infoPageTitle:string;
   mainPage: string;
   externalLinksTitle: string;
   formerVisitsTitle: string;
@@ -243,6 +244,18 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onClick3(query) { //handling click for sparql query (download)
     this.setData.sparqlToDownload(query);
+  }
+
+  onClick4() { 
+    
+    this.isInfo = true;    //handling click for info (unfold)
+    ;
+  }
+
+  onClick5() { 
+    
+    this.isInfo = false;    //handling click for info (fold)
+    ;
   }
 
   openImage(image){ //handling click for picture (open in new tab) 
@@ -467,25 +480,28 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
 
-            let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
-            for (let i = 0; i < this.natureOfList.length; i++){
+        ///sparql queries
+
+          this.sparqlSubject ="";
+          this.sparqlData = [];
+          let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
+          for (let i = 0; i < this.natureOfList.length; i++){
               natureOfIds[i]=this.natureOfList[i].item.id;
             }
           
         if(natureOfIds.includes("Q12")){ this.natureOf = "Q12" };
         
-          if (this.natureOf == "Q12"|| "Q24499" || "Q37073" || "Q146602" || "Q8") {
-            
-       //     this.isSparql = true;
-            if (this.natureOf == "Q12" && this.item[0].claims.P320){ this.natureOf = "" };
-              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);     
-              this.query = this.setData.sparqlToDisplay(sparqlQuery);
-              this.subscription4 = this.query?.subscribe(res => { this.sparqlData = this.sparql.listFromSparql(res);
-           //   this.sparqlSubject = item[0].claims.P2[0].mainsnak.datavalue.value.id ; 
-           this.sparqlSubject = this.natureOf;
-              }
-                )     
-          }   
+        if (this.natureOf == "Q12"|| "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8") {         
+          if (this.natureOf == "Q12" && this.item[0].claims.P320){ this.natureOf = "" };
+            let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);     
+            this.query = this.setData.sparqlToDisplay(sparqlQuery);
+            this.subscription4 = this.query?.subscribe(res => { this.sparqlData = this.sparql.listFromSparql(res);
+            this.sparqlSubject = this.natureOf;
+            console.log(this.sparqlData);
+            console.log(this.sparqlSubject)
+            }
+              )     
+        }    
             
             ///pictures
 

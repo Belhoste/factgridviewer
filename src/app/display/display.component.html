@@ -596,16 +596,22 @@
         </div>
       </mat-card-content>
     </div>
+    <div class="ground-div2" fxLayoutAlign="center center">
+      <div class="icon"  *ngIf="isInfo===false"  class="mat-button.mat-small" class="white-text">
+        <button mat-icon-button (click)="onClick4()" class="white-text"><mat-icon class="white-button">expand_more</mat-icon></button>
+      </div>
+      <div class="icon"  *ngIf="isInfo===true"  class="mat-button.mat-small" class="white-text">
+        <button mat-icon-button (click)="onClick5()" class="white-text"><mat-icon class="white-button">expand_less</mat-icon></button>
+      </div>
+    </div> 
+    <div class="ground-div2" [ngClass]="isInfo ? 'show-division':'hide-division'">
+      <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info> 
+    </div>
   </mat-card>
   </div>
-
- 
   
   <app-sparql-display  [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject" ></app-sparql-display>
  
-<div [ngClass]="isInfo ? 'show-division':'hide-division'">
-  <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info> 
-</div>
 </div>
   
   
