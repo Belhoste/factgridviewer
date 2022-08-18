@@ -69,13 +69,22 @@ export class SparqlDisplayComponent implements OnChanges {
                 if (this.selectedLang === "es") { this.subTitle = "Membres:" };
               }
             }
-              else { if(this.subTitle == "Q37073" || "Q146602"){
-                if (this.selectedLang === "en") {this.subTitle ="with this activity:"};
-                if (this.selectedLang === "de") { this.subTitle = "mit dieser Aktivität:" };
-                if (this.selectedLang === "fr") { this.subTitle = "Ayant cette activité:" };
-                if (this.selectedLang === "es") { this.subTitle = "con esta actividad:" };  
-                }
+            else { if(this.subTitle == "Q37073" || this.subTitle == "Q146602" || this.subTitle == "Q146410"){
+              console.log(this.subTitle)
+              if (this.selectedLang === "en") {this.subTitle ="with this activity:"};
+              if (this.selectedLang === "de") { this.subTitle = "mit dieser Aktivität:" };
+              if (this.selectedLang === "fr") { this.subTitle = "Ayant cette activité:" };
+              if (this.selectedLang === "es") { this.subTitle = "con esta actividad:" };  
               }
+              else { if(this.subTitle == "Q16200"){
+                console.log(this.subTitle);
+                if (this.selectedLang === "en") {this.subTitle ="Domiciled at this address:"};
+                if (this.selectedLang === "de") { this.subTitle = "An dieser Adresse wohnhaft:" };
+                if (this.selectedLang === "fr") { this.subTitle = "Domicilié.e.s à cette adresse:" };
+                if (this.selectedLang === "es") { this.subTitle = "con esta actividad:" };  
+              }       
+            }
+          } 
             }     
           }
         }

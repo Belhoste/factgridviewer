@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Pipe({
   name: 'unit',
@@ -26,7 +26,9 @@ export class UnitPipe implements PipeTransform {
     .set('format',"json")
     .set('origin',"*");
   let response= this.http.get('https://database.factgrid.de//w/api.php', { params: params}).
-  pipe(map(res=>unit + Object.values(Object.values(Object.values(Object.values(Object.values(res)[0])[0])[2])[0])[1]))
+  pipe(
+    tap(res => console.log(res)),
+    map(res=>unit + Object.values(Object.values(Object.values(Object.values(Object.values(res)[0])[0])[2])[0])[1]))
   return response
   }
 

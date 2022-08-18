@@ -491,14 +491,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           
         if(natureOfIds.includes("Q12")){ this.natureOf = "Q12" };
         
-        if (this.natureOf == "Q12"|| "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8") {         
+        if (this.natureOf == "Q12"|| "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8"  || "Q16200") {         
           if (this.natureOf == "Q12" && this.item[0].claims.P320){ this.natureOf = "" };
             let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);     
             this.query = this.setData.sparqlToDisplay(sparqlQuery);
             this.subscription4 = this.query?.subscribe(res => { this.sparqlData = this.sparql.listFromSparql(res);
             this.sparqlSubject = this.natureOf;
-            console.log(this.sparqlData);
-            console.log(this.sparqlSubject)
             }
               )     
         }    
@@ -556,6 +554,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.documentDisplay.setDocumentDisplay(this.item, this.documentDetail);
               ;
             }
+
+            console.log(item[0].claims.P6[0].qualifiers.P793[0].datavalue.value.unit)
 
             ///sources
 

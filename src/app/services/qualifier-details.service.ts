@@ -26,6 +26,7 @@ export class QualifierDetailsService {
                 re.claims[propertyIds[i]][j].qualifiers2[k].value.label = qualifiersArray[k][0].datavalue.value.label;
                 re.claims[propertyIds[i]][j].qualifiers2[k].value.description = qualifiersArray[k][0].datavalue.value.description;
                 re.claims[propertyIds[i]][j].qualifiers2[k].value.aliases = qualifiersArray[k][0].datavalue.value.aliases;
+                re.claims[propertyIds[i]][j].qualifiers2[k].value.unit = qualifiersArray[k][0].datavalue.value.unit;
                 // for
                 if (qualifiersArray[k][0].datatype === "commonsMedia"){
                   re.claims[propertyIds[i]][j].qualifiers2[k].value.string = "http://commons.wikimedia.org/wiki/Special:FilePath/"+qualifiersArray[k][0].datavalue.value };   

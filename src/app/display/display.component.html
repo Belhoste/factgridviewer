@@ -184,6 +184,7 @@
                         </mat-card>
                       </label>
                       <label>{{Q.value.amount}}</label>
+                      <label *ngIf="Q.value.unit"><em>&nbsp;({{Q.value.unit | unit |async}})</em>&nbsp;</label>
                       <label class="break-word-container" *ngIf="Q.datatype === 'url'">{{Q.value.label}},
                         <a href ="{{Q.value.url}}" target="_blank">{{Q.value.url}}</a></label>
                       <label *ngIf="Q.datatype==='wikibase-item'">{{Q.value.label}}, <span class="description-text">{{Q.value.description}}</span>
