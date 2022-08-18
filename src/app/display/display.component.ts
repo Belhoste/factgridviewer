@@ -275,6 +275,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sparqlList = [];
     this.sparqlData = [] ;
     this.sparqlSubject = "";
+ //   this.isInfo = true;
  //   this.isSparql = false;
     this.trans = "";
     this.instancesList = [];
@@ -553,9 +554,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.item[0].claims.P2.document !== undefined) {
               this.documentDisplay.setDocumentDisplay(this.item, this.documentDetail);
               ;
-            }
-
-            console.log(item[0].claims.P6[0].qualifiers.P793[0].datavalue.value.unit)
+            }        
 
             ///sources
 
