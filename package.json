@@ -39,6 +39,7 @@
     "moment": "^2.29.1",
     "ng-mat-select-infinite-scroll": "^3.0.0",
     "ngx-mat-select-search": "^3.2.2",
+    "node.js": "^0.0.1-security",
     "npm": "^7.23.0",
     "rxjs": "^6.6.3",
     "sass": "^1.39.2",

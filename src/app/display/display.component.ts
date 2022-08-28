@@ -124,7 +124,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   factGridLogo: string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
-  langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "  " }]
+  langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "hu" }, { lang: "it" }, { lang: "  " }]
 
   item: any[];
   linkedItems: any[]; //backList
@@ -172,6 +172,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   eswiki: any;
   nlwiki: any;
   itwiki: any;
+  huwiki: any;
   wikidatawiki: any;
   wikis: any[];
 
@@ -287,47 +288,65 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.newSearch = "new search"
     if (this.selectedLang === "de") { this.newSearch = "neue Suche" };
     if (this.selectedLang === "fr") { this.newSearch = "nouvelle recherche" };
-    if (this.selectedLang === "es") { this.newSearch = "nueva búsqueda" }
+    if (this.selectedLang === "es") { this.newSearch = "nueva búsqueda" };
+    if (this.selectedLang === "hu") { this.newSearch = "új keresés" };
+    if (this.selectedLang === "it") { this.newSearch = "nuova ricerca" };
 
     this.linkedPagesTitle = "linked pages"
     if (this.selectedLang === "de") { this.linkedPagesTitle = "verlinkte Seiten" };
     if (this.selectedLang === "fr") { this.linkedPagesTitle = "pages liées" };
     if (this.selectedLang === "es") { this.linkedPagesTitle = "páginas enlazadas" }
+    if (this.selectedLang === "hu") { this.linkedPagesTitle = "kapcsolódó oldalak" };
+    if (this.selectedLang === "it") { this.linkedPagesTitle = "pagine collegate" };
 
     this.mainPage = "Main page"
     if (this.selectedLang === "de") { this.mainPage = "HauptSeite" };
     if (this.selectedLang === "fr") { this.mainPage = "page principale" };
     if (this.selectedLang === "es") { this.mainPage = "página principal" };
+    if (this.selectedLang === "hu") { this.mainPage = "főoldal" };
+    if (this.selectedLang === "it") { this.mainPage = "pagina principale" };
 
     this.factGridQuery = "FactGrid query"
     if (this.selectedLang === "de") { this.factGridQuery = "FactGrid Abfrage" };
-    if (this.selectedLang === "fr") { this.factGridQuery = "Requête FactGrid" };
-    if (this.selectedLang === "es") { this.factGridQuery = "Consulta FactGrid" }
+    if (this.selectedLang === "fr") { this.factGridQuery = "requête FactGrid" };
+    if (this.selectedLang === "es") { this.factGridQuery = "consulta FactGrid" };
+    if (this.selectedLang === "hu") { this.factGridQuery = "FactGrid lekérdezés" };
+    if (this.selectedLang === "it") { this.factGridQuery = "interrogazione FactGrid" };
 
     this.externalLinksTitle = "External links"
     if (this.selectedLang === "de") { this.externalLinksTitle = "Externe Links" };
     if (this.selectedLang === "fr") { this.externalLinksTitle = "Liens externes" };
-    if (this.selectedLang === "es") { this.externalLinksTitle = "Enlaces externos" }
+    if (this.selectedLang === "es") { this.externalLinksTitle = "Enlaces externos" };
+    if (this.selectedLang === "hu") { this.externalLinksTitle = "Külső hivatkozások" };
+    if (this.selectedLang === "it") { this.externalLinksTitle = "Collegamenti esterni" };
 
     this.formerVisitsTitle = "you have visited:"
     if (this.selectedLang === "de") { this.formerVisitsTitle = "Sie haben besucht:" };
     if (this.selectedLang === "fr") { this.formerVisitsTitle = "vous avez visité :" };
-    if (this.selectedLang === "es") { this.formerVisitsTitle = "has visitado :" }
+    if (this.selectedLang === "es") { this.formerVisitsTitle = "has visitado :" };
+    if (this.selectedLang === "hu") { this.formerVisitsTitle = "meglátogatott :" };
+    if (this.selectedLang === "it") { this.formerVisitsTitle = "avete visitato :" };
 
     this.clickToDisplay = "click to display"
     if (this.selectedLang === "de") { this.clickToDisplay = "Klicken Sie zum Anzeigen" };
     if (this.selectedLang === "fr") { this.clickToDisplay = "cliquez pour afficher" };
     if (this.selectedLang === "es") { this.clickToDisplay = "haga clic para mostrar" };
+    if (this.selectedLang === "hu") { this.clickToDisplay = "kattintson a megtekintéshezr" };
+    if (this.selectedLang === "it") { this.clickToDisplay = "fare clic per visualizzare" };
 
     this.clickToDownload = "click to download"
     if (this.selectedLang === "de") { this.clickToDownload = "Klicken Sie zum Download" };
     if (this.selectedLang === "fr") { this.clickToDownload = "cliquez pour télécharger" };
-    if (this.selectedLang === "es") { this.clickToDownload = "haga clic para descargarlo" }
+    if (this.selectedLang === "es") { this.clickToDownload = "haga clic para descargarlo" };
+    if (this.selectedLang === "hu") { this.clickToDownload = "kattintson a letöltéshez" };
+    if (this.selectedLang === "it") { this.clickToDownload = "fare clic per scaricare" };
 
     this.stemma = "Preceding_in_stemma"
     if (this.selectedLang === "de") { this.stemma = "Stemma_aufwärts" };
     if (this.selectedLang === "fr") { this.stemma = "Précédent_dans_le_stemma" };
-    if (this.selectedLang === "es") { this.stemma = "Precedente_en_el_stemma" }
+    if (this.selectedLang === "es") { this.stemma = "Precedente_en_el_stemma" };
+    if (this.selectedLang === "hu") { this.stemma = "Preceding_in_stemma" };
+    if (this.selectedLang === "it") { this.stemma = "Precedente_in_stemma" };
 
     this.subscription0 = this.route.paramMap.subscribe(
       params => {
@@ -350,6 +369,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                 };
                 if (this.selectedLang === "es") {
                   this.linkedItems = [{ id: "Q21898", label: "ninguno" }]
+                };
+                if (this.selectedLang === "hu") {
+                  this.linkedItems = [{ id: "Q21898", label: "nincs" }]
+                };
+                if (this.selectedLang === "it") {
+                  this.linkedItems = [{ id: "Q21898", label: "nessuno" }]
                 };
               }
             })).
