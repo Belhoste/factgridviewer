@@ -98,7 +98,10 @@ private getUrlSuffix= '&format=json&origin=*' ;
     if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité :"};
     if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"};
     if(this.selectedLang === "hu") {this.formerVisitsTitle = "meglátogatott :"};
-    if(this.selectedLang === "it") {this.formerVisitsTitle = "has visitado :"};
+    if(this.selectedLang === "it") {this.formerVisitsTitle = "ha visitato :"};
+
+
+    console.log(this.selectedLang);
 
 
     this.labels = this.searchInput.valueChanges   //search engine

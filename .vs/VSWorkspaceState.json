@@ -3,9 +3,7 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\display",
     "\\src\\app\\search"
   ],
-  "SelectedNode": "\\src\\app\\search\\search.component.ts",
   "PreviewInSolutionExplorer": false
 }
