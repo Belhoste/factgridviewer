@@ -69,13 +69,14 @@ export class ItemDetailsService {
     return re
   }
 
-  addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
-    for (let i=0; i<propertyIds.length; i++){ 
+ /**/ addQualifierItemDetails(items, re, propertyIds, lang){  //add labels, definitions and aliases of items in the qualifiers/* 
+ for (let i=0; i<propertyIds.length; i++){ 
         for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
           if(propertyIds[i] =="P2"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = "0" } ;
           if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
           let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
-             for  (let k=0; k<props.length; k++){      
+             for  (let k=0; k<props.length; k++){
+  /*
                   if(re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datatype === "time"){
                        let value =re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.time
                        value = value.substring(0,value.length-10);
@@ -98,6 +99,31 @@ export class ItemDetailsService {
                      re.claims[propertyIds[i]][j].qualifiers[props[k]][0].datavalue.value.aliases = items[l].aliases;                            
                     }
                  }
+  */
+  			   for (let l=0; l<re.claims[propertyIds[i]][j].qualifiers[props[k]].length; l++){
+                  if(re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datatype === "time"){
+                       let value =re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.time
+                       value = value.substring(0,value.length-10);
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.date = this.setDate.setDate(value,lang);
+                       }
+                  for (let m=0; m<items.length; m++){ 
+                     if (re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.id !== items[m].id){ continue }
+                       if (re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datatype === "wikibase-item"){
+                         re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.label = items[m].label;
+                        if (items[k].description !== undefined)
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.description = items[m].description;
+                        if (items[k].aliases !== undefined)
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.aliases = items[m].aliases;                            
+                      }
+                    if (re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datatype === "commonsMedia"){
+                      re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.label = items[m].label;
+                     if (items[k].description !== undefined)
+                     re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.description = items[m].description;
+                     if (items[k].aliases !== undefined)
+                     re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.aliases = items[m].aliases;                            
+                    }
+				}
+			  }
                }
           for  (let k=0; k<props.length; k++){ //to chronologically order the list of values for a given property           
             if(re.claims[propertyIds[i]][j].qualifiers === undefined) {continue};

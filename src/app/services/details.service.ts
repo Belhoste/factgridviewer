@@ -144,7 +144,6 @@ let result = this.requestService.requestItems(itemsList0,itemsList1,itemsList2,i
 .pipe(map(res => this.mergeObjects(res)),
 map(res =>Object.values(res))
 );
-
    return result
 }
 
@@ -177,8 +176,10 @@ setQualifierItems(values,arr){ // create an array of the items in the qualifiers
          for (let j=0; j<arr.length;j++) {  
            if (u.qualifiers === undefined){ continue }
            if (u.qualifiers[arr[j]] !== undefined) {
-             if (u.qualifiers[arr[j]][0].datavalue.value.id === undefined) { continue}
-                result.push(u.qualifiers[arr[j]][0].datavalue.value.id);           
+             for(let k=0; k<u.qualifiers[arr[j]].length;k++){
+             if (u.qualifiers[arr[j]][k].datavalue.value.id === undefined) { continue}
+                result.push(u.qualifiers[arr[j]][k].datavalue.value.id);
+             }
            }
           }
         }

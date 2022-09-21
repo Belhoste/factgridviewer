@@ -290,7 +290,12 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P541"), 1);
       item[0].claims.P541.url = item[0].claims.P541[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P541)
-      console.log(externalLinks)
+    };
+ 
+    if (item[0].claims.P773 !== undefined) { //19th-century French printers-lithographers
+      item[1].splice(item[1].indexOf("P773"), 1);
+      item[0].claims.P773.url = 'http://elec.enc.sorbonne.fr/imprimeurs/node/' + item[0].claims.P773[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P773);
     };
     return externalLinks
   };

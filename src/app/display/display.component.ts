@@ -689,10 +689,26 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.trans = this.changeTranscript.cleaning(this.trans); 
               }
             )
-          }  
+          }
         }
 
-        if (this.item[0].claims.P251 === undefined) { 
+          if (this.item[0].claims.P817 !== undefined) { 
+            if(this.item[0].claims.P817[0].mainsnak.datavalue.value !== undefined){
+            let a = this.transcript.transcript(this.item[0].claims.P817[0].mainsnak.datavalue.value);
+            this.subscription3 = a.subscribe(res =>{ 
+             Object.keys(res)[0]=="error"? this.trans="no transcription":
+             this.trans=res.parse.text;
+              this.trans = this.changeTranscript.cleaning(this.trans); 
+              }
+            )
+          }
+        }
+
+      if (this.item[0].claims.P251 === undefined) { 
+            this.trans="";
+        }
+
+      if (this.item[0].claims.P817 === undefined) { 
             this.trans="";
         }
         
