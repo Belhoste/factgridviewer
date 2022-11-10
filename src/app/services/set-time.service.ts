@@ -34,16 +34,12 @@ export class SetTimeService {
       if (lang === "de") { month = "Januar " };
       if (lang === "fr") { month = "janvier " };
       if (lang === "es ") { month = "enero " };
-      if (lang === "it") { month = "gennaio "};
-      if (lang === "hu") { month = "január "};
     };
     if (month === "02") {
       if (lang === "en") { month = "February " };
       if (lang === "de") { month = "Februar " };
       if (lang === "fr") { month = "février " };
       if (lang === "es") { month = "febrero " };
-      if (lang === "it") { month = "febbraio "};
-     if (lang === "hu") { month = "február "};
     };
 
     if (month === "03") {
@@ -51,8 +47,6 @@ export class SetTimeService {
       if (lang === "de") { month = "März " };
       if (lang === "fr") { month = "mars " };
       if (lang === "es") { month = "marzo " };
-      if (lang === "it") { month = "marzo "};
-      if (lang === "hu") { month = "március "};
 
     };
     if (month === "04") {
@@ -60,9 +54,6 @@ export class SetTimeService {
       if (lang === "de") { month = "April " };
       if (lang === "fr") { month = "avril " };
       if (lang === "es") { month = "abril " };
-      if (lang === "it") { month = "aprile "};
-      if (lang === "hu") { month = "április "};
-
     };
 
     if (month === "05") {
@@ -70,8 +61,6 @@ export class SetTimeService {
       if (lang === "de") { month = "Mai " };
       if (lang === "fr") { month = "mai " };
       if (lang === "es") { month = "mayo " };
-      if (lang === "it") { month = "maggio "};
-      if (lang === "hu") { month = "május "};
     };
 
     if (month === "06") {
@@ -79,8 +68,6 @@ export class SetTimeService {
       if (lang === "de") { month = "Juni " };
       if (lang === "fr") { month = "juin " };
       if (lang === "es") { month = "junio " };
-      if (lang === "it") { month = "giugno "};
-      if (lang === "hu") { month = "június "};
     };
 
     if (month === "07") {
@@ -88,8 +75,6 @@ export class SetTimeService {
       if (lang === "de") { month = "Juli " };
       if (lang === "fr") { month = "juillet, " };
       if (lang === "es") { month = "julio " };
-      if (lang === "it") { month = "luglio "};
-      if (lang === "hu") { month = "július "};
     }
 
     if (month === "08") {
@@ -97,8 +82,6 @@ export class SetTimeService {
       if (lang === "de") { month = "August " };
       if (lang === "fr") { month = "août " };
       if (lang === "es") { month = "agosto " };
-      if (lang === "it") { month = "agosto "};
-      if (lang === "hu") { month = "augusztus "};
     };
 
 
@@ -107,8 +90,6 @@ export class SetTimeService {
       if (lang === "de") { month = "September " };
       if (lang === "fr") { month = "septembre " };
       if (lang === "es") { month = "septiembre " };
-      if (lang === "it") { month = "settembre "};
-      if (lang === "hu") { month = "szeptember "};
     };
 
     if (month === "10") {
@@ -116,8 +97,6 @@ export class SetTimeService {
       if (lang === "de") { month = "Oktober " };
       if (lang === "fr") { month = "octobre " };
       if (lang === "es") { month = "octubre " };
-      if (lang === "it") { month = "ottobre "};
-      if (lang === "hu") { month = "október "};
     };
 
     if (month === "11") {
@@ -125,8 +104,6 @@ export class SetTimeService {
       if (lang === "de") { month = "November " };
       if (lang === "fr") { month = "novembre " };
       if (lang === "es") { month = "noviembre " };
-      if (lang === "it") { month = "novembre "};
-      if (lang === "hu") { month = "november "};
     };
 
     if (month === "12") {
@@ -134,11 +111,9 @@ export class SetTimeService {
       if (lang === "de") { month = "Dezember " };
       if (lang === "fr") { month = "décembre " };
       if (lang === "es") { month = "diciembre " };
-      if (lang === "it") { month = "dicembre "};
-      if (lang === "hu") { month = "december "};
     };
 
-    if (lang === "en" || lang === "fr" || lang === "es" || lang === "it" || lang === "hu") { firstPart = day + " " + month };
+    if (lang === "en" || lang === "fr" || lang === "es") { firstPart = day + " " + month };
     if (lang === "de") { firstPart = day + ". " + month };
 
     if (day === 0) {
@@ -152,8 +127,6 @@ export class SetTimeService {
       if (lang === "de") { time = time+" v. d. Z." };
       if (lang === "fr") { time = time+" AEC" };
       if (lang === "es") { time = time+" a.e.c." };
-      if (lang === "it") { time = time+" a.C." };
-      if (lang === "hu") { time = "i.e. "+time };
     };
 
     if (era === "+" && time < 500) {
@@ -161,8 +134,6 @@ export class SetTimeService {
       if (lang === "de") { time = time+" n. d. Z." };
       if (lang === "fr") { time = time+" EC" };
       if (lang === "es") { time = time+" e.c." };
-      if (lang === "it") { time = time+" d.C." };
-      if (lang === "hu") { time = "i. sz. "+time };
     };
 
 

@@ -297,6 +297,107 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P773.url = 'http://elec.enc.sorbonne.fr/imprimeurs/node/' + item[0].claims.P773[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P773);
     };
+    if (item[0].claims.P782 !== undefined) { //GEPRIS-Historical ID (Person)
+      item[1].splice(item[1].indexOf("P782"), 1);
+      item[0].claims.P782.url = 'https://gepris-historisch.dfg.de/person/' + item[0].claims.P782[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P782);
+    };
+    if (item[0].claims.P791 !== undefined) { //RI ID
+      item[1].splice(item[1].indexOf("P791"), 1);
+      item[0].claims.P791.url = 'http://www.regesta-imperii.de/id/' + item[0].claims.P791[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P791);
+    };
+    if (item[0].claims.P794 !== undefined) { //Fruitbearing Society Member ID
+      item[1].splice(item[1].indexOf("P794"), 1);
+      item[0].claims.P794.url = 'http://dbs.hab.de/padmin/fruchtbringer/ausgabe.php?m4=allgemein&st3=&trunc3=%25&m2=name&st2=&trunc2=%25&m1=mitgliedsnr&st1=$1&trunc1=%25&submit=&m3=name' + item[0].claims.P794[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P794);
+    };
+    if (item[0].claims.P807 !== undefined) { //PRELIB place ID
+      item[1].splice(item[1].indexOf("P807"), 1);
+      item[0].claims.P807.url = 'https://mshb.huma-num.fr/prelib/ville/' + item[0].claims.P807[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P807);
+    };
+    if (item[0].claims.P809 !== undefined) { //PRELIB work ID
+      item[1].splice(item[1].indexOf("P809"), 1);
+      item[0].claims.P809.url = 'http://mshb.huma-num.fr/prelib/oeuvre/' + item[0].claims.P809[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P809);
+    };
+    if (item[0].claims.P810 !== undefined) { //PRELIB edition ID
+      item[1].splice(item[1].indexOf("P810"), 1);
+      item[0].claims.P810.url = 'https://mshb.huma-num.fr/prelib/edition/' + item[0].claims.P810[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P810);
+    };
+    if (item[0].claims.P811 !== undefined) { //PRELIB archival document ID
+      item[1].splice(item[1].indexOf("P811"), 1);
+      item[0].claims.P811.url = 'https://mshb.huma-num.fr/prelib/documentarchive/' + item[0].claims.P811[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P811);
+    };
+    if (item[0].claims.P812 !== undefined) { //PRELIB periodical ID
+      item[1].splice(item[1].indexOf("P812"), 1);
+      item[0].claims.P812.url = 'https://mshb.huma-num.fr/prelib/revue/' + item[0].claims.P812[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P812);
+    };
+   if (item[0].claims.P813 !== undefined) { //Sandrart.net person ID
+      item[1].splice(item[1].indexOf("P813"), 1);
+      item[0].claims.P813.url = 'http://ta.sandrart.net/en/person/view/' + item[0].claims.P813[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P813);
+    };
+    if (item[0].claims.P816 !== undefined) { //SSNE person ID
+      item[1].splice(item[1].indexOf("P816"), 1);
+      item[0].claims.P816.url = 'https://www.st-andrews.ac.uk/history/ssne/item.php?id=' + item[0].claims.P816[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P816);
+    };
+    if (item[0].claims.P821 !== undefined) { //ISNI-ID
+      item[1].splice(item[1].indexOf("P821"), 1);
+      item[0].claims.P821.url = 'https://isni.org/isni/' + item[0].claims.P821[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P821);
+    };
+    if (item[0].claims.P827 !== undefined) { //WorldCat Title ID
+      item[1].splice(item[1].indexOf("P827"), 1);
+      item[0].claims.P827.url = 'https://www.worldcat.org/title/' + item[0].claims.P827[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P827);
+    };
+    if (item[0].claims.P830 !== undefined) { //Niedersächsische Personen ID
+      item[1].splice(item[1].indexOf("P830"), 1);
+      item[0].claims.P830.url = 'https://www.niedersaechsische-bibliographie.de/DB=1.81/PPNSET?PPN=' + item[0].claims.P830[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P830);
+    };
+    if (item[0].claims.P837 !== undefined) { //museum-digital:hessen people-ID
+      item[1].splice(item[1].indexOf("P837"), 1);
+      item[0].claims.P837.url = 'https://hessen.museum-digital.de/people/' + item[0].claims.P837[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P837);
+    };
+    if (item[0].claims.P841 !== undefined) { //OpenStreetMap relation ID
+      item[1].splice(item[1].indexOf("P841"), 1);
+      item[0].claims.P841.url = 'https://hessen.museum-digital.de/people/' + item[0].claims.P841[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P841);
+    };
+    if (item[0].claims.P842 !== undefined) { //OpenStreetMap object
+      item[1].splice(item[1].indexOf("P842"), 1);
+      item[0].claims.P842.url = 'https://hessen.museum-digital.de/people/' + item[0].claims.P842[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P842);
+    };
+    if (item[0].claims.P844 !== undefined) { //Natural Law Database ID
+      item[1].splice(item[1].indexOf("P844"), 1);
+      item[0].claims.P844.url = 'https://hessen.museum-digital.de/people/' + item[0].claims.P844[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P844);
+    };
+   if (item[0].claims.P763 !== undefined) { //PRELIB person ID
+      item[1].splice(item[1].indexOf("P763"), 1);
+      item[0].claims.P763.url = 'http://mshb.huma-num.fr/prelib/personne/' + item[0].claims.P763[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P763);
+    };
+   if (item[0].claims.P764 !== undefined) { //PRELIB organization ID
+      item[1].splice(item[1].indexOf("P764"), 1);
+      item[0].claims.P764.url = 'http://mshb.huma-num.fr/prelib/collectif/' + item[0].claims.P764[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P764);
+    };
+ 
+    if (item[0].claims.P773 !== undefined) { //19th-century French printers-lithographers
+      item[1].splice(item[1].indexOf("P773"), 1);
+      item[0].claims.P773.url = 'http://elec.enc.sorbonne.fr/imprimeurs/node/' + item[0].claims.P773[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P773);
+    };
     return externalLinks
   };
 

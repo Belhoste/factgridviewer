@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { RequestService } from './request.service'  ;
 import { SetLanguageService} from './set-language.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { SelectedItemListService } from './selected-item-list.service';
 
 @Injectable({
@@ -85,18 +85,18 @@ return result
 
 
 setItemsList(u) {  //create the list of items in the statements
-
   let values: any[] = Object.values(u.claims) ;
   let items = [];
   let qualifierProperties =[];
   let referenceProperties = [];
-  
   for (const val of values) { //items Q in the mainsnaks
        for (const u of val) {
         if (u.mainsnak.datavalue.value.id === undefined) continue;
       items.push(u.mainsnak.datavalue.value.id)
     }
    }
+
+   
   
   for (const val of values) {
      for(const u of val) {
@@ -119,8 +119,9 @@ setItemsList(u) {  //create the list of items in the statements
   referenceProperties =this.uniq(referenceProperties);
 
 let qualifierItems = this.setQualifierItems(values,qualifierProperties).filter(function( element ) {  //get items in the qualifiers, remove the undefined
-  return element !== undefined;
+    return element !== undefined; 
 });
+
 
  let referenceItems = this.setReferenceItems(values,referenceProperties).filter(function( element ) { //get items in the references, remove the undefined
     return element !== undefined;
@@ -169,19 +170,19 @@ return u
   }
 
 setQualifierItems(values,arr){ // create an array of the items in the qualifiers and references. It is used in setItemsList
-  arr = arr.filter(Boolean);
-  let result = [];
-    for (const val of values){ 
-      for (const u of val){
-         for (let j=0; j<arr.length;j++) {  
-           if (u.qualifiers === undefined){ continue }
-           if (u.qualifiers[arr[j]] !== undefined) {
-             for(let k=0; k<u.qualifiers[arr[j]].length;k++){
-             if (u.qualifiers[arr[j]][k].datavalue.value.id === undefined) { continue}
-                result.push(u.qualifiers[arr[j]][k].datavalue.value.id);
-             }
+    arr = arr.filter(Boolean);
+      let result = [];
+          for (const val of values){ 
+            for (const u of val){
+              for (let j=0; j<arr.length;j++) {  
+                 if (u.qualifiers === undefined){ continue }
+                 if (u.qualifiers[arr[j]] !== undefined) {
+                 for (let k=0; k<arr[j].length;k++) { 
+                   if (u.qualifiers[arr[j]][k] === undefined) { continue }
+        /*            if (u.qualifiers[arr[j]][k].datavalue.value.id === undefined) { continue }*/
+                     result.push(u.qualifiers[arr[j]][k].datavalue.value.id);  }         
            }
-          }
+          } 
         }
       }
     return result 

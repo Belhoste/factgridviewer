@@ -118,30 +118,6 @@ changeLang(lang,res) {
       aliasesLang = res.aliases.es;
       aliasesValue = res.aliases.es[0].value;}
   }
-    if (lang === 'it') {
-    aliasesLang = undefined;
-    if (res.labels.it !== undefined) {
-      labelLang = res.labels.it;
-      labelValue = res.labels.it.value;}
-    if (res.descriptions.it !== undefined) {
-      descriptionLang = res.descriptions.it;
-      descriptionValue = res.descriptions.it.value;}
-    if (res.aliases.it !== undefined) {
-      aliasesLang = res.aliases.it;
-      aliasesValue = res.aliases.it[0].value;}
-  }
-    if (lang === 'hu') {
-    aliasesLang = undefined;
-    if (res.labels.hu !== undefined) {
-      labelLang = res.labels.hu;
-      labelValue = res.labels.hu.value;}
-    if (res.descriptions.hu !== undefined) {
-      descriptionLang = res.descriptions.hu;
-      descriptionValue = res.descriptions.hu.value;}
-    if (res.aliases.hu !== undefined) {
-      aliasesLang = res.aliases.hu;
-      aliasesValue = res.aliases.hu[0].value;}
-  }
     return [labelLang,labelValue,descriptionLang,descriptionValue,aliasesLang,aliasesValue] 
   }
 }

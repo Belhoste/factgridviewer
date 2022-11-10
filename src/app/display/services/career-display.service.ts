@@ -35,18 +35,6 @@ export class CareerDisplayService {
       item[1].splice(item[1].indexOf("P776"),1);
       careerAndActivities.push(item[0].claims.P776); 
     }
-    if (item[0].claims.P208 !==undefined){     //professional address 
-      if(item[0].claims.P208[0].qualifiers.P437 !==undefined){
-        console.log(item[0].claims.P208[0].qualifiers.P437[0].datavalue.value.id);
-        for (let i=0;i<item[0].claims.P208[0].qualifiers.P437.length;i++){         
-          if (item[0].claims.P208[0].qualifiers.P437[i].datavalue.value.id==="Q448941"){
-            console.log(item[0].claims.P208[0].qualifiers.P437[i].datavalue.value.id);
-            item[1].splice(item[1].indexOf("P208"),1);
-            careerAndActivities.push(item[0].claims.P208); 
-          }
-        }
-      }
-    }
     return careerAndActivities
   }
 }

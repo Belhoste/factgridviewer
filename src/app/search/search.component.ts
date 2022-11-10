@@ -64,44 +64,29 @@ private getUrlSuffix= '&format=json&origin=*' ;
   ngOnInit(): void {
    
     this.subtitle = "a database for historians"
-    if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" };
-    if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"};
-    if (this.selectedLang === "es") { this.subtitle = "una base de datos para historiadores"};
-    if (this.selectedLang === "hu") { this.subtitle = "adatbázis történészek számára" };
-    if (this.selectedLang === "it") { this.subtitle = "un database per gli storici" } ;
+    if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
+    if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
+    if (this.selectedLang === "es") { this.subtitle = "una base de datos para historiadores"}
 
     this.advanced_search = "advanced search"
-    if (this.selectedLang === "de") { this.advanced_search = "erweiterte Suche" };
-    if (this.selectedLang === "fr") { this.advanced_search = "recherche avancée"};
-    if (this.selectedLang === "es") { this.advanced_search = "búsqueda avanzada"};
-    if (this.selectedLang === "hu") { this.advanced_search = "speciális keresés"};
-    if (this.selectedLang === "it") { this.advanced_search = "ricerca avanzata"}
-
-
+    if (this.selectedLang === "de") { this.advanced_search = "erweiterte Suche" }
+    if (this.selectedLang === "fr") { this.advanced_search = "recherche avancée"}
+    if (this.selectedLang === "es") { this.advanced_search = "búsqueda avanzada"}
 
     this.projects = "research projects"
-    if (this.selectedLang === "de") { this.projects = "Forschungsprojekten" };
-    if (this.selectedLang === "fr") { this.projects = "projets de recherche"};
-    if (this.selectedLang === "es") { this.projects = "proyectos de investigación"};
-    if (this.selectedLang === "hu") { this.projects = "kutatási projektek"}
-    if (this.selectedLang === "it") { this.projects = "progetti di ricerca" };
+    if (this.selectedLang === "de") { this.projects = "Forschungsprojekten" }
+    if (this.selectedLang === "fr") { this.projects = "projets de recherche"}
+    if (this.selectedLang === "es") { this.projects = "proyectos de investigación"}
 
     this.fields = "fields of research"
-    if (this.selectedLang === "de") { this.fields = "Forschungsfelder" };
-    if (this.selectedLang === "fr") { this.fields = "domaines de recherche"};
-    if (this.selectedLang === "es") { this.fields = "campos de investigación"};
-    if (this.selectedLang === "hu") {this.fields = "kutatási területek"};
-    if (this.selectedLang === "it") {this.fields = "aree di ricerca"};
+    if (this.selectedLang === "de") { this.fields = "Forschungsfelder" }
+    if (this.selectedLang === "fr") { this.fields = "domaines de recherche"}
+    if (this.selectedLang === "es") { this.projects = "campos de investigación"}
       
     this.formerVisitsTitle = "you have visited:"
     if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht:"};
     if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité :"};
-    if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"};
-    if(this.selectedLang === "hu") {this.formerVisitsTitle = "meglátogatott :"};
-    if(this.selectedLang === "it") {this.formerVisitsTitle = "ha visitato :"};
-
-
-    console.log(this.selectedLang);
+    if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"}
 
 
     this.labels = this.searchInput.valueChanges   //search engine

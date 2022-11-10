@@ -18,8 +18,6 @@ export class UnitPipe implements PipeTransform {
     if (lang === "de") { unit = "Einheit: " };
     if (lang === "fr") { unit = "Unité: " };
     if (lang === "es") { unit = "Unidad: " };
-    if (lang === "it") { unit = "Unità: " };
-    if (lang === "hu") { unit = "Egység: " };
     value=value.replace('https://database.factgrid.de/entity/','');
     let params = new HttpParams().set('action',"wbgetentities")
     .set('languages',lang)
@@ -29,10 +27,9 @@ export class UnitPipe implements PipeTransform {
     .set('origin',"*");
   let response= this.http.get('https://database.factgrid.de//w/api.php', { params: params}).
   pipe(
-    tap(res => console.log(Object.keys(res))),
+    tap(res => console.log(res)),
     map(res=>unit + Object.values(Object.values(Object.values(Object.values(Object.values(res)[0])[0])[2])[0])[1]))
-  console.log(response);
-    return response
+  return response
   }
 
 }
