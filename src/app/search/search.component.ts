@@ -36,12 +36,9 @@ export class SearchComponent implements OnInit, OnDestroy
 
  public selectedItem:Observable<any>;
 
-// searchToken:string = "on";  //initialization of the token used to hide/display the display component   todo: change into public isDisplay:boolean = "false"
  public isDisplay:boolean = false;
- //animationState = 'in';
 
  public isDown: boolean = true;
- //state:string = 'down';
 
   labels
   items = [];
@@ -49,14 +46,11 @@ export class SearchComponent implements OnInit, OnDestroy
   itemId:string;
  
 
-//private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
 private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-//private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
 private getUrlSuffix= '&format=json&origin=*' ; 
 
   constructor( 
   private changeDetector: ChangeDetectorRef, 
-//  private http: HttpClient, 
   private request:RequestService, 
   private setLanguage:SetLanguageService) 
   {}
@@ -67,26 +61,31 @@ private getUrlSuffix= '&format=json&origin=*' ;
     if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
     if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
     if (this.selectedLang === "es") { this.subtitle = "una base de datos para historiadores"}
+    if (this.selectedLang === "it") { this.subtitle = "un database per gli storici"}
 
     this.advanced_search = "advanced search"
     if (this.selectedLang === "de") { this.advanced_search = "erweiterte Suche" }
     if (this.selectedLang === "fr") { this.advanced_search = "recherche avancée"}
     if (this.selectedLang === "es") { this.advanced_search = "búsqueda avanzada"}
+    if (this.selectedLang === "it") { this.advanced_search = "ricerca avanzata"}
 
     this.projects = "research projects"
     if (this.selectedLang === "de") { this.projects = "Forschungsprojekten" }
     if (this.selectedLang === "fr") { this.projects = "projets de recherche"}
     if (this.selectedLang === "es") { this.projects = "proyectos de investigación"}
+    if (this.selectedLang === "it") { this.projects = "progetti di ricerca"}
 
     this.fields = "fields of research"
     if (this.selectedLang === "de") { this.fields = "Forschungsfelder" }
     if (this.selectedLang === "fr") { this.fields = "domaines de recherche"}
     if (this.selectedLang === "es") { this.projects = "campos de investigación"}
+    if (this.selectedLang === "it") { this.projects = "aree di ricerca"}
       
     this.formerVisitsTitle = "you have visited:"
     if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht:"};
     if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité :"};
     if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"}
+    if(this.selectedLang === "it") {this.formerVisitsTitle = "hai visitato :"}
 
 
     this.labels = this.searchInput.valueChanges   //search engine
@@ -94,8 +93,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
     debounceTime(400),
     switchMap(label => this.request.searchItem(label, this.selectedLang)), 
     map( res => this.createList(res)),
-    //map(res => res == "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=&format=json"? 
-   // "https://www.wikidata.org//w/api.php?action=wbgetentities&ids=Q42&format=json&origin=*" : res ),
     map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
    "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res ),
     debounceTime(200),
@@ -108,7 +105,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.selectedLang);
     this.items = this.filterResearchField(this.items, this.selectedResearchField);  
- //   this.searchToken="on";
     this.isDisplay=true;
     this.changeDetector.detectChanges();
     })
@@ -121,10 +117,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
       localStorage['selectedResearchField'] = this.selectedResearchField;
        }
      
-// searchItem(label:string): Observable<any> { return this.http.get(this.baseSearchURL + label + this.searchUrlSuffix)}
-
-//  getItem(url:string): Observable<any> { return this.http.get(url) };
-
   createList(re) {  //create an url whith the elements of an array
     let list = "";
     let url = "";
@@ -162,14 +154,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
             return seen.hasOwnProperty(item) ? false : (seen[item] = true);
         });
     }
-
- /*   removeDuplicates(data, key){
-         return [ ...new Map(
-             data.map(x => [key(x), x])
-         ).values()
-      ]
-    }
-    */
   
       
      ngOnDestroy(): void {
