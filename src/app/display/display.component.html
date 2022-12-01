@@ -173,13 +173,14 @@
                       <label class="property">&nbsp;{{Q.label}}:&nbsp;</label>
                       <span *ngFor="let D of Q.display; last as isLast">
                       <label *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></label>
-                     
                       <label *ngIf="D.datatype==='string'">{{D.string}}<span *ngIf="!isLast">,&nbsp;</span></label>
-                      <label class="details1" class="break-word-container" *ngIf="D.datatype==='commonsMedia'">
-                        <mat-card class= mat-elevation-z8  fxFlex="40%" fxFlex.lt-sm="80%">
-                          {{D.commons}}
-                          <img mat-card-image  src={{D.value.commons}}>  
-                        </mat-card>
+                      <label class="break-word-container" *ngIf="D.datatype==='commonsMedia'">
+   <!--                    <mat-card class= mat-elevation-z8  fxFlex="40%" fxFlex.lt-sm="80%"> 
+                          {{D.commons}} --> 
+                          <div class="details3">
+                              <img   src={{D.commons}}>
+                          </div>
+    <!--                      </mat-card>    --> 
                       </label>
                       <label>{{D.amount}}</label>
                       <label *ngIf="D.unit"><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</label>

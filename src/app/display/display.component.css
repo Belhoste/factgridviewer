@@ -213,6 +213,11 @@ color:white;
   word-break: normal;
 }
 
+.details3 {
+  
+  width:33%
+}
+
 .break-word-container {
   display: table;
   table-layout: fixed;

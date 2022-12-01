@@ -4,7 +4,8 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\services"
+    "\\src\\app\\search"
   ],
+  "SelectedNode": "\\src\\app\\search\\search.component.html",
   "PreviewInSolutionExplorer": false
 }

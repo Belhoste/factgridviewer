@@ -291,7 +291,6 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P541.url = item[0].claims.P541[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P541)
     };
- 
     if (item[0].claims.P773 !== undefined) { //19th-century French printers-lithographers
       item[1].splice(item[1].indexOf("P773"), 1);
       item[0].claims.P773.url = 'http://elec.enc.sorbonne.fr/imprimeurs/node/' + item[0].claims.P773[0].mainsnak.datavalue.value
@@ -392,13 +391,11 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P764.url = 'http://mshb.huma-num.fr/prelib/collectif/' + item[0].claims.P764[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P764);
     };
- 
-    if (item[0].claims.P773 !== undefined) { //19th-century French printers-lithographers
-      item[1].splice(item[1].indexOf("P773"), 1);
-      item[0].claims.P773.url = 'http://elec.enc.sorbonne.fr/imprimeurs/node/' + item[0].claims.P773[0].mainsnak.datavalue.value
-      externalLinks.push(item[0].claims.P773);
+   if (item[0].claims.P849 !== undefined) { //Database of Salon artists person ID
+      item[1].splice(item[1].indexOf("P849"), 1);
+      item[0].claims.P849.url = 'https://humanities-research.exeter.ac.uk/salonartists/artist/id/' + item[0].claims.P849[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P849);
     };
     return externalLinks
   };
-
 }

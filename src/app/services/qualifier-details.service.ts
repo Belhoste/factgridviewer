@@ -18,21 +18,22 @@ export class QualifierDetailsService {
             let qualifierNumbers = [];
           for (let u=0;u<qualifierPropertyArray.length;u++){            
               let l= qualifiersArray[u].length;
-              console.log(l);
              qualifierNumbers.push(l)
               }
             for  (let k=0; k<qualifierPropertyArray.length; k++){
               let prop = qualifierPropertyArray[k];
               let qual= qualifiersArray[k];
-         
+              if (prop==="P189") {re.claims[propertyIds[i]][j].qualifiers2[k].label=""};
               if (re.claims[propertyIds[i]][j].qualifiers2[k].id !== prop){continue} ;
                 re.claims[propertyIds[i]][j].qualifiers2[k].display = [];
                 for (let l=0; l<qualifierNumbers[k];l++){
                   if (qual[l] === undefined) {continue}
+                  
                    let qualifier = { datatype:qual[l].datatype, id:qual[l].datavalue.value.id, label:qual[l].datavalue.value.label, description:qual[l].datavalue.value.description, unit:qual[l].datavalue.value.unit,
                    date:qual[l].datavalue.value.date, amount:qual[l].datavalue.value.amount, string:qual[l].datavalue.value, commons:"http://commons.wikimedia.org/wiki/Special:FilePath/"+qualifiersArray[k][0].datavalue.value } 
         //           , amount:qual[l].datavalue.value.amount,
         //           commons: "http://commons.wikimedia.org/wiki/Special:FilePath/"+qual[l].datavalue.value, url:qual[l].datavalue.value }
+                 if (qualifier.datatype ==="commonsMedia") { qualifier.label="" };
                   re.claims[propertyIds[i]][j].qualifiers2[k].display.push(qualifier); }
                   
           //   console.log(qualifier);}
