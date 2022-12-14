@@ -492,7 +492,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           
         if(natureOfIds.includes("Q12")){ this.natureOf = "Q12" };
         
-        if (this.natureOf == "Q12"|| "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8"  || "Q16200") {         
+            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005") {         
           if (this.natureOf == "Q12" && this.item[0].claims.P320){ this.natureOf = "" };
             let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);     
             this.query = this.setData.sparqlToDisplay(sparqlQuery);

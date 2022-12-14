@@ -396,6 +396,16 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P849.url = 'https://humanities-research.exeter.ac.uk/salonartists/artist/id/' + item[0].claims.P849[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P849);
     };
+   if (item[0].claims.P847 !== undefined) { //Mastodon ID
+      item[1].splice(item[1].indexOf("P847"), 1);
+      item[0].claims.P847.url = 'https://wikidata-externalid-url.toolforge.org/?p=4033&id=' + item[0].claims.P847[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P847);
+    };
+    if (item[0].claims.P433 !== undefined) { //Twitter username
+      item[1].splice(item[1].indexOf("P433"), 1);
+      item[0].claims.P433.url = 'https://twitter.com/' + item[0].claims.P433[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P433);
+    };
     return externalLinks
   };
 }

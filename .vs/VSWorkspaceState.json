@@ -4,8 +4,10 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\search"
+    "\\src\\app\\display\\services",
+    "\\src\\app\\search",
+    "\\src\\app\\services"
   ],
-  "SelectedNode": "\\src\\app\\search\\search.component.html",
+  "SelectedNode": "\\src\\app\\services\\qualifier-details.service.ts",
   "PreviewInSolutionExplorer": false
 }
