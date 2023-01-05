@@ -92,7 +92,11 @@ export class SparqlDisplayComponent implements OnChanges {
         }
   
         if(this.list[0] !==undefined){ this.isList = true };
-        if(this.list[0] ===undefined){ this.isList = false };
+        if (this.list[0] === undefined) { this.isList = false };
+
+    console.log(this.isList);
+
+
       }
     } 
 

@@ -18,18 +18,11 @@
     <button mat-button color="primary" routerLink='/'>{{newSearch}}</button>
   </div>
 
-  <!-----  <div class="parent">
-     fxLayout = "row"
-   fxLayout.md="column"
-   fxLayout.sm="column"
-   fxLayout.xs="column"
-    >   ---------->
   <div class="spinner">
     <mat-spinner *ngIf="isSpinner" diameter=50 mode="indeterminate"></mat-spinner>
   </div>
 
   <div *ngIf="!isSpinner">
-    <!-----  fxFlex="100%">------>
     <mat-drawer-container class="drawer-container">
       <mat-drawer #drawer mode="push">
         <div class="ground-div">
@@ -40,7 +33,6 @@
         <mat-card>
           <div class="subdivision-title" *ngIf='"main"!==undefined'>{{linkedPagesTitle}}</div>
           <mat-card-content>
-            <!-----fxLayout="column wrap" fxLayoutAlign="start stretch">---->
             <mat-list *ngFor="let item of linkedItems">
               <mat-divider></mat-divider>
               <span mat-list-item class="percent2">
@@ -53,20 +45,13 @@
       </mat-drawer>
       <mat-drawer-content>
         <div class="ground-div">
-          <!-------fxLayoutAlign="start stretch"---->
           <div class="icon mat-button.mat-small">
             <button mat-icon-button (click)="drawer.toggle()" class="white-text">{{linkedPagesTitle}}<mat-icon class="white-button">chevron_left</mat-icon></button>
           </div>
         </div>
 
-
         <div class="parent">
-          <!------     fxLayout="row"
-          fxLayout.sm="column"
-          fxLayout.xs="column">
-           <div fxFlex="75%" fxFlex.xl="80%" class="left">---->
           <div class="child1">
-
             <div>
               <mat-card class=mat-elevation-z8>
                 <div>
@@ -110,32 +95,43 @@
                         {{M.mainsnak.label}}
                         <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </label>
+
                       <span class="details2.percent2" *ngIf="M['qualifiers-order']">
                         <span *ngFor="let Q of M.qualifiers2">
-                          <label class="property"><em>&nbsp;{{Q.label}}:&nbsp;</em></label>
-                          <label>Q.display</label>
-                          <span *ngFor="let D of Q; last as isLast">
-                            <label>D</label>
-                            <label *ngIf="D.datatype==='wikibase-item'">
-                              {{D.value.label}} <span class="description-text">
-                                {{D.value.description}}
+                          <label class="property">&nbsp;{{Q.label}}:&nbsp;</label>
+                          <span *ngFor="let D of Q.display; last as isLast">
+                            <label *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></label>
+                            <label *ngIf="D.datatype==='string'">{{D.string}}<span *ngIf="!isLast">,&nbsp;</span></label>
+                            <label class="break-word-container" *ngIf="D.datatype==='commonsMedia'">
+                              {{D.commons}}
+                              <span class="details3">
+                                <img src={{D.commons}}>
                               </span>
-                              <mat-icon-button class="internalLink" [routerLink]="['/item', D.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon><span *ngIf="!isLast">,&nbsp;</span></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                            <label>{{D.amount}}</label>
+                            <label *ngIf="D.unit"><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</label>
+                            <label class="break-word-container" *ngIf="D.datatype === 'url'">
+                              {{D.label}},
+                              <a href="{{D.string}}" target="_blank">{{D.string}}</a>
+                            </label>
+                            <label *ngIf="D.datatype==='wikibase-item'">
+                              {{D.label}}, <span class="description-text">{{D.description}}&nbsp;</span>
+                              <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon><span *ngIf="!isLast">,&nbsp;</span></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </label>
                           </span>
                         </span>
-                      </span>
-                      <div class="details" class="percent2" *ngIf="M['references2']">
-                        <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
-                        <label>
-                          {{M.references2[0].value.label}}
-                          <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </label>
-                        <label>{{M.references2[0].value.date}}</label>
-                        <label>{{M.references2[0].value.string}}</label>
-                        <label class="break-word-container"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
-                      </div>
-                    </div>
+                        </span>
+                       <div class="details" class="percent2" *ngIf="M['references2']">
+                          <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
+                          <label>
+                            {{M.references2[0].value.label}}
+                            <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </label>
+                          <label>{{M.references2[0].value.date}}</label>
+                          <label>{{M.references2[0].value.string}}</label>
+                          <label class="break-word-container"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></label>
+                       </div>
+                     </div>
                   </div>
                 </div>
               </mat-card>
@@ -149,18 +145,7 @@
                     <div class="subdivision-title">{{item[0].claims.P2[0].mainsnak.label}}</div>
                   </div>
                   <mat-card-content>
-                    <!----           <mat-card-content fxLayout="column wrap"
-                          fxLayoutAlign="start stretch"
-                          fxLayoutGap="5px">
-          <div fxFlex="80%"
-               fxFlex.sm="100%"
-               fxFlex.xs="100%"
-               fxLayout.lg="row"
-               fxLayout.xl="row"
-               fxLayout.md="column"
-               fxLayout.sm="column"
-               fxLayout.xs="column">
-          </div>    --->
+
                     <router-outlet></router-outlet>
                     <div *ngFor="let P of mainList">
 
@@ -195,13 +180,11 @@
                               <span *ngFor="let D of Q.display; last as isLast">
                                 <label *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></label>
                                 <label *ngIf="D.datatype==='string'">{{D.string}}<span *ngIf="!isLast">,&nbsp;</span></label>
-                                <label class="break-word-container" *ngIf="D.datatype==='commonsMedia'">
-                                  <!--    <mat-card class= mat-elevation-z8  fxFlex="40%" fxFlex.lt-sm="80%">
-                                                     {{D.commons}} -->
-                                  <div class="details3">
+                                <label class="break-word-container" *ngIf="D.datatype==='commonsMedia'">                             
+                                                     {{D.commons}} 
+                                  <span class="details3">
                                     <img src={{D.commons}}>
-                                  </div>
-                                  <!--                      </mat-card>    -->
+                                  </span>
                                 </label>
                                 <label>{{D.amount}}</label>
                                 <label *ngIf="D.unit"><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</label>
@@ -241,8 +224,6 @@
                 <app-text-display [trans]="this.trans" *ngIf='this.trans !== ""'></app-text-display>
                 <div [ngClass]="isTraining ? 'show-division':'hide-division'">
                   <div class="subdivision-title">{{training}}</div>
-                  <!----         <mat-card-content fxLayout="column wrap" fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-          <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of education"> --->
                   <mat-card-content>
                     <div *ngFor="let P of education">
                       <div class="title">
@@ -269,7 +250,6 @@
 
                               <label *ngIf="D.datatype==='string'">{{D.string}}<span *ngIf="!isLast">,&nbsp;</span></label>
                               <label class="details1" class="break-word-container" *ngIf="D.datatype==='commonsMedia'">
-                                <!-----                 <mat-card class=mat-elevation-z8 fxFlex="40%" fxFlex.lt-sm="80%">  ------>
                                 <mat-card class=mat-elevation-z8>
                                   {{D.commons}}
                                   <img mat-card-image src={{D.value.commons}}>
@@ -305,8 +285,6 @@
                 </div>
                 <div [ngClass]="isCareer ? 'show-division':'hide-division'">
                   <div class="subdivision-title">{{career}}</div>
-                  <!----             <mat-card-content fxLayout="column wrap" fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of careerAndActivities">--->
                   <mat-card-content>
                     <div *ngFor="let P of careerAndActivities">
                       <div class="title">
@@ -369,8 +347,6 @@
                 </div>
                 <div [ngClass]="isSociability ? 'show-division':'hide-division'">
                   <div class="subdivision-title">{{sociability}}</div>
-                  <!----           <mat-card-content fxLayout="column wrap" fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-                   <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sociabilityAndCulture">----->
                   <mat-card-content>
                     <div *ngFor="let P of sociabilityAndCulture">
                       <div class="title">
@@ -438,7 +414,6 @@
                   </mat-card>
                 </div>
                 <div [ngClass]="isIframes ? 'show-division':'hide-division'">
-                  <!----     <mat-card-content fxLayout="column wrap" fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">-->
                   <mat-card-content>
                     <div *ngIf="item[0].claims.P309">
                       <div class="title">
@@ -574,8 +549,6 @@
                 </div>
                 <div [ngClass]="isSources ? 'show-division':'hide-division'">
                   <div class="subdivision-title">{{sources}}</div>
-                  <!---           <mat-card-content fxLayout="column wrap" fxLayout.sm="column wrap" fxLayout.xs="column wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="50%" fxFlex.sm="100%" fxFlex.xs="100%" fxLayout="column" *ngFor="let P of sourcesList">--->
                   <mat-card-content>
                     <div *ngFor="let P of sourcesList">
                       <div class="title">
@@ -604,7 +577,7 @@
                             </label>
                           </span>
                         </span>
-                        <div class="details" class="percent2" *ngIf="M['references2']">
+                        <div class="details percent2" *ngIf="M['references2']">
                           <label class="referenceProperty"><em>&nbsp;&nbsp;&nbsp;{{M.references2[0].label}}: </em></label>
                           <label>
                             {{M.references2[0].value.label}}, <span class="description-text">{{M.references2[0].value.description}}</span>
@@ -622,10 +595,10 @@
                   </mat-card-content>
                 </div>
                 <div class="ground-div2">
-                  <div class="icon" *ngIf="isInfo===false" class="mat-button.mat-small" class="white-text">
-                    <button mat-icon-button (click)="onClick4()" class="white-text"><mat-icon class="white-button">expand_less</mat-icon></button>
+                  <div *ngIf="isInfo===false" class="mat-button.mat-small">
+                    <button mat-icon-button (click)="onClick4()" class="icon white-text"><mat-icon class="icon white-button">expand_less</mat-icon></button>
                   </div>
-                  <div class="icon" *ngIf="isInfo===true" class="mat-button.mat-small" class="white-text">
+                  <div class="icon" *ngIf="isInfo===true" class="mat-button.mat-small">
                     <button mat-icon-button (click)="onClick5()" class="white-text"><mat-icon class="white-button">expand_more</mat-icon></button>
                   </div>
                 </div>
@@ -647,7 +620,7 @@
               </div>
             </div>
             <div>
-              <mat-card class=mat-elevation-z8 class="external-links">
+              <mat-card class="external-links">
                 <div>
                   <div class="subdivision-title">{{externalLinksTitle}}</div>
                   <hr>
@@ -673,12 +646,9 @@
             </div>
             <div>
               <mat-card class="mat-elevation-z8 itemSelected-mat-card">
-                <!----  <div fxLayout="column">-->
                 <div>
                   <div class="selectedList-title">{{formerVisitsTitle}}</div>
                   <div>
-
-                    <!-----               <mat-card-content fxLayout="column" fxLayoutAlign="start stretch"> --->
                     <mat-card-content>
                       <mat-list *ngFor="let selectedItem of selectedItemsList">
                         <span *ngIf="selectedItem" mat-list-item class="percent2 white-text">
@@ -693,9 +663,7 @@
             </div>
           </div>
         </div>
-
       </mat-drawer-content>
     </mat-drawer-container>
   </div>
-  <!---- </div>--->
 </body>

@@ -190,6 +190,7 @@ color:white;
 .item-title-text {
   line-height:1.2;
   color:#283593;
+  font-size:130%;
   }
 
 .blue-text {
@@ -228,15 +229,17 @@ color:white;
 }
 
 .subdivision-title {
-  color:#AD1457;
-  font-size: 20px !important;
-  font-weight:500;
+  color: #AD1457;
+  font-size: 1.6rem;
+  font-weight: 100;
   padding: 5px;
   margin-left: auto;
-  height:40px;
-  display:flex;
+  height: 40px;
+  display: flex;
   align-items: center;
 }
+
+.mdheadline .subdivision-title{}
 
 .externalLinks-title {
   color:#AD1457;

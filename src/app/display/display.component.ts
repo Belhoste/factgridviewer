@@ -509,14 +509,16 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
 
-            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005") {
+            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" ||  "Q16200" || "Q173005") {
               if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
               let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
               this.query = this.setData.sparqlToDisplay(sparqlQuery);
               this.subscription4 = this.query?.subscribe(res => {
                 this.sparqlData = this.sparql.listFromSparql(res);
                 this.sparqlSubject = this.natureOf;
+                console.log(this.sparqlData);
                 if (this.sparqlData.length > 0) {
+                  console.log(this.sparqlData.length);
                   this.isSparql = true;
                 }
                 console.log(this.isSparql);
@@ -759,7 +761,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription1.unsubscribe();
     this.subscription2.unsubscribe();
     if(this.subscription3 !==undefined){this.subscription3.unsubscribe();}
-    if(this.subscription4 !==undefined){this.subscription4.unsubscribe();}
+    if (this.subscription4 !== undefined) {
+      console.log(this.subscription4);
+      this.subscription4.unsubscribe();
+    }
     if(this.subscription5 !==undefined){this.subscription5.unsubscribe();}
     if(this.subscription6 !==undefined){this.subscription6.unsubscribe();}
     if(this.subscription7 !==undefined){this.subscription7.unsubscribe();}

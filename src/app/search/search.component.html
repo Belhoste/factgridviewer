@@ -16,8 +16,6 @@
             </div>
         </div>
 
-        <!-- <div fxLayout="row" fxLayoutAlign="space-around center">
-    change "searchToken === 'on'" into isDisplay === false -->
         <div class="center">
             <div *ngIf="isDisplay == true" class="div">
  
@@ -35,22 +33,20 @@
                 <a href="https://database.factgrid.de/query/#%23model%0A%0ASELECT%20%3Fitem%20%3Fviewer%20%3FitemLabel%20%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP2%20wd%3AQ7%3B%0A%20%20%20%20%20%20%20%20wdt%3AP247%20wd%3AQ24708.%0A%20%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%0A%20%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%0A%7D%0A">
                     sparql query
                 </a>
-                <!---- |
-            <a [routerLink]="['/essai']">essai</a>--->
             </div>
         </div>
 
         <div class="center">
             <div *ngIf="isDisplay == false">
                 <div class="itemSelected-div">
-                    <mat-card class=mat-elevation-z8 class="itemSelected-mat-card">
+                    <mat-card class="itemSelected-mat-card">
                         <div class="selectedList-title">{{formerVisitsTitle}}</div>
                         <div>
                             <hr>
-                            <!----            <mat-card-content fxLayout="column" fxLayoutAlign="start stretch">---->
+ 
                             <mat-card-content>
                                 <mat-list *ngFor="let selectedItem of selectedItemsList">
-                                    <span *ngIf="selectedItem" mat-list-item class="percent2" class="white-text">
+                                    <span *ngIf="selectedItem" mat-list-item class="white-text">
                                         {{selectedItem.label}}&nbsp;
                                         <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon class="white-button" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     </span>
