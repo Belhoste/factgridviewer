@@ -35,7 +35,8 @@ export class SparqlDisplayComponent implements OnChanges {
     if (this.selectedLang === "es") { this.instancesListTitle = "Entidades (limite: 50):" ;
                                      this.subclassesListTitle = "Subclases:"}; 
     if(changes.sparqlData && changes.sparqlData.currentValue){      
-      this.list=this.sparqlData;
+      this.list = this.sparqlData;
+      console.log(this.list);
       }
   
     if(changes.sparqlSubject && changes.sparqlSubject.currentValue){
@@ -55,8 +56,9 @@ export class SparqlDisplayComponent implements OnChanges {
           if (this.selectedLang === "es") { this.subTitle = "Llevando este apellido:" };
           }
           else {
-            if(this.sparqlSubject == "Q12"){
-              if(this.list[0].activity){
+          if (this.sparqlSubject == "Q12") {
+            console.log(this.list[0]);
+              if(this.list[0] && this.list[0].activity){
               if (this.selectedLang === "en") {this.subTitle ="Present in this context:"};
                 if (this.selectedLang === "de") { this.subTitle = "In diesem Kontext anwesend:" };
                 if (this.selectedLang === "fr") { this.subTitle = "Présents dans ce contexte:" };

@@ -1,5 +1,55 @@
 /* app-component.css à mettre dans display-component.css*/
+.basicFont {
+  font-size: 40px;
+}
 
+.center {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  background-color: rgb(250, 245, 236);
+}
+
+.drawer-container {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  border: 1px solid #555;
+}
+
+.parent {
+  display: flex;
+  flex-flow: row;
+}
+
+@media (max-width: 959.98px) {
+  .parent {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+  }
+  .image {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.main {
+  display: flex;
+  flex-flow: column;
+}
+
+
+.child1 {
+  flex:3;
+}
+
+.child2 {
+  display: flex;
+  flex: 1;
+  flex-flow: column wrap;
+  flex-grow: 1;
+}
 
 
 div#home-content {
@@ -16,8 +66,10 @@ mat-card{
   margin-left: 2px;
 }
 
+.details1.break-word-container {}
 
-mat-card img{
+
+mat-card img {
   object-fit: contain; /*this makes the image in src fit to the size specified below*/
   width: 100%;
   margin: 5px;
@@ -31,26 +83,35 @@ mat-card img{
   margin-left: 2px;
 }
 
+.mat-elevation-z8.itemSelected-mat-card {}
+
 .external-links {
   height: fit-content;
-  background-color:rgb(250, 235, 187);
+  background-color: rgb(250, 235, 187);
   margin-bottom: 4px;
   margin-right: 2px;
   margin-left: 2px;
 }
 
-.example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
+.icon.mat-button.mat-small {}
 
-.ground-div{
-  background-color: grey ;
+.details2.percent2 {}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
 }
 
-.ground-div2{
-  background-color: rgb(155, 177, 225) ;
+.ground-div {
+  background-color: grey;
+}
+
+.ground-div2 {
+  background-color: rgb(155, 177, 225);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .white-button{
@@ -88,8 +149,8 @@ color:white;
 }
 
 .img {
-  width: 40%; 
-  height:100px;
+  width: 40%;
+  height: 100px;
   margin: 10px;
 }
 
@@ -169,8 +230,8 @@ color:white;
 .subdivision-title {
   color:#AD1457;
   font-size: 20px !important;
-  font-weight: 360;
-  padding: 5 px;
+  font-weight:500;
+  padding: 5px;
   margin-left: auto;
   height:40px;
   display:flex;
@@ -180,8 +241,8 @@ color:white;
 .externalLinks-title {
   color:#AD1457;
   font-size: 25px !important;
-  font-weight: 360;
-  padding: 5 px;
+  font-weight:500;
+  padding: 5px;
   margin-left: auto;
   height:40px;
 }
@@ -189,8 +250,8 @@ color:white;
 .selectedList-title {
   color:white;
   font-size: 20px !important;
-  font-weight: 360;
-  margin: 10px;
+  font-weight:500;
+  margin-bottom: 30px;
   height:8px;
 }
 
@@ -213,9 +274,10 @@ color:white;
   word-break: normal;
 }
 
+.percent2.white-text {}
+
 .details3 {
-  
-  width:33%
+  width: 33%
 }
 
 .break-word-container {
@@ -235,12 +297,7 @@ color:white;
   text-overflow: ellipsis;
 }
 
-.center {
-    display: flex;
-    justify-content: center;
-    padding:15px;
-    background-color: rgb(250, 245, 236);
-  }
+
 
 .example-spacer {
     flex: 1 1 auto;
@@ -269,14 +326,14 @@ ul.inline {
   }
 
 .percent3 {
-    padding:15px;
-    font-size: 150%;
-    font-weight: 321;
-  }
+  padding: 15px;
+  font-size: 150%;
+  font-weight: 321;
+}
 
-.percent5 {
+ /*.percent5 {
     font-size: 12px !important;
-  }
+  }---*/
 
 .percent4 {
     color:#3F51B5;
@@ -343,12 +400,7 @@ button-content{
   max-width: 20px !important; 
 }
 
-.example-container {
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  border: 1px solid #555;
-}
+
 
 .example-additional-selection {
     font-size: 0.5em;

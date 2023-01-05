@@ -13,26 +13,31 @@ import * as Leaflet from 'leaflet';
 
 export class MapComponent implements OnInit {
 
-// @Input() coords:any;
+ //@Input() mapZoom:number;
   
   latitude:string;
-  longitude:string;
-  lat:number;
-  lng:number;
+  longitude: string;
+  mapZoom: string;
+  lat: number;
+  lng: number;
+  zoom: number;
  
 
   constructor(private changeDetector:ChangeDetectorRef, private route:ActivatedRoute) { 
   }
 
   ngOnInit(): void {
-
+  
   this.route.params.
   subscribe( 
-  params => { let latitude = params['lat']; let longitude = params['lng']; 
+    params => {
+      let latitude = params['lat']; let longitude = params['lng']; let zoom =params['z']; 
     this.lat = Number(latitude);
-    this.lng = Number(longitude);
+      this.lng = Number(longitude);
+      this.zoom = Number(zoom);
+      console.log(this.zoom);
     const itemLocation = { coords: new Leaflet.LatLng(this.lat, this.lng),
-      zoom:12 };
+      zoom:this.zoom };
       console.log(itemLocation);
                         
        let map = Leaflet.map('map');

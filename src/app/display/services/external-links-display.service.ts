@@ -14,7 +14,7 @@ export class ExternalLinksDisplayService {  // external links
       externalLinks.push(item[0].claims.P146)
     };
 
-    if (item[0].claims.P378 !== undefined) { //id viaf
+    if (item[0].claims.P378 !== undefined) { //id Viaf
       item[1].splice(item[1].indexOf("P378"), 1);
       item[0].claims.P378.url = "https://viaf.org/viaf/" + item[0].claims.P378[0].mainsnak.datavalue.value;
       externalLinks.push(item[0].claims.P378)
@@ -262,6 +262,12 @@ export class ExternalLinksDisplayService {  // external links
       externalLinks.push(item[0].claims.P692);
     };
 
+    if (item[0].claims.P716 !== undefined) { // Frankfurter Personenlexikon
+      item[1].splice(item[1].indexOf("P716"), 1);
+      item[0].claims.P716.url = 'https://frankfurter-personenlexikon.de/node/' + item[0].claims.P716[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P716);
+    };
+
     if (item[0].claims.P699 !== undefined) { // Edvard Munch's correspondance person ID
       item[1].splice(item[1].indexOf("P699"), 1);
       item[0].claims.P699.url = 'https://www.emunch.no/person.xhtml?id=pe' + item[0].claims.P699[0].mainsnak.datavalue.value
@@ -284,6 +290,18 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P712"), 1);
       item[0].claims.P712.url = 'https://www.researchgate.net/profile/' + item[0].claims.P712[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P712);
+    };
+
+    if (item[0].claims.P719 !== undefined) { // GitHub ID
+      item[1].splice(item[1].indexOf("P719"), 1);
+      item[0].claims.P719.url = 'https://github.com/' + item[0].claims.P719[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P719);
+    };
+
+    if (item[0].claims.P728 !== undefined) { // Forum München ID
+      item[1].splice(item[1].indexOf("P728"), 1);
+      item[0].claims.P728.url = '' + item[0].claims.P728[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P728);
     };
  
     if (item[0].claims.P541 !== undefined) { //Recording, online information

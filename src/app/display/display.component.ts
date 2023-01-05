@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Observable, Subscription, Subject, from, forkJoin, of, EMPTY, timer } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {
+  tap, takeUntil
+} from 'rxjs/operators';
 import { SetDataService } from '../services/set-data.service'
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -26,6 +28,7 @@ import { SetSelectedItemsListService } from '../services/set-selected-items-list
 import { TranscriptionService } from './services/transcription.service'
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 
 @Component({
@@ -39,7 +42,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private router: Router, private route: ActivatedRoute, private setData: SetDataService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
     private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
     private personDisplay: PersonDisplayService, private educationDisplay: EducationDisplayService, private careerDisplay: CareerDisplayService, private sociabilityDisplay: SociabilityDisplayService,
-    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript:TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sparql:SparqlService, private sanitizer: DomSanitizer) { }
+    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript: TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sparql: SparqlService, private sanitizer: DomSanitizer, private observer: BreakpointObserver) { }
 
     //iframe
   urlSafe1: SafeResourceUrl;
@@ -83,7 +86,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   placeType:string ="";
 
   sparqlData:any[]//data for a sparql query
-  sparqlSubject:string; //id of the property to which the sparql is related
+  sparqlSubject: string; //id of the property to which the sparql is related
+  zoom:number //define the zoom for the map
   
   query:Observable<any> | undefined; //sparql query
   subclassesListQuery:Observable<any> | undefined; //sparql query for list of subclasses
@@ -124,7 +128,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   factGridLogo: string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
-  langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "  " }]
+  langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "  " }];
+
+    
 
   item: any[];
   linkedItems: any[]; //backList
@@ -201,6 +207,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   isExternalLinks: boolean = false;
   isWikis: boolean = false;
   isPicture: boolean = false;
+  isTopPicture: boolean = false;
   isTraining: boolean = false;
   isCareer: boolean = false;
   isSociability: boolean = false;
@@ -213,10 +220,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   isIframes: boolean = false;
   isStemma: boolean = false;
   isFamilyTree: boolean = false;
-//  isSparql:boolean = false;
+  isSparql:boolean = false;
   isTranscription:boolean = false;
-  isInfo:boolean = false;
-  
+  isInfo: boolean = false;
+  isMobile: boolean = false;
 
   onClick2(query) { //handling click for sparql query
     query = this.setData.sparqlToDisplay(query);
@@ -327,8 +334,13 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.stemma = "Preceding_in_stemma"
     if (this.selectedLang === "de") { this.stemma = "Stemma_aufwärts" };
     if (this.selectedLang === "fr") { this.stemma = "Précédent_dans_le_stemma" };
-    if (this.selectedLang === "es") { this.stemma = "Precedente_en_el_stemma" }
+    if (this.selectedLang === "es") { this.stemma = "Precedente_en_el_stemma" };
 
+
+  /*  this.observer.observe([Breakpoints.HandsetPortrait]).subscribe(result => { //breakpoint
+      const breakpoints = result.breakpoints;
+      if (result.matches) { this.isMobile = true }   */
+  
     this.subscription0 = this.route.paramMap.subscribe(
       params => {
         this.itemId = params.get('id'),
@@ -376,6 +388,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscription2 = this.data.subscribe(item => {
           this.isMain = false;
           this.isOther = false;
+          this.isPicture = false;
           if (item !== undefined) {
             this.item = item;
             console.log(this.item);
@@ -385,7 +398,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.item[0].claims.P320 === undefined) { this.hideList() };
             //   if (this.item[0].claims.P2 !== undefined) {
             this.superClass = "";
-            this.natureOf=this.item[0].claims.P2[0].mainsnak.datavalue.value.id;
+            this.natureOf = this.item[0].claims.P2[0].mainsnak.datavalue.value.id;
             this.event = this.item[0].claims.P2.event;
             this.sources = this.item[0].claims.P2.sources;
             this.listTitle = this.item[0].claims.P2.listTitle;
@@ -393,25 +406,30 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             // }
             this.urlId = this.factGridUrl + this.id;
             if (this.item[0].claims.P48 !== undefined) {
+              this.zoom = 12;
+              if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q16200") { this.zoom = 18 }
+              else
+                if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q266101" || "Q172249" || "Q36239" || "Q164328" || "Q36251" || "Q141472" || "Q395380") { this.zoom = 16 };
               this.coords = this.item[0].claims.P48[0].mainsnak.datavalue.value;
               //map 
               this.latitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
               this.longitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
-              let lat = this.latitude.toString(); let lng = this.longitude;
-              this.router.navigate([lat, lng], { relativeTo: this.route });
+              this.router.navigate([this.latitude, this.longitude, this.zoom], { relativeTo: this.route });
             }
 
             this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
-            
-            if(this.item[0].infoList !== undefined){
-            this.instancesList=this.item[0].infoList[0];
-            this.subclassesList=this.item[0].infoList[1];
-            this.classesList=this.item[0].infoList[2];
-            this.natureOfList=this.item[0].infoList[3];
+
+            if (this.item[0].infoList !== undefined) {
+              this.instancesList = this.item[0].infoList[0];
+              this.subclassesList = this.item[0].infoList[1];
+              this.classesList = this.item[0].infoList[2];
+              this.natureOfList = this.item[0].infoList[3];
             }
 
-      if(this.classesList.length !== undefined || this.subclassesList.length !==undefined || this.instancesList.length !== undefined){ this.isInfo = true}
-         
+            if (this.classesList.length !== undefined || this.subclassesList.length !== undefined || this.instancesList.length !== undefined) { this.isInfo = true }
+
+          
+
             ///header
 
             this.id = this.item[0].id;
@@ -422,6 +440,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.headerDetail = [];
 
             this.headerDisplay.setHeaderDisplay(this.item, this.headerDetail);
+
 
             //  if (this.item[0].claims.P2 !== undefined) {
 
@@ -440,11 +459,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.item[0].claims.P2.person !== undefined) {
               if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
 
-              this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
+                this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
+              }
             }
 
-            }
- 
             //person: life and family
 
             this.lifeAndFamily = []
@@ -456,7 +474,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             //person:education
 
             this.education = [];
-            this.training = "";  
+            this.training = "";
 
             //person:career and activities
 
@@ -472,7 +490,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.sociabilityAndCulture = [];
             this.sociability = "";
-
             if (this.item[0].claims.P2.person !== undefined) {
               this.sociabilityDisplay.setSociabilityDisplay(this.item, this.sociabilityAndCulture);
               if (this.sociabilityAndCulture.length > 0) {
@@ -481,27 +498,34 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
 
-        ///sparql queries
+            ///sparql queries
 
-          this.sparqlSubject ="";
-          this.sparqlData = [];
-          let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
-          for (let i = 0; i < this.natureOfList.length; i++){
-              natureOfIds[i]=this.natureOfList[i].item.id;
+            this.sparqlSubject = "";
+            this.sparqlData = [];
+            let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
+            for (let i = 0; i < this.natureOfList.length; i++) {
+              natureOfIds[i] = this.natureOfList[i].item.id;
             }
-          
-        if(natureOfIds.includes("Q12")){ this.natureOf = "Q12" };
-        
-            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005") {         
-          if (this.natureOf == "Q12" && this.item[0].claims.P320){ this.natureOf = "" };
-            let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf,this.item[0].id);     
-            this.query = this.setData.sparqlToDisplay(sparqlQuery);
-            this.subscription4 = this.query?.subscribe(res => { this.sparqlData = this.sparql.listFromSparql(res);
-            this.sparqlSubject = this.natureOf;
+
+            if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
+
+            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005") {
+              if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
+              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
+              this.query = this.setData.sparqlToDisplay(sparqlQuery);
+              this.subscription4 = this.query?.subscribe(res => {
+                this.sparqlData = this.sparql.listFromSparql(res);
+                this.sparqlSubject = this.natureOf;
+                if (this.sparqlData.length > 0) {
+                  this.isSparql = true;
+                }
+                console.log(this.isSparql);
+              }
+              )
             }
-              )     
-        }    
-            
+
+            console.log(this.isSparql);
+
             ///pictures
 
             this.pictures = [];
@@ -518,7 +542,16 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
 
-            if (this.pictures !== undefined) this.isPicture = true;
+            if (this.pictures !== undefined) {
+              this.isPicture = true;
+
+              this.observer.observe([Breakpoints.HandsetPortrait]).subscribe(result => { //breakpoint
+                const breakpoints = result.breakpoints;
+                if (result.matches) { this.isMobile = true }
+                if (this.isMobile === true) { this.isTopPicture = true; this.isPicture = false; }
+              });
+            };
+              
 
             ///org
 
@@ -691,9 +724,11 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         )
   
       }
-    )
+      )
+  /*  }); */
 
-  }
+    }
+
 
   qualifiersList(u) { //setting the list of qualifiers for a mainsnak
     for (let i = 0; i < u.length; i++) {

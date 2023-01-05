@@ -10,3 +10,11 @@
 .show-division {
     display: block;
     }
+
+.sparql-div {
+  display: flex;
+  flex-flow: column wrap;
+  .sparql-div> *:not(:last-child) {
+    margin-bottom: 2px;
+   }
+  }

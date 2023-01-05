@@ -104,8 +104,11 @@ private getUrlSuffix= '&format=json&origin=*' ;
    )
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.selectedLang);
-    this.items = this.filterResearchField(this.items, this.selectedResearchField);  
-    this.isDisplay=true;
+    this.items = this.filterResearchField(this.items, this.selectedResearchField);
+      console.log(this.items);
+      this.isDisplay = true ;
+      if (this.items[0].id == "Q220375") { this.isDisplay = false };
+      console.log(this.isDisplay);
     this.changeDetector.detectChanges();
     })
 

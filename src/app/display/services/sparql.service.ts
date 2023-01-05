@@ -35,16 +35,19 @@ export class SparqlService {
         u = prefix+item+this.langService+suffix;
         } 
          else {    
-          if(id=="Q12"){ //organisation
+          if (id == "Q12" || id =="Q173005"){ //organisation
           let prefix1 = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%3FfLabel%20%3Factivity%20WHERE%20%7B%20%7B%3Fitem%20wdt%3AP247%20%3Ff%3B%20wdt%3AP165%20%3Factivity.%20%3Factivity%20wdt%3AP267%20wd%3A"
-          let prefix2 = "%20.%20%7D%20UNION%20%7B%3Fitem%20wdt%3AP91%20wd%3A"
-          let suffix2= "%20.%7D%0A%20%3Fitem%20wdt%3AP247%20%3Ff%20"
-          u =prefix1+item+prefix2+item+suffix2+this.langService+"ORDER%20BY%20%3FfitemLabel";
+            let prefix2 = "%20.%20%7D%20UNION%20%7B%3Fitem%20wdt%3AP91%20wd%3A";
+     //     let suffix2= "%20.%7D%0A%20%3Fitem%20wdt%3AP247%20%3Ff%20"
+            let suffix2 = "%20.%7D%20%3Fitem%20p%3AP247%20%3Fwds%20.%20%3Fwds%20ps%3AP247%20%3Ff.%20%0AFILTER%20%28%20NOT%20EXISTS%20%7B%20%3Fwds%20pq%3AP820%20%3Fp%20%7D%29";
+            u = prefix1 + item + prefix2 + item + suffix2 + this.langService + "ORDER%20BY%20%3FfitemLabel";
+            console.log(u);
           }
           else {
             if(id=="Q16200"){ //address
               let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%0AWHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP208%20wd%3A"
-              u=prefix+item+this.langService+"ORDER%20BY%20%3FfitemLabel";
+              u = prefix + item + this.langService + "ORDER%20BY%20%3FfitemLabel";
+              console.log(u)
             }
             else {
             u="";

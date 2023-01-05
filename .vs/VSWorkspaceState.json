@@ -4,10 +4,8 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\services",
-    "\\src\\app\\search",
-    "\\src\\app\\services"
+    "\\src\\app\\search"
   ],
-  "SelectedNode": "\\src\\app\\services\\qualifier-details.service.ts",
+  "SelectedNode": "\\src\\app\\display\\display.component.ts",
   "PreviewInSolutionExplorer": false
 }

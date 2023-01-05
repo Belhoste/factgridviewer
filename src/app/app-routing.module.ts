@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'item/:id',
     component: DisplayComponent,  
     children: [
-      { path: ':lat/:lng', component:MapComponent}
+      { path: ':lat/:lng/:z', component:MapComponent}
    //   { path: ':sparql', component:SparqlComponent, outlet:"'sparql"}
    ] 
   },
@@ -30,7 +30,7 @@ export const Routing = RouterModule.forRoot(routes, routingConfiguration);
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]
 }
 )
