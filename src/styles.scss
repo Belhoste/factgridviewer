@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
+
+
 // src/styles.scss
 
 // Custom Theming for Angular Material
@@ -19,86 +21,314 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-$theming-material-components-primary: mat.define-palette(mat.$indigo-palette);
-$theming-material-components-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$my-primary: mat.define-palette(mat.$indigo-palette);
+$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 
-$theming-material-components-warn: mat.define-palette(mat.$red-palette);
+$my-warn: mat.define-palette(mat.$red-palette);
 
-// Create the theme object (a Sass map containing all of the palettes).
+//$my-typography: mat.define-typography-config();
 
-$theming-material-components-theme: mat.define-light-theme(
-  $theming-material-components-primary,
-  $theming-material-components-accent,
-  $theming-material-components-warn
-);
+$my-typography: mat.define-typography-config($font-family:"Oxygen",
+$headline-1: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+$headline-2: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+$headline-3: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+$headline-4: mat.define-typography-level(34px, 40px, 400),
+$headline-5: mat.define-typography-level(24px, 32px, 400),
+$subtitle-1: mat.define-typography-level(20px, 28px, 400),
+$body-1: mat.define-typography-level(16px, 18px, 400),
+$body-2: mat.define-typography-level(12px, 14px, 400)
+)
+;
+
+/*Create the theme object (a Sass map containing all of the palettes).*/
+
+$my-theme: mat.define-light-theme(( color:(
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn ),
+ //   typography: $my-typography,
+    density: 0
+));  
+
+@include mat.all-component-themes($my-theme);
+
+// src/material/button/_button-theme.scss
+// content reduced for brevity
+
+// Applies a property to an mat-button element for each of the supported palettes.
+@mixin _theme-property($my-theme, $property, $hue) {
+  $primary: map.get($my-theme, primary);
+  $accent: map.get($my-theme, accent);
+  $warn: map.get($my-theme, warn);
+
+  &.mat-primary {
+    #{$property}: theming.get-color-from-palette($primary, $hue);
+  }
+  &.mat-accent {
+    #{$property}: theming.get-color-from-palette($accent, $hue);
+  }
+  &.mat-warn {
+    #{$property}: theming.get-color-from-palette($warn, $hue);
+  }
+
+  &.mat-primary,
+  &.mat-accent,
+  &.mat-warn,
+  &.mat-button-disabled {
+    &.mat-button-disabled {
+      $palette: if($property == "color", $foreground, $background);
+      #{$property}: theming.get-color-from-palette($palette, disabled-button);
+    }
+  }
+}
+
+@mixin color($config-or-theme) {
+  $config: theming.get-color-config($config-or-theme);
+  $foreground: map.get($config, foreground);
+
+  .mat-button,
+  .mat-icon-button,
+  .mat-stroked-button {
+    @include _theme-property($config, "color", text);
+  }
+}
+
+
+
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 
-@include mat.all-component-themes($theming-material-components-theme);
+
+//@include mat.typography-hierarchy($my-theme);
+
 
 /* You can add global styles to this file, and also import other style files */
 
 @import "../node_modules/leaflet/dist/leaflet.css";
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label:not(.mat-empty):not(.mat-form-field-empty) {
-  font-size:12px;
+  font-size: 12px;
   // scale or font-size
 }
 
+
+//@include mat.button-theme($my-theme);
+
+//@include mat.form-field-theme($my-theme);
+
+
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
-    $custom-typography: mat.define-typography-config(
-    $font-family:   'Oxygen',
-    $display-4:     mat.define-typography-level(112px, 112px, 300),
-    $display-3:     mat.define-typography-level(56px, 56px, 400),
-    $display-2:     mat.define-typography-level(45px, 48px, 400),
-    $display-1:     mat.define-typography-level(34px, 40px, 400),
-    $headline:      mat.define-typography-level(24px, 32px, 400),
-    $title:         mat.define-typography-level(20px, 32px, 500),
-    $subheading-2:  mat.define-typography-level(16px, 28px, 400),
-    $subheading-1:  mat.define-typography-level(15px, 24px, 400),
-    $body-2:        mat.define-typography-level(14px, 24px, 500),
-    $body-1:        mat.define-typography-level(14px, 20px, 400),
-    $caption:       mat.define-typography-level(12px, 20px, 400),
-    $button:        mat.define-typography-level(14px, 14px, 500),
-    $input:         mat.define-typography-level(inherit, 1.125, 400)
-);
 
-@include mat.typography-hierarchy($custom-typography);
+/// $custom-typography: mat.define-typography-config( $font-family: 'Oxygen', $display-4: mat.define-typography-level(112px, 112px, 300), $display-3: mat.define-typography-level(56px, 56px, 400), $display-2: mat.define-typography-level(45px, 48px, 400), $display-1: mat.define-typography-level(34px, 40px, 400), $headline: mat.define-typography-level(24px, 32px, 400), $
+/// : mat.define-typography-level(20px, 32px, 500), $subheading-2: mat.define-typography-level(16px, 28px, 400), $subheading-1: mat.define-typography-level(15px, 24px, 400), $body-2: mat.define-typography-level(14px, 24px, 500), $body-1: mat.define-typography-level(14px, 20px, 400), $caption: mat.define-typography-level(12px, 20px, 400), $button: mat.define-typography-level(14px, 14px, 500), $input: mat.define-typography-level(inherit, 1.125, 400) );
+
+/// @include mat.typography-hierarchy($custom-typography);
 
 // Override typography for a specific Angular Material components.
-@include mat.checkbox-typography($custom-typography);
+/// @include mat.checkbox-typography($custom-typography);
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
-@include mat.all-component-typographies($custom-typography);
+/// @include mat.all-component-typographies($custom-typography);
 
-@include mat.core($custom-typography);
+/// @include mat.core($custom-typography);
 
-.mat-focused .mat-form-field-label {
-  color: blue !important;
-  font-size: 20px;
-} 
 
 html, body {
-  background-color: rgb(250, 245, 236);
+  font-family: 'Oxygen';
+  background-color: rgb(250, 246, 239);
   margin: 0;
   //font-family: Cantarell, "Helvetica Neue", sans-serif;
-  
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
 .mat-button-focus-overlay {
-  background-color: transparent!important;
+  font-family: 'Oxygen';
+  background-color: transparent !important;
 }
 
 .mat-sidenav {
-  min-width: 100px ;
+  font-family: 'Oxygen';
+  min-width: 100px;
 }
 
-.mat-progress-spinner circle, .mat-spinner circle {
+
+.mat-mdc-progress-spinner circle, .mat-mdc-progress-spinner circle {
   stroke: #AD1457;
 }
 
+//css for components
+
+@mixin font-size($sizeValue:16px) {
+ font-size: $sizeValue;
+}
+
+.cardBackground { 
+height: fit-content;
+margin-right: 2px;
+margin-left: 2px;
+background-color: white ;
+}
+
+.statementSize { //size of the text of the statements
+  //color: black;
+  //color:mat-primary;
+  font-size:16px;
+}
+
+.descriptionText {  //color and weight for the descriptions of the statements and qualifiers
+  font-weight: 321;
+  color:#808080 !important;
+  }
+
+.qualifierProperty { //size and color of the label of the qualifier
+  font-size:14px;
+  color:#3F51B5;
+  font-style:italic;
+}
+
+.statementProperty { // size and color or the label of the statement
+ // font-size:16px; 
+  color:#3F51B5;
+ @include font-size();
+  font-weight:400;
+  padding-bottom: 4px;
+}
+
+.qualifierTextSize {  //size of the text of the qualifier
+  font-size:14px;
+}
+
+.qualifierTextColor { //color of the text of the qualifier
+  color:black;
+}
+
+.selectedItemText {
+  font-size:16px;
+  color:white;
+}
+
+.selectedItemText2 {
+  font-size:16px;
+  color:white;
+  line-height: 25px;
+}
+
+
+.referenceProperty { 
+  font-size:14 px;
+  color:#AD1457;
+  font-style:italic;
+}
+
+.labelTitlePadding {  //padding top on the labels of the statements
+  padding-top: 8px;
+}
+
+.subtitlePadding {  // padding-bottom on the subtitles (seems deprecate)
+  padding-bottom: 15px;
+}
+
+.matCardPadding {  //padding top and left of the mat-card
+ // padding-top: 3px;
+  padding-left:3px;
+}
+
+.externalLinksPadding {  //padding top and left of the externalLinks
+   padding-top: 10px;
+   padding-left:3px;
+ }
+
+ .externalLinksText { //styling of the external links and wikis
+  font-size:16px;
+  padding-left:10px;
+  padding-right:10px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.displayLayout {  // layout des external links and others
+  padding-left:10px;
+  padding-right:10px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.divisionTitle {  //size and color of the subtitles
+  color: #AD1457;
+  font-size: 2rem;
+  font-weight: 100;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: auto;
+ // margin-bottom:10px;
+  line-height: 30px;
+  //height: 60px;
+}
+
+.subdivisionTitle {  //size and color of the subsubtitles
+  color: #AD1457;
+  font-size: 1.6rem;
+  font-weight: 100;
+  padding-bottom: 20px;
+  margin-left: auto;
+}
+
+.selectedListTitle {  //size and color of the title of selectedList in display
+  color:white;
+  font-size: 1.6rem;
+  font-weight:100;
+  padding:5px;
+  margin-left:auto;
+  margin-bottom: 10px;
+}
+
+.selectedListTitle2 {  //size and color of the title of selectedList in search
+  color: white;
+  font-size: 1.2rem !important;
+  font-weight: 400;
+  padding:5px;
+  margin-top:20px;
+  margin-left:10px;
+  margin-bottom: 10px;
+}
+
+.listTitleStart { align-self: start;  // align left the subtitle linked page in the drawer
+    padding: 10px;
+};
+
+.iFrameComment{
+  font-size:14px;
+  text-overflow: ellipsis;
+  word-break: normal;
+}
+
+.searchListSize {  // in the search-component for the list of items
+  justify-content: center;
+  width: 80%;
+  font-size: 16px;
+}
+
+.whiteText {
+  color:white;
+  }
+
+
+.whiteButton { //use for you have visited
+    color: white;
+    font-size: medium;
+    line-height: 30px;
+  }
+
+.basicSize {
+    font-size: 16px;
+}

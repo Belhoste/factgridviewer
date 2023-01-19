@@ -1,12 +1,10 @@
 //service preparing data for display
 
 import { Injectable } from '@angular/core';
-import { CreateItemToDisplayService } from './create-item-to-display.service';
 import { SetLanguageService } from './set-language.service';
 import { RequestService } from './request.service';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-//import { ItemInfoService } from './item-info.service';
 import { CreateCompleteItemService } from './create-complete-item.service';
 
 @Injectable({
@@ -14,7 +12,7 @@ import { CreateCompleteItemService } from './create-complete-item.service';
 })
 export class SetDataService {
 
-  constructor(private createItem:CreateItemToDisplayService, private createCompleteItem:CreateCompleteItemService, private setLanguage:SetLanguageService, private request:RequestService) { }
+  constructor(private createCompleteItem:CreateCompleteItemService, private setLanguage:SetLanguageService, private request:RequestService) { }
 
 selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
 baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;

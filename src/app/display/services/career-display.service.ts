@@ -19,6 +19,10 @@ export class CareerDisplayService {
       item[1].splice(item[1].indexOf("P165"),1);
       careerAndActivities.push(item[0].claims.P165); 
     }  
+    if (item[0].claims.Q448941 !==undefined){ //professional address
+      item[1].splice(item[1].indexOf("Q448941"),1);
+      careerAndActivities.push(item[0].claims.Q448941); 
+    }  
     if (item[0].claims.P315 !==undefined){ //employer
       item[1].splice(item[1].indexOf("P315"),1);
       careerAndActivities.push(item[0].claims.P315); 
@@ -38,3 +42,4 @@ export class CareerDisplayService {
     return careerAndActivities
   }
 }
+

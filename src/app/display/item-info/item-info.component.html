@@ -1,16 +1,15 @@
 
 <div [ngClass]="isInfo ? 'show-division':'hide-division'">
-    <mat-card  class= mat-elevation-z8 class="itemInformation-mat-card">
-    <div class="subdivision-title">{{subTitle}}</div>
+  <mat-card  appearance="outlined"  class= mat-elevation-z8 class="itemInformation-mat-card">
+    <mat-card-content>
+    <div class="subdivisionTitle">{{subTitle}}</div>
 
     <div  [ngClass]="isList4 ? 'show-division':'hide-division'">
       <div class="property2">{{natureOfListTitle}} {{list4Number}} {{suffix1}} </div>   
       <hr>  
-      <mat-card-content fxLayout="column wrap" 
-                      fxLayoutAlign="start stretch"
-                      fxLayoutGap="2px">
+      
       <div class="details"  *ngFor="let L of list4">
-        <div flex-shrink flex-basis="auto">
+        <div>
           <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
             <span class="description-text" *ngIf="L.itemDescription">({{L.itemDescription.value}})</span>
             <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -18,17 +17,17 @@
         </div>
         <hr>
       </div>
-      </mat-card-content>
+     
       </div>
+    </mat-card-content>
 
     <div  [ngClass]="isList3 ? 'show-division':'hide-division'">
+      <mat-card-content>
         <div class="property2">{{prefix1}} {{list3Number}} {{classesListTitle}}</div>   
         <hr>  
-        <mat-card-content fxLayout="column wrap" 
-                        fxLayoutAlign="start stretch"
-                        fxLayoutGap="2px">
+        
         <div class="details"  *ngFor="let L of list3">
-          <div flex-shrink flex-basis="auto">
+          <div>
             <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
               <span class="description-text" *ngIf="L.itemDescription">({{L.itemDescription.value}})</span>
               <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -36,16 +35,14 @@
           </div>
           <hr>
         </div>
-        </mat-card-content>
-        </div>
-      <div [ngClass]="isList1 ? 'show-division':'hide-division'">       
+      </mat-card-content>
+    </div>
+    <div [ngClass]="isList1 ? 'show-division':'hide-division'"> 
+      <mat-card-content>     
         <div class="property2">{{prefix2}} {{list1Number}} {{subclassesListTitle}}</div>   
-                <hr>  
-                <mat-card-content fxLayout="column wrap" 
-                                fxLayoutAlign="start stretch"
-                                fxLayoutGap="2px">
+                <hr>          
                 <div class="details"  *ngFor="let L of list1">
-                  <div flex-shrink flex-basis="auto">
+                  <div>
                     <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
                       <span class="description-text" *ngIf="L.itemDescription">({{L.itemDescription.value}})</span>
                       <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -53,15 +50,13 @@
                   </div>
                   <hr>
                 </div>
-              </mat-card-content>
-            </div>
-      
-      <div  [ngClass]="isList2 ? 'show-division':'hide-division'">
+      </mat-card-content>    
+    </div>
+    <div  [ngClass]="isList2 ? 'show-division':'hide-division'">
+      <mat-card-content>
         <div class="property2">{{list2Number}} {{instancesListTitle}}</div>   
         <hr>  
-        <mat-card-content fxLayout="column wrap" 
-                        fxLayoutAlign="start stretch"
-                        fxLayoutGap="2px">
+        
         <div class="details"  *ngFor="let L of list2">
           <div flex-shrink flex-basis="auto">
             <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
@@ -71,10 +66,10 @@
           </div>
           <hr>
         </div>
-        </mat-card-content>
-        </div>
+      </mat-card-content>
+    </div>
       
-    </mat-card>
+  </mat-card>
  </div>
 
 

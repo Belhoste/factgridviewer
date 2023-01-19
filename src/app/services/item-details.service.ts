@@ -69,34 +69,40 @@ export class ItemDetailsService {
   }
 
   addQualifierItemDetails(items, re, propertyIds, lang){//add labels, definitions and aliases of items in the qualifiers/*
+ //   console.log(items);
     for (let i=0; i<propertyIds.length; i++){ 
         for (let j=0; j<re.claims[propertyIds[i]].length; j++) {
           if(propertyIds[i] =="P2"){ re.claims[propertyIds[i]][j].mainsnak.timeOrder = "0" } ;
           if (re.claims[propertyIds[i]][j].qualifiers === undefined) {continue}
           let props = Object.keys(re.claims[propertyIds[i]][j].qualifiers);
              for  (let k=0; k<props.length; k++){
-               for (let m=0; m<props[k].length; m++) {
-                 if(re.claims[propertyIds[i]][j].qualifiers[props[k]][m] === undefined){continue};
-                  if(re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datatype === "time"){
-                       let value =re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.time
+               for (let l=0; l<props[k].length; l++) {
+          //      console.log(re.claims[propertyIds[i]][j].qualifiers[props[k]][l])
+                
+                 if(re.claims[propertyIds[i]][j].qualifiers[props[k]][l] === undefined){continue};
+                  if(re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datatype === "time"){
+                       let value =re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.time
                        value = value.substring(0,value.length-10);
-                        re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.date = this.setDate.setDate(value,lang);
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.date = this.setDate.setDate(value,lang);
                        }
-                  for (let l=0; l<items.length; l++){
-                     if (re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.id !== items[l].id){ continue }
-                       if (re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datatype === "wikibase-item"){
-                         re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.label = items[l].label;
+                  for (let m=0; m<items.length; m++){
+              
+                     if (re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.id !== items[m].id){ continue }
+                       if (re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datatype === "wikibase-item"){
+                         re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.label = items[m].label;
                //         if (items[k].description !== undefined)
-                        re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.description = items[l].description;
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.description = items[m].description;
               //          if (items[k].aliases !== undefined)
-                        re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.aliases = items[l].aliases;                            
-                    }
-                    if (re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datatype === "commonsMedia"){
-                      re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.label = items[l].label;
+                        re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.aliases = items[m].aliases;  
+              //          this.roleOfObjectRendering(re.claims[propertyIds[i]][j].qualifiers[props[k]][l]);
+                        
+                      }
+                    if (re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datatype === "commonsMedia"){
+                      re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.label = items[m].label;
              //        if (items[k].description !== undefined)
-                     re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.description = items[l].description;
+                     re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.description = items[m].description;
               //       if (items[k].aliases !== undefined)
-                     re.claims[propertyIds[i]][j].qualifiers[props[k]][m].datavalue.value.aliases = items[l].aliases;                            
+                    re.claims[propertyIds[i]][j].qualifiers[props[k]][l].datavalue.value.aliases = items[m].aliases;                            
                     }
                  }
                }
@@ -147,12 +153,12 @@ export class ItemDetailsService {
                         if (items[l].aliases !== undefined)
                            re.claims[propertyIds[i]][j].references[k].snaks[props[a]][0].datavalue.value.aliases = items[l].aliases;               
                           }                     
-                   }      
-                 } 
-               }                            
+                        }      
+                      } 
+                    }                            
+                  }
+                }
               }
-           }
-        }
         return re
           }
 
@@ -215,5 +221,6 @@ export class ItemDetailsService {
  // re.info = this.itemInfo.infoListBuilding(re)
 
     }
+
 
 }

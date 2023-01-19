@@ -122,7 +122,10 @@ export class ItemInfoComponent implements OnChanges {
       if(this.list3[0] ===undefined){ this.isList3 = false };
       if(this.list4[0] !==undefined){ this.isList4 = true };
       if(this.list4[0] ===undefined){ this.isList4 = false };
-      }
+      
+      console.log(this.subTitle);
+    
+    }
     } 
 
 

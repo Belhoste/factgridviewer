@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
-import { SlideUpAnimation} from './slide-up-animation';
+import { SlideUpAnimation } from './slide-up-animation';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   animations: [SlideUpAnimation]
 })
 export class AppComponent implements OnInit

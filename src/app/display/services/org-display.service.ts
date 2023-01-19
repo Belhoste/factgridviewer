@@ -17,10 +17,10 @@ export class OrgDisplayService {
     item[1].splice(item[1].indexOf("P83"),1);
       locationAndContext.push(item[0].claims.P83); 
   }  
-  if (item[0].claims.P208 !==undefined){  //address  
+ /* if (item[0].claims.P208 !==undefined){  //address  
     item[1].splice(item[1].indexOf("P208"),1);
     locationAndContext.push(item[0].claims.P208); 
-  }
+  }*/
   if (item[0].claims.P49 !==undefined){  //begin date     
     item[1].splice(item[1].indexOf("P49"),1);
     locationAndContext.push(item[0].claims.P49); 

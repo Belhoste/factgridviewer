@@ -1,7 +1,5 @@
-import { Component, Input, OnInit, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { SparqlService } from './services/sparql.service';
-import { SetDataService } from '../services/set-data.service'
+import { Component, Input, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+
 
 @Component({
   selector: 'app-sparql-display',
@@ -50,6 +48,7 @@ export class SparqlDisplayComponent implements OnChanges {
       }
       else {
         if(this.subTitle == "Q24499"){
+          console.log(this.list[0]);
           if (this.selectedLang === "en") { this.subTitle = "Bearing this family name:" };
           if (this.selectedLang === "de") { this.subTitle = "Mit diesem Familiennamen:" };
           if (this.selectedLang === "fr") { this.subTitle = "Portant ce nom de famille:" };
@@ -71,7 +70,7 @@ export class SparqlDisplayComponent implements OnChanges {
                 if (this.selectedLang === "es") { this.subTitle = "Membres:" };
               }
             }
-            else { if(this.subTitle == "Q37073" || this.subTitle == "Q146602" || this.subTitle == "Q146410"){
+            else { if(this.subTitle == "Q37073" || this.subTitle == "Q146602" || this.subTitle == "Q146410" || this.subTitle =="Q257052"){
               console.log(this.subTitle)
               if (this.selectedLang === "en") {this.subTitle ="with this activity:"};
               if (this.selectedLang === "de") { this.subTitle = "mit dieser Aktivität:" };
@@ -79,23 +78,27 @@ export class SparqlDisplayComponent implements OnChanges {
               if (this.selectedLang === "es") { this.subTitle = "con esta actividad:" };  
               }
               else { if(this.subTitle == "Q16200"){
-                console.log(this.subTitle);
                 if (this.selectedLang === "en") {this.subTitle ="Domiciled at this address:"};
                 if (this.selectedLang === "de") { this.subTitle = "An dieser Adresse wohnhaft:" };
                 if (this.selectedLang === "fr") { this.subTitle = "Domicilié.e.s à cette adresse:" };
                 if (this.selectedLang === "es") { this.subTitle = "con esta actividad:" };  
-              }       
+              }  
+      /*        else { if(this.subTitle == ""){
+                if (this.selectedLang === "en") {this.subTitle =""};
+                if (this.selectedLang === "de") { this.subTitle = "" };
+                if (this.selectedLang === "fr") { this.subTitle = "" };
+                if (this.selectedLang === "es") { this.subTitle = "" };  
+                }
+              }  */   
             }
           } 
             }     
           }
-        }
-  
+        
         if(this.list[0] !==undefined){ this.isList = true };
         if (this.list[0] === undefined) { this.isList = false };
 
-    console.log(this.isList);
-
+      }
 
       }
     } 

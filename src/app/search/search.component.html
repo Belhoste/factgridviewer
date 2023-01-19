@@ -1,25 +1,23 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
     rel="stylesheet">
-    <body class="container">
+    <body class="search-container">
         <div>
-            <div class="FactGrid-div" [@slideUp]="isDown ? 'down' :'up'">
-                <div class="FactGridTitle-div">
-                    <p>FactGrid</p>
-                </div>
-                <span>{{subtitle}}</span>
+            <div class="FactGrid-div">          
+            <span class="FactGridTitle-div">FactGrid</span>
+            <span>{{subtitle}}</span>
             </div>
-            <div class="select-bar" class="center">
-                <mat-form-field color=primary appearance="standard" class="mat-h3">
+            <div class="search-center">
+                <mat-form-field>
                     <input matInput placeholder="Ex. Goethe" value="Goethe" [formControl]="searchInput">
                 </mat-form-field>
             </div>
         </div>
 
-        <div class="center">
-            <div *ngIf="isDisplay == true" class="div">
+        <div class="search-center">
+            <div *ngIf="isDisplay == true" class="searchListSize">
  
-                        <div>
+                        <div class="details">
                             <div *ngFor="let item of items">
                                 {{item.label}}
                                 <a [routerLink]="['/item', item.id]" routerLinkActive="activate-link">{{item.id}}</a>, <span class="description-text">{{item.description }}</span>
@@ -36,21 +34,24 @@
             </div>
         </div>
 
-        <div class="center">
+        <div class="search-center">
             <div *ngIf="isDisplay == false">
-                <div class="itemSelected-div">
-                    <mat-card class="itemSelected-mat-card">
-                        <div class="selectedList-title">{{formerVisitsTitle}}</div>
-                        <div>
+                <div class="search-itemSelected">
+                    <mat-card appearance="outlined" class="search-itemSelected-mat-card">
+                        <div class="selectedListTitle2">{{formerVisitsTitle}}</div>
+                        <div class="selectedItemSize">
                             <hr>
- 
                             <mat-card-content>
-                                <mat-list *ngFor="let selectedItem of selectedItemsList">
-                                    <span *ngIf="selectedItem" mat-list-item class="white-text">
+                                <div>
+                                <div *ngFor="let selectedItem of selectedItemsList">    
+                                    <span *ngIf="selectedItem" class="selectedItemText2">
                                         {{selectedItem.label}}&nbsp;
-                                        <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon class="white-button" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon class="whiteButton" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        
                                     </span>
-                                </mat-list>
+                                    <br>
+                                </div>
+                            </div>
                             </mat-card-content>
                         </div>
                     </mat-card>

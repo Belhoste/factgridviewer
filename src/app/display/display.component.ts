@@ -31,10 +31,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 
+
 @Component({
   selector: 'app-display',
   templateUrl: 'display.component.html',
-  styleUrls: ['./display.component.css']
+  styleUrls: ['./display.component.scss']
 })
 
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -163,8 +164,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   sources: string;
   other: string;
   publication: string;
+  mainTitle:string;
   listTitle: string;
-
   list: any[] = [];
   sparqlList:any[];
   superClass:string;
@@ -224,6 +225,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   isTranscription:boolean = false;
   isInfo: boolean = false;
   isMobile: boolean = false;
+  isAliases: boolean = false;
 
   onClick2(query) { //handling click for sparql query
     query = this.setData.sparqlToDisplay(query);
@@ -301,7 +303,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.selectedLang === "fr") { this.linkedPagesTitle = "pages liées" };
     if (this.selectedLang === "es") { this.linkedPagesTitle = "páginas enlazadas" }
 
-    this.mainPage = "Main page"
+    this.mainPage = "page"
     if (this.selectedLang === "de") { this.mainPage = "HauptSeite" };
     if (this.selectedLang === "fr") { this.mainPage = "page principale" };
     if (this.selectedLang === "es") { this.mainPage = "página principal" };
@@ -403,6 +405,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.sources = this.item[0].claims.P2.sources;
             this.listTitle = this.item[0].claims.P2.listTitle;
             this.main = this.item[0].claims.P2.main;
+            this.mainTitle = this.item[0].claims.P2[0].mainsnak.label;
+            if (this.mainTitle == "Humain") {this.mainTitle = "Personne"};
             // }
             this.urlId = this.factGridUrl + this.id;
             if (this.item[0].claims.P48 !== undefined) {
@@ -436,7 +440,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.label = this.item[0].label;
             this.description = this.item[0].description;
             this.aliases = this.item[0].aliases;
-
+            if (this.aliases) {  this.isAliases === true  };
             this.headerDetail = [];
 
             this.headerDisplay.setHeaderDisplay(this.item, this.headerDetail);
@@ -460,6 +464,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
 
                 this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
+               
               }
             }
 
@@ -471,19 +476,30 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
             }
 
+            console.log(this.lifeAndFamily);
+
             //person:education
 
             this.education = [];
             this.training = "";
 
+            if (this.item[0].claims.P2.person !== undefined) {
+              this.educationDisplay.setEducationDisplay(this.item, this.education);
+              if (this.item[0].claims.P2.person !== undefined) {
+                this.educationDisplay.setEducationDisplay(this.item, this.education);
+                if (this.education.length > 0) { this.training = this.item[0].claims.P2.training; this.isTraining = true };
+              }
+            }
+
             //person:career and activities
 
             this.careerAndActivities = [];
             this.career = "";
-
             if (this.item[0].claims.P2.person !== undefined) {
               this.careerDisplay.setCareerDisplay(this.item, this.careerAndActivities);
-              if (this.careerAndActivities.length > 0) { this.career = this.item[0].claims.P2.career; this.isCareer = true };
+              if (this.careerAndActivities.length > 0) { 
+                this.career = this.item[0].claims.P2.career; 
+                this.isCareer = true };
             }
 
             //person: sociability and culture
@@ -509,24 +525,19 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
 
-            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" ||  "Q16200" || "Q173005") {
+            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052") {
               if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
               let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
               this.query = this.setData.sparqlToDisplay(sparqlQuery);
               this.subscription4 = this.query?.subscribe(res => {
                 this.sparqlData = this.sparql.listFromSparql(res);
                 this.sparqlSubject = this.natureOf;
-                console.log(this.sparqlData);
                 if (this.sparqlData.length > 0) {
-                  console.log(this.sparqlData.length);
                   this.isSparql = true;
                 }
-                console.log(this.isSparql);
               }
               )
             }
-
-            console.log(this.isSparql);
 
             ///pictures
 
@@ -678,7 +689,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (this.mainList.length > 0) {
               this.isMain = true;
-            }
+           }
+
+            console.log(this.mainList);
            
             //wikis
 
@@ -762,7 +775,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription2.unsubscribe();
     if(this.subscription3 !==undefined){this.subscription3.unsubscribe();}
     if (this.subscription4 !== undefined) {
-      console.log(this.subscription4);
       this.subscription4.unsubscribe();
     }
     if(this.subscription5 !==undefined){this.subscription5.unsubscribe();}

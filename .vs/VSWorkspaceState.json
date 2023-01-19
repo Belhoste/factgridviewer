@@ -1,10 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\assets",
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\search"
+    "\\src\\app\\display\\text-display",
+    "\\src\\app\\search",
+    "\\src\\assets"
   ],
   "SelectedNode": "\\src\\app\\display\\display.component.html",
   "PreviewInSolutionExplorer": false

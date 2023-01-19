@@ -4,8 +4,9 @@ import { DetailsService } from  './details.service';
 import { PropertyDetailsService } from './property-details.service';
 import { SetItemToDisplayService } from './set-item-to-display.service';
 import { ItemDetailsService } from './item-details.service';
+import { RoleOfObjectRenderingService } from './role-of-object-rendering.service';
 import { forkJoin, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { BackListService } from './back-list.service';
 import { TypologyService } from './typology.service';
 
@@ -19,7 +20,7 @@ export class CreateItemToDisplayService {
   private subject : BehaviorSubject <any> = new BehaviorSubject(null);
 
   constructor(private setLanguage:SetLanguageService, private details:DetailsService, private setItem:SetItemToDisplayService, 
-    private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private backList:BackListService, private typology:TypologyService) { }
+    private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private roleOfObject:RoleOfObjectRenderingService, private backList:BackListService, private typology:TypologyService) { }
 
     
     createItemToDisplay(re, selectedLang) {
@@ -29,6 +30,7 @@ export class CreateItemToDisplayService {
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
+          
           map(res =>{   
           let qualifierProperties=[];
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
@@ -39,14 +41,11 @@ export class CreateItemToDisplayService {
           qualifierProperties = this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails,re, propertyIds)[1];
           this.addPropertyDetails.addQualifier2PropertyDetails(propertiesDetails,re, propertyIds)[1];
           this.addPropertyDetails.addReferencePropertyDetails(propertiesDetails, re, propertyIds);
-          this.addPropertyDetails.addReference2PropertyDetails(propertiesDetails, re, propertyIds)
+          this.addPropertyDetails.addReference2PropertyDetails(propertiesDetails, re, propertyIds);
           let itemsDetails = this.setLanguage.item2(res.items,selectedLang) ;
           this.addItemDetails.addClaimItemDetails(itemsDetails, re, propertyIds, selectedLang);// selected item with all the properties and items (with their labels and descriptions) of the mainsnaks
           this.addItemDetails.addQualifierItemDetails(itemsDetails, re, propertyIds, selectedLang);
-       //   this.typology.getValue(re)
-
-          //       this.addItemDetails.addQualifier2ItemDetails(re, propertyIds);
-    //  this.addItemDetails.sortedItemDetails(re);
+      //   this.roleOfObject.roleOfObject(re);  //failed
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds, selectedLang); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
           u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
           return [u, propertyIds, 
@@ -55,6 +54,7 @@ export class CreateItemToDisplayService {
             }
           )    
         )  
+   //     observedItem.subscribe(res =>console.log(res));
         return observedItem
       }
 

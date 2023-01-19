@@ -3,8 +3,6 @@ import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { DisplayComponent} from './display/display.component';
 import { SearchComponent } from './search/search.component';
 import { MapComponent } from './display/map/map.component';
-import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
-import { EssaiComponent } from './essai/essai.component';
 
 export const routingConfiguration: ExtraOptions = {
   paramsInheritanceStrategy: 'always'
@@ -19,10 +17,7 @@ const routes: Routes = [
       { path: ':lat/:lng/:z', component:MapComponent}
    //   { path: ':sparql', component:SparqlComponent, outlet:"'sparql"}
    ] 
-  },
-  { path: 'advanced_search',    //component for advanced search 
-     component: AdvancedSearchComponent},
-  { path: 'essai',  component: EssaiComponent   }
+  }
 
 ]
 
