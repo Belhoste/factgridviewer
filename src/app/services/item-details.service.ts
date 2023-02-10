@@ -20,7 +20,6 @@ export class ItemDetailsService {
     for (let i=0; i<propertyIds.length; i++){
       let timeOrder = 23000000;
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
-    
         re.claims[propertyIds[i]][j].mainsnak.timeOrder=timeOrder;
         if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
           let value= re.claims[propertyIds[i]][j].mainsnak.datavalue.value.time;

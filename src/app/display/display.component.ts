@@ -245,9 +245,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.isList = true;
     }
-  
-      //   this.delayDisplayList();
-    )
+   )
   }
   }
 
@@ -337,11 +335,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.selectedLang === "de") { this.stemma = "Stemma_aufwärts" };
     if (this.selectedLang === "fr") { this.stemma = "Précédent_dans_le_stemma" };
     if (this.selectedLang === "es") { this.stemma = "Precedente_en_el_stemma" };
-
-
-  /*  this.observer.observe([Breakpoints.HandsetPortrait]).subscribe(result => { //breakpoint
-      const breakpoints = result.breakpoints;
-      if (result.matches) { this.isMobile = true }   */
   
     this.subscription0 = this.route.paramMap.subscribe(
       params => {
@@ -391,6 +384,16 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isMain = false;
           this.isOther = false;
           this.isPicture = false;
+          this.isSparql = false;
+          this.isSources = false;
+          this.isTraining = false;
+          this.isCareer = false;
+          this.isFamilyTree = false;
+          this.isSociability = false;
+          this.isIframes = false;
+          this.isActivity = false;
+          this.isWikis = false;
+          this.isExternalLinks = false;
           if (item !== undefined) {
             this.item = item;
             console.log(this.item);
@@ -410,12 +413,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             // }
             this.urlId = this.factGridUrl + this.id;
             if (this.item[0].claims.P48 !== undefined) {
+              //map
               this.zoom = 12;
-              if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q16200") { this.zoom = 18 }
-              else
-                if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q266101" || "Q172249" || "Q36239" || "Q164328" || "Q36251" || "Q141472" || "Q395380") { this.zoom = 16 };
+              let xy= this.item[0].claims.P2[0].mainsnak.datavalue.value.id  
+              if (xy == "Q16200") { this.zoom = 18 }
+               if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380") {this.zoom = 16 }
               this.coords = this.item[0].claims.P48[0].mainsnak.datavalue.value;
-              //map 
               this.latitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
               this.longitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
               this.router.navigate([this.latitude, this.longitude, this.zoom], { relativeTo: this.route });
@@ -476,20 +479,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
             }
 
-            console.log(this.lifeAndFamily);
-
             //person:education
 
             this.education = [];
             this.training = "";
 
             if (this.item[0].claims.P2.person !== undefined) {
-              this.educationDisplay.setEducationDisplay(this.item, this.education);
-              if (this.item[0].claims.P2.person !== undefined) {
-                this.educationDisplay.setEducationDisplay(this.item, this.education);
-                if (this.education.length > 0) { this.training = this.item[0].claims.P2.training; this.isTraining = true };
+               this.educationDisplay.setEducationDisplay(this.item, this.education);
+               if (this.education.length > 0) { this.training = this.item[0].claims.P2.training; this.isTraining = true };
               }
-            }
 
             //person:career and activities
 
@@ -515,7 +513,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             ///sparql queries
-
+            
             this.sparqlSubject = "";
             this.sparqlData = [];
             let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
@@ -690,8 +688,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.mainList.length > 0) {
               this.isMain = true;
            }
-
-            console.log(this.mainList);
            
             //wikis
 
@@ -742,7 +738,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       )
   /*  }); */
 
-    }
+ 
+   }
 
 
   qualifiersList(u) { //setting the list of qualifiers for a mainsnak

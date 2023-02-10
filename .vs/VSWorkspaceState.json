@@ -5,10 +5,9 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\text-display",
-    "\\src\\app\\search",
+    "\\src\\app\\display\\services",
+    "\\src\\app\\services",
     "\\src\\assets"
   ],
-  "SelectedNode": "\\src\\app\\display\\display.component.html",
   "PreviewInSolutionExplorer": false
 }

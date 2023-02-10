@@ -34,7 +34,6 @@ export class SparqlDisplayComponent implements OnChanges {
                                      this.subclassesListTitle = "Subclases:"}; 
     if(changes.sparqlData && changes.sparqlData.currentValue){      
       this.list = this.sparqlData;
-      console.log(this.list);
       }
   
     if(changes.sparqlSubject && changes.sparqlSubject.currentValue){
@@ -48,7 +47,6 @@ export class SparqlDisplayComponent implements OnChanges {
       }
       else {
         if(this.subTitle == "Q24499"){
-          console.log(this.list[0]);
           if (this.selectedLang === "en") { this.subTitle = "Bearing this family name:" };
           if (this.selectedLang === "de") { this.subTitle = "Mit diesem Familiennamen:" };
           if (this.selectedLang === "fr") { this.subTitle = "Portant ce nom de famille:" };
@@ -56,7 +54,6 @@ export class SparqlDisplayComponent implements OnChanges {
           }
           else {
           if (this.sparqlSubject == "Q12") {
-            console.log(this.list[0]);
               if(this.list[0] && this.list[0].activity){
               if (this.selectedLang === "en") {this.subTitle ="Present in this context:"};
                 if (this.selectedLang === "de") { this.subTitle = "In diesem Kontext anwesend:" };
@@ -71,7 +68,6 @@ export class SparqlDisplayComponent implements OnChanges {
               }
             }
             else { if(this.subTitle == "Q37073" || this.subTitle == "Q146602" || this.subTitle == "Q146410" || this.subTitle =="Q257052"){
-              console.log(this.subTitle)
               if (this.selectedLang === "en") {this.subTitle ="with this activity:"};
               if (this.selectedLang === "de") { this.subTitle = "mit dieser Aktivität:" };
               if (this.selectedLang === "fr") { this.subTitle = "Ayant cette activité:" };
@@ -102,6 +98,7 @@ export class SparqlDisplayComponent implements OnChanges {
 
       }
     } 
+   
 
 
 

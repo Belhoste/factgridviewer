@@ -35,10 +35,8 @@ export class MapComponent implements OnInit {
     this.lat = Number(latitude);
       this.lng = Number(longitude);
       this.zoom = Number(zoom);
-      console.log(this.zoom);
-    const itemLocation = { coords: new Leaflet.LatLng(this.lat, this.lng),
+      const itemLocation = { coords: new Leaflet.LatLng(this.lat, this.lng),
       zoom:this.zoom };
-      console.log(itemLocation);
                         
        let map = Leaflet.map('map');
   

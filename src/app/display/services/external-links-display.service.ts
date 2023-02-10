@@ -24,7 +24,15 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P76"), 1);
       item[0].claims.P76.url = "https://d-nb.info/gnd/" + item[0].claims.P76[0].mainsnak.datavalue.value;
       externalLinks.push(item[0].claims.P76)
+      if (item[0].claims.P76[0].qualifiers !== undefined) {
+        item[0].claims.P855 = item[0].claims.P76[0].qualifiers.P855;
+        item[0].claims.P855[0].mainsnak = item[0].claims.P76[0].qualifiers.P855[0];
+        item[1].splice(item[1].indexOf("P855"), 1);
+        item[0].claims.P76[0].qualifiers.P855.url = "https://lobid.org/gnd/" +item[0].claims.P855[0].datavalue.value;
+        externalLinks.push(item[0].claims.P855)
+      }
     };
+
 
     if (item[0].claims.P500 !== undefined) { // id Data BnF
       item[1].splice(item[1].indexOf("P500"), 1);
@@ -52,7 +60,7 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P418 !== undefined) { // id Geonames
       item[1].splice(item[1].indexOf("P418"), 1);
-      item[0].claims.P418.url = "https://www.geonames.org/" + item[0].claims.P418[0].mainsnak.datavalue.value
+      item[0].claims.P418.url = "https://www.geonames.org/" + item[0].claims.P418[0].mainsnak.datavalue.value;
       externalLinks.push(item[0].claims.P418)
     };
 
@@ -99,6 +107,7 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P414.url = 'https://www.insee.fr/fr/statistiques/2011101?geo=COM-' + item[0].claims.P414[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P414)
     };
+
 
     if (item[0].claims.P502 !== undefined) {  // Complet Bible Genealogy ID
       item[1].splice(item[1].indexOf("P502"), 1);
@@ -152,6 +161,12 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P606"), 1);
       item[0].claims.P549.url = 'https://isbnsearch.org/isbn/' + item[0].claims.P606[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P606);
+    };
+
+     if (item[0].claims.P610 !== undefined) { // fichier Bossu
+      item[1].splice(item[1].indexOf("P610"), 1);
+      item[0].claims.P610.url = 'https://fichier-bossu.fr/?q=' + item[0].claims.P610[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P610);
     };
 
     if (item[0].claims.P650 !== undefined) { // INE ID (Spain)

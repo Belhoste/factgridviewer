@@ -14,8 +14,6 @@
 
 <body>
 
-  <!-----<body class="mat-typography mat-app-background">--->
-  
 
     <div class="center">
       <div class="basicSize">
@@ -68,7 +66,7 @@
                     <div class="itemTitle">
                     <span  >{{ label }}</span>
                     </div>
-                    <div  [ngClass]="iAliases ? 'hide-division':'show-division'" class="aliases">
+                    <div  [ngClass]="isAliases ? 'hide-division':'show-division'" class="aliases">
                       {{ aliases | join }}
                     </div>  
                     <div class="itemDescription">
@@ -151,7 +149,7 @@
                     <span class="divisionTitle">{{ mainTitle }}</span>
                     </div>
                 
-                      <router-outlet></router-outlet>   <!----map?----->
+                      <router-outlet></router-outlet>   
                       <div *ngFor="let P of mainList">
                         <div>
                           <div class="labelTitlePadding">
@@ -558,7 +556,7 @@
                     <div class="divisionTitle">{{sources}}</div>
                       <div *ngFor="let P of sourcesList">
                         <div class="labelTitlePadding">
-                          <span class="qualifierProperty"><strong>{{P.label}}:</strong></span>
+                          <span class="statementProperty"><strong>{{P.label}}:</strong></span>
                         </div>
                         <div class="statementSize" *ngFor="let M of P">
                           <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
