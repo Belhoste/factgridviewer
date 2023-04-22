@@ -193,7 +193,6 @@ background-color: white ;
 }
 
 .statementProperty { // size and color or the label of the statement
- // font-size:16px; 
   color:#3F51B5;
  @include font-size();
   font-weight:400;
@@ -202,6 +201,12 @@ background-color: white ;
 
 .qualifierTextSize {  //size of the text of the qualifier
   font-size:14px;
+}
+
+.warningDeprecated {  //warning for deprecated statements
+  font-size:14px !important; 
+  color:#AD1457;
+  font-style:italic;
 }
 
 .qualifierTextColor { //color of the text of the qualifier
@@ -220,11 +225,12 @@ background-color: white ;
 }
 
 
-.referenceProperty { 
+.referenceProperty {  //style for the property labels of references
   font-size:14 px;
   color:#AD1457;
   font-style:italic;
 }
+
 
 .labelTitlePadding {  //padding top on the labels of the statements
   padding-top: 8px;
@@ -313,7 +319,9 @@ background-color: white ;
 }
 
 .searchListSize {  // in the search-component for the list of items
+  margin-top:50px;
   justify-content: center;
+
   width: 80%;
   font-size: 16px;
 }
@@ -332,3 +340,4 @@ background-color: white ;
 .basicSize {
     font-size: 16px;
 }
+

@@ -3,10 +3,16 @@
 .search-container {
   display: flex;
   flex-direction: column;
+ 
+}
+
+.search-center {  
+  display: flex;
   justify-content: center;
 }
 
-.search-center {
+.search-center2 {
+  margin-top:40px;
   display: flex;
   justify-content: center;
 }

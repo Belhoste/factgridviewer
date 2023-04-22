@@ -84,7 +84,17 @@ div#home-content {
   margin-bottom: 10px;
   font-size:50px;
   color:#283593;
-  line-height: 50px;
+  line-height: 55px;
+}
+
+@media (max-width: 959.98px) {  //change the size of the title for small screen
+  .itemTitle{  //big title of the item
+  padding-top:20px;
+  margin-bottom: 10px;
+  font-size:44px;
+  color:#283593;
+  line-height: 55px;
+  }
 }
 
 .drawerBackground {  //background color of the drawer
@@ -250,8 +260,10 @@ mat-card img {
 
 .percent2.white-text {}
 
+@media (min-width: 959.98px) { 
 .details3 {
   width: 33%
+}
 }
 
 
@@ -261,10 +273,7 @@ mat-card img {
   padding:0px;
 }
 
-.details3 {
-  word-break: normal;
-  text-overflow: ellipsis;
-}
+
 
 
 

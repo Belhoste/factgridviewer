@@ -107,7 +107,7 @@ private getUrlSuffix= '&format=json&origin=*' ;
     this.items = this.filterResearchField(this.items, this.selectedResearchField);
       this.isDisplay = true ;
       if (this.items[0].id == "Q220375") { this.isDisplay = false };
-    this.changeDetector.detectChanges();
+   this.changeDetector.detectChanges();
     })
 
   }

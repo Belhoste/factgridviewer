@@ -417,7 +417,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.zoom = 12;
               let xy= this.item[0].claims.P2[0].mainsnak.datavalue.value.id  
               if (xy == "Q16200") { this.zoom = 18 }
-               if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380") {this.zoom = 16 }
+               if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380" || xy == "Q375357") {this.zoom = 16 }
               this.coords = this.item[0].claims.P48[0].mainsnak.datavalue.value;
               this.latitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
               this.longitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
@@ -537,21 +537,25 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               )
             }
 
-            ///pictures
+      
+        ///pictures
 
             this.pictures = [];
 
-            if (this.item[0].claims.P189 !== undefined) { //pictures
+            if (this.item[0].claims.P189 !== undefined) { //pictures media commons
               this.item[1].splice(this.item[1].indexOf("P189"), 1);
               this.pictures = this.item[0].claims.P189
             }
+
+              /*  out of use: problem of cross-origin read blocking (CORB)
 
             if (this.item[0].claims.P188 !== undefined) { //pictures
               if (this.item[0].claims.P188[0].picture !== undefined) {
                 this.item[1].splice(this.item[1].indexOf("P188"), 1);
                 this.pictures = this.item[0].claims.P188
               }
-            }
+            } */
+
 
             if (this.pictures !== undefined) {
               this.isPicture = true;
@@ -562,8 +566,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                 if (this.isMobile === true) { this.isTopPicture = true; this.isPicture = false; }
               });
             };
-              
-
+             
             ///org
 
             this.locationAndContext = [];

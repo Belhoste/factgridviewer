@@ -123,7 +123,7 @@
                           </span>
                         </span>
                         <div class="qualifierTextSize" *ngIf="M['references2']">
-                          <span class="referenceProperty">{{M.references2[0].span}}: </span>
+                          <span class="referenceProperty">{{M.references2[0].label}}: </span>
                           <span>
                             {{M.references2[0].value.label}}
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -156,6 +156,8 @@
                             <div class="statementProperty">{{P.label}}:</div>
                           </div>
                           <div class="statementSize" *ngFor="let M of P">
+                          <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
+                            <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
                             <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
                             <span *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
                             <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value}}</span>
@@ -178,9 +180,10 @@
                           
                             <span *ngIf="M.mainsnak.datavalue.value.unit"><em>&nbsp;({{M.mainsnak.datavalue.value.unit | unit |async}})</em>&nbsp;</span>
                             <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">
-                              <span *ngFor="let Q of M.qualifiers2">
-                                
-                                <span class="qualifierProperty">&nbsp;{{Q.label}}:&nbsp;</span>
+                          
+                              <span *ngFor="let Q of M.qualifiers2" >
+                               <span *ngIf ="Q.remove !=='y'">
+                                <span class="qualifierProperty" *ngIf="Q.label">&nbsp;{{Q.label}}:&nbsp;</span>
                                 <span *ngFor="let D of Q.display; last as isLast">
                                   <span *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></span>
                                   <span *ngIf="D.datatype==='string'">{{D.string}}<span *ngIf="!isLast">,&nbsp;</span></span>
@@ -202,6 +205,7 @@
                                   </div>
                                 </span>            
                               </span>
+                              </span>
                             </span>
 
                             <div class="qualifierTextSize" *ngIf="M['references2']">
@@ -215,6 +219,7 @@
                               <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                             </div>
                             <hr>
+                          </div>
                           </div>
                           <div class="statementSize" *ngFor="let M of list">
                             {{M}}
@@ -236,6 +241,9 @@
                           <span class="statementProperty">{{P.label}}:</span>
                         </div>
                         <div class="statementSize" *ngFor="let M of P">
+                        <div class="header-spacer">
+                        <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
+                          <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
                           <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
                           <span *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
                           <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</span>
@@ -250,8 +258,9 @@
                           </span>
                           <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">
             
-                              <span *ngFor="let Q of M.qualifiers2">
-                              <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span>
+                           <span *ngFor="let Q of M.qualifiers2">
+                            <span *ngIf ="Q.remove !=='y'">
+                            <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span>
                               <span *ngFor="let D of Q.display; last as isLast">
                                 <span *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></span>
 
@@ -272,11 +281,11 @@
                                   </span>
                                 </div>
                               </span>
-                              
+                              </span>
                             </span>
                           </span>
                           <div class="qualifierTextSize" *ngIf="M['references2']">
-                            <span class="referenceProperty">{{M.references2[0].span}}: </span>
+                            <span class="referenceProperty">{{M.references2[0].label}}: </span>
                             <span>
                               {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
                               <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -287,6 +296,8 @@
                           </div>
                           <hr>
                         </div>
+                       </div>
+                       </div>
                       </div>
                     </mat-card-content>
                   </div>
@@ -298,6 +309,9 @@
                           <span class="statementProperty">{{P.label}}:</span>
                         </div>
                         <div class="statementSize" *ngFor="let M of P">
+                        <div class="header-spacer">
+                        <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
+                          <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
                           <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
                           <span *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
                           <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</span>
@@ -313,6 +327,7 @@
                           
                           <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">
                             <span *ngFor="let Q of M.qualifiers2">
+                            <span *ngIf ="Q.remove !=='y'">
                               <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span>
                               <span *ngFor="let D of Q.display; last as isLast">
                                 <span *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></span>
@@ -332,11 +347,12 @@
                                     <img src={{D.commons}}>
                                   </span>
                                 </div>
-                              </span>                           
+                              </span>
+                             </span>
                             </span>
                           </span>
                           <div class="qualifierTextSize" *ngIf="M['references2']">
-                            <span class="referenceProperty">{{M.references2[0].span}}: </span>
+                            <span class="referenceProperty">{{M.references2[0].label}}: </span>
                             <span>
                               {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
                               <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -346,6 +362,8 @@
                             <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                           </div>
                           <hr>
+                        </div>
+                        </div>
                         </div>
                       </div>
                     </mat-card-content>
@@ -358,6 +376,9 @@
                           <span class="statementProperty">{{P.label}}:</span>
                         </div>
                         <div class="statementSize" *ngFor="let M of P">
+                        <div class="header-spacer">
+                         <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
+                          <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
                           <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
                           <span *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
                           <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</span>
@@ -370,8 +391,10 @@
                             {{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
-                          <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">                         
+
+                          <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">                      
                             <span *ngFor="let Q of M.qualifiers2">
+                            <span *ngIf ="Q.remove !=='y'">
                               <span class="qualifierProperty">&nbsp;{{Q.label}}:&nbsp;</span>
                               <span *ngFor="let D of Q.display; last as isLast">
                                 <span *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></span>
@@ -392,6 +415,7 @@
                                   </span>
                                 </div>
                               </span>
+                             </span>
                             </span>
                           </span>
                           <div class="qualifierTextSize" *ngIf="M['references2']">
@@ -405,7 +429,10 @@
                             <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                           </div>
                           <hr>
-                        </div>
+
+                          </div>
+                      </div>
+                      </div>
                       </div>
                     </mat-card-content>
                   </div>
@@ -556,9 +583,12 @@
                     <div class="divisionTitle">{{sources}}</div>
                       <div *ngFor="let P of sourcesList">
                         <div class="labelTitlePadding">
-                          <span class="statementProperty"><strong>{{P.label}}:</strong></span>
+                          <span class="statementProperty">{{P.label}}:</span>
                         </div>
                         <div class="statementSize" *ngFor="let M of P">
+                        <div class="header-spacer">
+                         <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
+                          <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
                           <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
                           <span *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</span>
                           <span>{{M.mainsnak.datavalue.value.amount}}</span>
@@ -572,6 +602,7 @@
                           <span>
                           <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">
                             <span *ngFor="let Q of M.qualifiers2">
+                            <span *ngIf ="Q.remove !=='y'">
                               <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:</em>&nbsp;&nbsp;</span>
                               <span *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</span>
                               <span *ngIf="Q.datatype== 'string'">{{Q.value.string}}</span>
@@ -580,6 +611,7 @@
                                 {{Q.value.label}}, <span class="descriptionText">{{Q.value.description}}</span>
                                 <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </span>
+                            </span>
                             </span>
                           </span>
                           </span>
@@ -595,20 +627,16 @@
                           </div>
                           <hr>
                         </div>
+                       </div>
+                      </div>
                       </div>
                       <div>
                     </div>
- 
                   </mat-card-content>
                   </div>
-          
-                
                 </mat-card>
-         
-               
-               
-                
               </div>
+
               <div [ngClass]="isSparql ? 'show-division':'hide-division'"  class="cardBackground">
                 <app-sparql-display [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject"></app-sparql-display>
               </div>
@@ -625,12 +653,8 @@
                     <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
                 </div>
               </div>
-              
               </div>
-              
-              
               <div class="child2">
-             
               <mat-card appearance="outlined">
               <div [ngClass]="isPicture ? 'show-division':'hide-division'">
                 <div *ngFor="let picture of pictures">

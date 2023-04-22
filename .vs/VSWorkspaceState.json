@@ -4,10 +4,7 @@
     "\\assets",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\display",
-    "\\src\\app\\display\\services",
-    "\\src\\app\\services",
-    "\\src\\assets"
+    "\\src\\app\\display"
   ],
   "PreviewInSolutionExplorer": false
 }

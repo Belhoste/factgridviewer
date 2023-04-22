@@ -73,7 +73,7 @@ export class SetTimeService {
     if (month === "07") {
       if (lang === "en") { month = "July " };
       if (lang === "de") { month = "Juli " };
-      if (lang === "fr") { month = "juillet, " };
+      if (lang === "fr") { month = "juillet " };
       if (lang === "es") { month = "julio " };
     }
 
