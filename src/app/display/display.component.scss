@@ -84,7 +84,7 @@ div#home-content {
   margin-bottom: 10px;
   font-size:50px;
   color:#283593;
-  line-height: 55px;
+  line-height: 50px;
 }
 
 @media (max-width: 959.98px) {  //change the size of the title for small screen
@@ -93,23 +93,24 @@ div#home-content {
   margin-bottom: 10px;
   font-size:44px;
   color:#283593;
-  line-height: 55px;
+  line-height: 50px;
   }
-}
-
-.drawerBackground {  //background color of the drawer
-  background-color: lightgray;
 }
 
 .aliases {
   font-size:16px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-weight: 500;
 }
 
 .itemDescription {
   font-size:16px;
-  padding-top:10px
+  // padding-top:5px
+}
+
+
+.drawerBackground {  //background color of the drawer
+  background-color: lightgray;
 }
 
 

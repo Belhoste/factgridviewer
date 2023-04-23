@@ -66,8 +66,8 @@
                     <div class="itemTitle">
                     <span  >{{ label }}</span>
                     </div>
-                    <div  [ngClass]="isAliases ? 'hide-division':'show-division'" class="aliases">
-                      {{ aliases | join }}
+                    <div  [ngClass]="isAliases ? 'hide-division':'show-division'" class="aliases">  
+                     {{ aliases | join }} 
                     </div>  
                     <div class="itemDescription">
                       {{ description }}
@@ -232,8 +232,7 @@
                   </div>
                   <app-text-display [trans]="this.trans" *ngIf='this.trans !== ""'></app-text-display> <!----transcription-->
                   
-                  <div class="matCardPadding" [ngClass]="isTraining ? 'show-division':'hide-division'">
-                    
+                  <div class="matCardPadding" [ngClass]="isTraining ? 'show-division':'hide-division'">               
                     <mat-card-content class="cardBackground">
                       <div class="subdivisionTitle">{{training}}</div>
                       <div *ngFor="let P of education">
@@ -252,12 +251,12 @@
                           </span>
                           <span>{{M.mainsnak.datavalue.value.amount}}</span>
                           <span *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
-                          <span *ngIf="M.mainsnak.datatype === 'wikibase-item'">
-                            {{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}},&nbsp;</span>
+                          <span *ngIf="M.mainsnak.datatype==='wikibase-item'">
+                            {{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
-                          <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">
-            
+
+                          <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">        
                            <span *ngFor="let Q of M.qualifiers2">
                             <span *ngIf ="Q.remove !=='y'">
                             <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span>
@@ -301,6 +300,7 @@
                       </div>
                     </mat-card-content>
                   </div>
+
                   <div class="matCardPadding" [ngClass]="isCareer ? 'show-division':'hide-division'">
                     <mat-card-content  class="cardBackground">
                       <div class="subdivisionTitle">{{career}}</div>
