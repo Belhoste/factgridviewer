@@ -8,8 +8,8 @@ describe('SparqlDisplayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SparqlDisplayComponent ]
-    })
+    imports: [SparqlDisplayComponent]
+})
     .compileComponents();
   });
 

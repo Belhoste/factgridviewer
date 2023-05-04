@@ -1,9 +1,15 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-item-info',
-  templateUrl: './item-info.component.html',
-  styleUrls: ['./item-info.component.scss']
+    selector: 'app-item-info',
+    templateUrl: './item-info.component.html',
+    styleUrls: ['./item-info.component.scss'],
+    standalone: true,
+    imports: [NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule]
 })
 export class ItemInfoComponent implements OnChanges {
 

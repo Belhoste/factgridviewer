@@ -8,12 +8,20 @@ import { HttpClient} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { SlideUpAnimation } from './slide-up-animation';
+import { RouterOutlet } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  animations: [SlideUpAnimation]
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    animations: [SlideUpAnimation],
+    standalone: true,
+    imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, NgFor, NgIf, RouterOutlet]
 })
 export class AppComponent implements OnInit
 //, OnDestroy 

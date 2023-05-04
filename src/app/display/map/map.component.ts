@@ -6,9 +6,10 @@ import * as Leaflet from 'leaflet';
 
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+    selector: 'app-map',
+    templateUrl: './map.component.html',
+    styleUrls: ['./map.component.scss'],
+    standalone: true
 })
 
 export class MapComponent implements OnInit {

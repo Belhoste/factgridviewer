@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'commaJoin'
+    name: 'commaJoin',
+    standalone: true
 })
 export class CommaJoinPipe implements PipeTransform {
 

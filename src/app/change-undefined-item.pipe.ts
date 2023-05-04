@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'changeUndefinedItem'
+    name: 'changeUndefinedItem',
+    standalone: true
 })
 export class ChangeUndefinedItemPipe implements PipeTransform {
 

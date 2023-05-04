@@ -1,10 +1,14 @@
 import { Component, Input, OnChanges, ChangeDetectorRef, SimpleChanges, SimpleChange } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { NgClass } from '@angular/common';
 
 
 @Component({
-  selector: 'app-text-display',
-  templateUrl: './text-display.component.html',
-  styleUrls: ['./text-display.component.scss']
+    selector: 'app-text-display',
+    templateUrl: './text-display.component.html',
+    styleUrls: ['./text-display.component.scss'],
+    standalone: true,
+    imports: [NgClass, MatCardModule]
 })
 export class TextDisplayComponent implements OnChanges {
 

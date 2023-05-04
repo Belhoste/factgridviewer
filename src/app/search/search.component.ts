@@ -1,20 +1,28 @@
 
 
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormControl } from '@angular/forms' ;
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms' ;
 import { debounceTime, switchMap, tap, map, filter, takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 //import { HttpClient} from '@angular/common/http';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
 import { SlideUpAnimation} from '../slide-up-animation';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import { NgIf, NgFor } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss'],
-  animations: [SlideUpAnimation]
+    selector: 'app-search',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.scss'],
+    animations: [SlideUpAnimation],
+    standalone: true,
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, NgIf, NgFor, RouterLinkActive, RouterLink, MatCardModule, MatIconModule, RouterOutlet]
 })
 
 export class SearchComponent implements OnInit, OnDestroy 

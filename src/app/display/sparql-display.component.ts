@@ -1,10 +1,16 @@
 import { Component, Input, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
 
 
 @Component({
-  selector: 'app-sparql-display',
-  templateUrl: 'sparql-display.component.html',
-  styleUrls: ['sparql-display.component.scss']
+    selector: 'app-sparql-display',
+    templateUrl: 'sparql-display.component.html',
+    styleUrls: ['sparql-display.component.scss'],
+    standalone: true,
+    imports: [MatCardModule, NgClass, NgFor, NgIf, RouterLink, MatIconModule]
 })
 export class SparqlDisplayComponent implements OnChanges {
  

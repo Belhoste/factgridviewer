@@ -5,7 +5,7 @@ import {
 } from 'rxjs/operators';
 import { SetDataService } from '../services/set-data.service'
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { BackListDetailsService } from '../services/back-list-details.service';
 import { HeaderDisplayService } from './services/header-display.service';
 import { PlaceDisplayService } from './services/place-display.service';
@@ -29,13 +29,26 @@ import { TranscriptionService } from './services/transcription.service'
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { UnitPipe } from '../unit.pipe';
+import { JoinPipe } from '../join.pipe';
+import { ItemInfoComponent } from './item-info/item-info.component';
+import { SparqlDisplayComponent } from './sparql-display.component';
+import { TextDisplayComponent } from './text-display/text-display.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgIf, NgFor, NgClass, NgStyle, AsyncPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
 @Component({
-  selector: 'app-display',
-  templateUrl: 'display.component.html',
-  styleUrls: ['./display.component.scss']
+    selector: 'app-display',
+    templateUrl: 'display.component.html',
+    styleUrls: ['./display.component.scss'],
+    standalone: true,
+    imports: [MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent, SparqlDisplayComponent, ItemInfoComponent, AsyncPipe, JoinPipe, UnitPipe]
 })
 
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {

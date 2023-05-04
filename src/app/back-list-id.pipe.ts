@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'backListId'
+    name: 'backListId',
+    standalone: true
 })
 export class BackListIdPipe implements PipeTransform {
 
