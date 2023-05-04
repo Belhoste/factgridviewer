@@ -124,7 +124,7 @@
                         </span>
                         <div class="qualifierTextSize" *ngIf="M['references2']">
                           <span class="referenceProperty">{{M.references2[0].label}}: </span>
-                          <span>
+                          <span *ngIf="M.references2[0].value.label">
                             {{M.references2[0].value.label}}
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
@@ -210,7 +210,7 @@
 
                             <div class="qualifierTextSize" *ngIf="M['references2']">
                               <span class="referenceProperty">{{M.references2[0].label}}: </span>
-                              <span>
+                              <span *ngIf="M.references2[0].value.label">
                                 {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
                                 <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </span>
@@ -285,7 +285,7 @@
                           </span>
                           <div class="qualifierTextSize" *ngIf="M['references2']">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
-                            <span>
+                            <span *ngIf="M.references2[0].value.label">
                               {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
                               <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
@@ -353,8 +353,8 @@
                           </span>
                           <div class="qualifierTextSize" *ngIf="M['references2']">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
-                            <span>
-                              {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
+                            <span *ngIf="M.references2[0].value.label">{{M.references2[0].value.label}}
+                              <span class="descriptionText">{{M.references2[0].value.description}}</span>
                               <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
                             <span>{{M.references2[0].value.date }}</span>
@@ -420,7 +420,7 @@
                           </span>
                           <div class="qualifierTextSize" *ngIf="M['references2']">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
-                            <span>
+                            <span *ngIf="M.references2[0].value.label">
                               {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
                               <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>

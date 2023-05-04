@@ -4,7 +4,8 @@
     "\\assets",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\display"
+    "\\src\\app\\services"
   ],
+  "SelectedNode": "\\src\\app\\services\\item-details.service.ts",
   "PreviewInSolutionExplorer": false
 }
