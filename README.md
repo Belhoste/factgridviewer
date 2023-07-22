@@ -1,13 +1,14 @@
 # factgridviewer
 
-<p>by Bruno Belhoste</p>
+<p>written and maintained by Bruno Belhoste</p>
 
 ## Description
 
 This tool provides a user interface to browse the FactGrid database https://database.factgrid.de/ (Wikibase instance). 
 
-For more details see https://blog.factgrid.de/archives/2684.
+The code can be adapted to any Wikibase instance. Some features are specific to FactGrid.
 
+For more details see https://blog.factgrid.de/archives/2684.
 
 ## Technologies used
 
