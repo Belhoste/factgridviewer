@@ -90,5 +90,6 @@ private getUrlSuffix= '&format=json&origin=*' ;
     if (lang !== undefined) {
     this.selectedLang = lang.code; }
     localStorage['selectedLang'] = this.selectedLang;
+    window.location.reload();
     }
 }

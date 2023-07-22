@@ -4,6 +4,7 @@ import { ItemInfoService } from './item-info.service';
 import { SetLanguageService } from './set-language.service';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +18,7 @@ export class CreateCompleteItemService {
   
     let u = this.createItem.createItemToDisplay(res= this.setLanguage.item(res, this.selectedLang)[0], this.selectedLang);
     this.itemInfo.infoListBuilding(res);
+  
 
   return u
 }

@@ -43,6 +43,7 @@ export class CreateItemToDisplayService {
           this.addPropertyDetails.addReferencePropertyDetails(propertiesDetails, re, propertyIds);
           this.addPropertyDetails.addReference2PropertyDetails(propertiesDetails, re, propertyIds);
           let itemsDetails = this.setLanguage.item2(res.items,selectedLang) ;
+    //      this.addItemDetails.addLongestWordLength(re);
           this.addItemDetails.addClaimItemDetails(itemsDetails, re, propertyIds, selectedLang);// selected item with all the properties and items (with their labels and descriptions) of the mainsnaks
           this.addItemDetails.addQualifierItemDetails(itemsDetails, re, propertyIds, selectedLang);
       //   this.roleOfObject.roleOfObject(re);  //failed
@@ -52,9 +53,11 @@ export class CreateItemToDisplayService {
      //       backList, 
             qualifierProperties, referenceProperties]     
             }
-          )    
-        )  
-   //     observedItem.subscribe(res =>console.log(res));
+          )
+          
+        )
+        tap(res =>console.log(res));
+   //    observedItem.subscribe(res =>console.log(res));
         return observedItem
       }
 
@@ -63,4 +66,3 @@ export class CreateItemToDisplayService {
     }
 */
 }
-  

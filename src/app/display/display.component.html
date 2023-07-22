@@ -63,9 +63,11 @@
                 <mat-card appearance="outlined" class=mat-elevation-z12>           
                   <div class="cardBackground">
                     <mat-card-content>
-                    <div class="itemTitle">
+                
+                
+                  <div class="itemTitle">
                     <span  >{{ label }}</span>
-                    </div>
+                    </div>    
                     <div  [ngClass]="isAliases ? 'hide-division':'show-division'" class="aliases">  
                      {{ aliases | join }} 
                     </div>  
@@ -145,7 +147,7 @@
               <div class="matCardPadding" [ngClass]="isMain ? 'show-division':'hide-division'">
                 <mat-card appearance="outlined" class= mat-elevation-z12>  
                   <mat-card-content class="cardBackground">
-                    <div class="subtitlePadding">
+                    <div class="subTitlePadding">
                     <span class="divisionTitle">{{ mainTitle }}</span>
                     </div>
                 
@@ -407,7 +409,7 @@
                                 </span>
                                 <span *ngIf="D.datatype==='wikibase-item'">
                                   {{D.label}}, <span class="descriptionText">{{D.description}}</span>
-                                  <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon><span *ngIf="!isLast">,&nbsp;</span></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon><span *ngIf="!isLast">,&nbsp;</span></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </span>
                                 <div class="details3" *ngIf="D.datatype==='commonsMedia'">
                                   <span class>
@@ -436,13 +438,13 @@
                       </div>
                     </mat-card-content>
                   </div>
-                  <div [ngClass]="isStemma ? 'show-division':'hide-division'">
+     <!----        <div [ngClass]="isStemma ? 'show-division':'hide-division'">
                     <mat-card appearance="outlined">
                       {{ item[0].span }}
                       <iframe style="width: 100%; height: 60vh; border: none;"
                               [src]="stemma_url"></iframe>
                     </mat-card>
-                  </div>
+                  </div> ---->
                   <div [ngClass]="isIframes ? 'show-division':'hide-division'">
                     <mat-card-content class="cardBackground">
                       <div *ngIf="item[0].claims.P309">
@@ -577,9 +579,20 @@
                       </div>
                     </mat-card-content>
                   </div>
-                  
-                  <div [ngClass]="isSources ? 'show-division':'hide-division'">
-                    <mat-card-content  class="cardBackground">
+                 
+
+
+
+
+                </mat-card>
+              </div>
+              
+              <div [ngClass]="isSparql ? 'show-division':'hide-division'"  class="cardBackground">
+                      <app-sparql-display [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject"></app-sparql-display>
+               </div>
+
+               <div [ngClass]="isSources ? 'show-division':'hide-division'">
+                   <mat-card-content  class="cardBackground">
                     <div class="divisionTitle">{{sources}}</div>
                       <div *ngFor="let P of sourcesList">
                         <div class="labelTitlePadding">
@@ -634,12 +647,7 @@
                     </div>
                   </mat-card-content>
                   </div>
-                </mat-card>
-              </div>
-
-              <div [ngClass]="isSparql ? 'show-division':'hide-division'"  class="cardBackground">
-                <app-sparql-display [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject"></app-sparql-display>
-              </div>
+              
               <div>
                 <div class="ground-div2">
                   <div *ngIf="isInfo===false" class="mat-button.mat-small">

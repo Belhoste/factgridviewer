@@ -142,7 +142,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   factGridLogo: string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
-  langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "  " }];
+  langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "hu" }, { lang: "it" }, { lang: "  " }];
 
     
 
@@ -215,6 +215,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   locationAndContext: any[]; //for organisations, societies and institutions
   mainList: any[]; //main list for persons, places, organisations
   pictures: any[];//for pictures
+  info:any[]; //for info
 
   //display the elements
   isMain: boolean = false;
@@ -298,6 +299,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
  //   this.isInfo = true;
  //   this.isSparql = false;
     this.trans = "";
+    
     this.instancesList = [];
     this.subclassesList = [];
     this.classesList = [];
@@ -307,47 +309,74 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.newSearch = "new search"
     if (this.selectedLang === "de") { this.newSearch = "neue Suche" };
     if (this.selectedLang === "fr") { this.newSearch = "nouvelle recherche" };
-    if (this.selectedLang === "es") { this.newSearch = "nueva búsqueda" }
+    if (this.selectedLang === "es") { this.newSearch = "nueva búsqueda" };
+    if (this.selectedLang === "hu") { this.newSearch = "új keresés" };
+    if (this.selectedLang === "it") { this.newSearch = "nuova ricerca" };
+
 
     this.linkedPagesTitle = "linked pages"
     if (this.selectedLang === "de") { this.linkedPagesTitle = "verlinkte Seiten" };
     if (this.selectedLang === "fr") { this.linkedPagesTitle = "pages liées" };
-    if (this.selectedLang === "es") { this.linkedPagesTitle = "páginas enlazadas" }
+    if (this.selectedLang === "es") { this.linkedPagesTitle = "páginas enlazadas" };
+    if (this.selectedLang === "hu") { this.linkedPagesTitle = "kapcsolódó oldalak" };
+    if (this.selectedLang === "it") { this.linkedPagesTitle = "pagine collegate" };
+
 
     this.mainPage = "page"
     if (this.selectedLang === "de") { this.mainPage = "HauptSeite" };
     if (this.selectedLang === "fr") { this.mainPage = "page principale" };
     if (this.selectedLang === "es") { this.mainPage = "página principal" };
+    if (this.selectedLang === "hu") { this.mainPage = "főoldal" };
+    if (this.selectedLang === "it") { this.mainPage = "pagina principale" };
+
 
     this.factGridQuery = "FactGrid query"
     if (this.selectedLang === "de") { this.factGridQuery = "FactGrid Abfrage" };
     if (this.selectedLang === "fr") { this.factGridQuery = "Requête FactGrid" };
-    if (this.selectedLang === "es") { this.factGridQuery = "Consulta FactGrid" }
+    if (this.selectedLang === "es") { this.factGridQuery = "Consulta FactGrid" };
+    if (this.selectedLang === "hu") { this.factGridQuery = "FactGrid lekérdezés" };
+    if (this.selectedLang === "it") { this.factGridQuery = "Interrogazione FactGrid" };
+
 
     this.externalLinksTitle = "External links"
     if (this.selectedLang === "de") { this.externalLinksTitle = "Externe Links" };
     if (this.selectedLang === "fr") { this.externalLinksTitle = "Liens externes" };
-    if (this.selectedLang === "es") { this.externalLinksTitle = "Enlaces externos" }
+    if (this.selectedLang === "es") { this.externalLinksTitle = "Enlaces externos" };
+    if (this.selectedLang === "hu") { this.externalLinksTitle = "Külső hivatkozások" };
+    if (this.selectedLang === "it") { this.externalLinksTitle = "Collegamenti esterni" };
 
     this.formerVisitsTitle = "you have visited:"
     if (this.selectedLang === "de") { this.formerVisitsTitle = "Sie haben besucht:" };
     if (this.selectedLang === "fr") { this.formerVisitsTitle = "vous avez visité :" };
-    if (this.selectedLang === "es") { this.formerVisitsTitle = "has visitado :" }
+    if (this.selectedLang === "es") { this.formerVisitsTitle = "has visitado :" };
+    if (this.selectedLang === "hu") { this.formerVisitsTitle = "meglátogatott :" };
+    if (this.selectedLang === "it") { this.formerVisitsTitle = "avete visitato :" };
+
 
     this.clickToDisplay = "click to display"
     if (this.selectedLang === "de") { this.clickToDisplay = "Klicken Sie zum Anzeigen" };
     if (this.selectedLang === "fr") { this.clickToDisplay = "cliquez pour afficher" };
     if (this.selectedLang === "es") { this.clickToDisplay = "haga clic para mostrar" };
+    if (this.selectedLang === "hu") { this.clickToDisplay = "kattintson a megtekintéshezr" };
+    if (this.selectedLang === "it") { this.clickToDisplay = "fare clic per visualizzare" };
+
+
 
     this.clickToDownload = "click to download"
     if (this.selectedLang === "de") { this.clickToDownload = "Klicken Sie zum Download" };
     if (this.selectedLang === "fr") { this.clickToDownload = "cliquez pour télécharger" };
-    if (this.selectedLang === "es") { this.clickToDownload = "haga clic para descargarlo" }
+    if (this.selectedLang === "es") { this.clickToDownload = "haga clic para descargarlo" };
+    if (this.selectedLang === "hu") { this.clickToDownload = "kattintson a letöltéshez" };
+    if (this.selectedLang === "it") { this.clickToDownload = "fare clic per scaricare" };
+
 
     this.stemma = "Preceding_in_stemma"
     if (this.selectedLang === "de") { this.stemma = "Stemma_aufwärts" };
     if (this.selectedLang === "fr") { this.stemma = "Précédent_dans_le_stemma" };
     if (this.selectedLang === "es") { this.stemma = "Precedente_en_el_stemma" };
+    if (this.selectedLang === "hu") { this.stemma = "Preceding_in_stemma" };
+    if (this.selectedLang === "it") { this.stemma = "Precedente_in_stemma" };
+
   
     this.subscription0 = this.route.paramMap.subscribe(
       params => {
@@ -370,6 +399,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                 };
                 if (this.selectedLang === "es") {
                   this.linkedItems = [{ id: "Q21898", label: "ninguno" }]
+                };
+                if (this.selectedLang === "hu") {
+                  this.linkedItems = [{ id: "Q21898", label: "nincs" }]
+                };
+                if (this.selectedLang === "it") {
+                  this.linkedItems = [{ id: "Q21898", label: "nessuno" }]
                 };
               }
             })).
@@ -407,6 +442,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isActivity = false;
           this.isWikis = false;
           this.isExternalLinks = false;
+          this.isInfo = false;
           if (item !== undefined) {
             this.item = item;
             console.log(this.item);
@@ -440,15 +476,14 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
 
             if (this.item[0].infoList !== undefined) {
+             
               this.instancesList = this.item[0].infoList[0];
               this.subclassesList = this.item[0].infoList[1];
               this.classesList = this.item[0].infoList[2];
               this.natureOfList = this.item[0].infoList[3];
             }
 
-            if (this.classesList.length !== undefined || this.subclassesList.length !== undefined || this.instancesList.length !== undefined) { this.isInfo = true }
-
-          
+            if (this.classesList.length !== undefined || this.subclassesList.length !== undefined || this.instancesList.length !== undefined) { this.isInfo = true };
 
             ///header
 
@@ -530,14 +565,55 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.sparqlSubject = "";
             this.sparqlData = [];
             let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
+         //   console.log(this.natureOfIds);
+            console.log(this.natureOf);
+
             for (let i = 0; i < this.natureOfList.length; i++) {
               natureOfIds[i] = this.natureOfList[i].item.id;
             }
 
             if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
 
-            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052") {
+            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052" || "Q20") {
+              if (natureOfIds.includes("Q8") && natureOfIds.includes("Q12")) { this.natureOf = "Q8"};
               if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
+              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
+              this.query = this.setData.sparqlToDisplay(sparqlQuery);
+              this.subscription4 = this.query?.subscribe(res => {
+                this.sparqlData = this.sparql.listFromSparql(res);
+                this.sparqlSubject = this.natureOf;
+                if (this.sparqlData.length > 0) { 
+                  }
+                  this.isSparql = true;
+                }
+              )
+            }
+
+           
+
+           if (this.natureOf == "Q7") {
+                if(this.item[0].claims.P165 !==undefined){
+                 for (let i = 0; i < this.item[0].claims.P165.length; i++) {
+                     if(this.item[0].claims.P165[i].mainsnak.datavalue.value.id !== "Q23190") break;
+                     if (this.item[0].claims.P165[i].mainsnak.datavalue.value.id == "Q23190") {
+                       let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].claims.P165[i].mainsnak.datavalue.value.id);
+                      this.query = this.setData.sparqlToDisplay(sparqlQuery);
+                      this.subscription4 = this.query?.subscribe(res => {
+                      this.sparqlData = this.sparql.listFromSparql(res);
+                      this.sparqlSubject = this.item[0].claims.P165[i].mainsnak.datavalue.value.id;
+                    if (this.sparqlData.length > 0) {
+                      this.isSparql = true;
+                      }
+                    }
+                  )
+                     
+                     }       
+                   }    
+                 }   
+               }
+
+
+                 /*     if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
               let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
               this.query = this.setData.sparqlToDisplay(sparqlQuery);
               this.subscription4 = this.query?.subscribe(res => {
@@ -548,7 +624,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               }
               )
-            }
+            }*/
 
       
         ///pictures
@@ -737,8 +813,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
           //trees
 
-          this.stemma_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/" + this.selectedLang + "/" + this.stemma + "/" + item[0].id);
-          this.familyTree_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/" + this.selectedLang + "/1/" + item[0].id);
+          //this.stemma_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/" + this.selectedLang + "/" + this.stemma + "/" + item[0].id);
+          // this.familyTree_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/" + this.selectedLang + "/1/" + item[0].id);
 
           if (this.item[0].claims.P150 || this.item[0].claims.P141 || this.item[0].claims.P142) {
             this.isFamilyTree = true;

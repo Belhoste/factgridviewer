@@ -4,6 +4,7 @@ import {FactgridSubtitlesService} from './factgrid-subtitles.service'
 import { QualifierDetailsService } from './qualifier-details.service';
 import { TypologyService} from './typology.service';
 import { ItemInfoService } from './item-info.service';
+import { LongestWordService  } from './longest-word.service'
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,11 @@ export class ItemDetailsService {
 
   private baseWikimediaURL ='http://commons.wikimedia.org/wiki/Special:FilePath/';
 
-  constructor(private setDate:SetTimeService, private factgrid:FactgridSubtitlesService, private qualifier:QualifierDetailsService, private typology:TypologyService, private itemInfo:ItemInfoService) { }
+  constructor(private setDate:SetTimeService, private factgrid:FactgridSubtitlesService, private qualifier:QualifierDetailsService, private typology:TypologyService, private itemInfo:ItemInfoService, private longestLength:LongestWordService) { }
 
   qualifiers2:any[];
+
+  addLongestWordLength(re) { re.longestWordLength = this.longestLength.findLongestWord(re.label) };
 
    addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks   
     for (let i=0; i<propertyIds.length; i++){
@@ -26,7 +29,7 @@ export class ItemDetailsService {
           value = value.substring(0,value.length-10);
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.date = this.setDate.setDate(value,lang);
         }
-    //add typology, that is the nature of the nature of the item    
+    //add typology, that is the nature of the item    
     if(propertyIds[i] === "P2"){
       let u ="";
      re.claims[propertyIds[i]][j].typology = this.typology.getValue(re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id);

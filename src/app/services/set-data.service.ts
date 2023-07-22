@@ -20,10 +20,14 @@ getUrlSuffix= '&format=json&origin=*' ;
 	
 itemToDisplay(id){
 
+  let labelLength:number = 0
 	let url = this.baseGetURL+id+this.getUrlSuffix;
   let itemToDisplay = this.request.getItem(url).pipe( // get the item
                       map(res => res=Object.values(res.entities)),
-                      switchMap(res => itemToDisplay = this.createCompleteItem.createCompleteItem(res)));                   
+                      switchMap (res => itemToDisplay = this.createCompleteItem.createCompleteItem(res)),        
+                    );
+ 
+   
       return itemToDisplay
     }
 

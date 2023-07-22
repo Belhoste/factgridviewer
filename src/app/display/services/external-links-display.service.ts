@@ -22,7 +22,8 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P76 !== undefined) { // id GND
       item[1].splice(item[1].indexOf("P76"), 1);
-      item[0].claims.P76.url = "https://d-nb.info/gnd/" + item[0].claims.P76[0].mainsnak.datavalue.value;
+      item[0].claims.P76.url = "https://explore.gnd.network/gnd/" + item[0].claims.P76[0].mainsnak.datavalue.value;
+  // item[0].claims.P76.url = "https://d-nb.info/gnd/" + item[0].claims.P76[0].mainsnak.datavalue.value; 
       externalLinks.push(item[0].claims.P76)
       if (item[0].claims.P76[0].qualifiers !== undefined) {
         item[0].claims.P855 = item[0].claims.P76[0].qualifiers.P855;
@@ -438,6 +439,41 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P433"), 1);
       item[0].claims.P433.url = 'https://twitter.com/' + item[0].claims.P433[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P433);
+    };
+   if (item[0].claims.P433 !== undefined) { //Code ISO 3166-1 alpha-2
+      item[1].splice(item[1].indexOf("P870"), 1);
+      item[0].claims.P870.url = 'https://www.iso.org/obp/ui/#iso:code:3166:' + item[0].claims.P870[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P870);
+    };
+   if (item[0].claims.P882 !== undefined) { // Deusches Rechtswörterbuch
+      item[1].splice(item[1].indexOf("P882"), 1);
+      item[0].claims.P882.url = 'https://drw-www.adw.uni-heidelberg.de/drw-cgi/zeige?index=lemmata&term=' + item[0].claims.P882[0].mainsnak.datavalue.value +'&darstellung=V'
+      externalLinks.push(item[0].claims.P882);
+    };
+   if (item[0].claims.P891 !== undefined) { //ICD-10
+      item[1].splice(item[1].indexOf("P891"), 1);
+      item[0].claims.P433.url = 'https://icd.who.int/browse10/2019/en#/' + item[0].claims.P891[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P891);
+    };
+   if (item[0].claims.P893 !== undefined) { //Jacob Grimm, Deutsches Wörterbuch
+      item[1].splice(item[1].indexOf("P893"), 1);
+      item[0].claims.P893.url = 'https://www.dwds.de/wb/dwb/' + item[0].claims.P893[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P893);
+    };
+   if (item[0].claims.P924 !== undefined) { //Deutsche Digitale Bibliothek Item ID
+      item[1].splice(item[1].indexOf("P924"), 1);
+      item[0].claims.P924.url = 'https://www.deutsche-digitale-bibliothek.de/item/:' + item[0].claims.P924[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P924);
+    };
+   if (item[0].claims.P931 !== undefined) { //Latin Place Names ID
+      item[1].splice(item[1].indexOf("P931"), 1);
+      item[0].claims.P931.url = 'https://rbms.info/lpn/' + item[0].claims.P931[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P931);
+    };
+   if (item[0].claims.P932 !== undefined) { //BARTOC Vocabularies ID
+      item[1].splice(item[1].indexOf("P932"), 1);
+      item[0].claims.P932.url = 'https://bartoc.org/' + item[0].claims.P932[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P932);
     };
     return externalLinks
   };

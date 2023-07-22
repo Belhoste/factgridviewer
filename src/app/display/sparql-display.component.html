@@ -5,12 +5,13 @@
       <div [ngClass]="isList ? 'show-division':'hide-division'" class="cardBackground">
         
         <mat-card-content>
-        <div class="statementProperty">{{subTitle}}</div>
+  <!----    <div class="subTitlePadding"></div>  ---->
+     <div [ngClass] = "isWorks ? 'subdivisionTitle' : 'statementProperty'">{{subTitle}}</div> 
         <hr>
           <div class="details" *ngFor="let L of list">
             <div  class="sparql-div">
               <label *ngIf="L.itemLabel.value">
-                {{L.itemLabel.value}}<span class="description-text" *ngIf="L.itemDescription">, {{L.itemDescription.value}}</span>
+               {{L.itemLabel.value}}<span class="description-text" *ngIf="L.itemDescription">, {{L.itemDescription.value}}</span><span class="description-text" *ngIf="L.year">, {{L.year.value}}</span>
                 <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </label>
             </div>
