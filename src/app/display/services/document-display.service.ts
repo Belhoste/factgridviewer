@@ -190,10 +190,6 @@ setDocumentDisplay(item, documentDetail){//if P2-
     item[1].splice(item[1].indexOf("P64"),1);
     documentDetail.push(item[0].claims.P64);
   }
-  if (item[0].claims.P240 !==undefined){ //place of publication as (misleadingly) stated
-    item[1].splice(item[1].indexOf("P240"),1);
-    documentDetail.push(item[0].claims.P240);
-  }
   if (item[0].claims.P124 !==undefined){ //listed in
     item[1].splice(item[1].indexOf("P124"),1);
     documentDetail.push(item[0].claims.P124);

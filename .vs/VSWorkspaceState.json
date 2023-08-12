@@ -7,6 +7,6 @@
     "\\src\\app\\display",
     "\\src\\app\\display\\services"
   ],
-  "SelectedNode": "\\src\\app\\display\\display.component.html",
+  "SelectedNode": "\\src\\app\\display\\services\\external-links-display.service.ts",
   "PreviewInSolutionExplorer": false
 }
