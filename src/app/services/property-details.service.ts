@@ -8,7 +8,7 @@ export class PropertyDetailsService {
   constructor() { }
 
 addClaimPropertyDetails(properties, re, propertyIds){ // add labels, descriptions and aliases to the properties in the mainsnaks
-  for (let i=0; i<propertyIds.length; i++){
+    for (let i=0; i<propertyIds.length; i++){
        for (let j=0; j<properties.length; j++){ 
          if (propertyIds[i] === properties[j].id){
              re.claims[propertyIds[i]].label = properties[j].label;

@@ -827,10 +827,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         )
   
       }
-      )
-  /*  }); */
-
- 
+     )
    }
 
 

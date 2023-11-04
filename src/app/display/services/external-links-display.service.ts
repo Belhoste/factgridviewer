@@ -7,7 +7,52 @@ export class ExternalLinksDisplayService {  // external links
 
   constructor() { }
 
-  setExternalLinksDisplay(item, externalLinks) {
+ /* setExternalLinksDisplay2(item, externalLinks){
+     let p=Object.keys(item[0].claims)
+        for (let i = 0; i < p.length; i++) {
+          if(item[0].claims[p[i]].datatype !== "external-id"){ continue ; }
+          item[1].splice(item[1].indexOf(p[i]), 1);
+          this.setUrl(item, p[i]);
+     //       item[0].claims[p[i]].url = item[0].claims[p[i]][0].mainsnak.datavalue.value ;
+         // console.log(item[0].claims[p[i]].url)
+            externalLinks.push(item[0].claims[p[i]])
+            }
+             return externalLinks
+          }
+
+  setUrl(item, p){
+  item[0].claims[p].url = item[0].claims[p][0].mainsnak.datavalue.value ;
+  if (item[0].claims.P76 !== undefined) { // id GND
+   item[0].claims.P76.url = "https://explore.gnd.network/gnd/" + item[0].claims.P76[0].mainsnak.datavalue.value;
+     };
+  if (item[0].claims.P368 !== undefined) { // id VD16 +
+  item[0].claims.P368.url = 'http://gateway-bayern.de/VD16+' + item[0].claims.P368[0].mainsnak.datavalue.value;
+     };
+  if (item[0].claims.P369 !== undefined) { //id VD17
+ // item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27$1%27:'
+ item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27:'
+    + item[0].claims.P369[0].mainsnak.datavalue.value +"%27";
+      };
+   if (item[0].claims.P370 !== undefined) {//id VD18
+   item[0].claims.P370.url = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18' + item[0].claims.P370[0].mainsnak.datavalue.value
+      };
+   if (item[0].claims.P650 !== undefined) { // INE ID (Spain)
+      let province = item[0].claims.P650[0].mainsnak.datavalue.value.slice(0,2);
+      let municipality = item[0].claims.P650[0].mainsnak.datavalue.value.slice(2,5);
+      let parish = item[0].claims.P650[0].mainsnak.datavalue.value.slice(5,7);
+      let es = item[0].claims.P650[0].mainsnak.datavalue.value.slice(7,9);
+      item[0].claims.P650.url = 'https://www.ine.es/nomen2/inicio_a.do?accion=busquedaAvanzada&inicio=inicio_a&subaccion=&botonBusquedaAvanzada=Consultar+selecci%C3%B3n&numPag=0&ordenAnios=ASC&comunidad=00&entidad_amb=no&poblacion_amb=T&poblacion_op=%3D&poblacion_txt=&denominacion_op=like&denominacion_txt=&codProv='+province+'&codMuni='+municipality+'&codEC='+parish+'&codES='+es+'&codNUC=00'
+      };
+   if (item[0].claims.P882 !== undefined) { // Deusches Rechtswörterbuch
+    item[0].claims.P882.url = 'https://drw-www.adw.uni-heidelberg.de/drw-cgi/zeige?index=lemmata&term=' + item[0].claims.P882[0].mainsnak.datavalue.value +'&darstellung=V'
+      };
+    }
+  }
+  */
+
+  
+
+ setExternalLinksDisplay(item, externalLinks) {
     if (item[0].claims.P146 !== undefined) {  //Online information
       item[1].splice(item[1].indexOf("P146"), 1);
       item[0].claims.P146.url = item[0].claims.P146[0].mainsnak.datavalue.value;
@@ -67,15 +112,15 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P368 !== undefined) { // id VD16
       item[1].splice(item[1].indexOf("P368"), 1);
-      item[0].claims.P368.url = 'https://opacplus.bib-bvb.de/TouchPoint_touchpoint/start.do?Query=1120%3D%22%5C%22VD16+$1%5C""&SearchProfile=Altbestand&Language=De'
+      item[0].claims.P368.url = 'http://gateway-bayern.de/VD16'
         + item[0].claims.P368[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P368)
     };
 
     if (item[0].claims.P369 !== undefined) { //id VD17
       item[1].splice(item[1].indexOf("P369"), 1);
-      item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27$1%27:'
-        + item[0].claims.P369[0].mainsnak.datavalue.value
+      item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27'
+        + item[0].claims.P369[0].mainsnak.datavalue.value +"%27"
       externalLinks.push(item[0].claims.P369)
     };
 
@@ -435,12 +480,12 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P847.url = 'https://wikidata-externalid-url.toolforge.org/?p=4033&id=' + item[0].claims.P847[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P847);
     };
-    if (item[0].claims.P433 !== undefined) { //Twitter username
+    if (item[0].claims.P433 !== undefined) { //er username
       item[1].splice(item[1].indexOf("P433"), 1);
       item[0].claims.P433.url = 'https://twitter.com/' + item[0].claims.P433[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P433);
     };
-   if (item[0].claims.P433 !== undefined) { //Code ISO 3166-1 alpha-2
+   if (item[0].claims.P870 !== undefined) { //Code ISO 3166-1 alpha-2
       item[1].splice(item[1].indexOf("P870"), 1);
       item[0].claims.P870.url = 'https://www.iso.org/obp/ui/#iso:code:3166:' + item[0].claims.P870[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P870);
@@ -477,4 +522,5 @@ export class ExternalLinksDisplayService {  // external links
     };
     return externalLinks
   };
-}
+  }
+

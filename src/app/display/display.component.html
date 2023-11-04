@@ -82,7 +82,7 @@
                     <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" class="image" *ngFor="let picture of pictures">
                       <div>
                         <mat-card appearance="outlined" class=mat-elevation-z2>
-                          <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
+                       <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)"> 
                         </mat-card>
                       </div>
                     </div>
@@ -164,6 +164,9 @@
                             <span *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
                             <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value}}</span>
                             <span class="value-text" *ngIf="M.mainsnak.datatype === 'wikibase-property'">{{M.mainsnak.datavalue.value.id}}</span>
+                            <span *ngIf="M.mainsnak.datatype==='commonsMedia'">
+                              <img src={{M.picture}}>
+                            </span>
                             <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'url'">
                               <a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
                             </span>
@@ -710,7 +713,7 @@
                     <br>
                     <div>
                         <div *ngFor="let selectedItem of selectedItemsList">
-                          <div>;
+                          <div>
                           <span *ngIf="selectedItem" class="selectedItemText">
                               {{selectedItem.label}}&nbsp;
                             <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon  [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

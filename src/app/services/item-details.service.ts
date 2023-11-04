@@ -22,6 +22,8 @@ export class ItemDetailsService {
    addClaimItemDetails(items,re,propertyIds, lang){ // add labels, descriptions and aliases to the items in the mainsnaks   
     for (let i=0; i<propertyIds.length; i++){
       let timeOrder = 23000000;
+      re.claims[propertyIds[i]].datatype = re.claims[propertyIds[i]][0].mainsnak.datatype;
+  //     if(re.claims[propertyIds[i]][0].mainsnak.datatype =="external-id"){re.claims[propertyIds[i]].external ="1"}; // add external = "1" if external link property
       for (let j=0; j<re.claims[propertyIds[i]].length; j++){
         re.claims[propertyIds[i]][j].mainsnak.timeOrder=timeOrder;
         if(re.claims[propertyIds[i]][j].mainsnak.datatype === "time"){
@@ -30,13 +32,13 @@ export class ItemDetailsService {
           re.claims[propertyIds[i]][j].mainsnak.datavalue.value.date = this.setDate.setDate(value,lang);
         }
     //add typology, that is the nature of the item    
-    if(propertyIds[i] === "P2"){
+  /*  if(propertyIds[i] === "P2"){
       let u ="";
      re.claims[propertyIds[i]][j].typology = this.typology.getValue(re.claims[propertyIds[i]][j].mainsnak.datavalue.value.id);
    
-    }
+    }*/
     
-        if(propertyIds[i] === "P189"){
+        if(propertyIds[i] === "P189" || propertyIds[i] === "P556"){
           re.claims[propertyIds[i]][j].picture = this.baseWikimediaURL+re.claims[propertyIds[i]][j].mainsnak.datavalue.value
         }
         if(propertyIds[i] === "P188"){

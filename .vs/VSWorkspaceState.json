@@ -5,8 +5,10 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\services"
+    "\\src\\app\\paris-search",
+    "\\src\\app\\search",
+    "\\src\\app\\services"
   ],
-  "SelectedNode": "\\src\\app\\display\\services\\external-links-display.service.ts",
+  "SelectedNode": "\\src\\app\\search\\search.component.scss",
   "PreviewInSolutionExplorer": false
 }
