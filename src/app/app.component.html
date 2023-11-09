@@ -16,17 +16,25 @@
           <mat-icon>language</mat-icon>
         </button>
         <mat-menu #menuLanguage="matMenu">
-          <button (click)="langSetting(lang)" *ngFor = "let lang of langs" mat-menu-item>
-              <span>{{lang.name}}</span><mat-icon *ngIf="selectedLang===lang.code">done</mat-icon>
+          @for (lang of langs; track lang) {
+  <button (click)="langSetting(lang)" mat-menu-item>
+              <span>{{lang.name}}</span>@if (selectedLang===lang.code) {
+<mat-icon>done</mat-icon>
+}
           </button>
+}
         </mat-menu>        
         <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Example icon-button with a menu">
           <mat-icon>settings</mat-icon>
         </button>
         <mat-menu #menuResearchField="matMenu">
-            <button (click)="researchFieldSelect(researchField)" *ngFor = "let researchField of researchFields" mat-menu-item>
-               <span>{{researchField.name}}</span><mat-icon *ngIf="selectedResearchField===researchField.id">done</mat-icon>
+            @for (researchField of researchFields; track researchField) {
+  <button (click)="researchFieldSelect(researchField)" mat-menu-item>
+               <span>{{researchField.name}}</span>@if (selectedResearchField===researchField.id) {
+<mat-icon>done</mat-icon>
+}
             </button>
+}
         </mat-menu>
     </mat-toolbar>
     

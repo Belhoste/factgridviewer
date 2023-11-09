@@ -1,14 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\assets",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\display",
-    "\\src\\app\\paris-search",
-    "\\src\\app\\search",
-    "\\src\\app\\services"
+    ""
   ],
-  "SelectedNode": "\\src\\app\\search\\search.component.scss",
   "PreviewInSolutionExplorer": false
 }

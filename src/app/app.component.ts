@@ -92,4 +92,10 @@ private getUrlSuffix= '&format=json&origin=*' ;
     localStorage['selectedLang'] = this.selectedLang;
     window.location.reload();
     }
+
+   researchFieldSelect(researchField){
+     if (researchField === undefined) {this.selectedResearchField = "all"};
+     if (researchField !== undefined) {this.selectedResearchField = researchField.id; };
+     localStorage['selectedResearchField'] = this.selectedResearchField;
+       }
 }

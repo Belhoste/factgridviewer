@@ -8,15 +8,21 @@
       <div class="property2">{{natureOfListTitle}} {{list4Number}} {{suffix1}} </div>   
       <hr>  
       
-      <div class="details"  *ngFor="let L of list4">
+      @for (L of list4; track L) {
+  <div class="details" >
         <div>
-          <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
-            <span class="description-text" *ngIf="L.itemDescription">({{L.itemDescription.value}})</span>
+          @if (L.itemLabel.value) {
+<label>{{L.itemLabel.value}}
+            @if (L.itemDescription) {
+<span class="description-text">({{L.itemDescription.value}})</span>
+}
             <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </label>
+}
         </div>
         <hr>
       </div>
+}
      
       </div>
     </mat-card-content>
@@ -26,30 +32,42 @@
         <div class="property2">{{prefix1}} {{list3Number}} {{classesListTitle}}</div>   
         <hr>  
         
-        <div class="details"  *ngFor="let L of list3">
+        @for (L of list3; track L) {
+  <div class="details" >
           <div>
-            <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
-              <span class="description-text" *ngIf="L.itemDescription">({{L.itemDescription.value}})</span>
+            @if (L.itemLabel.value) {
+<label>{{L.itemLabel.value}}
+              @if (L.itemDescription) {
+<span class="description-text">({{L.itemDescription.value}})</span>
+}
               <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
+}
           </div>
           <hr>
         </div>
+}
       </mat-card-content>
     </div>
     <div [ngClass]="isList1 ? 'show-division':'hide-division'"> 
       <mat-card-content>     
         <div class="property2">{{prefix2}} {{list1Number}} {{subclassesListTitle}}</div>   
                 <hr>          
-                <div class="details"  *ngFor="let L of list1">
+                @for (L of list1; track L) {
+  <div class="details" >
                   <div>
-                    <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
-                      <span class="description-text" *ngIf="L.itemDescription">({{L.itemDescription.value}})</span>
+                    @if (L.itemLabel.value) {
+<label>{{L.itemLabel.value}}
+                      @if (L.itemDescription) {
+<span class="description-text">({{L.itemDescription.value}})</span>
+}
                       <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </label>
+}
                   </div>
                   <hr>
                 </div>
+}
       </mat-card-content>    
     </div>
     <div  [ngClass]="isList2 ? 'show-division':'hide-division'">
@@ -57,15 +75,21 @@
         <div class="property2">{{list2Number}} {{instancesListTitle}}</div>   
         <hr>  
         
-        <div class="details"  *ngFor="let L of list2">
+        @for (L of list2; track L) {
+  <div class="details" >
           <div flex-shrink flex-basis="auto">
-            <label *ngIf="L.itemLabel.value">{{L.itemLabel.value}}
-              <span class="description-text" *ngIf="L.itemDescription">({{L.itemDescription.value}})</span>
+            @if (L.itemLabel.value) {
+<label>{{L.itemLabel.value}}
+              @if (L.itemDescription) {
+<span class="description-text">({{L.itemDescription.value}})</span>
+}
               <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
+}
           </div>
           <hr>
         </div>
+}
       </mat-card-content>
     </div>
       

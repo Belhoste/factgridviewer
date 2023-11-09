@@ -7,7 +7,7 @@ export class ExternalLinksDisplayService {  // external links
 
   constructor() { }
 
- /* setExternalLinksDisplay2(item, externalLinks){
+ /* setExternalLinksDisplay2(item, externalLinks){  // in case external links are automatically constructed
      let p=Object.keys(item[0].claims)
         for (let i = 0; i < p.length; i++) {
           if(item[0].claims[p[i]].datatype !== "external-id"){ continue ; }
@@ -205,7 +205,7 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P606 !== undefined) { // ISBN-13
       item[1].splice(item[1].indexOf("P606"), 1);
-      item[0].claims.P549.url = 'https://isbnsearch.org/isbn/' + item[0].claims.P606[0].mainsnak.datavalue.value
+      item[0].claims.P606.url = 'https://isbnsearch.org/isbn/' + item[0].claims.P606[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P606);
     };
 
@@ -519,6 +519,51 @@ export class ExternalLinksDisplayService {  // external links
       item[1].splice(item[1].indexOf("P932"), 1);
       item[0].claims.P932.url = 'https://bartoc.org/' + item[0].claims.P932[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P932);
+    };
+    if (item[0].claims.P946 !== undefined) { //Pastor's database ID
+      item[1].splice(item[1].indexOf("P946"), 1);
+      item[0].claims.P946.url = 'https://pfarrerbuch.de/sachsen/person/' + item[0].claims.P946[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P946);
+    };
+    if (item[0].claims.P959 !== undefined) { //BDTNS ID
+      item[1].splice(item[1].indexOf("P959"), 1);
+      item[0].claims.P959.url = 'http://bdtns.filol.csic.es/' + item[0].claims.P959[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P959);
+    };
+    if (item[0].claims.P960 !== undefined) { //ORACC ID
+      item[1].splice(item[1].indexOf("P960"), 1);
+      item[0].claims.P960.url = 'http://oracc.museum.upenn.edu/' + item[0].claims.P960[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P960);
+    };
+    if (item[0].claims.P961 !== undefined) { //ÖSTAT number
+      item[1].splice(item[1].indexOf("P961"), 1);
+      item[0].claims.P961.url = 'https://www.statistik.at/blickgem/gemDetail.do?gemnr=' + item[0].claims.P961[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P961);
+    };
+    if (item[0].claims.P962 !== undefined) { //SIMC ID
+      item[1].splice(item[1].indexOf("P962"), 1);
+      item[0].claims.P962.url = 'http://eteryt.stat.gov.pl/eTeryt/rejestr_teryt/udostepnianie_danych/baza_teryt/uzytkownicy_indywidualni/wyszukiwanie/wyszukiwanie.aspx/' + item[0].claims.P962[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P962);
+    };
+    if (item[0].claims.P963 !== undefined) { //Czech municipality ID
+      item[1].splice(item[1].indexOf("P963"), 1);
+      item[0].claims.P963.url = 'https://vdp.cuzk.cz/vdp/ruian/obce/' + item[0].claims.P963[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P963);
+    };
+    if (item[0].claims.P968 !== undefined) { //EU Knowledge Graph item ID
+      item[1].splice(item[1].indexOf("P968"), 1);
+      item[0].claims.P968.url = 'https://linkedopendata.eu/wiki/Item:' + item[0].claims.P968[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P968);
+    };
+    if (item[0].claims.P977 !== undefined) { //Wikibase World Item ID
+      item[1].splice(item[1].indexOf("P977"), 1);
+      item[0].claims.P977.url = 'https://wikibase.world/wiki/Item:' + item[0].claims.P977[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P977);
+    };
+    if (item[0].claims.P980 !== undefined) { //Iconclass ID
+      item[1].splice(item[1].indexOf("P980"), 1);
+      item[0].claims.P980.url = 'http://iconclass.org/' + item[0].claims.P980[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P980);
     };
     return externalLinks
   };
