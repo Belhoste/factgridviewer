@@ -17,9 +17,10 @@
         </button>
         <mat-menu #menuLanguage="matMenu">
           @for (lang of langs; track lang) {
-              <button (click)="langSetting(lang)" mat-menu-item>
-              <span>{{lang.name}}</span>
-            @if (lang.code === this.selectedLang){ <mat-icon>done</mat-icon> } 
+  <button (click)="langSetting(lang)" mat-menu-item>
+              <span>{{lang.name}}</span>@if (selectedLang===lang.code) {
+<mat-icon>done</mat-icon>
+}
           </button>
 }
         </mat-menu>        
@@ -27,23 +28,16 @@
           <mat-icon>settings</mat-icon>
         </button>
         <mat-menu #menuResearchField="matMenu">
-           @for (researchField of researchFields; track researchField) {
-
-              <div class='displayLayout'>
-               <span>{{researchField.name}}</span>
-               @if (researchField.name == "Paris") { 
-                  <mat-icon-button class="internalLink" [routerLink]="'/paris'"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-               }
-               @if (researchField.name == "Harmonia Universalis") {
-                    <mat-icon-button class="internalLink" [routerLink]="'/harmonia_universalis'"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-               }
-               </div>
-               }      
-           
+            @for (researchField of researchFields; track researchField) {
+  <button (click)="researchFieldSelect(researchField)" mat-menu-item>
+               <span>{{researchField.name}}</span>@if (selectedResearchField===researchField.id) {
+<mat-icon>done</mat-icon>
+}
+            </button>
+}
         </mat-menu>
     </mat-toolbar>
     
     <router-outlet></router-outlet>
 
 </body>
-

@@ -146,6 +146,10 @@ mat-card img {
   width: 100%;
 }
 
+table {          // for the mat-tab if I use it
+  width: 100%;
+}
+
 
 
 .linksToItem-mat-card{
@@ -180,15 +184,6 @@ mat-card img {
   margin: 10px;
 }
 
-.spinner {
-  background-color: rgb(250, 245, 236);
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%); 
-}
 
 .hide-division {
   display: none;

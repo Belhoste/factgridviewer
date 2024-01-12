@@ -235,7 +235,7 @@
                             @if (M.mainsnak.datatype === 'globe-coordinate') {
 <span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
 }
-                            @if (M.mainsnak.datatype === 'sparql') {
+ <!--                           @if (M.mainsnak.datatype === 'sparql') {
 <span>
                               {{clickToDisplay}}
                               <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick2(M.mainsnak.datavalue.value)"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -243,6 +243,7 @@
                               <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick3(M.mainsnak.datavalue.value)"><mat-icon color="primary" [inline]="true">download</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                             </span>
 }
+-->
                             @if (M.mainsnak.datatype === 'wikibase-item') {
 <span>
                               {{M.mainsnak.label}}
@@ -990,34 +991,33 @@
 }
                           <span>
                           @if (M['qualifiers-order']) {
-<span class="qualifierTextSize">
+                          <span class="qualifierTextSize">
                             @for (Q of M.qualifiers2; track Q) {
-  <span>
+                              <span>
                             @if (Q.remove !=='y') {
-<span>
+                            <span>
                               <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:</em>&nbsp;&nbsp;</span>
                               @if (Q.value.time !== undefined) {
-<span>{{Q.value.date }}&nbsp;&nbsp;&nbsp;</span>
-}
+                              <span>{{Q.value.date }}&nbsp;&nbsp;&nbsp;</span>
+                              }
                               @if (Q.datatype== 'string') {
-<span>{{Q.value.string}}</span>
-}
+                              <span>{{Q.value.string}}</span>
+                                }
                               <span>{{Q.value.amount}}</span>
                               @if (Q.datatype==='wikibase-item') {
-<span>
-                                {{Q.value.label}}, <span class="descriptionText">{{Q.value.description}}</span>
+                                <span> {{Q.value.label}}, <span class="descriptionText">{{Q.value.description}}</span>
                                 <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </span>
-}
+                              }
                             </span>
-}
+                            }
                             </span>
-}
+                            }
                           </span>
-}
+                          }
                           </span>
                           @if (M['references2']) {
-<div class="qualifierTextSize">
+                          <div class="qualifierTextSize">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
                             <span>
                               {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
@@ -1027,14 +1027,14 @@
                             <span>{{M.references2[0].value.string }}</span>
                             <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                           </div>
-}
+                            }
                           <hr>
                         </div>
                        </div>
                       </div>
-}
+                      }
                       </div>
-}
+                      }
                       <div>
                     </div>
                   </mat-card-content>
@@ -1043,15 +1043,15 @@
               <div>
                 <div class="ground-div2">
                   @if (isInfo===false) {
-<div class="mat-button.mat-small">
+                    <div class="mat-button.mat-small">
                     <button mat-icon-button (click)="onClick4()" class="icon whiteText"><mat-icon class="icon whiteButton">expand_less</mat-icon></button>
                   </div>
-}
+                    }
                   @if (isInfo===true) {
-<div class="icon" class="mat-button.mat-small">
+                  <div class="icon" class="mat-button.mat-small">
                     <button mat-icon-button (click)="onClick5()" class="whiteText"><mat-icon class="whiteButton">expand_more</mat-icon></button>
                   </div>
-}
+                  }
                 </div>
                 <div class="ground-div2" [ngClass]="isInfo ? 'hide-division':'show-division'">
                     <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
@@ -1079,13 +1079,13 @@
                     <hr>
                </div>
                 @for (externalLink of externalLinks; track externalLink) {
-  <div>
+                  <div>
                   <div class="externalLinksText">
                       <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
-                    </div>
-                    <br>
+                  </div>
+                   <br>
                 </div>
-}
+                  }
                 </mat-card-content>
                 <div></div>
                 <mat-card-content class="header-spacer" [ngClass]="isWikis ? 'show-division':'hide-division'">
@@ -1094,13 +1094,13 @@
                     <hr>
                </div>
                 @for (wiki of wikis; track wiki) {
-  <div>
+                  <div>
                     <div class="externalLinksText" >
                       <span>{{wiki.site}}: </span><a href="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
                     </div>
                     <br>
                 </div>
-}
+                }
                 </mat-card-content>
               </mat-card>
              </div>
@@ -1108,23 +1108,45 @@
                 <mat-card appearance="outlined" class="mat-elevation-z8 ">
                   <div class="itemSelected-mat-card">
                     <mat-card-content>
- <!----                   <div class="selectedListTitle">{{formerVisitsTitle}}</div>
+
+
+                    <div class="selectedListTitle">{{formerVisitsTitle}}</div>
                     <br>
                     <div>
-                        @for (selectedItem of selectedItemsList; track selectedItem) {
-  <div>
+                        <div *ngFor="let selectedItem of selectedItemsList">
                           <div>
-                          @if (selectedItem) {
-<span class="selectedItemText">
+                           <span *ngIf="selectedItem" class="selectedItemText">
                               {{selectedItem.label}}&nbsp;
                             <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon  [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
-}
                           </div>
                           <br>
                         </div>
-}
-                    </div> ---->
+                    </div>
+
+
+
+
+
+                <!-- 
+                    <div>
+                        @for (selectedItem of selectedItemsList; track selectedItem) {
+                        <div>
+                          <div>
+                          @if (selectedItem) {
+                          <span class="selectedItemText">
+                              {{selectedItem.label}}&nbsp;
+                            <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon  [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
+                          }
+                          </div>
+                          <br>
+                        </div>
+                        }
+                    </div>
+                -->
+
+
                   </mat-card-content>
                   </div>
                 </mat-card>
@@ -1135,5 +1157,5 @@
         </mat-drawer-content>
       </mat-drawer-container>
     </div>
-}
+    }
   </body>

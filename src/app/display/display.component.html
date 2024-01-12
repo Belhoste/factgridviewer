@@ -23,12 +23,12 @@
 
     <div class="spinner">
       @if (isSpinner) {
-		    <mat-spinner diameter=50 mode="indeterminate"></mat-spinner>
-		  }
+<mat-spinner diameter=50 mode="indeterminate"></mat-spinner>
+}
     </div>
 
-     @if (!isSpinner) {
-	  <div>
+    @if (!isSpinner) {
+<div>
       <mat-drawer-container class="drawer-container">
         <mat-drawer #drawer mode="push">
           <div class="ground-div0">
@@ -41,17 +41,18 @@
             <mat-card-content class="cardBackground">
             <div class="listTitleStart">
             @if ("main"!==undefined) {
-				      <div class="subdivisionTitle">{{linkedPagesTitle}}</div> }
+          <div class="subdivisionTitle">{{linkedPagesTitle}}</div>
+}
             </div>
-            @for (item of linkedItems; track item) {
-			      <div>   
-				    <span>
-               &nbsp;&nbsp;{{ item.label }}, {{ item.id }}
-               <mat-icon-button class="internalLink" [routerLink]="['/item', item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-            <hr>
-			      </div>
-			      }
+              @for (item of linkedItems; track item) {
+           <div>   
+                <span>
+                  &nbsp;&nbsp;{{ item.label }}, {{ item.id }}
+                  <mat-icon-button class="internalLink" [routerLink]="['/item', item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                <hr>
+              </div>
+}
           </mat-card-content>
           </mat-card>
           </div>
@@ -68,9 +69,8 @@
               <div class="matCardPadding">
                 <mat-card appearance="outlined" class=mat-elevation-z12>           
                   <div class="cardBackground">
-                    <mat-card-content>
-                
-                
+
+                  <mat-card-content>       
                   <div class="itemTitle">
                     <span  >{{ label }}</span>
                     </div>    
@@ -82,58 +82,57 @@
                     </div>
                     <br>
                     <div><span class="statementProperty">FactGrid ID:&nbsp;&nbsp;</span> @if (id) {
-						          <span class="percent4">
-						            <a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
-						          </span>
-						          }
+                      <span class="percent4">
+                        <a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
+                      </span>
+                      }
                     </div>
-   				        @for (picture of pictures; track picture) {
-						      <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" class="image">
-							    <div>
-								      <mat-card appearance="outlined" class=mat-elevation-z2>
-									      <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)"> 
-								      </mat-card>
-							    </div>
-						      </div>
-                  }                
+                    @for (picture of pictures; track picture) {
+                    <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" class="image">
+                      <div>
+                        <mat-card appearance="outlined" class=mat-elevation-z2>
+                       <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)"> 
+                        </mat-card>
+                      </div>
+                    </div>
+                    }                   
                   </mat-card-content>
 
                   <mat-card-content>
                     @for (P of headerDetail; track P) {
-	        					<div >
-	      						<div class="labelTitlePadding">
-	        						<span class="statementProperty">{{P.label}}:</span>
-      							</div>
+                    <div >
+                      <div class="labelTitlePadding">
+                        <span class="statementProperty">{{P.label}}:</span>
+                      </div>
                       @for (M of P; track M) {
-                        <div class="statementSize">
+                      <div class="statementSize">
                         <div class="header-spacer">
                         @if (M.mainsnak.datatype==='wikibase-item') {
-                         <span>
+                        <span>
                           {{M.mainsnak.label}}
                           <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </span>
-                        }
+                          }
                         @if (M['qualifiers-order']) {
-                          <span class="iFrameComment">
+                        <span class="iFrameComment">
                           @for (Q of M.qualifiers2; track Q) {
-                            <span>
+                          <span>
                             <span class="qualifierProperty">&nbsp;{{Q.label}}:&nbsp;</span>
                             @for (D of Q.display; track D; let isLast = $last) {
                               <span>
                               @if (D.datatype === 'time') {
                               <span>{{D.date}}@if (!isLast) {
-                              <span>,&nbsp;</span> }
-                                </span>
-                              }
+                              <span>,&nbsp;</span>
+                             }</span>
+                          }
                               @if (D.datatype==='string') {
-                                <span>{{D.string}}@if (!isLast) {
-                                <span>,&nbsp;</span>
-                                }
-                                </span>
-                              }
+                              <span>{{D.string}}@if (!isLast) {
+                              <span>,&nbsp;</span>
+                              }</span>
+                            }
                               <span>{{D.amount}}</span>
                               @if (D.unit) {
-                                <span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
+                              <span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
                               }
                               @if (D.datatype === 'url') {
                               <span class="displayLayout">
@@ -142,12 +141,12 @@
                               </span>
                               }
                               @if (D.datatype==='wikibase-item') {
-                                <span>
+                              <span>
                                 {{D.label}}, <span class="descriptionText">{{D.description}}&nbsp;</span>
-                                 <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
-                                 <span>,&nbsp;</span> }
-                                </mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </span>
+                                <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
+                              <span>,&nbsp;</span>
+                               }</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </span>
                               }
                               @if (D.datatype==='commonsMedia') {
                               <div class="details3">
@@ -163,272 +162,314 @@
                         </span>
                         }
                         @if (M['references2']) {
-                          <div class="qualifierTextSize">
+                      <div class="qualifierTextSize">
                           <span class="referenceProperty">{{M.references2[0].label}}: </span>
                           @if (M.references2[0].value.label) {
                           <span>
                             {{M.references2[0].value.label}}
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
-                          }
+                            }
                           <span>{{M.references2[0].value.date}}</span>
                           <span>{{M.references2[0].value.string}}</span>
                           <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                         </div>
-                        }
+                          }
                         </div>
                       </div>
                       }
                     </div>
                     }
                   </mat-card-content>
-                  </div>
+                  </div>            
                 </mat-card>
               </div>
+
               <div>
-            </div>
-  
-			<div class="matCardPadding" [ngClass]="isMain ? 'show-division':'hide-division'">
+              </div>
+
+<!-- ESSAI    voir https://stackblitz.com/edit/angular-ibcmee-3a2oux?file=src%2Fapp%2Ftable-basic-example.ts,src%2Fapp%2Ftable-basic-example.html 
+                     https://stackblitz.com/edit/angular-ibcmee-3a2oux?file=src%2Fapp%2Ftable-basic-example.css,src%2Fapp%2Ftable-basic-example.ts,src%2Fapp%2Ftable-basic-example.html
+            et surtout
+                     https://stackblitz.com/edit/angular-ibcmee-isejxv?file=src%2Fapp%2Ftable-basic-example.html
+
+         <div class="matCardPadding">
+          <mat-card appearance="outlined" class= mat-elevation-z12>  
+              <mat-card-content class="cardBackground">
+
+                  <div class="subTitlePadding">
+                    <span class="divisionTitle">Essai</span>
+                    </div>
+
+              @for (P of mainList; track P) {
+                 <table mat-table>
+                   <ng-container>
+                    <td mat-cell> 
+                        {{ P.label}}
+                  </td>
+                  </ng-container>
+                  
+              @for (M of P; track M) {
+                  <ng-container>
+                  <table>
+                    <ng-container>
+                    <td mat-cell> 
+                        {{ M.mainsnak.label}}
+                  </td>
+                   </ng-container>
+                  </table>
+                  </ng-container>
+              }
+                </table>
+             }
+          </mat-card-content>
+         </mat-card>
+        </div>
+        -->    
+          
+              <!-- section Main   -->
+              <div class="matCardPadding" [ngClass]="isMain ? 'show-division':'hide-division'">
                 <mat-card appearance="outlined" class= mat-elevation-z12>  
-                  <mat-card-content class="cardBackground">
+
+                <mat-card-content class="cardBackground">
                     <div class="subTitlePadding">
-						<span class="divisionTitle">{{ mainTitle }}</span>
-                    </div>               
-						<router-outlet></router-outlet>   
-                    @for (P of mainList; track P) {
-						<div>
-							<div>
-								<div class="labelTitlePadding">
-								<div class="statementProperty">{{P.label}}:</div>
-								</div>
-                    @for (M of P; track M) {
-						<div class="statementSize">
+                    <span class="divisionTitle">{{ mainTitle }}</span>
+                    </div>      
+                      <router-outlet></router-outlet>   
+                      @for (P of mainList; track P) {
+                      <div>
+                        <div>
+                          <div class="labelTitlePadding">
+                            <div class="statementProperty">{{P.label}}:</div>
+                          </div>
+                          @for (M of P; track M) {
+                         <div class="statementSize">
                           <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
                             @if (M.rank=='deprecated') {
-								<span class="warningDeprecated">{{M.rank}}: </span>
-							}
+                          <span class="warningDeprecated">{{M.rank}}: </span>
+                          }
                             @if (M.mainsnak.datatype ==='time') {
-								<span>{{M.mainsnak.datavalue.value.date}}</span>
-							}
-                            @if (M.mainsnak.datatype==='monolingualtext') {
-								<span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
-							}
-                            @if (M.mainsnak.datatype === 'string') {
-								<span class="displayLayout">{{M.mainsnak.datavalue.value}}</span>
-							}
-                            @if (M.mainsnak.datatype === 'wikibase-property') {
-								<span class="value-text">{{M.mainsnak.datavalue.value.id}}</span>
-							}
-                            @if (M.mainsnak.datatype==='commonsMedia') {
-								<span>
-									<img src={{M.picture}}>
-								</span>
-							}
-                            @if (M.mainsnak.datatype === 'url') {
-								<span class="displayLayout">
-									<a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
-								</span>
-							}
-								<span>{{M.mainsnak.datavalue.value.amount}}</span>
-                            @if (M.mainsnak.datatype === 'globe-coordinate') {
-								<span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
-							}
-							<span *ngIf="M.mainsnak.datatype === 'sparql'">
-								{{clickToDisplay}}
-								<span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick2(M.mainsnak.datavalue.value)"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-								<span>{{clickToDownload}}</span>
-								<span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick3(M.mainsnak.datavalue.value)"><mat-icon color="primary" [inline]="true">download</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-								</span>
-                            @if (M.mainsnak.datatype === 'wikibase-item') {
-								<span>
-									{{M.mainsnak.label}}
-									<mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								</span>
-							}                       
-                            @if (M.mainsnak.datavalue.value.unit) {
-								<span><em>&nbsp;({{M.mainsnak.datavalue.value.unit | unit |async}})</em>&nbsp;</span>
+                          <span>{{M.mainsnak.datavalue.value.date}}</span>
                             }
+                            @if (M.mainsnak.datatype==='monolingualtext') {
+                          <span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
+                            }
+                            @if (M.mainsnak.datatype === 'string') {
+                          <span class="displayLayout">{{M.mainsnak.datavalue.value}}</span>
+                            }
+                            @if (M.mainsnak.datatype === 'wikibase-property') {
+                          <span class="value-text">{{M.mainsnak.datavalue.value.id}}</span>
+                          }
+                            @if (M.mainsnak.datatype==='commonsMedia') {
+                             <span>
+                              <img src={{M.picture}}>
+                            </span>
+                            }
+                            @if (M.mainsnak.datatype === 'url') {
+                             <span class="displayLayout">
+                              <a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
+                            </span>
+                            }
+                            <span>{{M.mainsnak.datavalue.value.amount}}</span>
+                            @if (M.mainsnak.datatype === 'globe-coordinate') {
+                            <span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
+                            }
+                            @if (M.mainsnak.datatype === 'wikibase-item') {
+                              <span>
+                              {{M.mainsnak.label}}
+                              <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
+                            }                         
+                            @if (M.mainsnak.datavalue.value.unit) {
+                              <span><em>&nbsp;({{M.mainsnak.datavalue.value.unit | unit |async}})</em>&nbsp;</span>
+                            }
+
                             @if (M['qualifiers-order']) {
-								<span class="qualifierTextSize">                     
-						@for (Q of M.qualifiers2; track Q) {
-							<span >
-							@if (Q.remove !=='y') {
+                          <span class="qualifierTextSize">                      
+                             @for (Q of M.qualifiers2; track Q) {
+                            <span >
+                               @if (Q.remove !=='y') {
                                 <span>
                                 @if (Q.label) {
-                                  <span class="qualifierProperty">&nbsp;{{Q.label}}:&nbsp;</span>
-                                }
-                            @for (D of Q.display; track D; let isLast = $last) {
-                                <span>
-									@if (D.datatype === 'time') {
-										<span>{{D.date}}@if (!isLast) {
-										<span>,&nbsp;</span>
-                                    }
-									</span>
-									}
-									@if (D.datatype==='string') {
-										<span>{{D.string}}@if (!isLast) {
-										<span>,&nbsp;</span>
-                                    }
-									</span>
-                                    }     
-									<span>{{D.amount}}</span>
-									@if (D.unit) {
-										<span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
-									}
-									@if (D.datatype === 'url') {
-										<span class="displayLayout">
-										{{D.label}},
-										<a href="{{D.string}}" target="_blank">{{D.string}}</a>
-									</span>
-									}
-									@if (D.datatype==='wikibase-item') {
-										<span >
-										{{D.label}}, <span class="descriptionText">{{D.description}}&nbsp;</span>
-										<mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
-										<span>,&nbsp;</span>
-										}</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</span>
-									}
-									@if (D.datatype==='commonsMedia') {
-										<div class="details3">
-										<span class>
-											<img src={{D.commons}}>
-										</span>
-										</div>
-									}
-								</span>
-							}            
-							</span>
-							}
-						</span>
-						}
-					</span>
+                                <span class="qualifierProperty">&nbsp;{{Q.label}}:&nbsp;</span>
+                                  }
+                                @for (D of Q.display; track D; let isLast = $last) {
+                               <span>
+                                  @if (D.datatype === 'time') {
+                              <span>{{D.date}}@if (!isLast) {
+                              <span>,&nbsp;</span>
+                               }</span>
+                              }
+                                 @if (D.datatype==='string') {
+                                    <span>{{D.string}}@if (!isLast) {
+                                     <span>,&nbsp;</span>
+                                     }</span>
+                                  }
+                                     <span>{{D.amount}}</span>
+                                  @if (D.unit) {
+                                      <span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
+                                  }
+                                  @if (D.datatype === 'url') {
+                                      <span class="displayLayout">
+                                    {{D.label}},
+                                    <a href="{{D.string}}" target="_blank">{{D.string}}</a>
+                                  </span>
+                                  }
+                                  @if (D.datatype==='wikibase-item') {
+                                    <span >
+                                    {{D.label}}, <span class="descriptionText">{{D.description}}&nbsp;</span>
+                                    <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
+                                    <span>,&nbsp;</span>
+                                    }</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  </span>
+                                  }
+                                  @if (D.datatype==='commonsMedia') {
+                                  <div class="details3">
+                                    <span class>
+                                      <img src={{D.commons}}>
+                                    </span>
+                                  </div>
+                                  }
+                                </span>
+                              }            
+                              </span>
+                            }
+                              </span>
+                          }
+                            </span>
+                        }
+
+                            @if (M['references2']) {
+                              <div class="qualifierTextSize">
+                              <span class="referenceProperty">{{M.references2[0].label}}: </span>
+                            @if (M.references2[0].value.label) {
+                               <span>{{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
+                                <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </span>
+                            }
+                              <span>{{M.references2[0].value.date}}</span>
+                              <span class="displayLayout">{{M.references2[0].value.string }}</span>
+                              <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
+                            </div>
+                            }
+                            <hr>
+                          </div>
+                          </div>
+                        }
+                          @for (M of list; track M) {
+                              <div class="statementSize">
+                                {{M}}
+                          </div>
+                        }  
+                        </div>
+                      </div>
+                       }
+                      <br>
+                    </mat-card-content>
+                   <!-- end of main section -->
+                  <div>
+
+   
+
+                  </div>
+                  @if (this.trans !== "") {   <app-text-display [trans]="this.trans"></app-text-display>   } <!----transcription-->
+                  
+              <!-- section Training -->
+               <div class="matCardPadding" [ngClass]="isTraining ? 'show-division':'hide-division'">               
+                   <mat-card-content class="cardBackground">
+                        <div class="subdivisionTitle">{{training}}</div>
+                        @for (P of education; track P) {
+                       <div>
+                          <div class="labelTitlePadding">
+                            <span class="statementProperty">{{P.label}}:</span>
+                          </div>
+                            @for (M of P; track M) {
+                         <div class="statementSize">
+                        <div class="header-spacer">
+                        <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
+                          @if (M.rank=='deprecated') {
+<span class="warningDeprecated">{{M.rank}}: </span>
+}
+                          @if (M.mainsnak.datatype ==='time') {
+<span>{{M.mainsnak.datavalue.value.date}}</span>
+}
+                          @if (M.mainsnak.datatype==='monolingualtext') {
+<span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
+}
+                          @if (M.mainsnak.datatype === 'string') {
+<span class="displayLayout">{{M.mainsnak.datavalue.value }}</span>
+}
+                          @if (M.mainsnak.datatype === 'url') {
+<span class="displayLayout">
+                            <a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
+                          </span>
+}
+                          <span>{{M.mainsnak.datavalue.value.amount}}</span>
+                          @if (M.mainsnak.datatype === 'globe-coordinate') {
+<span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
+}
+                          @if (M.mainsnak.datatype==='wikibase-item') {
+<span>
+                            {{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
+                            <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
 }
 
-					@if (M['references2']) {
-						<div class="qualifierTextSize">
-						<span class="referenceProperty">{{M.references2[0].label}}: </span>
-							@if (M.references2[0].value.label) {
-								<span>
-                                {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
-                                <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								</span>
-							}
-							<span>{{M.references2[0].value.date}}</span>
-							<span class="displayLayout">{{M.references2[0].value.string }}</span>
-							<span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
-						</div>
-					}
-                    <hr>
-				</div>
-			</div>
-		}
-  				@for (M of list; track M) {
-						<div class="statementSize">
-							{{M}}
-						</div>
-					}  
-					</div>
-					</div>
-					}
-					<br>
-				  </mat-card-content>   
-                  
-				<div>
-				</div>
- 						@if (this.trans !== "") {
-					<app-text-display [trans]="this.trans"></app-text-display>
-					} <!----transcription-->     
-						 <div class="matCardPadding" [ngClass]="isTraining ? 'show-division':'hide-division'">               
-						  <mat-card-content class="cardBackground">
-							<div class="subdivisionTitle">{{training}}</div>
-							@for (P of education; track P) {
-								<div>
-								<div class="labelTitlePadding">
-								  <span class="statementProperty">{{P.label}}:</span>
-								</div>
-							@for (M of P; track M) {
-								<div class="statementSize">
-								<div class="header-spacer">
-								<div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
-								@if (M.rank=='deprecated') {
-									<span class="warningDeprecated">{{M.rank}}: </span>
-								}
-								@if (M.mainsnak.datatype ==='time') {
-									<span>{{M.mainsnak.datavalue.value.date}}</span>
-								}
-								@if (M.mainsnak.datatype==='monolingualtext') {
-									<span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
-								}
-								@if (M.mainsnak.datatype === 'string') {
-									<span class="displayLayout">{{M.mainsnak.datavalue.value }}</span>
-								}
-								@if (M.mainsnak.datatype === 'url') {
-									<span class="displayLayout">
-									<a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
-									</span>
-								}
-								<span>{{M.mainsnak.datavalue.value.amount}}</span>
-								@if (M.mainsnak.datatype === 'globe-coordinate') {
-									<span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
-								}
-								@if (M.mainsnak.datatype==='wikibase-item') {
-									<span>
-									{{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
-									<mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</span>
-								}
-								@if (M['qualifiers-order']) {
-									<span class="qualifierTextSize">        
-									@for (Q of M.qualifiers2; track Q) {
-									<span>
-										@if (Q.remove !=='y') {
-										<span>
-										<span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span>
-											@for (D of Q.display; track D; let isLast = $last) {
-											<span>
-												@if (D.datatype === 'time') {
-												<span>{{D.date}}@if (!isLast) {
-												<span>,&nbsp;</span>
-												}</span>
-												}	
-												@if (D.datatype==='string') {
-												<span>{{D.string}}@if (!isLast) {<span>,&nbsp;</span>}</span>
-												}
-												<span>{{D.amount}}</span>
-												@if (D.unit) {
-												<span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
-												}
-												@if (D.datatype === 'url') {
-													<span class="displayLayout">
-													{{D.label}},
-													<a href="{{D.string}}" target="_blank">{{D.string}}</a>
-												</span>
-												}
-												@if (D.datatype==='wikibase-item') {
-													<span>
-													{{D.label}}@if (D.description) {
-													<span>,</span>
-													}
-													<span class="descriptionText">{{D.description}},&nbsp;</span>
-													<mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {<span>,&nbsp;</span>}</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												</span>
-												}	
-												@if (D.datatype==='commonsMedia') {
-												<div class="details3">
-												<span class>
-													<img src={{D.commons}}>
-												</span>
-												</div>
-												}
-											</span>
-											}
-											</span>
-										}
-									</span>
-									}
-									</span>
-								}
+                          @if (M['qualifiers-order']) {
+<span class="qualifierTextSize">        
+                           @for (Q of M.qualifiers2; track Q) {
+  <span>
+                            @if (Q.remove !=='y') {
+<span>
+                            <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span>
+                              @for (D of Q.display; track D; let isLast = $last) {
+  <span>
+                                @if (D.datatype === 'time') {
+<span>{{D.date}}@if (!isLast) {
+<span>,&nbsp;</span>
+}</span>
+}
+
+                                @if (D.datatype==='string') {
+<span>{{D.string}}@if (!isLast) {
+<span>,&nbsp;</span>
+}</span>
+}
+                                <span>{{D.amount}}</span>
+                                @if (D.unit) {
+<span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
+}
+                                @if (D.datatype === 'url') {
+<span class="displayLayout">
+                                  {{D.label}},
+                                  <a href="{{D.string}}" target="_blank">{{D.string}}</a>
+                                </span>
+}
+                                @if (D.datatype==='wikibase-item') {
+<span>
+                                  {{D.label}}@if (D.description) {
+<span>,</span>
+}<span class="descriptionText">{{D.description}},&nbsp;</span>
+                                  <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
+<span>,&nbsp;</span>
+}</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
+}
+                                @if (D.datatype==='commonsMedia') {
+<div class="details3">
+                                  <span class>
+                                    <img src={{D.commons}}>
+                                  </span>
+                                </div>
+}
+                              </span>
+}
+                              </span>
+}
+                            </span>
+}
+                          </span>
+}
                           @if (M['references2']) {
 <div class="qualifierTextSize">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
@@ -456,136 +497,232 @@
                   <div class="matCardPadding" [ngClass]="isCareer ? 'show-division':'hide-division'">
                     <mat-card-content  class="cardBackground">
                       <div class="subdivisionTitle">{{career}}</div>
-                      <div *ngFor="let P of careerAndActivities">
+                      @for (P of careerAndActivities; track P) {
+  <div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{P.label}}:</span>
                         </div>
-                        <div class="statementSize" *ngFor="let M of P">
+                        @for (M of P; track M) {
+  <div class="statementSize">
                         <div class="header-spacer">
                         <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
-                          <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
-                          <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
-                          <span *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
-                          <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</span>
-                          <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'url'">
+                          @if (M.rank=='deprecated') {
+<span class="warningDeprecated">{{M.rank}}: </span>
+}
+                          @if (M.mainsnak.datatype ==='time') {
+<span>{{M.mainsnak.datavalue.value.date}}</span>
+}
+                          @if (M.mainsnak.datatype==='monolingualtext') {
+<span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
+}
+                          @if (M.mainsnak.datatype === 'string') {
+<span class="displayLayout">{{M.mainsnak.datavalue.value }}</span>
+}
+                          @if (M.mainsnak.datatype === 'url') {
+<span class="displayLayout">
                             <a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
                           </span>
+}
                           <span>{{M.mainsnak.datavalue.value.amount}}</span>
-                          <span *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
-                          <span *ngIf="M.mainsnak.datatype==='wikibase-item'">
+                          @if (M.mainsnak.datatype === 'globe-coordinate') {
+<span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
+}
+                          @if (M.mainsnak.datatype==='wikibase-item') {
+<span>
                             {{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
+}
                           
-                          <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">
-                            <span *ngFor="let Q of M.qualifiers2">
-                            <span *ngIf ="Q.remove !=='y'">
+                          @if (M['qualifiers-order']) {
+<span class="qualifierTextSize">
+                            @for (Q of M.qualifiers2; track Q) {
+  <span>
+                            @if (Q.remove !=='y') {
+<span>
                               <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span>
-                              <span *ngFor="let D of Q.display; last as isLast">
-                                <span *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></span>
-                                <span *ngIf="D.datatype==='string'">{{D.string}}<span *ngIf="!isLast">,&nbsp;</span></span>
+                              @for (D of Q.display; track D; let isLast = $last) {
+  <span>
+                                @if (D.datatype === 'time') {
+<span>{{D.date}}@if (!isLast) {
+<span>,&nbsp;</span>
+}</span>
+}
+                                @if (D.datatype==='string') {
+<span>{{D.string}}@if (!isLast) {
+<span>,&nbsp;</span>
+}</span>
+}
                                 <span>{{D.amount}}</span>
-                                <span *ngIf="D.unit"><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
-                                <span class="displayLayout" *ngIf="D.datatype === 'url'">
+                                @if (D.unit) {
+<span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
+}
+                                @if (D.datatype === 'url') {
+<span class="displayLayout">
                                   {{D.label}},
                                   <a href="{{D.string}}" target="_blank">{{D.string}}</a>
                                 </span>
-                                <span *ngIf="D.datatype==='wikibase-item'">
+}
+                                @if (D.datatype==='wikibase-item') {
+<span>
                                   {{D.label}}, <span class="descriptionText">{{D.description}}&nbsp;</span>
-                                  <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon><span *ngIf="!isLast">,&nbsp;</span></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
+<span>,&nbsp;</span>
+}</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </span>
-                                <div class="details3" *ngIf="D.datatype==='commonsMedia'">
+}
+                                @if (D.datatype==='commonsMedia') {
+<div class="details3">
                                   <span class>
                                     <img src={{D.commons}}>
                                   </span>
                                 </div>
+}
                               </span>
+}
                              </span>
+}
                             </span>
+}
                           </span>
-                          <div class="qualifierTextSize" *ngIf="M['references2']">
+}
+                          @if (M['references2']) {
+<div class="qualifierTextSize">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
-                            <span *ngIf="M.references2[0].value.label">{{M.references2[0].value.label}}
+                            @if (M.references2[0].value.label) {
+<span>{{M.references2[0].value.label}}
                               <span class="descriptionText">{{M.references2[0].value.description}}</span>
                               <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
+}
                             <span>{{M.references2[0].value.date }}</span>
                             <span>{{M.references2[0].value.string }}</span>
                             <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                           </div>
+}
                           <hr>
                         </div>
                         </div>
                         </div>
+}
                       </div>
+}
                     </mat-card-content>
                   </div>
                   <div  [ngClass]="isSociability ? 'show-division':'hide-division'">
                     <mat-card-content class="cardBackground">
                       <div class="subdivisionTitle">{{sociability}}</div>
-                      <div *ngFor="let P of sociabilityAndCulture">
+                      @for (P of sociabilityAndCulture; track P) {
+  <div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{P.label}}:</span>
                         </div>
-                        <div class="statementSize" *ngFor="let M of P">
+                        @for (M of P; track M) {
+  <div class="statementSize">
                         <div class="header-spacer">
                          <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
-                          <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
-                          <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
-                          <span *ngIf="M.mainsnak.datatype==='monolingualtext'">{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
-                          <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</span>
-                          <span class="displayLayout" *ngIf="M.mainsnak.datatype === 'url'">
+                          @if (M.rank=='deprecated') {
+<span class="warningDeprecated">{{M.rank}}: </span>
+}
+                          @if (M.mainsnak.datatype ==='time') {
+<span>{{M.mainsnak.datavalue.value.date}}</span>
+}
+                          @if (M.mainsnak.datatype==='monolingualtext') {
+<span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
+}
+                          @if (M.mainsnak.datatype === 'string') {
+<span class="displayLayout">{{M.mainsnak.datavalue.value }}</span>
+}
+                          @if (M.mainsnak.datatype === 'url') {
+<span class="displayLayout">
                             <a href="{{M.mainsnak.datavalue.value}}" target="_blank">link</a>
                           </span>
+}
                           <span>{{M.mainsnak.datavalue.value.amount}}</span>
-                          <span *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
-                          <span *ngIf="M.mainsnak.datatype === 'wikibase-item'">
+                          @if (M.mainsnak.datatype === 'globe-coordinate') {
+<span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
+}
+                          @if (M.mainsnak.datatype === 'wikibase-item') {
+<span>
                             {{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
+}
 
-                          <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">                      
-                            <span *ngFor="let Q of M.qualifiers2">
-                            <span *ngIf ="Q.remove !=='y'">
+                          @if (M['qualifiers-order']) {
+<span class="qualifierTextSize">                      
+                            @for (Q of M.qualifiers2; track Q) {
+  <span>
+                            @if (Q.remove !=='y') {
+<span>
                               <span class="qualifierProperty">&nbsp;{{Q.label}}:&nbsp;</span>
-                              <span *ngFor="let D of Q.display; last as isLast">
-                                <span *ngIf="D.datatype === 'time'">{{D.date}}<span *ngIf="!isLast">,&nbsp;</span></span>
-                                <span *ngIf="D.datatype==='string'">{{D.string}}<span *ngIf="!isLast">,&nbsp;</span></span>
+                              @for (D of Q.display; track D; let isLast = $last) {
+  <span>
+                                @if (D.datatype === 'time') {
+<span>{{D.date}}@if (!isLast) {
+<span>,&nbsp;</span>
+}</span>
+}
+                                @if (D.datatype==='string') {
+<span>{{D.string}}@if (!isLast) {
+<span>,&nbsp;</span>
+}</span>
+}
                                 <span>{{D.amount}}</span>
-                                <span *ngIf="D.unit"><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
-                                <span class="displayLayout" *ngIf="D.datatype === 'url'">
+                                @if (D.unit) {
+<span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
+}
+                                @if (D.datatype === 'url') {
+<span class="displayLayout">
                                   {{D.label}},
                                   <a href="{{D.string}}" target="_blank">{{D.string}}</a>
                                 </span>
-                                <span *ngIf="D.datatype==='wikibase-item'">
+}
+                                @if (D.datatype==='wikibase-item') {
+<span>
                                   {{D.label}}, <span class="descriptionText">{{D.description}}</span>
-                                  <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon><span *ngIf="!isLast">,&nbsp;</span></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
+<span>,&nbsp;</span>
+}</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </span>
-                                <div class="details3" *ngIf="D.datatype==='commonsMedia'">
+}
+                                @if (D.datatype==='commonsMedia') {
+<div class="details3">
                                   <span class>
                                     <img src={{D.commons}}>
                                   </span>
                                 </div>
+}
                               </span>
+}
                              </span>
+}
                             </span>
+}
                           </span>
-                          <div class="qualifierTextSize" *ngIf="M['references2']">
+}
+                          @if (M['references2']) {
+<div class="qualifierTextSize">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
-                            <span *ngIf="M.references2[0].value.label">
+                            @if (M.references2[0].value.label) {
+<span>
                               {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
                               <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
+}
                             <span>{{M.references2[0].value.date }}</span>
                             <span class="displayLayout">{{M.references2[0].value.string }}</span>
                             <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                           </div>
+}
                           <hr>
 
                           </div>
                       </div>
                       </div>
+}
                       </div>
+}
                     </mat-card-content>
                   </div>
      <!----        <div [ngClass]="isStemma ? 'show-division':'hide-division'">
@@ -597,141 +734,250 @@
                   </div> ---->
                   <div [ngClass]="isIframes ? 'show-division':'hide-division'">
                     <mat-card-content class="cardBackground">
-                      <div *ngIf="item[0].claims.P309">
+                      @if (item[0].claims.P309) {
+<div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{item[0].claims.P309.label}}:</span>
                         </div>
-                        <div *ngIf="item[0].claims.P309[0]">
-                          <div *ngIf="item[0].claims.P309[0].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P309[0].qualifiers2[0].value.label"><span>{{item[0].claims.P309[0].qualifiers2[0].value.label}}</span></span>
+                        @if (item[0].claims.P309[0]) {
+<div>
+                          @if (item[0].claims.P309[0].qualifiers2) {
+<div>
+                            @if (item[0].claims.P309[0].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P309[0].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe1"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P309[1]">
-                          <div *ngIf="item[0].claims.P309[1].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P309[1].qualifiers2[0].value.label"><span>{{item[0].claims.P309[1].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P309[1]) {
+<div>
+                          @if (item[0].claims.P309[1].qualifiers2) {
+<div>
+                            @if (item[0].claims.P309[1].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P309[1].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe2"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P309[2]">
-                          <div *ngIf="item[0].claims.P309[2].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P309[2].qualifiers2[0].value.label"><span>{{item[0].claims.P309[2].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P309[2]) {
+<div>
+                          @if (item[0].claims.P309[2].qualifiers2) {
+<div>
+                            @if (item[0].claims.P309[2].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P309[2].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe3"></iframe>
                         </div>
+}
                       </div>
-                      <div *ngIf="item[0].claims.P320">
+}
+                      @if (item[0].claims.P320) {
+<div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{item[0].claims.P320.label}}:</span>
                         </div>
-                        <div *ngIf="item[0].claims.P320[0]">
-                          <div *ngIf="item[0].claims.P320[0].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P320[0].qualifiers2[0].value.label"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+                        @if (item[0].claims.P320[0]) {
+<div>
+                          @if (item[0].claims.P320[0].qualifiers2) {
+<div>
+                            @if (item[0].claims.P320[0].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe4"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P320[1]">
-                          <div *ngIf="item[0].claims.P320[1].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P320[1].qualifiers2[0].value.label"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P320[1]) {
+<div>
+                          @if (item[0].claims.P320[1].qualifiers2) {
+<div>
+                            @if (item[0].claims.P320[1].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe5"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P320[2]">
-                          <div *ngIf="item[0].claims.P320[2].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P320[2].qualifiers2[0].value.label"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P320[2]) {
+<div>
+                          @if (item[0].claims.P320[2].qualifiers2) {
+<div>
+                            @if (item[0].claims.P320[2].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe6"></iframe>
                         </div>
+}
                       </div>
-                      <div *ngIf="item[0].claims.P679">
+}
+                      @if (item[0].claims.P679) {
+<div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{item[0].claims.P679.label}}:</span>
                         </div>
-                        <div *ngIf="item[0].claims.P679[0]">
-                          <div *ngIf="item[0].claims.P679[0].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P679[0].qualifiers2[0].value.label"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+                        @if (item[0].claims.P679[0]) {
+<div>
+                          @if (item[0].claims.P679[0].qualifiers2) {
+<div>
+                            @if (item[0].claims.P679[0].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P679[0].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe7"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P679[1]">
-                          <div *ngIf="item[0].claims.P679[1].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P679[1].qualifiers2[0].value.label"><span *ngIf="item[0].claims.P679[1].qualifiers2">{{item[0].claims.P679[1].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P679[1]) {
+<div>
+                          @if (item[0].claims.P679[1].qualifiers2) {
+<div>
+                            @if (item[0].claims.P679[1].qualifiers2[0].value.label) {
+<span class="iFrameComment">@if (item[0].claims.P679[1].qualifiers2) {
+<span>{{item[0].claims.P679[1].qualifiers2[0].value.label}}</span>
+}</span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe8"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P679[2]">
-                          <div *ngIf="item[0].claims.P679[2].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P679[2].qualifiers2[0].value.label"><span *ngIf="item[0].claims.P679[2].qualifiers2">{{item[0].claims.P679[2].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P679[2]) {
+<div>
+                          @if (item[0].claims.P679[2].qualifiers2) {
+<div>
+                            @if (item[0].claims.P679[2].qualifiers2[0].value.label) {
+<span class="iFrameComment">@if (item[0].claims.P679[2].qualifiers2) {
+<span>{{item[0].claims.P679[2].qualifiers2[0].value.label}}</span>
+}</span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe9"></iframe>
                         </div>
+}
                       </div>
-                      <div *ngIf="item[0].claims.P693">
+}
+                      @if (item[0].claims.P693) {
+<div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{item[0].claims.P693.label}}:</span>
                         </div>
-                        <div *ngIf="item[0].claims.P693[0]">
-                          <div *ngIf="item[0].claims.P693[0].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P693[0].qualifiers2[0].value.label"><span>{{item[0].claims.P693[0].qualifiers2[0].value.label}}</span></span>
+                        @if (item[0].claims.P693[0]) {
+<div>
+                          @if (item[0].claims.P693[0].qualifiers2) {
+<div>
+                            @if (item[0].claims.P693[0].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P693[0].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe10"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P693[1]">
-                          <div *ngIf="item[0].claims.P693[1].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P693[1].qualifiers2[0].value.label"><span>{{item[0].claims.P693[1].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P693[1]) {
+<div>
+                          @if (item[0].claims.P693[1].qualifiers2) {
+<div>
+                            @if (item[0].claims.P693[1].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P693[1].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe11"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P693[2]">
-                          <div *ngIf="item[0].claims.P693[2].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P693[2].qualifiers2[0].value.label"><span>{{item[0].claims.P693[2].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P693[2]) {
+<div>
+                          @if (item[0].claims.P693[2].qualifiers2) {
+<div>
+                            @if (item[0].claims.P693[2].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P693[2].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe12"></iframe>
                         </div>
+}
                       </div>
-                      <div *ngIf="item[0].claims.P720">
+}
+                      @if (item[0].claims.P720) {
+<div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{item[0].claims.P720.label}}:</span>
                         </div>
-                        <div *ngIf="item[0].claims.P720[0]">
-                          <div *ngIf="item[0].claims.P720[0].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P720[0].qualifiers2[0].value.label"><span>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</span></span>
+                        @if (item[0].claims.P720[0]) {
+<div>
+                          @if (item[0].claims.P720[0].qualifiers2) {
+<div>
+                            @if (item[0].claims.P720[0].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P720[0].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe13"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P720[1]">
-                          <div *ngIf="item[0].claims.P720[1].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P720[1].qualifiers2[0].value.label"><span>{{item[0].claims.P720[1].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P720[1]) {
+<div>
+                          @if (item[0].claims.P720[1].qualifiers2) {
+<div>
+                            @if (item[0].claims.P720[1].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P720[1].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe14"></iframe>
                         </div>
-                        <div *ngIf="item[0].claims.P720[2]">
-                          <div *ngIf="item[0].claims.P720[2].qualifiers2">
-                            <span class="iFrameComment" *ngIf="item[0].claims.P720[2].qualifiers2[0].value.label"><span>{{item[0].claims.P720[2].qualifiers2[0].value.label}}</span></span>
+}
+                        @if (item[0].claims.P720[2]) {
+<div>
+                          @if (item[0].claims.P720[2].qualifiers2) {
+<div>
+                            @if (item[0].claims.P720[2].qualifiers2[0].value.label) {
+<span class="iFrameComment"><span>{{item[0].claims.P720[2].qualifiers2[0].value.label}}</span></span>
+}
                           </div>
+}
                           <iframe style="width: 100%; height: 100vh; border: none;"
                                   [src]="urlSafe15"></iframe>
                         </div>
+}
                       </div>
+}
                     </mat-card-content>
                   </div>
+                 
+
+
+
+
                 </mat-card>
               </div>
-
+              
               <div [ngClass]="isSparql ? 'show-division':'hide-division'"  class="cardBackground">
                       <app-sparql-display [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject"></app-sparql-display>
                </div>
@@ -739,41 +985,69 @@
                <div [ngClass]="isSources ? 'show-division':'hide-division'">
                    <mat-card-content  class="cardBackground">
                     <div class="divisionTitle">{{sources}}</div>
-                      <div *ngFor="let P of sourcesList">
+                      @for (P of sourcesList; track P) {
+  <div>
                         <div class="labelTitlePadding">
                           <span class="statementProperty">{{P.label}}:</span>
                         </div>
-                        <div class="statementSize" *ngFor="let M of P">
+                        @for (M of P; track M) {
+  <div class="statementSize">
                         <div class="header-spacer">
                          <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
-                          <span class="warningDeprecated" *ngIf="M.rank=='deprecated'">{{M.rank}}: </span>
-                          <span *ngIf="M.mainsnak.datatype ==='time'">{{M.mainsnak.datavalue.value.date}}</span>
-                          <span *ngIf="M.mainsnak.datatype === 'string'">{{M.mainsnak.datavalue.value }}</span>
+                          @if (M.rank=='deprecated') {
+<span class="warningDeprecated">{{M.rank}}: </span>
+}
+                          @if (M.mainsnak.datatype ==='time') {
+<span>{{M.mainsnak.datavalue.value.date}}</span>
+}
+                          @if (M.mainsnak.datatype === 'string') {
+<span>{{M.mainsnak.datavalue.value }}</span>
+}
                           <span>{{M.mainsnak.datavalue.value.amount}}</span>
-                          <span *ngIf="M.mainsnak.datavalue.value.text">{{M.mainsnak.datavalue.value.text}}</span>
-                          <span *ngIf="M.mainsnak.datatype === 'globe-coordinate'">latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
-                          <span *ngIf="M.mainsnak.datatype === 'wikibase-item'">
+                          @if (M.mainsnak.datavalue.value.text) {
+<span>{{M.mainsnak.datavalue.value.text}}</span>
+}
+                          @if (M.mainsnak.datatype === 'globe-coordinate') {
+<span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
+}
+                          @if (M.mainsnak.datatype === 'wikibase-item') {
+<span>
                             {{M.mainsnak.label}}, <span class="descriptionText">{{M.mainsnak.description}}</span>
-                            <span *ngIf="M.mainsnak.datatype ==='string'">{{M.mainsnak.datavalue.value}}</span>
+                            @if (M.mainsnak.datatype ==='string') {
+<span>{{M.mainsnak.datavalue.value}}</span>
+}
                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>
+}
                           <span>
-                          <span class="qualifierTextSize" *ngIf="M['qualifiers-order']">
-                            <span *ngFor="let Q of M.qualifiers2">
-                            <span *ngIf ="Q.remove !=='y'">
+                          @if (M['qualifiers-order']) {
+                          <span class="qualifierTextSize">
+                            @for (Q of M.qualifiers2; track Q) {
+                              <span>
+                            @if (Q.remove !=='y') {
+                            <span>
                               <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:</em>&nbsp;&nbsp;</span>
-                              <span *ngIf="Q.value.time !== undefined">{{Q.value.date }}&nbsp;&nbsp;&nbsp;</span>
-                              <span *ngIf="Q.datatype== 'string'">{{Q.value.string}}</span>
+                              @if (Q.value.time !== undefined) {
+                              <span>{{Q.value.date }}&nbsp;&nbsp;&nbsp;</span>
+                              }
+                              @if (Q.datatype== 'string') {
+                              <span>{{Q.value.string}}</span>
+                                }
                               <span>{{Q.value.amount}}</span>
-                              <span *ngIf="Q.datatype==='wikibase-item'">
-                                {{Q.value.label}}, <span class="descriptionText">{{Q.value.description}}</span>
+                              @if (Q.datatype==='wikibase-item') {
+                                <span> {{Q.value.label}}, <span class="descriptionText">{{Q.value.description}}</span>
                                 <mat-icon-button class="internalLink" [routerLink]="['/item', Q.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                               </span>
+                              }
                             </span>
+                            }
                             </span>
+                            }
                           </span>
+                          }
                           </span>
-                          <div class="qualifierTextSize" *ngIf="M['references2']">
+                          @if (M['references2']) {
+                          <div class="qualifierTextSize">
                             <span class="referenceProperty">{{M.references2[0].label}}: </span>
                             <span>
                               {{M.references2[0].value.label}}, <span class="descriptionText">{{M.references2[0].value.description}}</span>
@@ -783,11 +1057,14 @@
                             <span>{{M.references2[0].value.string }}</span>
                             <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
                           </div>
+                            }
                           <hr>
                         </div>
                        </div>
                       </div>
+                      }
                       </div>
+                      }
                       <div>
                     </div>
                   </mat-card-content>
@@ -795,12 +1072,16 @@
               
               <div>
                 <div class="ground-div2">
-                  <div *ngIf="isInfo===false" class="mat-button.mat-small">
+                  @if (isInfo===false) {
+                    <div class="mat-button.mat-small">
                     <button mat-icon-button (click)="onClick4()" class="icon whiteText"><mat-icon class="icon whiteButton">expand_less</mat-icon></button>
                   </div>
-                  <div class="icon" *ngIf="isInfo===true" class="mat-button.mat-small">
+                    }
+                  @if (isInfo===true) {
+                  <div class="icon" class="mat-button.mat-small">
                     <button mat-icon-button (click)="onClick5()" class="whiteText"><mat-icon class="whiteButton">expand_more</mat-icon></button>
                   </div>
+                  }
                 </div>
                 <div class="ground-div2" [ngClass]="isInfo ? 'hide-division':'show-division'">
                     <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
@@ -810,11 +1091,13 @@
               <div class="child2">
               <mat-card appearance="outlined">
               <div [ngClass]="isPicture ? 'show-division':'hide-division'">
-                <div *ngFor="let picture of pictures">
+                @for (picture of pictures; track picture) {
+  <div>
                   <mat-card appearance="outlined" class=mat-elevation-z8>
                     <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
                   </mat-card>
                 </div>
+}
               </div>
               </mat-card>
            
@@ -825,12 +1108,14 @@
                   <div class="divisionTitle">{{externalLinksTitle}}</div>
                     <hr>
                </div>
-                <div *ngFor="let externalLink of externalLinks">
+                @for (externalLink of externalLinks; track externalLink) {
+                  <div>
                   <div class="externalLinksText">
                       <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
-                    </div>
-                    <br>
+                  </div>
+                   <br>
                 </div>
+                  }
                 </mat-card-content>
                 <div></div>
                 <mat-card-content class="header-spacer" [ngClass]="isWikis ? 'show-division':'hide-division'">
@@ -838,12 +1123,14 @@
                 <div class="divisionTitle">Wikis</div>
                     <hr>
                </div>
-                <div *ngFor="let wiki of wikis">
+                @for (wiki of wikis; track wiki) {
+                  <div>
                     <div class="externalLinksText" >
                       <span>{{wiki.site}}: </span><a href="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
                     </div>
                     <br>
                 </div>
+                }
                 </mat-card-content>
               </mat-card>
              </div>
@@ -851,12 +1138,14 @@
                 <mat-card appearance="outlined" class="mat-elevation-z8 ">
                   <div class="itemSelected-mat-card">
                     <mat-card-content>
+
+
                     <div class="selectedListTitle">{{formerVisitsTitle}}</div>
                     <br>
                     <div>
                         <div *ngFor="let selectedItem of selectedItemsList">
                           <div>
-                          <span *ngIf="selectedItem" class="selectedItemText">
+                           <span *ngIf="selectedItem" class="selectedItemText">
                               {{selectedItem.label}}&nbsp;
                             <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon  [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                           </span>

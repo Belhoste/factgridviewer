@@ -144,6 +144,7 @@ html, body {
   background-color: rgb(250, 246, 239);
   margin: 0;
   //font-family: Cantarell, "Helvetica Neue", sans-serif;
+  width: 100%;
 }
 
 /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
@@ -224,6 +225,14 @@ background-color: white ;
   line-height: 25px;
 }
 
+.search-center {  //style for the links in the search components
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom:10px;
+}
+
+
 
 .referenceProperty {  //style for the property labels of references
   font-size:14 px;
@@ -269,17 +278,63 @@ background-color: white ;
   word-wrap: break-word;
 }
 
+
+@mixin title() {
+
+  padding-bottom: 5px;
+  line-height: 30px;
+}
+
+
 .divisionTitle {  //size and color of the subtitles
   color: #AD1457;
   font-size: 2rem;
   font-weight: 100;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  @include title();
   margin-left: auto;
- // margin-bottom:10px;
-  line-height: 30px;
-  //height: 60px;
+  padding-top: 5px;
+  line-height: 50px;
 }
+
+.bigTitle {  //size and color of the title of the page of specific projects
+   padding-top: 20px;
+    padding-bottom: 50px;
+  color:#3F51B5;
+   font-size: 3rem;
+  font-weight: 150;
+  @include title();
+  display: flex;
+  justify-content: center;
+}
+
+.FactGridTitle {  //size and color of the title of the search page of FactGrid
+   padding-top: 40px;
+    padding-bottom: 50px;
+  color:#3F51B5;
+   font-size: 4rem;
+  font-weight: 150;
+  @include title();
+  display: flex;
+  justify-content: center;
+}
+n
+.subTitle {   // subtitle of the FactGrid title
+   padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  padding-bottom:30px;
+}
+
+
+@media (max-width: 959.98px) {  //change the size of the title for small screen
+  .bigTitle{  //big title of the bibliography of HU
+  font-size:2.5rem;
+  line-height: 45px;
+  }
+}
+
+
+
 
 @media (max-width: 959.98px) {  //change the size of the subtitles for small screen
 .divisionTitle {  //size and color of the subtitles 
@@ -339,6 +394,22 @@ background-color: white ;
   font-size: 16px;
 }
 
+.search-itemSelected-mat-card { //style the card of selected items
+  height: fit-content;
+  width: 600px;
+  background-color: rgb(99, 98, 98) !important;
+  margin-bottom: 4px;
+  margin-right: 2px;
+  margin-left: 2px;
+}
+
+@media (max-width: 959.98px) {  //change the size of the subsubtitles for small screen
+.search-itemSelected-mat-card {  //size and color of the subsubtitles
+   width: 300px;
+}
+}
+
+
 .whiteText {
   color:white;
   }
@@ -353,4 +424,15 @@ background-color: white ;
 .basicSize {
     font-size: 16px;
 }
+
+.spinner {
+  background-color: rgb(250, 245, 236);
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%); 
+}
+
 

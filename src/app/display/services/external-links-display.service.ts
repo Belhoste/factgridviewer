@@ -7,21 +7,25 @@ export class ExternalLinksDisplayService {  // external links
 
   constructor() { }
 
- /* setExternalLinksDisplay2(item, externalLinks){  // in case external links are automatically constructed
+  
+
+ setExternalLinksDisplay(item, externalLinks){  // external links automatically constructed
      let p=Object.keys(item[0].claims)
-        for (let i = 0; i < p.length; i++) {
+       for (let i = 0; i < p.length; i++) {
           if(item[0].claims[p[i]].datatype !== "external-id"){ continue ; }
           item[1].splice(item[1].indexOf(p[i]), 1);
           this.setUrl(item, p[i]);
-     //       item[0].claims[p[i]].url = item[0].claims[p[i]][0].mainsnak.datavalue.value ;
-         // console.log(item[0].claims[p[i]].url)
             externalLinks.push(item[0].claims[p[i]])
-            }
+            } 
              return externalLinks
           }
 
   setUrl(item, p){
-  item[0].claims[p].url = item[0].claims[p][0].mainsnak.datavalue.value ;
+
+  if (item[0].claims[p].externalLink !== undefined) {
+
+  item[0].claims[p].url =item[0].claims[p].externalLink.replace("$1",item[0].claims[p][0].mainsnak.datavalue.value); }
+
   if (item[0].claims.P76 !== undefined) { // id GND
    item[0].claims.P76.url = "https://explore.gnd.network/gnd/" + item[0].claims.P76[0].mainsnak.datavalue.value;
      };
@@ -29,7 +33,6 @@ export class ExternalLinksDisplayService {  // external links
   item[0].claims.P368.url = 'http://gateway-bayern.de/VD16+' + item[0].claims.P368[0].mainsnak.datavalue.value;
      };
   if (item[0].claims.P369 !== undefined) { //id VD17
- // item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27$1%27:'
  item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27:'
     + item[0].claims.P369[0].mainsnak.datavalue.value +"%27";
       };
@@ -41,18 +44,24 @@ export class ExternalLinksDisplayService {  // external links
       let municipality = item[0].claims.P650[0].mainsnak.datavalue.value.slice(2,5);
       let parish = item[0].claims.P650[0].mainsnak.datavalue.value.slice(5,7);
       let es = item[0].claims.P650[0].mainsnak.datavalue.value.slice(7,9);
-      item[0].claims.P650.url = 'https://www.ine.es/nomen2/inicio_a.do?accion=busquedaAvanzada&inicio=inicio_a&subaccion=&botonBusquedaAvanzada=Consultar+selecci%C3%B3n&numPag=0&ordenAnios=ASC&comunidad=00&entidad_amb=no&poblacion_amb=T&poblacion_op=%3D&poblacion_txt=&denominacion_op=like&denominacion_txt=&codProv='+province+'&codMuni='+municipality+'&codEC='+parish+'&codES='+es+'&codNUC=00'
+       if (item[0].claims.P650.externalLink !== undefined) {
+        item[0].claims.P650.url = item[0].claims.P650.externalLink.replace("$1",province);
+        item[0].claims.P650.url =   item[0].claims.P650.url.replace("$2",municipality);
+        item[0].claims.P650.url =  item[0].claims.P650.url.replace("$3",parish);
+        item[0].claims.P650.url =  item[0].claims.P650.url.replace("$4",es);
+        item[0].claims.P650.url =  item[0].claims.P650.url.replace("$5","00");
+        }
       };
    if (item[0].claims.P882 !== undefined) { // Deusches Rechtswörterbuch
     item[0].claims.P882.url = 'https://drw-www.adw.uni-heidelberg.de/drw-cgi/zeige?index=lemmata&term=' + item[0].claims.P882[0].mainsnak.datavalue.value +'&darstellung=V'
       };
     }
   }
-  */
 
+  /*
   
-
  setExternalLinksDisplay(item, externalLinks) {
+     console.log(item[1]);
     if (item[0].claims.P146 !== undefined) {  //Online information
       item[1].splice(item[1].indexOf("P146"), 1);
       item[0].claims.P146.url = item[0].claims.P146[0].mainsnak.datavalue.value;
@@ -92,13 +101,13 @@ export class ExternalLinksDisplayService {  // external links
       externalLinks.push(item[0].claims.P346)
     };
 
-    if (item[0].claims.P367 !== undefined) { // id BnF
+    if (item[0].claims.P367 !== undefined) { // BnF ID
       item[1].splice(item[1].indexOf("P367"), 1);
       item[0].claims.P367.url = "https://catalogue.bnf.fr/ark:/12148/cb" + item[0].claims.P367[0].mainsnak.datavalue.value;
       externalLinks.push(item[0].claims.P367)
     };
 
-    if (item[0].claims.P366 !== undefined) { //id IRef
+    if (item[0].claims.P366 !== undefined) { // IRef ID
       item[1].splice(item[1].indexOf("P366"), 1);
       item[0].claims.P366.url = "https://www.idref.fr/" + item[0].claims.P366[0].mainsnak.datavalue.value;
       externalLinks.push(item[0].claims.P366)
@@ -106,6 +115,7 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P418 !== undefined) { // id Geonames
       item[1].splice(item[1].indexOf("P418"), 1);
+        console.log(item[1]);
       item[0].claims.P418.url = "https://www.geonames.org/" + item[0].claims.P418[0].mainsnak.datavalue.value;
       externalLinks.push(item[0].claims.P418)
     };
@@ -167,15 +177,22 @@ export class ExternalLinksDisplayService {  // external links
       externalLinks.push(item[0].claims.P462)
     };
 
-    if (item[0].claims.P601 !== undefined) { // 	WIAG ID
-      item[1].splice(item[1].indexOf("P601"), 1);
-      item[0].claims.P601.url = 'https://wiag-vocab.adw-goe.de/id/' + item[0].claims.P601[0].mainsnak.datavalue.value
-      externalLinks.push(item[0].claims.P601)
+
+    if (item[0].claims.P525 !== undefined) { // 	Google Books ID
+      item[1].splice(item[1].indexOf("P525"), 1);
+      item[0].claims.P525.url = 'https://books.google.de/books?id=' + item[0].claims.P525[0].mainsnak.datavalue.value +'&printsec=frontcover&source=gbs_ge_summary_r&cad=0#v=onepage&q&f=false'
+      externalLinks.push(item[0].claims.P525)
+    };
+
+     if (item[0].claims.P526 !== undefined) { // 	MDZ ID
+      item[1].splice(item[1].indexOf("P526"), 1);
+      item[0].claims.P526.url = 'https://reader.digitale-sammlungen.de/resolve/display/bsb' + item[0].claims.P526[0].mainsnak.datavalue.value +'.html'
+      externalLinks.push(item[0].claims.P526)
     };
 
     if (item[0].claims.P585 !== undefined) { // ESTC ID
       item[1].splice(item[1].indexOf("P585"), 1);
-      item[0].claims.P585.url = 'http://estc.bl.uk/' + item[0].claims.P585[0].mainsnak.datavalue.value
+      item[0].claims.P585.url = 'http://estc.bl.uk/' + item[0].claims.P585[0].mainsnak.datavalue.value 
       externalLinks.push(item[0].claims.P585)
     };
 
@@ -233,7 +250,7 @@ export class ExternalLinksDisplayService {  // external links
 
     if (item[0].claims.P655 !== undefined) { // RISM ID
       item[1].splice(item[1].indexOf("P655"), 1);
-      item[0].claims.P655.url = 'https://opac.rism.info/search?id=' + item[0].claims.P655[0].mainsnak.datavalue.value
+      item[0].claims.P655.url = 'https://rism.online/' + item[0].claims.P655[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P655);
     };
 
@@ -565,7 +582,21 @@ export class ExternalLinksDisplayService {  // external links
       item[0].claims.P980.url = 'http://iconclass.org/' + item[0].claims.P980[0].mainsnak.datavalue.value
       externalLinks.push(item[0].claims.P980);
     };
+    if (item[0].claims.P998 !== undefined) { //Francke Foundations Bio ID
+      item[1].splice(item[1].indexOf("P998"), 1);
+      item[0].claims.P998.url = 'https://digital.francke-halle.de/fshal/name/view/' + item[0].claims.P998[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P998);
+    };
+       if (item[0].claims.P1002 !== undefined) { //Gallica ID (French book)
+      item[1].splice(item[1].indexOf("P1002"), 1);
+      item[0].claims.P1002.url = 'https://gallica.bnf.fr/ark:/12148/' + item[0].claims.P1002[0].mainsnak.datavalue.value
+      externalLinks.push(item[0].claims.P1002);
+    };
+    console.log(item[1]);
     return externalLinks
   };
+  
+  
   }
+  */
 

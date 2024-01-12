@@ -11,58 +11,46 @@ import { BackListService } from './back-list.service';
 import { TypologyService } from './typology.service';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class CreateItemToDisplayService {
 
-  private subject : BehaviorSubject <any> = new BehaviorSubject(null);
+ // private subject : BehaviorSubject <any> = new BehaviorSubject(null); // useless
 
   constructor(private setLanguage:SetLanguageService, private details:DetailsService, private setItem:SetItemToDisplayService, 
     private addPropertyDetails:PropertyDetailsService, private addItemDetails:ItemDetailsService, private roleOfObject:RoleOfObjectRenderingService, private backList:BackListService, private typology:TypologyService) { }
 
-    
+
     createItemToDisplay(re, selectedLang) {
-  //    let values = Object.values(re.claims);
-      let propertyIds = Object.keys(re.claims);
-      let u;
+      let itemProperties = Object.keys(re.claims); // number of properties in the mainsnak
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
-          
-          map(res =>{   
-          let qualifierProperties=[];
-          let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang); 
-          this.addItemDetails.addSidelinksDetails(re);
-          let referenceProperties = this.details.getReferenceProperties(re);
-          this.addPropertyDetails.addClaimPropertyDetails(propertiesDetails,re, propertyIds);
-          this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails,re, propertyIds)[0];
-          qualifierProperties = this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails,re, propertyIds)[1];
-          this.addPropertyDetails.addQualifier2PropertyDetails(propertiesDetails,re, propertyIds)[1];
-          this.addPropertyDetails.addReferencePropertyDetails(propertiesDetails, re, propertyIds);
-          this.addPropertyDetails.addReference2PropertyDetails(propertiesDetails, re, propertyIds);
+        map(res =>{       
+          let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang);
+          let qualifierProperties = this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, itemProperties)[1];  // number of properties for the qualifiers
+          let referenceProperties = this.details.getReferenceProperties(re);  // number of properties of the references
+          this.addItemDetails.addSidelinksDetails(re);  // useless?
+          this.addPropertyDetails.addClaimPropertyDetails(propertiesDetails, re, itemProperties);  // add the properties to the statements
+ //       this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, itemProperties)[0];  // useless?
+          this.addPropertyDetails.addQualifier2PropertyDetails(propertiesDetails, re, itemProperties)[1];
+          this.addPropertyDetails.addReferencePropertyDetails(propertiesDetails, re, itemProperties);
+          this.addPropertyDetails.addReference2PropertyDetails(propertiesDetails, re, itemProperties);
           let itemsDetails = this.setLanguage.item2(res.items,selectedLang) ;
-    //      this.addItemDetails.addLongestWordLength(re);
-          this.addItemDetails.addClaimItemDetails(itemsDetails, re, propertyIds, selectedLang);// selected item with all the properties and items (with their labels and descriptions) of the mainsnaks
-          this.addItemDetails.addQualifierItemDetails(itemsDetails, re, propertyIds, selectedLang);
+    //      this.addItemDetails.addLongestWordLength(re);   // useless?
+          this.addItemDetails.addClaimItemDetails(itemsDetails, re, itemProperties, selectedLang);// selected item with all the properties and items (with their labels and descriptions) of the mainsnaks
+         
+          this.addItemDetails.addQualifierItemDetails(itemsDetails, re, itemProperties, selectedLang);
       //   this.roleOfObject.roleOfObject(re);  //failed
-          this.addItemDetails.addReferenceItemDetails(itemsDetails, re, propertyIds, selectedLang); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
-          u= this.addItemDetails.addReference2ItemDetails(itemsDetails, re, propertyIds);
-          return [u, propertyIds, 
-     //       backList, 
-            qualifierProperties, referenceProperties]     
+          this.addItemDetails.addReferenceItemDetails(itemsDetails, re, itemProperties, selectedLang); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
+          let item = this.addItemDetails.addReference2ItemDetails(itemsDetails, re, itemProperties);
+          return [item, itemProperties, qualifierProperties, referenceProperties]     
             }
           )
-          
         )
-        tap(res =>console.log(res));
-   //    observedItem.subscribe(res =>console.log(res));
         return observedItem
-      }
-
-/*    createListToDisplay(re, selectedLang){
-       let observedList 
-    }
-*/
+     }
 }

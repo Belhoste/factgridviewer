@@ -49,19 +49,25 @@ return c
 item2(res,lang) {//create an array of items with id, label and description in the selected language for the properties and items in the statements
   let arr = []; 
   if (res === undefined){ res = []};
-  for (let i = 0; i < res.length; i++) { 
+  
+  for (let i = 0; i < res.length; i++) {
     let aliases = [];
     let propertiesLang=this.changeLang(lang,res[i]);
     aliases = this.aliasPush(propertiesLang[4]);
-   if (propertiesLang[0] !== undefined && propertiesLang[2] ===undefined && propertiesLang[4] ===undefined) {arr.push({ id: res[i].id, label: propertiesLang[1] })}
-   else if (propertiesLang[0] !== undefined && propertiesLang[2] !==undefined && propertiesLang[4] !==undefined) {arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3], aliases: aliases })} 
-   else if (propertiesLang[0] !== undefined && propertiesLang[2] !==undefined && propertiesLang[4] ===undefined) {arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3] })}
-   else if (propertiesLang[0] !== undefined && propertiesLang[2] ===undefined && propertiesLang[4] !==undefined) {arr.push({ id: res[i].id, label: propertiesLang[1], aliases: aliases })}
-   else if (propertiesLang[0] === undefined && res[i].descriptions.en ===undefined && res[i].aliases.en ===undefined) {arr.push({ id: res[i].id, label: res[i].labels.en.value })}
-   else if (propertiesLang[0] === undefined && res[i].descriptions.en !== undefined && res[i].aliases.en !==undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, aliases: aliases })}	 
-   else if (propertiesLang[0] === undefined && res[i].descriptions.en ===undefined && res[i].aliases.en !==undefined) {arr.push({ id: res[i].id, label: res[i].labels.en.value, aliases: aliases })}
-   else if (propertiesLang[0] === undefined && res[i].descriptions.en !== undefined && res[i].aliases.en ===undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value })}	 
-   };
+    let externalLinkValue: string;
+    if(res[i].datatype = "external-id") { if (res[i].claims.P236 !== undefined) {
+     externalLinkValue = res[i].claims.P236[0].mainsnak.datavalue.value  } }
+
+   if (propertiesLang[0] !== undefined && propertiesLang[2] ===undefined && propertiesLang[4] ===undefined) {arr.push({ id: res[i].id, label: propertiesLang[1], externalLink: externalLinkValue  })}
+   else if (propertiesLang[0] !== undefined && propertiesLang[2] !==undefined && propertiesLang[4] !==undefined) {arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3], aliases: aliases, externalLink: externalLinkValue })} 
+   else if (propertiesLang[0] !== undefined && propertiesLang[2] !==undefined && propertiesLang[4] ===undefined) {arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3], externalLink: externalLinkValue })}
+   else if (propertiesLang[0] !== undefined && propertiesLang[2] ===undefined && propertiesLang[4] !==undefined) {arr.push({ id: res[i].id, label: propertiesLang[1], aliases: aliases, externalLink: externalLinkValue })}
+   else if (propertiesLang[0] === undefined && res[i].descriptions.en ===undefined && res[i].aliases.en ===undefined) {arr.push({ id: res[i].id, label: res[i].labels.en.value, externalLink: externalLinkValue })}
+   else if (propertiesLang[0] === undefined && res[i].descriptions.en !== undefined && res[i].aliases.en !==undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, aliases: aliases, externalLink: externalLinkValue })}	 
+   else if (propertiesLang[0] === undefined && res[i].descriptions.en ===undefined && res[i].aliases.en !==undefined) {arr.push({ id: res[i].id, label: res[i].labels.en.value, aliases: aliases, externalLink: externalLinkValue })}
+   else if (propertiesLang[0] === undefined && res[i].descriptions.en !== undefined && res[i].aliases.en ===undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, externalLink: externalLinkValue })}	
+  };
+  
   return arr
  }
 

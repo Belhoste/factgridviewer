@@ -8,19 +8,12 @@ import { HttpClient} from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { SlideUpAnimation } from './slide-up-animation';
-import { RouterLink, RouterModule } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
-
-export interface Lang {
-  name: string; 
-  code: string; }
-
-
 
 @Component({
     selector: 'app-root',
@@ -28,31 +21,21 @@ export interface Lang {
     styleUrls: ['./app.component.scss'],
     animations: [SlideUpAnimation],
     standalone: true,
-    imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, NgFor, NgIf, RouterModule, RouterLink ]
+    imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, NgFor, NgIf, RouterOutlet]
 })
-
-
 export class AppComponent implements OnInit
 //, OnDestroy 
 {
 
-  langs:Lang[] = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, 
+  langs = [{name:'English',code:"en"},{name:'German',code:"de"},{name:'French',code:"fr"}, {name:'Spanish',code:"es"}, 
            {name:'Italian',code:"it"}, {name:'Hungarian',code:"hu"}, {name:'Swedish',code:"se"}];//list of the languages
 
-
-  specialPages = [ {name:'Harmonia Universalis', address:"harmonia_universalis"}, {name:'Paris', address:"paris"} ] ;
-
   researchFields:any[] = [{name:'all', id:"all"},{name:'Illuminati',id:"Q10677"}, {name:'student corporations', id:"Q28115"}, {name:'animal magnetism',id:"Q172203"}, {name:'freemasonry', id:"Q10678"},
-                          {name:'prose fiction', id:"Q195135"}, {name:'Paris',id:"Q10441"}, {name:'Harmonia Universalis',id:"Q99677"}]; //list of the research fields
+                          {name:'prose fiction', id:"Q195135"}]; //list of the research fields
 
-  selectedLang:string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
-
-  selectedPage = (sessionStorage['selectedPage'] ===undefined)? JSON.stringify([{ name:'FactGrid', address:"" }]) : sessionStorage['selectedPage']; //initialization of the storage of the selected page (FactGrid)
-
+  selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
 
   selectedItems:any[] = []; //initialization of the array of selected items
-
-  selectedParisItems: any[] = [];  //initialization of the array of selected items on Paris
 
   selectedResearchField: string = localStorage['selectedResearchField']; //storage of the selected research field
 
@@ -71,8 +54,6 @@ export class AppComponent implements OnInit
  public isDown: boolean = true;
  //state:string = 'down';
 
-   u:string;
-
   labels
   items = [];
   newItem;
@@ -81,11 +62,15 @@ export class AppComponent implements OnInit
 /*private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
 private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
 private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
-private getUrlSuffix= '&format=json&origin=*' ; */
+private getUrlSuffix= '&format=json&origin=*' ; 
 
+  constructor( 
+  private changeDetector: ChangeDetectorRef, 
+  private http: HttpClient, 
+  private request:RequestService, 
+  private setLanguage:SetLanguageService) 
+  {}*/
 
-  constructor( ){} 
-  
   ngOnInit(): void {
 
     if (localStorage['selectedLang']===undefined) {
@@ -99,31 +84,18 @@ private getUrlSuffix= '&format=json&origin=*' ; */
     if (localStorage['selectedResearchField']===undefined){  //initialization of the storage of the research field
       localStorage.setItem("selectedResearchField", "all");
     }
-
-    if (localStorage['selectedParisItems']===undefined){    //initialization of the storage of selected items
-      localStorage.setItem("selectedParisItems", JSON.stringify([{ value: {id: "Q152233"}, label:"FactGrid" }]));
-    }
-
   }
-
-   
   
   langSetting(lang){
     if (lang !== undefined) {
-       this.selectedLang = lang.code;
-    }
-    localStorage['selectedLang'] = this.selectedLang; 
-     window.location.reload();
+    this.selectedLang = lang.code; }
+    localStorage['selectedLang'] = this.selectedLang;
+    window.location.reload();
     }
 
    researchFieldSelect(researchField){
-     if (researchField === undefined) { this.selectedResearchField = "all" };
-     if (researchField !== undefined) { this.selectedResearchField = researchField.id; };
-  //   console.log(researchField.id);
+     if (researchField === undefined) {this.selectedResearchField = "all"};
+     if (researchField !== undefined) {this.selectedResearchField = researchField.id; };
      localStorage['selectedResearchField'] = this.selectedResearchField;
-   //   if(this.selectedResearchField = "Q10441") { this.router.navigate(['harmonia_universalis']) }
- 
-
        }
-
 }

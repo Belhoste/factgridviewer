@@ -13,8 +13,6 @@ import * as Leaflet from 'leaflet';
 })
 
 export class MapComponent implements OnInit {
-
- //@Input() mapZoom:number;
   
   latitude:string;
   longitude: string;
@@ -54,10 +52,5 @@ export class MapComponent implements OnInit {
    ngOnDestroy(): void {
     
    }
-  
- 
- 
- 
- 
  
 }

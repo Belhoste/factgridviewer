@@ -22,7 +22,8 @@ const routes: Routes = [
   children: [{ path: ':lat/:lng/:z', component:MapComponent}
   ]
   },
-  { path: 'paris', component:ParisSearchComponent }
+  { path: 'paris', loadComponent: () => import('./paris-search/paris-search.component').then(mod => mod.ParisSearchComponent) },
+  { path: 'harmonia_universalis', loadComponent: () => import('./harmonia-universalis/harmonia-universalis.component').then(mod => mod.HarmoniaUniversalisComponent) }
 
 ]
 

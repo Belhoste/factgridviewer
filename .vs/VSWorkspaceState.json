@@ -1,6 +1,15 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\harmonia-universalis",
+    "\\src\\app\\harmonia-universalis\\services",
+    "\\src\\app\\paris-search",
+    "\\src\\app\\paris-search\\services",
+    "\\src\\app\\search",
+    "\\src\\app\\services"
   ],
+  "SelectedNode": "\\src\\app\\display",
   "PreviewInSolutionExplorer": false
 }

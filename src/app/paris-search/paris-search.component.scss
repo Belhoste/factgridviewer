@@ -1,0 +1,46 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.search-center {  
+  display: flex;
+  justify-content: center;
+}
+
+
+.search-center2 {
+  margin-top:40px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-label { // style of the labels of the items
+  font-weight: bold;
+}
+
+.search-itemSelected { // put a margin on top of the box of selected items
+  margin-top: 50px;
+}
+
+
+
+.selectedItemSize {
+   font-size: 14px;
+}

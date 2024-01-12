@@ -55,7 +55,6 @@ export class PersonDisplayService {
       item[1].splice(item[1].indexOf("P354"),1);
       lifeAndFamily.push(item[0].claims.P354);
     }
-
     if (item[0].claims.P77 !==undefined){ //birthday
       item[1].splice(item[1].indexOf("P77"),1);
       lifeAndFamily.push(item[0].claims.P77);
@@ -131,11 +130,14 @@ export class PersonDisplayService {
     if(item[0].claims.P83 !==undefined){ // place (residence)
       item[1].splice(item[1].indexOf("P83"),1);
        lifeAndFamily.push(item[0].claims.P83);
-       
     }
     if (item[0].claims.P296 !==undefined){ //sejour
       item[1].splice(item[1].indexOf("P296"),1);
       lifeAndFamily.push(item[0].claims.P296);
+    }
+    if (item[0].claims.P208 !==undefined){ //address
+      item[1].splice(item[1].indexOf("P208"),1);
+      lifeAndFamily.push(item[0].claims.P208);
     }
     console.log(lifeAndFamily);
   return lifeAndFamily

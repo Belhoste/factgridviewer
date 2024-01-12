@@ -99,7 +99,8 @@ requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesLi
     response7$=  this.http.get(this.baseGetURL+propertiesList7+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)}))  
     } 
     
-    result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$,response7$])
+    result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$,response7$]);
+ 
     return result
   
   }
@@ -175,11 +176,12 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
   response6$=  this.http.get(this.baseGetURL+itemsList6+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})), 
   response7$=  this.http.get(this.baseGetURL+itemsList7+this.getUrlSuffix).pipe(catchError((err)=> {return of(undefined)})) 
   } 
-  result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$, response7$])
+  result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$, response7$]);
   return result
 }
   
   searchItem(label, lang) {
+    console.log(label);
    let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
     let params = new HttpParams().set('action',"wbsearchentities")
     .set('search',label)
@@ -189,7 +191,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     .set('format',"json")
     .set('origin',"*");
    return this.http.get('https://database.factgrid.de//w/api.php', {
- //    headers: headers, 
+   //  headers: headers, 
      params: params})   
  // return this.http.get('https://www.wikidata.org//w/api.php', {params: params}) 
     }
@@ -211,7 +213,9 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
       u= this.http.get(sparql, {
         params: params}).pipe(catchError((err)=> {return of(undefined)})) 
       } 
-        return u
+   //  u.tap(res => console.log(res));
+
+      return u
        }
 
   downLoadList(sparql:string) {   

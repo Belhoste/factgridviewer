@@ -1,7 +1,5 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-
 import { environment } from './environments/environment';
 import { AppComponent } from './app/app.component';
 import { RouterModule } from '@angular/router';
@@ -26,7 +24,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
-import { ShortUrlInterceptor } from './app/short-url-interceptor.service';
+import { SparqlInterceptor } from './app/sparql-interceptor.service';
 import { HTTP_INTERCEPTORS, withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
 
 if (environment.production) {
@@ -38,7 +36,7 @@ bootstrapApplication(AppComponent, {
         importProvidersFrom(BrowserModule, FormsModule, ReactiveFormsModule, MatToolbarModule, MatSelectModule, MatInputModule, MatButtonModule, MatCardModule, MatListModule, MatDatepickerModule, MatMomentDateModule, MatGridListModule, MatIconModule, MatMenuModule, MatFormFieldModule, MatTooltipModule, MatDividerModule, MatSidenavModule, MatProgressSpinnerModule, AppRoutingModule, RouterModule),
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: ShortUrlInterceptor,
+            useClass: SparqlInterceptor,
             multi: true
         },
         {
@@ -50,7 +48,8 @@ bootstrapApplication(AppComponent, {
             }
         },
         provideHttpClient(withInterceptorsFromDi()),
-        provideAnimations()
+        provideAnimations(),
+        
     ]
 })
   .catch(err => console.error(err));

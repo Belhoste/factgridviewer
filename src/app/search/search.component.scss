@@ -6,13 +6,9 @@
  
 }
 
-.search-center {  
-  display: flex;
-  justify-content: center;
-}
 
 .search-center2 {
-  margin-top:40px;
+  margin-top:20px;
   display: flex;
   justify-content: center;
 }
@@ -39,14 +35,11 @@
   margin-top: 50px;
 }
 
-.search-itemSelected-mat-card { //style the card of selected items
-  height: fit-content;
-  width: 350px;
-  background-color: rgb(99, 98, 98) !important;
-  margin-bottom: 4px;
-  margin-right: 2px;
-  margin-left: 2px;
-}
+
+
+//style the card of selected items
+
+ 
 
 .selectedItemSize {
    font-size: 14px;

@@ -40,7 +40,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf, NgFor, NgClass, NgStyle, AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-
+import { SelectedLangService } from '../selected-lang.service';
+import {MatTabsModule} from '@angular/material/tabs';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -48,12 +50,12 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: 'display.component.html',
     styleUrls: ['./display.component.scss'],
     standalone: true,
-    imports: [MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent, SparqlDisplayComponent, ItemInfoComponent, AsyncPipe, JoinPipe, UnitPipe]
+    imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent, SparqlDisplayComponent, ItemInfoComponent, AsyncPipe, JoinPipe, UnitPipe]
 })
 
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  constructor(private router: Router, private route: ActivatedRoute, private setData: SetDataService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
+  constructor(private lang: SelectedLangService, private router: Router, private route: ActivatedRoute, private setData: SetDataService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
     private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
     private personDisplay: PersonDisplayService, private educationDisplay: EducationDisplayService, private careerDisplay: CareerDisplayService, private sociabilityDisplay: SociabilityDisplayService,
     private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript: TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sparql: SparqlService, private sanitizer: DomSanitizer, private observer: BreakpointObserver) { }
@@ -75,6 +77,14 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   urlSafe14:SafeResourceUrl;
   urlSafe15:SafeResourceUrl;
 
+
+
+// mat-table
+
+ //vdisplayedColumns: string[] = ['property', 'statement'];
+  
+
+
   // transcription
 
   transcription;
@@ -84,18 +94,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   //tree
   stemma_url: SafeResourceUrl;
   familyTree_url: SafeResourceUrl;
-  stemma: string;
 
   unsafeUrls: any[][];
   iframesNumber: any;
-  factGridQuery: string;
 
   instancesList:any[]; //
   subclassesList:any[];
   classesList:any[];
   natureOfList:any[];
   classIds:any[];
- 
 
   placeType:string ="";
 
@@ -126,25 +133,25 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   subscription6: Subscription | undefined;
   subscription7: Subscription | undefined;
 
-  selectedLang: string = (localStorage['selectedLang'] === undefined) ? "en" : localStorage['selectedLang'];
+  //selectedLang: string = (localStorage['selectedLang'] === undefined) ? "en" : localStorage['selectedLang'];
 
-  newSearch: string;
-  linkedPagesTitle: string;
-  infoPageTitle:string;
-  mainPage: string;
-  externalLinksTitle: string;
-  formerVisitsTitle: string;
-  clickToDisplay: string;
-  clickToDownload: string;
+  newSearch: string = "new search";
+  linkedPagesTitle: string = "linked pages";
+  mainPage: string = "main page";
+  externalLinksTitle: string = "External links";
+  formerVisitsTitle: string = "you have visited:";
+  factGridQuery: string = "FactGrid query";
+  clickToDisplay: string = "click to display";
+  clickToDownload: string = "click to download";
+  stemma: string = "stemma";
+
   bearingFamilyName: string;
 
   selectedItems: any[] 
 
   factGridLogo: string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
-  langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "hu" }, { lang: "it" }, { lang: "  " }];
-
-    
+  //langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "hu" }, { lang: "it" }, { lang: "  " }];
 
   item: any[];
   linkedItems: any[]; //backList
@@ -198,7 +205,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   wikiCommons: string;
 
   // arrays to display the properties
-
   headerDetail: any[];//for header
   lifeAndFamily: any[];//for persons
   education: any[];
@@ -296,8 +302,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sparqlList = [];
     this.sparqlData = [] ;
     this.sparqlSubject = "";
- //   this.isInfo = true;
- //   this.isSparql = false;
     this.trans = "";
     
     this.instancesList = [];
@@ -306,111 +310,51 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.natureOfList = [];
     this.superClass = "";
 
-    this.newSearch = "new search"
-    if (this.selectedLang === "de") { this.newSearch = "neue Suche" };
-    if (this.selectedLang === "fr") { this.newSearch = "nouvelle recherche" };
-    if (this.selectedLang === "es") { this.newSearch = "nueva búsqueda" };
-    if (this.selectedLang === "hu") { this.newSearch = "új keresés" };
-    if (this.selectedLang === "it") { this.newSearch = "nuova ricerca" };
-
-
-    this.linkedPagesTitle = "linked pages"
-    if (this.selectedLang === "de") { this.linkedPagesTitle = "verlinkte Seiten" };
-    if (this.selectedLang === "fr") { this.linkedPagesTitle = "pages liées" };
-    if (this.selectedLang === "es") { this.linkedPagesTitle = "páginas enlazadas" };
-    if (this.selectedLang === "hu") { this.linkedPagesTitle = "kapcsolódó oldalak" };
-    if (this.selectedLang === "it") { this.linkedPagesTitle = "pagine collegate" };
-
-
-    this.mainPage = "page"
-    if (this.selectedLang === "de") { this.mainPage = "HauptSeite" };
-    if (this.selectedLang === "fr") { this.mainPage = "page principale" };
-    if (this.selectedLang === "es") { this.mainPage = "página principal" };
-    if (this.selectedLang === "hu") { this.mainPage = "főoldal" };
-    if (this.selectedLang === "it") { this.mainPage = "pagina principale" };
-
-
-    this.factGridQuery = "FactGrid query"
-    if (this.selectedLang === "de") { this.factGridQuery = "FactGrid Abfrage" };
-    if (this.selectedLang === "fr") { this.factGridQuery = "Requête FactGrid" };
-    if (this.selectedLang === "es") { this.factGridQuery = "Consulta FactGrid" };
-    if (this.selectedLang === "hu") { this.factGridQuery = "FactGrid lekérdezés" };
-    if (this.selectedLang === "it") { this.factGridQuery = "Interrogazione FactGrid" };
-
-
-    this.externalLinksTitle = "External links"
-    if (this.selectedLang === "de") { this.externalLinksTitle = "Externe Links" };
-    if (this.selectedLang === "fr") { this.externalLinksTitle = "Liens externes" };
-    if (this.selectedLang === "es") { this.externalLinksTitle = "Enlaces externos" };
-    if (this.selectedLang === "hu") { this.externalLinksTitle = "Külső hivatkozások" };
-    if (this.selectedLang === "it") { this.externalLinksTitle = "Collegamenti esterni" };
-
-    this.formerVisitsTitle = "you have visited:"
-    if (this.selectedLang === "de") { this.formerVisitsTitle = "Sie haben besucht:" };
-    if (this.selectedLang === "fr") { this.formerVisitsTitle = "vous avez visité :" };
-    if (this.selectedLang === "es") { this.formerVisitsTitle = "has visitado :" };
-    if (this.selectedLang === "hu") { this.formerVisitsTitle = "meglátogatott :" };
-    if (this.selectedLang === "it") { this.formerVisitsTitle = "avete visitato :" };
-
-
-    this.clickToDisplay = "click to display"
-    if (this.selectedLang === "de") { this.clickToDisplay = "Klicken Sie zum Anzeigen" };
-    if (this.selectedLang === "fr") { this.clickToDisplay = "cliquez pour afficher" };
-    if (this.selectedLang === "es") { this.clickToDisplay = "haga clic para mostrar" };
-    if (this.selectedLang === "hu") { this.clickToDisplay = "kattintson a megtekintéshezr" };
-    if (this.selectedLang === "it") { this.clickToDisplay = "fare clic per visualizzare" };
-
-
-
-    this.clickToDownload = "click to download"
-    if (this.selectedLang === "de") { this.clickToDownload = "Klicken Sie zum Download" };
-    if (this.selectedLang === "fr") { this.clickToDownload = "cliquez pour télécharger" };
-    if (this.selectedLang === "es") { this.clickToDownload = "haga clic para descargarlo" };
-    if (this.selectedLang === "hu") { this.clickToDownload = "kattintson a letöltéshez" };
-    if (this.selectedLang === "it") { this.clickToDownload = "fare clic per scaricare" };
-
-
-    this.stemma = "Preceding_in_stemma"
-    if (this.selectedLang === "de") { this.stemma = "Stemma_aufwärts" };
-    if (this.selectedLang === "fr") { this.stemma = "Précédent_dans_le_stemma" };
-    if (this.selectedLang === "es") { this.stemma = "Precedente_en_el_stemma" };
-    if (this.selectedLang === "hu") { this.stemma = "Preceding_in_stemma" };
-    if (this.selectedLang === "it") { this.stemma = "Precedente_in_stemma" };
-
+    this.newSearch = this.lang.newSearch(this.newSearch);
+    this.linkedPagesTitle = this.lang.linkedPagesTitle(this.linkedPagesTitle);
+    this.mainPage = this.lang.mainPage(this.mainPage);
+    this.factGridQuery = this.lang.factGridQuery(this.factGridQuery);
+    this.externalLinksTitle = this.lang.externalLinksTitle(this.externalLinksTitle);
+    this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
+    this.clickToDownload = this.lang.clickToDownload(this.clickToDownload);
+    this.clickToDisplay = this.lang.clickToDisplay(this.clickToDisplay);
+    this.stemma = this.lang.stemma(this.stemma);
+    
+  
   
     this.subscription0 = this.route.paramMap.subscribe(
       params => {
         this.itemId = params.get('id'),
-        this.subscription1 = this.backList.backList(this.itemId, this.selectedLang). //handle backList
+        this.subscription1 = this.backList.backList(this.itemId, this.lang.selectedLang). //handle backList
           pipe(
             map(res => {
               if (res[0].query !== undefined) {
                 this.linkedItems = this.backListDetails.setBackList(res[0].query.pages)
               }
               if (res[0].query === undefined) {
-                if (this.selectedLang === "de") {
+                if (this.lang.selectedLang === "de") {
                   this.linkedItems = [{ id: "Q21898", label: "keine" }]
                 };
-                if (this.selectedLang === "fr") {
+                if (this.lang.selectedLang === "fr") {
                   this.linkedItems = [{ id: "Q21898", label: "aucune" }]
                 };
-                if (this.selectedLang === "en") {
+                if (this.lang.selectedLang === "en") {
                   this.linkedItems = [{ id: "Q21898", label: "none" }]
                 };
-                if (this.selectedLang === "es") {
+                if (this.lang.selectedLang === "es") {
                   this.linkedItems = [{ id: "Q21898", label: "ninguno" }]
                 };
-                if (this.selectedLang === "hu") {
+                if (this.lang.selectedLang === "hu") {
                   this.linkedItems = [{ id: "Q21898", label: "nincs" }]
                 };
-                if (this.selectedLang === "it") {
+                if (this.lang.selectedLang === "it") {
                   this.linkedItems = [{ id: "Q21898", label: "nessuno" }]
                 };
               }
             })).
           subscribe(res => { this.linkedItems }
           ),
-        this.subscription2 = this.backList.backList(this.itemId, this.selectedLang). //labels in English in the backList
+        this.subscription2 = this.backList.backList(this.itemId, this.lang.selectedLang). //labels in English in the backList
           pipe(
             map(res => {
               if (res[1].query !== undefined) {
@@ -462,10 +406,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             // }
             this.urlId = this.factGridUrl + this.id;
             if (this.item[0].claims.P48 !== undefined) {
-              //map
+            // **********************map*******************************
               this.zoom = 12;
-              let xy= this.item[0].claims.P2[0].mainsnak.datavalue.value.id  
-              if (xy == "Q16200") { this.zoom = 18 }
+              let xy= this.item[0].claims.P2[0].mainsnak.datavalue.value.id   ;
+              if (xy == "Q176131") { this.zoom = 3 } ;
+              if (xy == "Q21925") { this.zoom = 4 } ;
+              if (xy == "Q16200") { this.zoom = 18 } ;
                if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380" || xy == "Q375357") {this.zoom = 16 }
               this.coords = this.item[0].claims.P48[0].mainsnak.datavalue.value;
               this.latitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
@@ -574,11 +520,13 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
 
-            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052" || "Q20") {
+          if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052" || "Q20")
+             {
               if (natureOfIds.includes("Q8") && natureOfIds.includes("Q12")) { this.natureOf = "Q8"};
               if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
               let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
-              this.query = this.setData.sparqlToDisplay(sparqlQuery);
+              console.log(sparqlQuery);
+             if (sparqlQuery) { this.query = this.setData.sparqlToDisplay(sparqlQuery); }
               this.subscription4 = this.query?.subscribe(res => {
                 this.sparqlData = this.sparql.listFromSparql(res);
                 this.sparqlSubject = this.natureOf;
@@ -587,7 +535,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.isSparql = true;
                 }
               )
-            }
+            }  
 
            
 
@@ -763,7 +711,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.isOther = true
             };
 
-            //mainList
+            //mainList   : list containing the main data
 
             this.mainList = [];
 

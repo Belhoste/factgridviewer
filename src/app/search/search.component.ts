@@ -1,71 +1,99 @@
-
-
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms' ;
-import { debounceTime, switchMap, tap, map, filter, takeWhile } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-//import { HttpClient} from '@angular/common/http';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Observable, BehaviorSubject, combineLatest} from 'rxjs';
+import { map, switchMap, tap, debounceTime, takeWhile, filter } from 'rxjs/operators';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+//import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
-import { SlideUpAnimation} from '../slide-up-animation';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
-import { NgIf, NgFor } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { SelectedLangService } from '../selected-lang.service';
+
+
+
 
 
 @Component({
-    selector: 'app-search',
-    templateUrl: './search.component.html',
-    styleUrls: ['./search.component.scss'],
-    animations: [SlideUpAnimation],
-    standalone: true,
-    imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, NgIf, NgFor, RouterLinkActive, RouterLink, MatCardModule, MatIconModule, RouterOutlet]
+  selector: 'app-search',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+  ],
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.scss']
 })
 
-export class SearchComponent implements OnInit, OnDestroy 
-{
-  selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
-  
-  selectedResearchField: string = localStorage['selectedResearchField']; 
 
-  selectedItemsList:any[] = JSON.parse(localStorage.getItem('selectedItems'));
 
-  title = 'factgrid';
-  subtitle:string;
-  advanced_search:string;
-  projects:string;
-  fields:string;
-  formerVisitsTitle:string;
-  
-  searchInput = new FormControl();
 
- public selectedItem:Observable<any>;
+export class SearchComponent implements OnInit {
 
- public isDisplay:boolean = false;
+ constructor(
 
- public isDown: boolean = true;
+   private changeDetector: ChangeDetectorRef, 
+   private request:RequestService, 
+   private setLanguage:SetLanguageService,
+   private lang:SelectedLangService
+ ) {}
 
-  labels
-  items = [];
-  newItem;
-  itemId:string;
- 
+  //  selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
 
-private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-private getUrlSuffix= '&format=json&origin=*' ; 
-
-  constructor( 
-  private changeDetector: ChangeDetectorRef, 
-  private request:RequestService, 
-  private setLanguage:SetLanguageService) 
-  {}
-
-  ngOnInit(): void {
+    title = 'factgrid';
+    subtitle:string = "a database for historians";
+    advanced_search:string = "advanced search";
+    projects:string = "research projects";
+    fields:string = "fields of reserach";
    
-    this.subtitle = "a database for historians"
+
+    searchInput = new FormControl();
+
+    public selectedItem:Observable<any>;
+    public isDisplay:boolean = false;
+
+    data$ = new Observable<string[]>();
+    searchQuery$ = new BehaviorSubject<string>('');
+    
+    labels
+    items = [];
+    newItem;
+    itemId:string;
+
+    private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
+    private getUrlSuffix= '&format=json&origin=*' ;
+
+    formerVisitsTitle:string = "you have visited:";
+    selectedItemsList:any[] = JSON.parse(localStorage.getItem('selectedItems'));
+
+
+    ngOnInit(): void {
+
+  this.subtitle = this.lang.subtitle(this.subtitle);
+
+  this.advanced_search = this.lang.advanced_search(this.advanced_search);
+
+  this.projects = this.lang.projects(this.projects);
+
+  this.fields = this.lang.fields(this.fields);
+
+  this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
+
+   /*
+   this.subtitle = "a database for historians"
     if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
     if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
     if (this.selectedLang === "es") { this.subtitle = "una base de datos para historiadores"}
@@ -95,38 +123,34 @@ private getUrlSuffix= '&format=json&origin=*' ;
     if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"}
     if(this.selectedLang === "it") {this.formerVisitsTitle = "hai visitato :"}
 
+    */
+
 
     this.labels = this.searchInput.valueChanges   //search engine
     .pipe(
     debounceTime(400),
-    switchMap(label => this.request.searchItem(label, this.selectedLang)), 
+    switchMap(label => this.request.searchItem(label, this.lang.selectedLang)), 
     map( res => this.createList(res)),
     map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
    "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res ),
     debounceTime(200),
     switchMap(url => this.request.getItem(url)),
-    takeWhile (res => res !== undefined),
-    filter (res => res.entities !== undefined),
-    filter (res => res.entities !== null),
+  //  takeWhile (res => res !== undefined),
+    filter (res => res !== undefined),
+    filter (res => res.entities !== undefined && res.entities !==null),
+   // filter (res => res.entities !== null),
     map(res => Object.values(res.entities))
    )
     .subscribe(re => { 
-    this.items = this.setLanguage.item(re, this.selectedLang);
-    this.items = this.filterResearchField(this.items, this.selectedResearchField);
+    this.items = this.setLanguage.item(re, this.lang.selectedLang);
+  //  this.items = this.filterResearchField(this.items, this.selectedResearchField);
       this.isDisplay = true ;
       if (this.items[0].id == "Q220375") { this.isDisplay = false };
    this.changeDetector.detectChanges();
-    })
+      })
+    }
 
-  }
-
-  researchFieldSelect(researchField){
-      if (researchField === undefined) {this.selectedResearchField = "all"};
-      if (researchField !== undefined) {this.selectedResearchField = researchField.id; };
-      localStorage['selectedResearchField'] = this.selectedResearchField;
-       }
-     
-  createList(re) {  //create an url whith the elements of an array
+   createList(re) {  //create an url whith the elements of an array
     let list = "";
     let url = "";
     let arr = re.search;
@@ -140,32 +164,13 @@ private getUrlSuffix= '&format=json&origin=*' ;
     return url
     }
 
-  filterResearchField(items, researchField){        //to only get items of the selectedResearchField (=selectedItems)
-    let selectedItems = []
-      for (let i=0; i<items.length; i++){
-        if (items[i].claims.P97!==undefined){
-          for (let j=0; j<items[i].claims.P97.length; j++) {
-          let id = items[i].claims.P97[j].mainsnak.datavalue.value.id;
-            if (researchField == id){
-              selectedItems.push(items[i]);
-               }
-             }
-          }
-        if (researchField == "all" ){ selectedItems = items};
-        }
-        return selectedItems
-      }
+  addParis(re) {
+     re = "Paris, "+re;
+    // return re
+   }
 
-      uniq(arr){  //remove duplicates in an array / it is used in setPropertiesList and setItemsList
-        var seen = {};
-        arr = arr.filter(Boolean);
-        return arr.filter(function(item) {
-            return seen.hasOwnProperty(item) ? false : (seen[item] = true);
-        });
-    }
-  
-      
-     ngOnDestroy(): void {
+    ngOnDestroy(): void {
        this.labels.unsubscribe()
        }
-}
+   
+   }
