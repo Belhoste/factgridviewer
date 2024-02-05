@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { SetTimeService} from './set-time.service';
-import {FactgridSubtitlesService} from './factgrid-subtitles.service'
+import { FactgridSubtitlesService } from './factgrid-subtitles.service'
 import { QualifierDetailsService } from './qualifier-details.service';
 import { TypologyService} from './typology.service';
 import { ItemInfoService } from './item-info.service';
-import { LongestWordService  } from './longest-word.service'
+import { LongestWordService } from './longest-word.service'
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,7 @@ export class ItemDetailsService {
     //    if(re.claims[itemProperties[i]][j].mainsnak.datavalue.includes("item")) {console.log(re.claims[itemProperties[i]][j].mainsnak)};
       };
        
-      this.factgrid.setSubtitle1(re,itemProperties[i],lang);
+      this.factgrid.setSubtitle1(re,itemProperties[i],lang); // to set a subtitle
 
       if (re.claims[itemProperties[i]][j].mainsnak.datatype !== "wikibase-item") {continue}
       let number:number = j;
@@ -62,7 +62,8 @@ export class ItemDetailsService {
         if (re.claims[itemProperties[i]][j].mainsnak.datavalue.value.id === items[k].id){
          re.claims[itemProperties[i]][j].mainsnak.label = items[k].label;
           if (items[k].description !== undefined) 
-          re.claims[itemProperties[i]][j].mainsnak.description = items[k].description; 
+          re.claims[itemProperties[i]][j].mainsnak.description = items[k].description;
+            items[k].description ? (re.claims[itemProperties[i]][j].mainsnak.separator = ", ") : (re.claims[itemProperties[i]][j].mainsnak.separator = "");
           if (items[k].aliases !== undefined) 
           re.claims[itemProperties[i]][j].mainsnak.aliases = items[k].aliases;
           }
@@ -81,13 +82,14 @@ export class ItemDetailsService {
           let props = Object.keys(re.claims[itemProperties[i]][j].qualifiers);
              for  (let k=0; k<props.length; k++){
                for (let l=0; l<props[k].length; l++) {
-          //      console.log(re.claims[itemProperties[i]][j].qualifiers[props[k]][l])
-                
                  if(re.claims[itemProperties[i]][j].qualifiers[props[k]][l] === undefined){continue};
                   if(re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datatype === "time"){
+           //         console.log(re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.time)
+          //          if(re.claims[itemProperties[i]][j].qualifiers[props[k]][l] !== undefined) {
                        let value =re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.time
-                       value = value.substring(0,value.length-10);
-                        re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.date = this.setDate.setDate(value,lang);
+                      value = value.substring(0,value.length-10);
+                       re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.date = this.setDate.setDate(value,lang);
+         //          }
                        }
                   for (let m=0; m<items.length; m++){
               
@@ -96,7 +98,7 @@ export class ItemDetailsService {
                          re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.label = items[m].label;
                //         if (items[k].description !== undefined)
                         re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.description = items[m].description;
-              //          if (items[k].aliases !== undefined)
+                //       if (items[m].aliases !== undefined) {
                         re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.aliases = items[m].aliases;  
               //          this.roleOfObjectRendering(re.claims[itemProperties[i]][j].qualifiers[props[k]][l]);
                         

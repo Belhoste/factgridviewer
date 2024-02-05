@@ -170,7 +170,7 @@ return u
   }
 
 setQualifierItems(values,arr){ // create an array of the items in the qualifiers and references. It is used in setItemsList
-    arr = arr.filter(Boolean);
+      arr = arr.filter(Boolean);
       let result = [];
           for (const val of values){ 
             for (const u of val){
@@ -179,7 +179,6 @@ setQualifierItems(values,arr){ // create an array of the items in the qualifiers
                  if (u.qualifiers[arr[j]] !== undefined) {
                  for (let k=0; k<arr[j].length;k++) { 
                    if (u.qualifiers[arr[j]][k] === undefined) { continue }
-        /*            if (u.qualifiers[arr[j]][k].datavalue.value.id === undefined) { continue }*/
                      result.push(u.qualifiers[arr[j]][k].datavalue.value.id);  }         
            }
           } 

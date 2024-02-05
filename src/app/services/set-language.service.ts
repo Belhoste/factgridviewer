@@ -81,6 +81,22 @@ changeLang(lang,res) {
   if (res.labels.en !== undefined) {
   labelLang = res.labels.en;
   labelValue= res.labels.en.value; }
+  else {
+    if (res.labels.fr !== undefined ) {
+      labelLang = res.labels.fr;
+      labelValue = res.labels.fr.value;
+    } else {
+      if (res.labels.de !== undefined) {
+        labelLang = res.labels.de;
+        labelValue = res.labels.de.value;
+      } else {
+        labelLang="undefined";
+        labelValue="undefined"
+      }
+    }
+  }
+
+
    if (res.descriptions.en !== undefined) {
        descriptionLang = res.descriptions.en; 
        descriptionValue = res.descriptions.en.value;}

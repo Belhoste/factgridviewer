@@ -7,21 +7,23 @@
 
 <body>
 
- <mat-card  appearance="outlined" class=mat-elevation-z12>
-       <mat-card-content  class="cardBackground">
-        <div class="bigTitle">Paris on FactGrid</div>
-        <div></div>
-       </mat-card-content>
 
-<div>
- <div class="search-center2">
+
+
+<div class="cardBackground">
+     <div class="bigTitle">Paris on FactGrid</div>
+</div>
+
+<mat-card  appearance="outlined" class=mat-elevation-z12>
+  <mat-card-content>
+     <div class="search-center2">
         <mat-form-field>
             <input matInput placeholder="Ex. rue de la Paix" value="rue de la Paix" [formControl]="searchInput">
         </mat-form-field>
-            </div>
-  </div>
+     </div>
+    </mat-card-content>
 
-     <div class="search-center">
+    <div class="search-center">
            @if (isDisplay == true) {
                   <div class="searchListSize">
                      <div class="details">
@@ -73,12 +75,6 @@
                 </div>
             } 
       </div>
-  
-  
- 
-
-
-
  </mat-card>
 
 </body>

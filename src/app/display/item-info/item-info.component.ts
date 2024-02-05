@@ -41,8 +41,8 @@ export class ItemInfoComponent implements OnChanges {
   subInfoTitle:string = "Information on the Q-item";
   classesListTitle:string = "classes of the Q-item:"
   natureOfListTitle:string = "instance of";
-  prefix1:string = "class depending on ";
-  prefix2:string = "class with ";
+  prefix1:string = "class hierarchy: class depending on ";
+  prefix2:string = "class hierarchy: class with ";
   suffix1:string = "classes:"
 
   constructor( private lang:SelectedLangService ) {  }
@@ -133,7 +133,6 @@ export class ItemInfoComponent implements OnChanges {
       this.list4Number=this.list4.length
       if(this.list1Number + this.list2Number +this.list3Number +this.list4Number > 0) { this.isInfo = true }
 
-     console.log(this.list3Number);
       
       
     /*   if (this.list1Number < 2){

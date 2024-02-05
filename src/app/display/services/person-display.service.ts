@@ -139,7 +139,6 @@ export class PersonDisplayService {
       item[1].splice(item[1].indexOf("P208"),1);
       lifeAndFamily.push(item[0].claims.P208);
     }
-    console.log(lifeAndFamily);
   return lifeAndFamily
 
   }

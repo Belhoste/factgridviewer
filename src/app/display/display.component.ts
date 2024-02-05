@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Observable, Subscription, Subject, from, forkJoin, of, EMPTY, timer } from 'rxjs';
+import { Component, OnInit, OnDestroy,  ChangeDetectionStrategy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Observable, Subscription, Subject, BehaviorSubject, from, forkJoin, of, EMPTY, timer, combineLatest } from 'rxjs';
 import {
-  tap, takeUntil
+  switchMap, tap, takeUntil, take
 } from 'rxjs/operators';
 import { SetDataService } from '../services/set-data.service'
 import { map } from 'rxjs/operators';
@@ -32,6 +32,11 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { UnitPipe } from '../unit.pipe';
 import { JoinPipe } from '../join.pipe';
 import { ItemInfoComponent } from './item-info/item-info.component';
+import { CareerDisplayComponent } from './career-display/career-display.component';
+import { MainDisplayComponent } from './main-display/main-display.component';
+import { EducationDisplayComponent } from './education-display/education-display.component';
+import { SociabilityDisplayComponent } from './sociability-display/sociability-display.component';
+import { SourcesDisplayComponent } from './sources-display/sources-display.component';
 import { SparqlDisplayComponent } from './sparql-display.component';
 import { TextDisplayComponent } from './text-display/text-display.component';
 import { MatCardModule } from '@angular/material/card';
@@ -49,8 +54,12 @@ import { CommonModule } from '@angular/common';
     selector: 'app-display',
     templateUrl: 'display.component.html',
     styleUrls: ['./display.component.scss'],
+  //  changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent, SparqlDisplayComponent, ItemInfoComponent, AsyncPipe, JoinPipe, UnitPipe]
+    imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent, SparqlDisplayComponent, ItemInfoComponent,
+    MainDisplayComponent,
+    SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, AsyncPipe, JoinPipe, UnitPipe]      
+          
 })
 
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -78,12 +87,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   urlSafe15:SafeResourceUrl;
 
 
-
-// mat-table
-
  //vdisplayedColumns: string[] = ['property', 'statement'];
   
-
 
   // transcription
 
@@ -114,6 +119,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   subclassesListQuery:Observable<any> | undefined; //sparql query for list of subclasses
   instancesListQuery:Observable<any> | undefined; //sparql query for list of instances
   classesListQuery:Observable<any> | undefined; // sparql query for list of classes
+  infoList:Observable<any>
 
   data: Observable<any>; //for routing
   itemId; //for routing
@@ -294,6 +300,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+
   ngOnInit(): void {
 
     this.isSpinner = true ;
@@ -319,12 +326,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.clickToDownload = this.lang.clickToDownload(this.clickToDownload);
     this.clickToDisplay = this.lang.clickToDisplay(this.clickToDisplay);
     this.stemma = this.lang.stemma(this.stemma);
-    
-  
   
     this.subscription0 = this.route.paramMap.subscribe(
       params => {
+    //    console.log(params);
         this.itemId = params.get('id'),
+      //  console.log(this.itemId);
         this.subscription1 = this.backList.backList(this.itemId, this.lang.selectedLang). //handle backList
           pipe(
             map(res => {
@@ -398,15 +405,19 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.superClass = "";
             this.natureOf = this.item[0].claims.P2[0].mainsnak.datavalue.value.id;
             this.event = this.item[0].claims.P2.event;
-            this.sources = this.item[0].claims.P2.sources;
+     //       this.sources = this.item[0].claims.P2.sources;
             this.listTitle = this.item[0].claims.P2.listTitle;
             this.main = this.item[0].claims.P2.main;
-            this.mainTitle = this.item[0].claims.P2[0].mainsnak.label;
+     //       this.mainTitle = this.item[0].claims.P2[0].mainsnak.label;
             if (this.mainTitle == "Humain") {this.mainTitle = "Personne"};
+            if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id ==="Q37073" ||
+             this.item[0].claims.P2[0].mainsnak.datavalue.value.id ==="Q257052")
+                 {this.mainTitle = this.lang.activity(this.mainTitle) };
             // }
             this.urlId = this.factGridUrl + this.id;
             if (this.item[0].claims.P48 !== undefined) {
-            // **********************map*******************************
+ // ******************************** map *******************************
+
               this.zoom = 12;
               let xy= this.item[0].claims.P2[0].mainsnak.datavalue.value.id   ;
               if (xy == "Q176131") { this.zoom = 3 } ;
@@ -418,6 +429,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.longitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
               this.router.navigate([this.latitude, this.longitude, this.zoom], { relativeTo: this.route });
             }
+
+// ******************************** end of map *******************************
 
             this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
 
@@ -457,21 +470,23 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             ///person
 
-            if (this.item[0].claims.P2.person !== undefined) {
+    /*        if (this.item[0].claims.P2.person !== undefined) {
               if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
 
                 this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
                
               }
             }
+    */
 
             //person: life and family
 
-            this.lifeAndFamily = []
+           this.lifeAndFamily = []
 
             if (this.item[0].claims.P2.person !== undefined) {
               this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
             }
+     
 
             //person:education
 
@@ -506,28 +521,20 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
 
-            ///sparql queries
+          ///sparql queries
             
             this.sparqlSubject = "";
             this.sparqlData = [];
-            let natureOfIds = new Array(this.natureOfList.length);  //create an array of ids used for displaying the members or participants to an organization 
-         //   console.log(this.natureOfIds);
-            console.log(this.natureOf);
-
-            for (let i = 0; i < this.natureOfList.length; i++) {
-              natureOfIds[i] = this.natureOfList[i].item.id;
-            }
+            let natureOfIds= Array.from(this.natureOfList, (x) => x.item.id) //create an array with the ids of its classes and the superclasses of its classes in the class hierarchy
 
             if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
 
-          if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052" || "Q20")
-             {
+            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052" || "Q20") {
               if (natureOfIds.includes("Q8") && natureOfIds.includes("Q12")) { this.natureOf = "Q8"};
               if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
               let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
-              console.log(sparqlQuery);
-             if (sparqlQuery) { this.query = this.setData.sparqlToDisplay(sparqlQuery); }
-              this.subscription4 = this.query?.subscribe(res => {
+              if (sparqlQuery) {  this.query = this.setData.sparqlToDisplay(sparqlQuery); }
+              this.subscription4 = this.query?.pipe(take(1)).subscribe(res => {
                 this.sparqlData = this.sparql.listFromSparql(res);
                 this.sparqlSubject = this.natureOf;
                 if (this.sparqlData.length > 0) { 
@@ -535,9 +542,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.isSparql = true;
                 }
               )
-            }  
-
-           
+            }
 
            if (this.natureOf == "Q7") {
                 if(this.item[0].claims.P165 !==undefined){
@@ -560,19 +565,11 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                  }   
                }
 
+            this.isSparql = false;
 
-                 /*     if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
-              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
-              this.query = this.setData.sparqlToDisplay(sparqlQuery);
-              this.subscription4 = this.query?.subscribe(res => {
-                this.sparqlData = this.sparql.listFromSparql(res);
-                this.sparqlSubject = this.natureOf;
-                if (this.sparqlData.length > 0) {
-                  this.isSparql = true;
-                }
-              }
-              )
-            }*/
+               
+
+         
 
       
         ///pictures
@@ -583,15 +580,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.item[1].splice(this.item[1].indexOf("P189"), 1);
               this.pictures = this.item[0].claims.P189
             }
-
-              /*  out of use: problem of cross-origin read blocking (CORB)
-
-            if (this.item[0].claims.P188 !== undefined) { //pictures
-              if (this.item[0].claims.P188[0].picture !== undefined) {
-                this.item[1].splice(this.item[1].indexOf("P188"), 1);
-                this.pictures = this.item[0].claims.P188
-              }
-            } */
 
 
             if (this.pictures !== undefined) {
@@ -646,7 +634,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (this.item[0].claims.P2.sources !== undefined) {
               this.sourcesDisplay.setSourcesDisplay(this.item, this.sourcesList);
-              if (this.sourcesList.length > 0) { this.isSources = true };
+              if (this.sourcesList.length > 0) {
+                this.sources = this.item[0].claims.P2.sources;
+                this.isSources = true };
             }
 
             //  }
@@ -720,6 +710,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             };
 
             if (this.item[0].claims.P2 !== undefined) {
+              this.mainTitle = this.item[0].claims.P2[0].mainsnak.label;
               this.mainList = this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail,
                 this.eventDetail, this.documentDetail, this.otherClaims
               );
@@ -804,15 +795,14 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
+   
     this.subscription0.unsubscribe();
     this.subscription1.unsubscribe();
     this.subscription2.unsubscribe();
     if(this.subscription3 !==undefined){this.subscription3.unsubscribe();}
-    if (this.subscription4 !== undefined) {
-      this.subscription4.unsubscribe();
-    }
+    if (this.subscription4 !== undefined) { this.subscription4.unsubscribe(); }
     if(this.subscription5 !==undefined){this.subscription5.unsubscribe();}
     if(this.subscription6 !==undefined){this.subscription6.unsubscribe();}
-    if(this.subscription7 !==undefined){this.subscription7.unsubscribe();}
+   if(this.subscription7 !==undefined){this.subscription7.unsubscribe();}
   }
 }

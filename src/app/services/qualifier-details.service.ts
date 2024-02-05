@@ -27,9 +27,10 @@ export class QualifierDetailsService {
                 re.claims[itemProperties[i]][j].qualifiers2[k].display = [];
                 for (let l=0; l<qualifierNumbers[k];l++){
                   if (qual[l] === undefined) {continue}         
-                   let qualifier = { datatype:qual[l].datatype, id:qual[l].datavalue.value.id, label:qual[l].datavalue.value.label, description:qual[l].datavalue.value.description, unit:qual[l].datavalue.value.unit,
+                   let qualifier = { datatype:qual[l].datatype, id:qual[l].datavalue.value.id, label:qual[l].datavalue.value.label, description:qual[l].datavalue.value.description, unit:qual[l].datavalue.value.unit, separator:", ",
                    date:qual[l].datavalue.value.date, amount:qual[l].datavalue.value.amount, string:qual[l].datavalue.value, commons:"http://commons.wikimedia.org/wiki/Special:FilePath/"+qualifiersArray[k][0].datavalue.value } 
                  if (qualifier.datatype ==="commonsMedia") { qualifier.label="" };
+                 if (qualifier.description === undefined) { qualifier.separator=""};
                   re.claims[itemProperties[i]][j].qualifiers2[k].display.push(qualifier); }
               if(re.claims[itemProperties[i]][j].qualifiers2[k].id == "P820"){   //remove P277 (role of subject) when P820 (role of object) exists
                 for (let m=0; m<qualifierPropertyArray.length;m++){

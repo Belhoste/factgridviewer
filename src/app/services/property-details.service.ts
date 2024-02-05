@@ -8,8 +8,6 @@ export class PropertyDetailsService {
   constructor() { }
 
 addClaimPropertyDetails(properties, re, itemProperties){ // add labels, descriptions and aliases to the properties in the mainsnaks
-    console.log(properties);
-    console.log(re);
     for (let i=0; i<itemProperties.length; i++){
        for (let j=0; j<properties.length; j++){ 
          if (itemProperties[i] === properties[j].id){

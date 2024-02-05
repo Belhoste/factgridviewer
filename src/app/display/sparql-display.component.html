@@ -6,24 +6,24 @@
         
         <mat-card-content>
   <!----    <div class="subTitlePadding"></div>  ---->
-     <div [ngClass] = "isWorks ? 'subdivisionTitle' : 'statementProperty'">{{subTitle}}</div> 
+     <div [ngClass] = "isWorks ? 'subdivisionTitle' : 'propertyStyle'">{{subTitle}}</div> 
         <hr>
           @for (L of list; track L) {
-  <div class="details">
+          <div class="statementStyle">
             <div  class="sparql-div">
               @if (L.itemLabel.value) {
-<label>
+              <label>
                {{L.itemLabel.value}}@if (L.itemDescription) {
-<span class="description-text">, {{L.itemDescription.value}}</span>
-}@if (L.year) {
-<span class="description-text">, {{L.year.value}}</span>
-}
+                <span>, {{L.itemDescription.value}}</span>
+                }@if (L.year) {
+                  <span>, {{L.year.value}}</span>
+                  }
                 <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               </label>
-}
+              }
             </div>
             <hr>
           </div>
-}
+          }
         </mat-card-content>
       </div>

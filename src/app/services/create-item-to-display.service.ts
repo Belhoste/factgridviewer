@@ -40,6 +40,7 @@ export class CreateItemToDisplayService {
           this.addPropertyDetails.addReferencePropertyDetails(propertiesDetails, re, itemProperties);
           this.addPropertyDetails.addReference2PropertyDetails(propertiesDetails, re, itemProperties);
           let itemsDetails = this.setLanguage.item2(res.items,selectedLang) ;
+     //     if(itemsDetails[0].label === undefined) { itemsDetails[0].label = "missing label" } // useful?
     //      this.addItemDetails.addLongestWordLength(re);   // useless?
           this.addItemDetails.addClaimItemDetails(itemsDetails, re, itemProperties, selectedLang);// selected item with all the properties and items (with their labels and descriptions) of the mainsnaks
          

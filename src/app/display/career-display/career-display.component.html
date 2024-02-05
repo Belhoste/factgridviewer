@@ -1,0 +1,118 @@
+        <mat-card-content  class="cardBackground">
+                      <div class="subdivisionTitle">{{career}}</div>
+                      @for (P of careerAndActivities; track P) {
+                      <div>
+                        <div class="labelTitlePadding">
+                          <span class="propertyStyle">{{P.label}}:</span>
+                        </div>
+                        @for (M of P; track M; let isLast = $last) {
+                       <div class="statementStyle">
+                        <div class="header-spacer">
+                        <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
+                          @if (M.rank=='deprecated') {
+                          <span class="warningDeprecated">{{M.rank}}: </span>
+                          }
+                          @if (M.mainsnak.datatype ==='time') {
+                          <span>{{M.mainsnak.datavalue.value.date}}</span>
+                          }
+                          @if (M.mainsnak.datatype==='monolingualtext') {
+                          <span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
+                          }
+                          @if (M.mainsnak.datatype === 'string') {
+                          <span class="displayLayout">{{M.mainsnak.datavalue.value }}</span>
+                          }
+                          @if (M.mainsnak.datatype === 'url') {
+                          <span class="displayLayout">
+                            <a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
+                          </span>
+                          }
+                          <span>{{M.mainsnak.datavalue.value.amount}}</span>
+                          @if (M.mainsnak.datatype === 'globe-coordinate') {
+                          <span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
+                          }
+                          @if (M.mainsnak.datatype==='wikibase-item') {
+                           <span>
+                            {{M.mainsnak.label}}{{M.mainsnak.separator}}<span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
+                            <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
+                          }
+                        </div>
+                        <div class="qualifierStyle">
+                          @if (M['qualifiers-order']) {
+                            <span>
+                            @for (Q of M.qualifiers2; track Q) {
+                            <div>
+                <!--           @if (Q.remove !=='y') {
+                         <span> -->
+                                <span class="qualifierProperty"><em>&nbsp;{{Q.label}}:&nbsp;</em></span> 
+                   
+                              @for (D of Q.display; track D; let isLast = $last) { 
+                             <span>
+                                @if (D.datatype === 'time') {
+																  <span>{{D.date}}@if (!isLast) {
+																		  <span>,&nbsp;</span>
+																  }</span>
+																}
+                                @if (D.datatype==='string') {
+																  <span>{{D.string}}@if (!isLast) {
+																		  <span>,&nbsp;</span>
+																  }</span>
+																}
+                                <span>{{D.amount}}</span>
+                                @if (D.unit) {
+																  <span><em>&nbsp;({{D.unit | unit |async}})</em>&nbsp;</span>
+																  }
+                                @if (D.datatype === 'url') {
+																  <span class="displayLayout">
+                                  {{D.label}},
+                                  <a href="{{D.string}}" target="_blank">{{D.string}}</a>
+                                </span>
+																}
+                                @if (D.datatype==='wikibase-item') {
+																  <span>
+                                  {{D.label}}{{D.separator}}<span class="descriptionText">{{D.description}}&nbsp;</span>
+                                  <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon>@if (!isLast) {
+																  <span>,&nbsp;</span>
+																	}</mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
+																}
+                                @if (D.datatype==='commonsMedia') {
+																<div class="details3">
+                                  <span class>
+                                    <img src={{D.commons}}>
+                                  </span>
+                                </div>
+                                 }
+                             </span>
+                             
+																}
+                             <!--                   </span> 
+															} -->
+                            </div>
+														}
+                            </span>
+												  }
+				               </div>
+											<div>
+                          @if (M['references2']) {
+                          <div class="qualifierStyle">
+                            <span class="referenceProperty">{{M.references2[0].label}}: </span>
+                            @if (M.references2[0].value.label) {
+														 <span>{{M.references2[0].value.label}}
+                              <span class="descriptionText">{{M.references2[0].value.description}}</span>
+                              <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
+														}
+                            <span>{{M.references2[0].value.date }}</span>
+                            <span>{{M.references2[0].value.string }}</span>
+                            <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
+                          </div>
+												  }
+                          <hr>
+                        </div>
+                        </div>
+                        </div>
+												}
+                      </div>
+										 }
+        </mat-card-content>

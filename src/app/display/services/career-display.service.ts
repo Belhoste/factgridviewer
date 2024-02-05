@@ -9,7 +9,7 @@ export class CareerDisplayService {
 
   setCareerDisplay(item, careerAndActivities){
 
-    // careerAndAcitivities
+    // careerAndActivities
 
     if (item[0].claims.P164 !==undefined){ //position
       item[1].splice(item[1].indexOf("P164"),1);

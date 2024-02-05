@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { NgClass, NgFor, NgIf } from '@angular/common';
@@ -11,16 +11,19 @@ import { SelectedLangService } from '../selected-lang.service';
     templateUrl: 'sparql-display.component.html',
     styleUrls: ['sparql-display.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [MatCardModule, NgClass, NgFor, NgIf, RouterLink, MatIconModule]
 })
-export class SparqlDisplayComponent implements OnChanges {
+export class SparqlDisplayComponent implements OnChanges
+, OnDestroy
+{
  
   @Input() sparqlSubject;
   @Input() sparqlData ;
 //  @Input() instancesList;
 //  @Input() subclassesList;
   
-
+ 
   
  // selectedLang: string = (localStorage['selectedLang'] === undefined) ? "en" : localStorage['selectedLang'];
   list:any[] = [];
@@ -33,20 +36,22 @@ export class SparqlDisplayComponent implements OnChanges {
   familyNameTitle:string = "Bearing this family name:" ;
   contextTitle:string = "Present in this context:" ;
   organisationTitle:string = "Members:" ;
-  activityTitle:string = "with this activity:" ;
-  addressTitle:string ="Domiciled at this addreess:" ;
+  activityTitle:string = "With this activity:" ;
+  addressTitle:string ="Domiciled at this address:" ;
   workTitle:string = "Works:"
-
-
 
    
   constructor( private lang: SelectedLangService ) {  }
 
   ngOnChanges(changes: SimpleChanges): void {
 
+   this.isList = false;
+
     this.instancesListTitle_50 = this.lang.instancesListTitle_50(this.instancesListTitle_50);
 
     this.subclassesListTitle = this.lang.subclassesListTitle(this.subclassesListTitle);
+
+    
 
 
  /*   if (this.selectedLang === "de") { this.instancesListTitle = "Instanzen (limit: 50):"; 
@@ -154,20 +159,20 @@ export class SparqlDisplayComponent implements OnChanges {
              }     
            }
       
-
-  
-
-      console.log(this.list);
-      console.log(this.isWorks);
         
-        if (this.list[0] !==undefined){ this.isList = true };
-        if (this.list[0] === undefined) { this.isList = false };
-
-       console.log(this.isList);
+       if (this.list !==undefined && this.list[0] !==undefined){ this.isList = true };
+        if (this.list !==undefined && this.list[0] === undefined) { this.isList = false };
 
       }
 
       }
+
+      ngOnDestroy(): void {
+    this.sparqlSubject = "";
+    this.sparqlData = "";
+    this.list = [];
+      }
+
     } 
    
 

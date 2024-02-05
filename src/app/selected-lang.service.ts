@@ -93,7 +93,7 @@ export class SelectedLangService {
       return u
     }
 
- newSearch(u) {  //component display
+ newSearch(u) {  //display component
     if (this.selectedLang === "de") { u = "neue Suche" };
     if (this.selectedLang === "fr") { u = "nouvelle recherche" };
     if (this.selectedLang === "es") { u = "nueva búsqueda" };
@@ -103,7 +103,7 @@ export class SelectedLangService {
     }
 
 
- linkedPagesTitle(u) {  //component display
+ linkedPagesTitle(u) {  //display component
     if (this.selectedLang === "de") { u = "verlinkte Seiten" };
     if (this.selectedLang === "fr") { u = "pages liées" };
     if (this.selectedLang === "es") { u = "páginas enlazadas" };
@@ -123,7 +123,7 @@ export class SelectedLangService {
     }
 
 
-  factGridQuery(u)  {  //component display
+  factGridQuery(u)  {  //display component
     if (this.selectedLang === "de") { u = "FactGrid Abfrage" };
     if (this.selectedLang === "fr") { u = "Requête FactGrid" };
     if (this.selectedLang === "es") { u = "Consulta FactGrid" };
@@ -133,7 +133,7 @@ export class SelectedLangService {
     }
 
 
-  externalLinksTitle(u)  {  //component display
+  externalLinksTitle(u)  {  //display component
     if (this.selectedLang === "de") { u = "Externe Links" };
     if (this.selectedLang === "fr") { u = "Liens externes" };
     if (this.selectedLang === "es") { u = "Enlaces externos" };
@@ -142,7 +142,7 @@ export class SelectedLangService {
         return u
     }
 
-  clickToDisplay(u)  {  //component display
+  clickToDisplay(u)  {  //display component
     if (this.selectedLang === "de") { u = "Klicken Sie zum Anzeigen" };
     if (this.selectedLang === "fr") { u = "cliquez pour afficher" };
     if (this.selectedLang === "es") { u = "haga clic para mostrar" };
@@ -152,7 +152,7 @@ export class SelectedLangService {
     }
 
 
-  clickToDownload(u)  {  //component display
+  clickToDownload(u)  {  //display component
     if (this.selectedLang === "de") { u = "Klicken Sie zum Download" };
     if (this.selectedLang === "fr") { u = "cliquez pour télécharger" };
     if (this.selectedLang === "es") { u = "haga clic para descargarlo" };
@@ -162,7 +162,7 @@ export class SelectedLangService {
     }
 
 
-  stemma(u) {  //component display
+  stemma(u) {  //display component
     if (this.selectedLang === "de") { u = "Stemma_aufwärts" };
     if (this.selectedLang === "fr") { u = "Précédent_dans_le_stemma" };
     if (this.selectedLang === "es") { u = "Precedente_en_el_stemma" };
@@ -170,6 +170,16 @@ export class SelectedLangService {
     if (this.selectedLang === "it") { u = "Precedente_in_stemma" };
         return u
     }
+
+ activity(u) { // display component
+          if (this.selectedLang === "en") { u = "Activity" };
+         if (this.selectedLang === "de") { u = "Aktivität" };
+         if (this.selectedLang === "fr") { u = "Activité" };
+         if (this.selectedLang === "es") { u = "Actividad" };
+         if (this.selectedLang === "it") { u = "Attività" };
+         if (this.selectedLang === "hu") { u = "Aktivitással" };
+        return u
+   }
 
 
  instancesListTitle(u) {  // component info
@@ -180,6 +190,8 @@ export class SelectedLangService {
     if (this.selectedLang === "hu") { u = "entitások (korlát: 200):" };
        return u
     }
+
+
 
 instancesListTitle_50(u) {  // sparql-display 
     if (this.selectedLang === "de") { u = "Instanzen (Limit: 50):"; };
@@ -230,20 +242,20 @@ instancesListTitle_50(u) {  // sparql-display
     }
 
   prefix1(u) {  // component info
-    if (this.selectedLang === "de") { u = "abhängige Klasse von " };
-    if (this.selectedLang === "fr") { u = "classe dépendante de " };
-    if (this.selectedLang === "es") { u = "clase dependiente de " };
-    if (this.selectedLang === "it") { u = "classe dipendente da " };
-    if (this.selectedLang === "hu") { u = "osztály függő " };
+    if (this.selectedLang === "de") { u = "Klassenhierarchie: abhängige Klasse von " };
+    if (this.selectedLang === "fr") { u = "hiérarchie des classes: classe dépendante de " };
+    if (this.selectedLang === "es") { u = "jerarquía de clases: clase dependiente de " };
+    if (this.selectedLang === "it") { u = "gerarchia delle classe: classe dipendente da " };
+    if (this.selectedLang === "hu") { u = "osztályhierarchia: osztály függő " };
        return u
     }
 
   prefix2(u) {  // component info
-    if (this.selectedLang === "de") { u = "Klasse mit" };
-    if (this.selectedLang === "fr") { u = "classe dotée de " };
-    if (this.selectedLang === "es") { u = "clase con " };
-    if (this.selectedLang === "it") { u = "classe con " };
-    if (this.selectedLang === "hu") { u = "osztály a " };
+    if (this.selectedLang === "de") { u = "Klassenhierarchie: Klasse mit" };
+    if (this.selectedLang === "fr") { u = "hiérarchie des classes: classe dotée de " };
+    if (this.selectedLang === "es") { u = "jerarquía de clases: clase con " };
+    if (this.selectedLang === "it") { u = "gerarchia delle classe: classe con " };
+    if (this.selectedLang === "hu") { u = "osztályhierarchia: osztály a " };
        return u
     }
 
@@ -293,15 +305,14 @@ instancesListTitle_50(u) {  // sparql-display
    }
 
     activityTitle(u) { // sparql-display component
-         if (this.selectedLang === "de") { u = "mit dieser Aktivität:" };
+         if (this.selectedLang === "de") { u = "Mit dieser Aktivität:" };
          if (this.selectedLang === "fr") { u = "Ayant cette activité:" };
-         if (this.selectedLang === "es") { u = "con esta actividad:" };
-         if (this.selectedLang === "it") { u = "con questa attività:" };
-         if (this.selectedLang === "hu") { u = "ezzel az aktivitással:" };
+         if (this.selectedLang === "es") { u = "Con esta actividad:" };
+         if (this.selectedLang === "it") { u = "Con questa attività:" };
+         if (this.selectedLang === "hu") { u = "Ezzel az aktivitással:" };
         return u
    }
 
-c
    addressTitle(u) { // sparql-display component
          if (this.selectedLang === "de") { u = "An dieser Adresse wohnhaft:" };
          if (this.selectedLang === "fr") { u = "Domicilié.e.s à cette adresse:" };

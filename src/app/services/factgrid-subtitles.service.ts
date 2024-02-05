@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { SelectedLangService } from '../selected-lang.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FactgridSubtitlesService {
 
-  constructor() { }
+  constructor( private lang: SelectedLangService ) { }
+
+  //TODO: pass the lang selection to the SelectedLangService
 
   setSubtitle1(re,propertyId,lang){  //to add a subtitle with a condition on the property
   if (propertyId === "P320"){

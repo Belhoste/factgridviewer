@@ -126,4 +126,8 @@ private getUrlSuffix= '&format=json&origin=*' ; */
 
        }
 
+   linking(){
+    window.open("https://database.factgrid.de/wiki/Main_Page", '_blank')
+  }
+
 }

@@ -17,7 +17,7 @@ export class CreateCompleteItemService {
   createCompleteItem(res){
  
     let u = this.createItem.createItemToDisplay(res= this.setLanguage.item(res, this.lang.selectedLang)[0], this.lang.selectedLang);
-    this.itemInfo.infoListBuilding(res);
+    this.itemInfo.infoListBuilding(res); 
   
 
   return u

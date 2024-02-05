@@ -7,13 +7,20 @@
 
 <body>
 
+ <!--
  <mat-card  appearance="outlined" class=mat-elevation-z12>
        <mat-card-content  class="cardBackground">
         <div class="FactGridTitle">FactGrid</div>
         <div class="subTitle">{{subtitle}}</div>
-        <div></div>
        </mat-card-content>
+-->
+ <div class="cardBackground">
+        <div class="FactGridTitle">FactGrid</div>
+        <div class="subTitle">{{subtitle}}</div>
+</div>
 
+<mat-card  appearance="outlined" class=mat-elevation-z12>
+  <mat-card-content>
 <div>
  <div class="search-center2">
         <mat-form-field>
@@ -21,6 +28,7 @@
         </mat-form-field>
   </div>
   </div>
+  </mat-card-content>
 
      <div class="search-center">
            @if (isDisplay == true) {

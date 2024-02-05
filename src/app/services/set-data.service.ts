@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { SetLanguageService } from './set-language.service';
 import { RequestService } from './request.service';
 import { switchMap, map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { CreateCompleteItemService } from './create-complete-item.service';
 
 @Injectable({
@@ -14,28 +14,34 @@ export class SetDataService {
 
   constructor(private createCompleteItem:CreateCompleteItemService, private setLanguage:SetLanguageService, private request:RequestService) { }
 
+sparqlResult = new Subject(); // In  case of BehaviorSubject I have to give an initial value
+
 selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
 baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
 getUrlSuffix= '&format=json&origin=*' ; 
 	
 itemToDisplay(id){
 
+  //let sparql = this.sparql.sparqlToDisplay(id).subscribe(res => console.log(res));
+
   let labelLength:number = 0
 	let url = this.baseGetURL+id+this.getUrlSuffix;
-  let itemToDisplay = this.request.getItem(url).pipe( // get the item
+  let completeItem = this.request.getItem(url).pipe( // get the item
+            //          tap(res => console.log(res)),
                       map(res => res=Object.values(res.entities)),
-                      switchMap (res => itemToDisplay = this.createCompleteItem.createCompleteItem(res)),        
+                      switchMap (res => completeItem = this.createCompleteItem.createCompleteItem(res)),
+                      
                     );
- 
+  
    
-      return itemToDisplay
+      return completeItem
     }
 
 sparqlToDisplay(sparql){
-  let sparqlResult:Observable<any> | undefined;
+ let sparqlResult:Observable<any> | undefined;
    if(sparql.includes("item")){
     let selectedSparql = this.newSparqlAdress(sparql,this.selectedLang); //handle sparql queries 1. create the address 
-   sparqlResult = this.request.getList(selectedSparql); 
+    sparqlResult = this.request.getList(selectedSparql);
       //handle sparql queries 2. list ready to display  
   }
     return sparqlResult
