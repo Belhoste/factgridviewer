@@ -18,4 +18,8 @@ export class MainDisplayComponent {
   @Input() mainTitle;
   @Input() list;
 
+ openImage(image){ //handling click for picture (open in new tab) 
+    window.open(image);
+  }
+
 }

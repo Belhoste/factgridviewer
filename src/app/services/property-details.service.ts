@@ -40,6 +40,8 @@ addClaimPropertyDetails(properties, re, itemProperties){ // add labels, descript
                                 re.claims[itemProperties[i]][j].qualifiers[prop].description = properties[l].description;
                             if (properties[l].aliases !== undefined)
                                 re.claims[itemProperties[i]][j].qualifiers[prop].aliases = properties[l].aliases;
+                            if (properties[l].externalLink !== undefined)
+                               re.claims[itemProperties[i]][j].qualifiers[prop].externalLink = properties[l].externalLink; 
                             }  
                         }                     
                     }     
@@ -66,7 +68,9 @@ addClaimPropertyDetails(properties, re, itemProperties){ // add labels, descript
                           if (properties[l].description !== undefined)
                               qualifier2[k].description = properties[l].description;
                           if (properties[l].aliases !== undefined)
-                              qualifier2[k].aliases = properties[l].aliases;                  
+                              qualifier2[k].aliases = properties[l].aliases;
+                          if (properties[l].externalLink !== undefined)
+                              qualifier2[k].externalLink = properties[l].externalLink; 
                         
                         re.claims[itemProperties[i]][j].qualifiers2.push(qualifier2[k])
                       }        
@@ -90,8 +94,10 @@ addClaimPropertyDetails(properties, re, itemProperties){ // add labels, descript
                re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].label = properties[m].label;
               if (properties[m].description !== undefined) 
                 re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].description = properties[m].description;
-               if (properties[m].aliases !== undefined)
-              re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].aliases = properties[m].aliases; 
+              if (properties[m].aliases !== undefined)
+                re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].aliases = properties[m].aliases;
+              if (properties[m].externalLink !== undefined)
+                re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].externalLink = properties[m].externalLink;
                 } 
               }                    
             }         
@@ -115,18 +121,20 @@ addClaimPropertyDetails(properties, re, itemProperties){ // add labels, descript
                         let reference = re.claims[itemProperties[i]][j].references[k].snaks[props[r]][0]; 
                     //    let referenceItem= re.claims[itemProperties[i]][j].references[k].snaks[props[r]][0].datavalue;
                         //ici on sélectionne l'array des propriétés relatives aux références ci-dessus
-                         references2[r] = { id:undefined, label:undefined, description:undefined, aliases:undefined, 
-                                          value:{id:undefined, time:undefined, string:undefined, url:undefined, 
-                                          label:undefined, description:undefined, aliases:undefined}};   //ici on définit l'objet item reference                                                
-                          references2[r].id = reference.property;
-                          references2[r].label = reference.label
+                         references2[r] = { datatype:undefined, id:undefined, label:undefined, description:undefined, aliases:undefined
+               //          , value:{id:undefined, time:undefined, string:undefined, url:undefined, label:undefined, description:undefined, aliases:undefined}
+                         };   //ici on définit l'objet item reference                                                
+                         references2[r].datatype = reference.datatype;
+                         references2[r].id = reference.property;
+                          references2[r].label = reference.label;
                           if (reference.description !== undefined)
                               references2[r].description = reference.description;
                           if (reference.aliases !== undefined)
-                              references2[r].aliases = reference.aliases; 
-                          references2[r].value.id = reference.datavalue.value.id;
+                              references2[r].aliases = reference.aliases;
+                          if (reference.externalLink !== undefined)
+                              references2[r].externalLink = reference.externalLink; 
+                      //    references2[r].value.id = reference.datavalue.value.id;
                      //     references2[r].value.label=referenceItem.value.label;
-                     //     console.log(references2[r].value.label);
                           
                     re.claims[itemProperties[i]][j].references2.push(references2[r]); //ici je peuple references2 avec les l items
                     }

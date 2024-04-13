@@ -17,4 +17,7 @@ export class SociabilityDisplayComponent {
 @Input() sociabilityAndCulture;
 @Input() sociability;
 
+ openImage(image){ //handling click for picture (open in new tab) 
+    window.open(image);}
+
 }

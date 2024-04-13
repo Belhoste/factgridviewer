@@ -1,0 +1,234 @@
+               <mat-card-content class="cardBackground">  
+                      @if (claims.P309) {
+                      <div>
+                        <div class="iframeTitlePadding">
+                          <span class="propertyStyle">{{claims.P309.label}}:</span>
+                        </div>
+                        @if (claims.P309[0]) {
+                        <div>
+                          @if (claims.P309[0].qualifiers2) {
+                            <div>
+                             @if (claims.P309[0].qualifiers2[0].value.label) {
+                            <span class="iFrameComment"><span>{{claims.P309[0].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                            }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe1"></iframe>
+                        </div>
+                         }
+                        @if (claims.P309[1]) {
+                          <div>
+                            @if (claims.P309[1].qualifiers2) {
+                              <div>
+                                 @if (claims.P309[1].qualifiers2[0].value.label) {
+                                    <span class="iFrameComment"><span>{{claims.P309[1].qualifiers2[0].value.label}}</span></span>
+                                 }
+                              </div>
+                            }
+                            <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe2"></iframe>
+                          </div>
+                          }
+                        @if (claims.P309[2]) {
+                          <div>
+                            @if (claims.P309[2].qualifiers2) {
+                              <div>
+                                @if (claims.P309[2].qualifiers2[0].value.label) {
+                                  <span class="iFrameComment"><span>{{claims.P309[2].qualifiers2[0].value.label}}</span></span>
+                                }
+                              </div>
+                            }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe3"></iframe>
+                        </div>
+                        }
+                      </div>
+                      }
+                      @if (claims.P320) {
+										  <div>
+                        <div class="iframeTitlePadding">
+                          <span class="propertyStyle">{{claims.P320.label}}:</span>
+                        </div>
+                        @if (claims.P320[0]) {
+										    	<div>
+                           @if (claims.P320[0].qualifiers2) {
+												   <div>
+                            @if (claims.P320[0].qualifiers2[0].value.label) {
+														  <span class="iFrameComment"><span>{{claims.P679[0].qualifiers2[0].value.label}}</span></span>
+														  }
+                           </div>
+													}
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe4"></iframe>
+                        </div>
+											}
+                        @if (claims.P320[1]) {
+                      <div>
+                          @if (claims.P320[1].qualifiers2) {
+                          <div>
+                            @if (claims.P320[1].qualifiers2[0].value.label) {
+                              <span class="iFrameComment"><span>{{claims.P679[0].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe5"></iframe>
+                        </div>
+                      }
+                        @if (claims.P320[2]) {
+                      <div>
+                          @if (claims.P320[2].qualifiers2) {
+                          <div>
+                            @if (claims.P320[2].qualifiers2[0].value.label) {
+                            <span class="iFrameComment"><span>{{claims.P679[0].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe6"></iframe>
+                        </div>
+                      }
+                      </div>
+                      }
+                      @if (claims.P679) {
+                        <div class="iframeTitlePadding">
+                          <span class="propertyStyle">{{claims.P679.label}}:</span>
+                        </div>
+                        @if (claims.P679[0]) {
+                          <div>
+                          @if (claims.P679[0].qualifiers2) {
+                          <div>
+                            @if (claims.P679[0].qualifiers2[0].value.label) {
+                              <span class="iFrameComment"><span>{{claims.P679[0].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe7"></iframe>
+                        </div>
+                        }
+                        @if (claims.P679[1]) {
+                        <div>
+                          @if (claims.P679[1].qualifiers2) {
+                          <div>
+                            @if (claims.P679[1].qualifiers2[0].value.label) {
+                              <span class="iFrameComment">@if (claims.P679[1].qualifiers2) {
+                              <span>{{claims.P679[1].qualifiers2[0].value.label}}</span>
+                              }</span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe8"></iframe>
+                        </div>
+                        }
+                        @if (claims.P679[2]) {
+												 <div>
+                          @if (claims.P679[2].qualifiers2) {
+												  <div>
+                            @if (claims.P679[2].qualifiers2[0].value.label) {
+												  <span class="iFrameComment">@if (claims.P679[2].qualifiers2) {
+														  <span>{{claims.P679[2].qualifiers2[0].value.label}}</span>
+														  }</span>
+													}
+                          </div>
+													}
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe9"></iframe>
+                        </div>
+											  }
+										  }
+                      @if (claims.P693) {
+										  <div>
+                        <div class="iframeTitlePadding">
+                          <span class="propertyStyle">{{claims.P693.label}}:</span>
+                        </div>
+                        @if (claims.P693[0]) {
+                        <div>
+                          @if (claims.P693[0].qualifiers2) {
+                          <div>
+                            @if (claims.P693[0].qualifiers2[0].value.label) {
+                            <span class="iFrameComment"><span>{{claims.P693[0].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                        }
+                        <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe10"></iframe>
+                        </div>
+                        }
+                        @if (claims.P693[1]) {
+                        <div>
+                          @if (claims.P693[1].qualifiers2) {
+                          <div>
+                            @if (claims.P693[1].qualifiers2[0].value.label) {
+                            <span class="iFrameComment"><span>{{claims.P693[1].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe11"></iframe>
+                        </div>
+                        }
+                        @if (claims.P693[2]) {
+                        <div>
+                          @if (claims.P693[2].qualifiers2) {
+                          <div>
+                            @if (claims.P693[2].qualifiers2[0].value.label) {
+                            <span class="iFrameComment"><span>{{claims.P693[2].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe12"></iframe>
+                        </div>
+                        }
+                      </div>
+                      }
+                      @if (claims.P720) {
+                      <div>
+                        <div class="iframeTitlePadding">
+                          <span class="propertyStyle">{{claims.P720.label}}:</span>
+                        </div>
+                        @if (claims.P720[0]) {
+                        <div>
+                          @if (claims.P720[0].qualifiers2) {
+                          <div>
+                            @if (claims.P720[0].qualifiers2[0].value.label) {
+                              <span class="iFrameComment"><span>{{claims.P720[0].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe13"></iframe>
+                        </div>
+                        }
+                        @if (claims.P720[1]) {
+                          <div>
+                            @if (claims.P720[1].qualifiers2) {
+                            <div>
+                             @if (claims.P720[1].qualifiers2[0].value.label) {
+                               <span class="iFrameComment"><span>{{claims.P720[1].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe14"></iframe>
+                        </div>
+                        }
+                        @if (claims.P720[2]) {
+                        <div>
+                          @if (claims.P720[2].qualifiers2) {
+                          <div>
+                            @if (claims.P720[2].qualifiers2[0].value.label) {
+                              <span class="iFrameComment"><span>{{claims.P720[2].qualifiers2[0].value.label}}</span></span>
+                            }
+                          </div>
+                          }
+                          <iframe style="width: 100%; height: 100vh; border: none;"
+                                  [src]="urlSafe15"></iframe>
+                        </div>
+                        }
+                      </div>
+                      }
+                    </mat-card-content>

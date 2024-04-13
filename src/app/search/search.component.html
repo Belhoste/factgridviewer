@@ -36,11 +36,12 @@
                      <div class="details">
                       @for (item of items; track item) {
                           <div>
-                            <span class="search-label"> {{item.label}}</span>
+                            <span class="search-label">{{item.label}}&nbsp;</span>
+                            <mat-icon-button class="internalLink" [routerLink]="['/item',item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;       
                             @if (item.description) {
                             <span class="description-text">, {{item.description }}</span>
                             }
-                            <mat-icon-button class="internalLink" [routerLink]="['/item',item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                
+                                    
                             <hr>
                           </div>
                           }
@@ -64,9 +65,9 @@
                             <mat-card-content>
                              <div>
                                 @for (selectedItem of selectedItemsList; track selectedItem) {
-                                <div>    
+                                <div class="labelTitlePadding">    
                                     @if (selectedItem) {
-                                    <span class="selectedItemText2">
+                                    <span class="selectedItemText">
                                         {{selectedItem.label}}&nbsp;
                                         <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon class="whiteButton" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      
                                     </span>

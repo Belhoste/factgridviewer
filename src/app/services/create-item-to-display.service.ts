@@ -29,7 +29,8 @@ export class CreateItemToDisplayService {
       let observedItem = forkJoin({
         properties: this.details.setPropertiesList(re),
         items: this.details.setItemsList(re) } ).pipe(
-        map(res =>{       
+        map(res =>{
+          console.log(res.items);
           let propertiesDetails = this.setLanguage.item2(res.properties,selectedLang);
           let qualifierProperties = this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, itemProperties)[1];  // number of properties for the qualifiers
           let referenceProperties = this.details.getReferenceProperties(re);  // number of properties of the references

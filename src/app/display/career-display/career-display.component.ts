@@ -19,4 +19,7 @@ export class CareerDisplayComponent {
  @Input() careerAndActivities;
  @Input() career;
 
+ openImage(image){ //handling click for picture (open in new tab) 
+    window.open(image);}
+
 }

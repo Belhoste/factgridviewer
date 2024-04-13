@@ -56,6 +56,10 @@ setIframesDisplay(item, iframes){
       iframes.push(item[0].claims.P720);
     } 
     }
-  }
- 
 
+    setHouseNumbersQuery(res){
+      res = res.replace("item%","viewer%");
+      res = res.replace("%7D%7D",`%7D%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%7D%0A`);
+      return res
+    }
+  }

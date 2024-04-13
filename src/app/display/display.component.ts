@@ -32,12 +32,14 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { UnitPipe } from '../unit.pipe';
 import { JoinPipe } from '../join.pipe';
 import { ItemInfoComponent } from './item-info/item-info.component';
+import { HeaderDisplayComponent } from './header-display/header-display.component';
 import { CareerDisplayComponent } from './career-display/career-display.component';
 import { MainDisplayComponent } from './main-display/main-display.component';
 import { EducationDisplayComponent } from './education-display/education-display.component';
 import { SociabilityDisplayComponent } from './sociability-display/sociability-display.component';
 import { SourcesDisplayComponent } from './sources-display/sources-display.component';
-import { SparqlDisplayComponent } from './sparql-display.component';
+import { SparqlDisplayComponent } from './sparql-display/sparql-display.component';
+import { IframesDisplayComponent } from './iframes-display/iframes-display.component';
 import { TextDisplayComponent } from './text-display/text-display.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -57,8 +59,7 @@ import { CommonModule } from '@angular/common';
   //  changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent, SparqlDisplayComponent, ItemInfoComponent,
-    MainDisplayComponent,
-    SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, AsyncPipe, JoinPipe, UnitPipe]      
+    MainDisplayComponent, HeaderDisplayComponent, SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, IframesDisplayComponent, AsyncPipe, JoinPipe, UnitPipe]      
           
 })
 
@@ -160,6 +161,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   //langs = [{ lang: "en" }, { lang: "de" }, { lang: "fr" }, { lang: "es" }, { lang: "hu" }, { lang: "it" }, { lang: "  " }];
 
   item: any[];
+  claims:any //claims of the item
   linkedItems: any[]; //backList
   linkedItems2: any[];//backList2 (english)
   linkedItem: any //backList
@@ -396,37 +398,37 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isInfo = false;
           if (item !== undefined) {
             this.item = item;
+            this.claims = item[0].claims
             console.log(this.item);
+            console.log(this.claims);
             this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
 
-            if (this.item[0].claims.P2 === undefined) { alert("property P2 undefined") };
-            if (this.item[0].claims.P320 === undefined) { this.hideList() };
-            //   if (this.item[0].claims.P2 !== undefined) {
+            if (this.claims.P2 === undefined) { alert("property P2 undefined") };
+            if (this.claims.P320 === undefined) { this.hideList() };
             this.superClass = "";
-            this.natureOf = this.item[0].claims.P2[0].mainsnak.datavalue.value.id;
-            this.event = this.item[0].claims.P2.event;
-     //       this.sources = this.item[0].claims.P2.sources;
-            this.listTitle = this.item[0].claims.P2.listTitle;
-            this.main = this.item[0].claims.P2.main;
-     //       this.mainTitle = this.item[0].claims.P2[0].mainsnak.label;
+            this.natureOf = this.claims.P2[0].mainsnak.datavalue.value.id;
+            this.event = this.claims.P2.event;
+            this.listTitle = this.claims.P2.listTitle;
+            this.main = this.claims.P2.main;
             if (this.mainTitle == "Humain") {this.mainTitle = "Personne"};
-            if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id ==="Q37073" ||
-             this.item[0].claims.P2[0].mainsnak.datavalue.value.id ==="Q257052")
+            if (this.claims.P2[0].mainsnak.datavalue.value.id ==="Q37073" ||
+             this.claims.P2[0].mainsnak.datavalue.value.id ==="Q257052")
                  {this.mainTitle = this.lang.activity(this.mainTitle) };
-            // }
             this.urlId = this.factGridUrl + this.id;
-            if (this.item[0].claims.P48 !== undefined) {
- // ******************************** map *******************************
+            if (this.claims.P48 !== undefined) {
+
+// ************************************************** map ************************************
 
               this.zoom = 12;
-              let xy= this.item[0].claims.P2[0].mainsnak.datavalue.value.id   ;
+              let xy= this.claims.P2[0].mainsnak.datavalue.value.id   ;
               if (xy == "Q176131") { this.zoom = 3 } ;
               if (xy == "Q21925") { this.zoom = 4 } ;
+              if (xy == "Q21876") { this.zoom = 6 }
               if (xy == "Q16200") { this.zoom = 18 } ;
-               if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380" || xy == "Q375357") {this.zoom = 16 }
-              this.coords = this.item[0].claims.P48[0].mainsnak.datavalue.value;
-              this.latitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.latitude;
-              this.longitude = this.item[0].claims.P48[0].mainsnak.datavalue.value.longitude;
+              if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380" || xy == "Q375357") {this.zoom = 16 }
+              this.coords = this.claims.P48[0].mainsnak.datavalue.value;
+              this.latitude = this.claims.P48[0].mainsnak.datavalue.value.latitude;
+              this.longitude = this.claims.P48[0].mainsnak.datavalue.value.longitude;
               this.router.navigate([this.latitude, this.longitude, this.zoom], { relativeTo: this.route });
             }
 
@@ -454,6 +456,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.headerDetail = [];
 
             this.headerDisplay.setHeaderDisplay(this.item, this.headerDetail);
+            console.log(this.headerDetail);
 
 
             //  if (this.item[0].claims.P2 !== undefined) {
@@ -462,50 +465,38 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.locationAndSituation = [];
 
-            if (this.item[0].claims.P2.place !== undefined) {
+            if (this.claims.P2.place !== undefined) {
               this.placeDisplay.setPlaceDisplay(this.item, this.locationAndSituation);
             }
 
             if (this.locationAndSituation.length > 0) { this.isPlace = true };
 
-            ///person
-
-    /*        if (this.item[0].claims.P2.person !== undefined) {
-              if (this.item[0].claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
-
-                this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
-               
-              }
-            }
-    */
-
             //person: life and family
 
            this.lifeAndFamily = []
 
-            if (this.item[0].claims.P2.person !== undefined) {
+            if (this.claims.P2.person !== undefined) {
               this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
             }
-     
 
             //person:education
 
             this.education = [];
             this.training = "";
 
-            if (this.item[0].claims.P2.person !== undefined) {
+            if (this.claims.P2.person !== undefined) {
                this.educationDisplay.setEducationDisplay(this.item, this.education);
-               if (this.education.length > 0) { this.training = this.item[0].claims.P2.training; this.isTraining = true };
+               if (this.education.length > 0) { this.training = this.claims.P2.training; this.isTraining = true };
               }
 
             //person:career and activities
 
             this.careerAndActivities = [];
             this.career = "";
-            if (this.item[0].claims.P2.person !== undefined) {
+            if (this.claims.P2.person !== undefined) {
               this.careerDisplay.setCareerDisplay(this.item, this.careerAndActivities);
               if (this.careerAndActivities.length > 0) { 
-                this.career = this.item[0].claims.P2.career; 
+                this.career = this.claims.P2.career; 
                 this.isCareer = true };
             }
 
@@ -513,10 +504,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.sociabilityAndCulture = [];
             this.sociability = "";
-            if (this.item[0].claims.P2.person !== undefined) {
+            if (this.claims.P2.person !== undefined) {
               this.sociabilityDisplay.setSociabilityDisplay(this.item, this.sociabilityAndCulture);
               if (this.sociabilityAndCulture.length > 0) {
-                this.sociability = this.item[0].claims.P2.sociability;
+                this.sociability = this.claims.P2.sociability;
                 this.isSociability = true
               }
             }
@@ -529,9 +520,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
 
-            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q16200" || "Q173005" || "Q257052" || "Q20") {
+            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q37131" || "Q16200" || "Q173005" || "Q257052" || "Q20") {
               if (natureOfIds.includes("Q8") && natureOfIds.includes("Q12")) { this.natureOf = "Q8"};
-              if (this.natureOf == "Q12" && this.item[0].claims.P320) { this.natureOf = "" };
+              if (this.natureOf == "Q12" && this.claims.P320) { this.natureOf = "" };
               let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
               if (sparqlQuery) {  this.query = this.setData.sparqlToDisplay(sparqlQuery); }
               this.subscription4 = this.query?.pipe(take(1)).subscribe(res => {
@@ -545,15 +536,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
            if (this.natureOf == "Q7") {
-                if(this.item[0].claims.P165 !==undefined){
+                if(this.claims.P165 !==undefined){
                  for (let i = 0; i < this.item[0].claims.P165.length; i++) {
-                     if(this.item[0].claims.P165[i].mainsnak.datavalue.value.id !== "Q23190") break;
-                     if (this.item[0].claims.P165[i].mainsnak.datavalue.value.id == "Q23190") {
-                       let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].claims.P165[i].mainsnak.datavalue.value.id);
+                     if(this.claims.P165[i].mainsnak.datavalue.value.id !== "Q23190") break;
+                     if (this.claims.P165[i].mainsnak.datavalue.value.id == "Q23190") {
+                       let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.claims.P165[i].mainsnak.datavalue.value.id);
                       this.query = this.setData.sparqlToDisplay(sparqlQuery);
                       this.subscription4 = this.query?.subscribe(res => {
                       this.sparqlData = this.sparql.listFromSparql(res);
-                      this.sparqlSubject = this.item[0].claims.P165[i].mainsnak.datavalue.value.id;
+                      this.sparqlSubject = this.claims.P165[i].mainsnak.datavalue.value.id;
                     if (this.sparqlData.length > 0) {
                       this.isSparql = true;
                       }
@@ -568,19 +559,14 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.isSparql = false;
 
                
-
-         
-
-      
         ///pictures
 
             this.pictures = [];
 
             if (this.item[0].claims.P189 !== undefined) { //pictures media commons
               this.item[1].splice(this.item[1].indexOf("P189"), 1);
-              this.pictures = this.item[0].claims.P189
+              this.pictures = this.claims.P189
             }
-
 
             if (this.pictures !== undefined) {
               this.isPicture = true;
@@ -596,7 +582,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.locationAndContext = [];
 
-            if (this.item[0].claims.P2.org !== undefined) {
+            if (this.claims.P2.org !== undefined) {
               this.orgDisplay.setOrgDisplay(this.item, this.locationAndContext);
             }
 
@@ -604,7 +590,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.activityDetail = [];
 
-            if (this.item[0].claims.P2.activity !== undefined) {
+            if (this.claims.P2.activity !== undefined) {
               this.activityDisplay.setActivityDisplay(this.item, this.activityDetail);
               if (this.activityDetail.length > 0) { this.isActivity = true };
             }
@@ -613,7 +599,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.eventDetail = [];
 
-            if (this.item[0].claims.P2.event !== undefined) {
+            if (this.claims.P2.event !== undefined) {
               this.eventDisplay.setEventDisplay(this.item, this.eventDetail);
               if (this.eventDetail.length > 0) { this.isEvent = true };
 
@@ -623,7 +609,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.documentDetail = [];
 
-            if (this.item[0].claims.P2.document !== undefined) {
+            if (this.claims.P2.document !== undefined) {
               this.documentDisplay.setDocumentDisplay(this.item, this.documentDetail);
               ;
             }        
@@ -632,7 +618,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.sourcesList = [];
 
-            if (this.item[0].claims.P2.sources !== undefined) {
+            if (this.claims.P2.sources !== undefined) {
               this.sourcesDisplay.setSourcesDisplay(this.item, this.sourcesList);
               if (this.sourcesList.length > 0) {
                 this.sources = this.item[0].claims.P2.sources;
@@ -643,40 +629,44 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             ///iframes
 
+
             this.iframes = []; //list of iframes
 
-            this.iframesDisplay.setIframesDisplay(this.item, this.iframes);
+            this.iframesDisplay.setIframesDisplay(this.item, this.iframes); // to prevent display of the sparql queries and to populate the array iframe
+           // console.log(this.iframesDisplay);
+
+            console.log(this.iframes);
 
             if (this.iframes.length > 0) { this.isIframes = true };
 
-            if (this.item[0].claims.P309 !== undefined) {
-              if (this.item[0].claims.P309[0] !== undefined) {  this.urlSafe1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P309[0].mainsnak.datavalue.value);}            
-              if (this.item[0].claims.P309[1] !== undefined) {  this.urlSafe2 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P309[1].mainsnak.datavalue.value); }
-              if (this.item[0].claims.P309[2] !== undefined) { this.urlSafe3 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P309[2].mainsnak.datavalue.value);}
+            if (this.claims.P309 !== undefined) {
+              if (this.claims.P309[0] !== undefined) {  this.urlSafe1 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P309[0].mainsnak.datavalue.value);}            
+              if (this.claims.P309[1] !== undefined) {  this.urlSafe2 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P309[1].mainsnak.datavalue.value); }
+              if (this.claims.P309[2] !== undefined) { this.urlSafe3 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P309[2].mainsnak.datavalue.value);}
             }
 
-            if (this.item[0].claims.P320 !== undefined) {
-              if (this.item[0].claims.P320[0] !== undefined) {  this.urlSafe4 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[0].mainsnak.datavalue.value);}
-              if (this.item[0].claims.P320[1] !== undefined) { this.urlSafe5 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[1].mainsnak.datavalue.value);}
-              if (this.item[0].claims.P320[2] !== undefined) { this.urlSafe6 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P320[2].mainsnak.datavalue.value); }
+            if (this.claims.P320 !== undefined) {
+              if (this.claims.P320[0] !== undefined) {  this.urlSafe4 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P320[0].mainsnak.datavalue.value);}
+              if (this.claims.P320[1] !== undefined) { this.urlSafe5 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P320[1].mainsnak.datavalue.value);}
+              if (this.claims.P320[2] !== undefined) { this.urlSafe6 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P320[2].mainsnak.datavalue.value); }
             }
 
-            if (this.item[0].claims.P679 !== undefined) {
-              if (this.item[0].claims.P679[0] !== undefined) { this.urlSafe7 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[0].mainsnak.datavalue.value);}
-              if (this.item[0].claims.P679[1] !== undefined) { this.urlSafe8 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[1].mainsnak.datavalue.value); }
-              if (this.item[0].claims.P679[2] !== undefined) { this.urlSafe9 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P679[2].mainsnak.datavalue.value); }
+            if (this.claims.P679 !== undefined) {
+              if (this.item[0].claims.P679[0] !== undefined) { this.urlSafe7 = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframesDisplay.setHouseNumbersQuery(this.item[0].claims.P679[0].mainsnak.datavalue.value));}
+              if (this.item[0].claims.P679[1] !== undefined) { this.urlSafe8 = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframesDisplay.setHouseNumbersQuery(this.item[0].claims.P679[1].mainsnak.datavalue.value)); }
+              if (this.item[0].claims.P679[2] !== undefined) { this.urlSafe9 = this.sanitizer.bypassSecurityTrustResourceUrl(this.iframesDisplay.setHouseNumbersQuery(this.item[0].claims.P679[2].mainsnak.datavalue.value)); }
             }
 
-            if (this.item[0].claims.P693 !== undefined) {
-              if (this.item[0].claims.P693[0] !== undefined){ this.urlSafe10 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[0].mainsnak.datavalue.value);}
-              if (this.item[0].claims.P693[1] !== undefined){ this.urlSafe11 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[1].mainsnak.datavalue.value);}
-              if (this.item[0].claims.P693[2] !== undefined){ this.urlSafe12 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P693[2].mainsnak.datavalue.value);}
+            if (this.claims.P693 !== undefined) {
+              if (this.claims.P693[0] !== undefined){ this.urlSafe10 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P693[0].mainsnak.datavalue.value);}
+              if (this.claims.P693[1] !== undefined){ this.urlSafe11 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P693[1].mainsnak.datavalue.value);}
+              if (this.claims.P693[2] !== undefined){ this.urlSafe12 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P693[2].mainsnak.datavalue.value);}
             }
 
-            if (this.item[0].claims.P720 !== undefined) {
-              if (this.item[0].claims.P720[0] !== undefined) {  this.urlSafe13 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[0].mainsnak.datavalue.value);}
-              if (this.item[0].claims.P720[1] !== undefined) { this.urlSafe14 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[1].mainsnak.datavalue.value);}
-              if (this.item[0].claims.P720[2] !== undefined) { this.urlSafe15 = this.sanitizer.bypassSecurityTrustResourceUrl(this.item[0].claims.P720[2].mainsnak.datavalue.value); }
+            if (this.claims.P720 !== undefined) {
+              if (this.claims.P720[0] !== undefined) {  this.urlSafe13 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P720[0].mainsnak.datavalue.value);}
+              if (this.claims.P720[1] !== undefined) { this.urlSafe14 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P720[1].mainsnak.datavalue.value);}
+              if (this.claims.P720[2] !== undefined) { this.urlSafe15 = this.sanitizer.bypassSecurityTrustResourceUrl(this.claims.P720[2].mainsnak.datavalue.value); }
             }
 
             ///externalLinks
@@ -693,7 +683,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             for (let i = 0; i < this.item[1].length; i++) {
               let P: string = this.item[1][i];
-              this.otherClaims.push(this.item[0].claims[P]);
+              this.otherClaims.push(this.claims[P]);
             }
 
             if (this.otherClaims.length > 0) {
@@ -705,12 +695,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.mainList = [];
 
-            if (this.item[0].claims.P2 === undefined) {  // no definition of instance
-              this.mainList.push(this.item[0].claims.P3)
+            if (this.claims.P2 === undefined) {  // no definition of instance
+              this.mainList.push(this.claims.P3)
             };
 
-            if (this.item[0].claims.P2 !== undefined) {
-              this.mainTitle = this.item[0].claims.P2[0].mainsnak.label;
+            if (this.claims.P2 !== undefined) {
+              this.mainTitle = this.claims.P2[0].mainsnak.label;
               this.mainList = this.lifeAndFamily.concat(this.locationAndContext, this.locationAndSituation, this.activityDetail,
                 this.eventDetail, this.documentDetail, this.otherClaims
               );
@@ -719,6 +709,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.mainList.length > 0) {
               this.isMain = true;
            }
+
+
            
             //wikis
 
@@ -730,9 +722,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // transcription
           
-          if (this.item[0].claims.P251 !== undefined) { 
-            if(this.item[0].claims.P251[0].mainsnak.datavalue.value !== undefined){
-            let a = this.transcript.transcript(this.item[0].claims.P251[0].mainsnak.datavalue.value);
+          if (this.claims.P251 !== undefined) { 
+            if(this.claims.P251[0].mainsnak.datavalue.value !== undefined){
+            let a = this.transcript.transcript(this.claims.P251[0].mainsnak.datavalue.value);
             this.subscription3 = a.subscribe(res =>{ 
              Object.keys(res)[0]=="error"? this.trans="no transcription":
              this.trans=res.parse.text;
@@ -742,7 +734,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           }  
         }
 
-        if (this.item[0].claims.P251 === undefined) { 
+        if (this.claims.P251 === undefined) { 
             this.trans="";
         }
         
@@ -755,11 +747,11 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           //this.stemma_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/" + this.selectedLang + "/" + this.stemma + "/" + item[0].id);
           // this.familyTree_url = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.entitree.com/factgrid/" + this.selectedLang + "/1/" + item[0].id);
 
-          if (this.item[0].claims.P150 || this.item[0].claims.P141 || this.item[0].claims.P142) {
+          if (this.claims.P150 || this.claims.P141 || this.claims.P142) {
             this.isFamilyTree = true;
           }
 
-          if (this.item[0].claims.P233) {
+          if (this.claims.P233) {
             this.isStemma = true;
           }
         }

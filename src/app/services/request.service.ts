@@ -100,6 +100,8 @@ requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesLi
     } 
     
     result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$,response7$]);
+
+    result.subscribe(res => console.log(res));
  
     return result
   
@@ -181,7 +183,6 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 }
   
   searchItem(label, lang) {
-    console.log(label);
    let headers = new HttpHeaders().set('Access-Control-Allow-Origin','*')
     let params = new HttpParams().set('action',"wbsearchentities")
     .set('search',label)
@@ -213,10 +214,8 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
       u= this.http.get(sparql, {
         params: params}).pipe(catchError((err)=> {return of(undefined)})) 
       } 
-   //  u.tap(res => console.log(res));
-
       return u
-       }
+   }
 
   downLoadList(sparql:string) {   
     let u

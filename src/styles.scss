@@ -204,13 +204,23 @@ margin-left: 2px;
 .qualifierStyle {  //size of the text of the qualifier
   font-size:14px;
   padding-left:10px;
- 
 }
+
+.referenceStyle {  //size of the text of the qualifier
+  font-size:14px;
+  padding-left:20px;
+}
+
+.calendarStyle { //size and style of the calendar type of the date
+  font-size:10px;
+  font-style:italic;
+}
+
 
 .warningDeprecated {  //warning for deprecated statements
   font-size:14px !important; 
   color:#AD1457;
-  font-style:italic;
+ // font-style:italic;
 }
 
 .qualifierTextColor { //color of the text of the qualifier
@@ -225,8 +235,10 @@ margin-left: 2px;
 .selectedItemText2 {
   font-size:16px;
   color:white;
-  line-height: 25px;
-//  padding:10 px;
+ // line-height: 15 px;
+ // display:list-item;
+  padding:10 px;
+
   
 }
 
@@ -249,6 +261,11 @@ margin-left: 2px;
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+.iframeTitlePadding {  //padding bottom on the title of the iframe
+  padding-bottom: 10px;
+}
+
 
 .mapPadding {
   padding-top: 10px;
@@ -284,6 +301,10 @@ margin-left: 2px;
   display: table;
   table-layout: fixed;
   width: 100%;
+  word-wrap: break-word;
+}
+
+.url {    // display of the url
   word-wrap: break-word;
 }
 
@@ -352,8 +373,15 @@ margin-left: 2px;
 
 
 
+@media (min-width: 959.98px) {  // change the size of the picture for big screen
+.smallPicture {
+   width: 30% ;
+}
+}
 
-
+.cover {
+  object-fit: cover;
+}
 
 
 @media (max-width: 959.98px) {  //change the size of the subtitles for small screen

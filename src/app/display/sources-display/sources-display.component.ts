@@ -18,4 +18,7 @@ export class SourcesDisplayComponent {
 @Input() sourcesList ;
 @Input() sources ;
 
+ openImage(image){ //handling click for picture (open in new tab) 
+    window.open(image);}
+
 }

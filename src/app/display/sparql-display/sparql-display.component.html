@@ -13,12 +13,15 @@
             <div  class="sparql-div">
               @if (L.itemLabel.value) {
               <label>
-               {{L.itemLabel.value}}@if (L.itemDescription) {
+               {{L.itemLabel.value}}
+               <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
+               @if (L.itemDescription) {
                 <span>, {{L.itemDescription.value}}</span>
-                }@if (L.year) {
+                }
+                @if (L.year) {
                   <span>, {{L.year.value}}</span>
                   }
-                <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               
               </label>
               }
             </div>

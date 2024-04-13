@@ -198,13 +198,18 @@ setQualifierItems(values,arr){ // create an array of the items in the qualifiers
                  if (u.references[i] !== undefined) {
                    if (u.references[i].snaks[arr[j]] !== undefined) {
                    if (u.references[i].snaks[arr[j]].datatype ="wikibase-item")
-                     result.push(u.references[i].snaks[arr[j]][0].datavalue.value.id)
+                     for (let k=0; k<arr[j].length; k++) {
+                        if (u.references[i].snaks[arr[j]][k] !==undefined){
+                        result.push(u.references[i].snaks[arr[j]][k].datavalue.value.id)
+                        }
+                       }
                      }
                   }  
                 }               
              }
           }
         }
+      console.log(result)
       return result 
     };
   

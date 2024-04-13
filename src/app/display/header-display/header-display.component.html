@@ -1,63 +1,19 @@
-        <mat-card-content  class="cardBackground">
-                      <div class="subdivisionTitle">{{career}}</div>
-                      @for (P of careerAndActivities; track P) {
-                      <div>
-                        <div class="labelTitlePadding">
-                          <span class="propertyStyle">{{P.label}}:</span>
-                        </div>
-                        @for (M of P; track M) {
-                       <div class="statementStyle">
+               <mat-card-content>
+                    @for (P of headerDetail; track P) {
+                    <div >
+                      <div class="labelTitlePadding">
+                        <span class="propertyStyle">{{P.label}}:</span>
+                      </div>
+                      @for (M of P; track M) {
+                      <div class="statementStyle">
                         <div class="header-spacer">
-                        <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
-                         
-                        @if (M.mainsnak.datatype ==='time') {
-                          <span>{{M.mainsnak.datavalue.value.date}}</span>
-                          @if (M.mainsnak.datavalue.value.calendarmodel === "http://www.wikidata.org/entity/Q1985727"){
-                             <span class="calendarStyle"> greg.
-                              <mat-icon-button class="internalLink" [routerLink]="['/item','Q220486']"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
-                            </span>
-                            }   
-                            @if (M.mainsnak.datavalue.value.calendarmodel === "http://www.wikidata.org/entity/Q1985786"){
-                             <span class="calendarStyle"> jul.
-                              <mat-icon-button class="internalLink" [routerLink]="['/item','Q505980']"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
-                            </span>
-                            }  
+                        @if (M.mainsnak.datatype==='wikibase-item') {
+                        <span>
+                          {{M.mainsnak.label}}
+                          <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
                           }
-                          @if (M.mainsnak.datatype==='monolingualtext') {
-                          <span>{{M.mainsnak.datavalue.value.text}}, {{M.mainsnak.datavalue.value.language}}</span>
-                          }
-                          @if (M.mainsnak.datatype === 'string') {
-                          <span class="displayLayout">{{M.mainsnak.datavalue.value }}</span>
-                          }
-                          @if (M.mainsnak.datatype === 'url') {
-                          <span class="displayLayout">
-                            <a href="{{M.mainsnak.datavalue.value}}" target="_blank">{{M.mainsnak.datavalue.value}}</a>
-                          </span>
-                          }
-                          <span>{{M.mainsnak.datavalue.value.amount}}</span>
-                          @if (M.mainsnak.datatype === 'globe-coordinate') {
-                          <span>latitude: {{M.mainsnak.datavalue.value.latitude}}, longitude: {{M.mainsnak.datavalue.value.longitude}}</span>
-                          }
-                          @if (M.mainsnak.datatype==='commonsMedia') {
-																<div>
-                                  <span>
-                                    <img class="cover" src={{M.picture}}  (click)="openImage(M.picture)">
-                                  </span>             
-                                </div>
-                          }   
-                          @if (M.mainsnak.datatype==='wikibase-item') {
-                          <span>
-                            {{M.mainsnak.label}}
-                             <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-                            &nbsp;&nbsp;&nbsp;
-                            </span>
-                            {{M.mainsnak.separator}}
-                            <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>                       
-                          }
-                           @if (M.rank=='deprecated') {
-                          <span class="warningDeprecated"> &nbsp;({{M.rank}})</span>
-                          }
-                        </div>
+
                         <div class="qualifierStyle">
                           @if (M['qualifiers-order']) {
                             <span>
@@ -67,33 +23,32 @@
                          <span> -->
                               <span class="qualifierProperty"><em>{{Q.label}}:&nbsp;</em></span> 
                    
-                              @for (D of Q.display; track D; let isLast = $last) { 
+                             @for (D of Q.display; track D; let isLast = $last) { 
                              <span>
                                 @if (D.datatype === 'time') {
+                  
 																  <span>{{D.date}}
-                           @if (D.calendar === "http://www.wikidata.org/entity/Q1985727"){
+               <!--            @if (D.calendar === "http://www.wikidata.org/entity/Q1985727"){
                                   <span class="calendarStyle"> greg.
                                       <mat-icon-button class="internalLink" [routerLink]="['/item','Q220486']"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
                                   </span>
-                                  }
-                 
-                                 @if (D.calendar === "http://www.wikidata.org/entity/Q1985786"){
+                               }   -->
+                               @if (D.calendar === "http://www.wikidata.org/entity/Q1985786"){
                                   <span class="calendarStyle"> jul.
                                     <mat-icon-button class="internalLink" [routerLink]="['/item','Q505980']"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
                                  </span>
-                                 }  
-
-
-                                @if (!isLast) {
-																		  <span>,&nbsp;</span>
-																  }</span>
+                               }  
+                               @if (!isLast) {
+                            			  <span>,&nbsp;</span>
+																  }
+                               </span>
 																}
                                 @if (D.datatype==='string') {
 																  <span>{{D.string}}@if (!isLast) {
 																		  <span>,&nbsp;</span>
 																  }</span>
 																}
-                                @if (D.datatype==='monolingualtext') {
+                               @if (D.datatype==='monolingualtext') {
 																  <span>{{D.string.text}}@if (!isLast) {
 																		  <span>,&nbsp;</span>
 																  }</span>
@@ -127,9 +82,9 @@
                                   </span>     
 																}
                                 @if (D.datatype==='commonsMedia') {
-																<div>
-                                  <span> 
-                                    <img src={{D.commons}}  (click)="openImage(D.commons)">
+																<div class="details3">
+                                  <span class>
+                                    <img src={{D.commons}}>
                                   </span>
                                 </div>
                                  }
@@ -188,14 +143,33 @@
 															  	<span>,&nbsp;</span>
                                  }
                                 }
+
+
                               }  
                            </span>
                            </div>
                          }
                        }
+
+
+
+      <!--                  @if (M['references2']) {
+                      <div class="qualifierStyle">
+                          <span class="referenceProperty">{{M.references2[0].label}}: </span>
+                          @if (M.references2[0].value.label) {
+                          <span>
+                            {{M.references2[0].value.label}}
+                            <mat-icon-button class="internalLink" [routerLink]="['/item', M.references2[0].value.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </span>
+                            }
+                          <span>{{M.references2[0].value.date}}</span>
+                          <span>{{M.references2[0].value.string}}</span>
+                          <span class="displayLayout"><a href="{{M.references2[0].value.url}}" target="_blank">{{M.references2[0].value.url }}</a></span>
+                       </div>
+                          } -->
                      </div>
                       </div>
                       }
                     </div>
                     }
-        </mat-card-content>
+                  </mat-card-content>

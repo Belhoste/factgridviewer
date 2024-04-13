@@ -4,10 +4,10 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display-component",
+    "\\src\\app\\display\\career-display",
     "\\src\\app\\display\\sociability-display",
-    "\\src\\app\\services"
+    "\\src\\app\\display\\sources-display"
   ],
-  "SelectedNode": "\\src\\app\\display\\sociability-display\\sociability-display.component.ts",
+  "SelectedNode": "\\src\\app\\display\\sources-display\\sources-display.component.html",
   "PreviewInSolutionExplorer": false
 }

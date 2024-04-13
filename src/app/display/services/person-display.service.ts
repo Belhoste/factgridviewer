@@ -19,14 +19,15 @@ export class PersonDisplayService {
       item[1].splice(item[1].indexOf("P247"),1);
       lifeAndFamily.push(item[0].claims.P247);
     }
-    if (item[0].claims.Q28006 !== undefined){ //marital name
+/*    if (item[0].claims.Q28006 !== undefined){ //marital name
       item[1].splice(item[1].indexOf("Q28006"),1);
       lifeAndFamily.push(item[0].claims.Q28006);
       } 
     if (item[0].claims.Q468366 !== undefined){ //marital name
       item[1].splice(item[1].indexOf("Q468366"),1);
       lifeAndFamily.push(item[0].claims.Q468366);
-      } 
+      }
+*/
     if (item[0].claims.P248 !==undefined){ //forenames
       item[1].splice(item[1].indexOf("P248"),1);
       lifeAndFamily.push(item[0].claims.P248);

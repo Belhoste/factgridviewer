@@ -1,4 +1,0 @@
-//File: main.scss
-
-@use 'layout/header';
-@use 'base/variables'

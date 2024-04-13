@@ -50,8 +50,7 @@ export class ItemDetailsService {
         if ( itemProperties[i] === "P320")
         { re.claims[itemProperties[i]][j].mainsnak.datatype = "sparql";
      //   if(re.claims[itemProperties[i]][j].mainsnak.datavalue.value.includes("item")===false){ re.claims[itemProperties[i]][j].mainsnak.datavalue.value="undefined"};
-    //    if(re.claims[itemProperties[i]][j].mainsnak.datavalue.includes("item")) {console.log(re.claims[itemProperties[i]][j].mainsnak)};
-      };
+        };
        
       this.factgrid.setSubtitle1(re,itemProperties[i],lang); // to set a subtitle
 
@@ -84,15 +83,14 @@ export class ItemDetailsService {
                for (let l=0; l<props[k].length; l++) {
                  if(re.claims[itemProperties[i]][j].qualifiers[props[k]][l] === undefined){continue};
                   if(re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datatype === "time"){
-           //         console.log(re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.time)
-          //          if(re.claims[itemProperties[i]][j].qualifiers[props[k]][l] !== undefined) {
                        let value =re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.time
                       value = value.substring(0,value.length-10);
                        re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.date = this.setDate.setDate(value,lang);
-         //          }
                        }
-                  for (let m=0; m<items.length; m++){
-              
+                  if(re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datatype === "external-id"){
+                       this.setUrl(re.claims[itemProperties[i]][j].qualifiers[props[k]][l],props[k]);
+                      }
+                  for (let m=0; m<items.length; m++){             
                      if (re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.id !== items[m].id){ continue }
                        if (re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datatype === "wikibase-item"){
                          re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.label = items[m].label;
@@ -100,8 +98,7 @@ export class ItemDetailsService {
                         re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.description = items[m].description;
                 //       if (items[m].aliases !== undefined) {
                         re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.aliases = items[m].aliases;  
-              //          this.roleOfObjectRendering(re.claims[itemProperties[i]][j].qualifiers[props[k]][l]);
-                        
+              //          this.roleOfObjectRendering(re.claims[itemProperties[i]][j].qualifiers[props[k]][l]);      
                       }
                     if (re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datatype === "commonsMedia"){
                       re.claims[itemProperties[i]][j].qualifiers[props[k]][l].datavalue.value.label = items[m].label;
@@ -143,24 +140,30 @@ export class ItemDetailsService {
             if (re.claims[itemProperties[i]][j].references === undefined) {continue}
              for  (let k=0; k<re.claims[itemProperties[i]][j].references.length; k++){
                let props = Object.keys(re.claims[itemProperties[i]][j].references[k].snaks);
+                for (let l=0; l<items.length; l++){
                   for(let a=0;a<props.length;a++){
-                    for (let l=0; l<items.length; l++){  
-                      if(re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datatype === "time"){
-                        let value = re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datavalue.value.time;
+                    for(let b=0; b<re.claims[itemProperties[i]][j].references[k].snaks[props[a]].length; b++ ){
+                      if(re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datatype === "time"){
+                        let value = re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.time;
                         value = value.substring(0,value.length-10);
-                        re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datavalue.value.date = this.setDate.setDate(value,lang);
+                        re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.date = this.setDate.setDate(value,lang);
                       }
-                      if (re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datatype !== "wikibase-item"){continue}
-                      if (re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datavalue.value.id === items[l].id ){
-                          if (re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0] !==undefined) { 
-                           re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datavalue.value.label = items[l].label;
+                      if(re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datatype === "external-id"){
+                       this.setUrl(re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b],props[a]);
+                      }
+                      if (re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datatype !== "wikibase-item"){continue}
+                      if (re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.id === items[l].id ){
+                        if (re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b] !==undefined) { 
+                           re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.label = items[l].label;
                         if (items[l].description !== undefined) 
-                           re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datavalue.value.description = items[l].description;
+                           re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.description = items[l].description;
+                        items[l].description ?  re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.separator = ", " : re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.separator ="";
                         if (items[l].aliases !== undefined)
-                           re.claims[itemProperties[i]][j].references[k].snaks[props[a]][0].datavalue.value.aliases = items[l].aliases;               
-                          }                     
+                           re.claims[itemProperties[i]][j].references[k].snaks[props[a]][b].datavalue.value.aliases = items[l].aliases;               
+                           }
+                          }
                         }      
-                      } 
+                      }
                     }                            
                   }
                 }
@@ -168,37 +171,37 @@ export class ItemDetailsService {
         return re
           }
 
-
-    addReference2ItemDetails(items, re, itemProperties){ //add the items of the qualifiers to the array qualifiers          
+     addReference2ItemDetails(items, re, itemProperties){ //add the items of the qualifiers to the array qualifiers     
             for (let i=0; i<itemProperties.length; i++){  
               for (let j=0; j<re.claims[itemProperties[i]].length; j++) {
                  if (re.claims[itemProperties[i]][j].references === undefined) {continue}
-                   for (let k=0; k<re.claims[itemProperties[i]][j].references.length; k++){
-                   let props = Object.keys(re.claims[itemProperties[i]][j].references[k].snaks);
-                   let referencesArray = Object.values(re.claims[itemProperties[i]][j].references[k].snaks);//l'objet referencesArray est à revoir, il n'a pas la structure qui convient.                 
-                      for (let l=0; l<referencesArray.length; l++){
-                        for (let m=0; m<re.claims[itemProperties[i]][j].references2.length;m++){
-                          if (re.claims[itemProperties[i]][j].references2[m].value.id === referencesArray[l][0].datavalue.value.id)
-                          { re.claims[itemProperties[i]][j].references2[m].value.label === referencesArray[l][0].datavalue.value.label ;
-                            re.claims[itemProperties[i]][j].references2[m].value.id === referencesArray[l][0].datavalue.value.id
-                            re.claims[itemProperties[i]][j].references2[m].value.time = referencesArray[l][0].datavalue.value.time;
-                            re.claims[itemProperties[i]][j].references2[m].value.date = referencesArray[l][0].datavalue.value.date; 
-                            re.claims[itemProperties[i]][j].references2[m].value.month = referencesArray[l][0].datavalue.value.month; 
-                            if (referencesArray[l][0].datatype === "string"){
-                            re.claims[itemProperties[i]][j].references2[m].value.string = referencesArray[l][0].datavalue.value };
-                            if (referencesArray[l][0].datatype === "url"){
-                              re.claims[itemProperties[i]][j].references2[m].value.url = referencesArray[l][0].datavalue.value };
-                            re.claims[itemProperties[i]][j].references2[m].value.label = referencesArray[l][0].datavalue.value.label;
-                            re.claims[itemProperties[i]][j].references2[m].value.description = referencesArray[l][0].datavalue.value.description;
-                            re.claims[itemProperties[i]][j].references2[m].value.aliases = referencesArray[l][0].datavalue.value.aliases;           
+                 for(let k=0; k<re.claims[itemProperties[i]][j].references2.length;k++) {
+                   let display = [] ;
+                  for (let l=0; l<re.claims[itemProperties[i]][j].references.length; l++){      
+                   let props = Object.keys(re.claims[itemProperties[i]][j].references[l].snaks);
+                   let referencesArray = Object.values(re.claims[itemProperties[i]][j].references[l].snaks);           
+                         for(let m=0; m<props.length;m++) {
+                            for (let n=0; n<re.claims[itemProperties[i]][j].references[l].snaks[props[m]].length;n++) {
+                               if (re.claims[itemProperties[i]][j].references2[k].id === props[m]) {
+                               if(re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datavalue.value){
+                                 if(re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datatype ==="external-id"){
+                                   display.push(re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datavalue)
+                                 } else
+                               { display.push(re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datavalue.value)}
+                               }
+                             }
                            }
                          }
-                        }
+                      }
+                      re.claims[itemProperties[i]][j].references2[k].display=display 
                       }    
                     }
                   }
               return re
             }
+
+
+   
 
     addSidelinksDetails(re){
         if (re.sitelinks.commonswiki !==undefined){
@@ -226,6 +229,41 @@ export class ItemDetailsService {
     
  // re.info = this.itemInfo.infoListBuilding(re)
 
+    }
+
+  setUrl(u, p){
+
+  if (u.externalLink !== undefined) {
+
+  u.datavalue.link =u.externalLink.replace("$1", u.datavalue.value); }
+
+  if (p === "P76") { // id GND
+   u.datavalue.link  = "https://explore.gnd.network/gnd/" + u.datavalue.value;
+     };
+  if (p === "P368") { // id VD16 +
+  u.datavalue.link = 'http://gateway-bayern.de/VD16+' + u.datavalue.value;
+     };
+  if (p === "P369") { //id VD17
+  u.datavalue.link = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27:'
+    + u.datavalue.value +"%27";
+      };
+   if (p === "P370") {//id VD18
+   u.datavalue.link = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18' + u.datavalue.value
+      };
+   if (p === "P650") { // INE ID (Spain)
+      let province = u.datavalue.value.slice(0,2);
+      let municipality = u.datavalue.value.slice(2,5);
+      let parish = u.datavalue.value.slice(5,7);
+      let es = u.datavalue.value.slice(7,9);
+        u.datavalue.link = u.externalLink.replace("$1",province);
+        u.datavalue.link = u.datavalue.link.replace("$2",municipality);
+        u.datavalue.link = u.datavalue.link.replace("$3",parish);
+        u.datavalue.link = u.datavalue.link.replace("$4",es);
+        u.datavalue.link = u.datavalue.link.replace("$5","00");
+      };
+   if (p === "P882") { // Deusches Rechtswörterbuch
+   u.datavalue.link  = 'https://drw-www.adw.uni-heidelberg.de/drw-cgi/zeige?index=lemmata&term=' +  u.datavalue.value +'&darstellung=V' ;
+      };
     }
 
 

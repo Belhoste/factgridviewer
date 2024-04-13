@@ -22,7 +22,7 @@ export class SparqlService {
       u = prefix+item+this.langService+suffix;
      }
      else {
-      if (id == "Q37073" || id == "Q146602" || id == "Q21909" || id == "Q146410" || id == "Q257052"){ // career statement
+      if (id == "Q37073" || id == "Q146602" || id == "Q21909" || id == "Q146410" || id == "Q257052" || id == "Q37131"){ // career statement
       let prefix1 = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%3FfamilyNameLabel%0AWHERE%20%7B%20%3Fitem%20wdt%3AP165%2Fwdt%3AP3%2a%20wd%3A";
       let prefix2="%3B%20wdt%3AP247%20%3FfamilyName";
       u = prefix1+item+prefix2+this.langService+"ORDER%20by%20%3FfamilyNameLabel%20";
