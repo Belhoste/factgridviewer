@@ -26,14 +26,13 @@
   }
 }
 
-/*.main {   // deprecate
+.main {   // deprecate
   display: flex;
   flex-flow: column;
-} */
+}
 
-.child1 { // determine the size of the first column
-  flex: 3;
-//  background-color: grey !important;
+.child1 { // determine the size of the first column 
+  flex:3;
 }
 
 .child2 {
@@ -43,21 +42,38 @@
   flex-grow: 1;
 }
 
-
-.ground-div1 { //bande grise for the drawer
+div#home-content {
+  flex-grow: 1;                         /*  added  */
   display: flex;
-  background-color: whitesmoke;
-  justify-content: flex-start;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ground {
+  background-color: grey !important;  //does'nt work
+}
+
+.ground-div0 {  //bande grise
+  display:flex;
+//  background-color: grey;
+  justify-content:flex-end;
+}
+
+.ground-div1 {    //bande grise
+  display:flex;
+//  background-color: rgb(99, 98, 98);
+  justify-content:flex-start;
 }
 
 .ground-div2 {  //bande bleue
   background-color: rgb(155, 177, 225);
+//  background-color: #627fc4;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.itemTitle{  // styling the big title of the item
+.itemTitle{  //big title of the item
   padding-top:10px;
   margin-bottom: 10px;
   font-size:50px;
@@ -72,21 +88,20 @@
   }
 }
 
-.aliases {  //styling the aliases of the item
+.aliases {
   font-size:16px;
   margin-bottom: 15px;
   font-weight: 500;
 }
 
-.itemDescription {   // styling the description of the itmm
+.itemDescription {
   font-size:16px;
   // padding-top:5px
 }
 
-/*.drawerBackground {  //background color of the drawer
+.drawerBackground {  //background color of the drawer
   background-color: lightgray;
 }
-    */
 
 
 /*  TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.  */
@@ -106,7 +121,7 @@ mat-card img {
   margin-left: 2px;
 }
 
-.external-links { // styling the box of the external links
+.external-links {  // keep in diplay?
   height: fit-content;
   background-color: rgb(250, 235, 187);
   margin-bottom: 4px;
@@ -114,9 +129,7 @@ mat-card img {
   margin-left: 2px;
 }
 
-/*
-
-    .externalLinks-title {  // styling the titles of the external links
+.externalLinks-title {
   color:#AD1457;
   font-size: 25px !important;
   font-weight:500;
@@ -124,19 +137,12 @@ mat-card img {
   margin-left: auto;
   height:40px;
 }
-*/
 
-
-
-
-
-/*
- .external-links-details { //size of the text of the statements in the external links
-  font-size: 14px;
+.external-links-details { //size of the text of the statements
+  font-size:14px;
   padding: 10px;
   margin: 0px;
 }
-    */
 
 .icon.mat-mdc-button.mat-small {}
 
@@ -153,16 +159,13 @@ table {          // for the mat-tab if I use it
 }
 
 
-/*
-    .linksToItem-mat-card{
+.linksToItem-mat-card{
   height: fit-content;
   background-color:#e1f5fe !important;
   margin-bottom: 4px;
   margin-right: 2px;
   margin-left: 2px;
 }
-
-*/
 
 .map-container {
   position: absolute;
@@ -174,8 +177,7 @@ table {          // for the mat-tab if I use it
   height: 100%;
 }
 
-/*
-    #c1{
+#c1{
   float:right;
 }​
 
@@ -183,16 +185,11 @@ table {          // for the mat-tab if I use it
   height: 100%;
 }
 
-*/
-
-
-
 .img {
   width: 40%;
   height: 100px;
   margin: 10px;
 }
-
 
 
 .hide-division {
@@ -203,21 +200,17 @@ table {          // for the mat-tab if I use it
     display: block;
     }
 
-/*
- .padding1 {
+.padding1 {
   padding: 6 px;
   margin-right: 20 px;
 }
+
 
 
 .w-100 {      
   width: 100% !important;
   margin-right: 20 px;
 }
-
-*/
-
-
 
 .mat-list-base.inline-list {
   display: flex;   /*inline list*/

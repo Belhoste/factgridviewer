@@ -26,6 +26,11 @@ export class SourcesDisplayService {
       item[1].splice(item[1].indexOf("P185"),1);
       sourcesList.push(item[0].claims.P185);
     }
+    if (item[0].claims.P146 !== undefined) { //on line information
+      item[1].splice(item[1].indexOf("P146"), 1);
+      sourcesList.push(item[0].claims.P146);
+    }
+
     return sourcesList
    }
 }

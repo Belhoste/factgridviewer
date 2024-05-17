@@ -10,20 +10,20 @@
       <hr>  
       
       @for (L of list4; track L) {
-  <div class="details" >
+       <div class="details" >
         <div>
           @if (L.itemLabel.value) {
-<label>{{L.itemLabel.value}}
+            <label>{{L.itemLabel.value}}
             @if (L.itemDescription) {
-<span class="description-text">({{L.itemDescription.value}})</span>
-}
+            <span class="description-text">({{L.itemDescription.value}})</span>
+            }
             <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </label>
-}
+            }
         </div>
         <hr>
       </div>
-}
+     }
      
       </div>
     </mat-card-content>
@@ -34,16 +34,16 @@
         <hr>  
         
         @for (L of list3; track L) {
-  <div class="details" >
+         <div class="details" >
           <div>
             @if (L.itemLabel.value) {
-<label>{{L.itemLabel.value}}
+          <label>{{L.itemLabel.value}}
               @if (L.itemDescription) {
-<span class="description-text">({{L.itemDescription.value}})</span>
-}
+          <span class="description-text">({{L.itemDescription.value}})</span>
+            }
               <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
-}
+          }
           </div>
           <hr>
         </div>
@@ -77,13 +77,13 @@
         <hr>  
         
         @for (L of list2; track L) {
-  <div class="details" >
+           <div class="details" >
           <div flex-shrink flex-basis="auto">
             @if (L.itemLabel.value) {
-<label>{{L.itemLabel.value}}
+            <label>{{L.itemLabel.value}}
               @if (L.itemDescription) {
-<span class="description-text">({{L.itemDescription.value}})</span>
-}
+              <span class="description-text">({{L.itemDescription.value}})</span>
+              }
               <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </label>
 }

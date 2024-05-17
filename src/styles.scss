@@ -172,333 +172,371 @@ html, body {
 .cardBackground { // for styling card
 height: fit-content;
 margin-right: 2px;
-margin-left: 2px;
+margin-left: 24px;
 // background-color: white ;
 }
 
-.statementStyle { //size of the text of the statements
-  //color: black;
-  //color:mat-primary;
-  font-size:16px;
-  padding-left:15px;
-}
-
-.descriptionText {  //color and weight for the descriptions of the statements and qualifiers
-  font-weight: 321;
-  color:#808080 !important;
+@media (max-width: 959.98px) { //change the padding for small screen
+  .cardBackground { // for styling card
+    height: fit-content;
+    margin-right: 2px;
+    margin-left: 2px;
+  }
   }
 
-.qualifierProperty { //size and color of the label of the qualifier
-  font-size:14px;
-  color:#3F51B5;
-  font-style:italic;
+.listStyle{  // for styling the list of statements in a section
+    padding-left: 30px;
 }
 
-.propertyStyle { // size and color or the label of the statement
-  color:#3F51B5;
- @include font-size();
-  font-weight:400;
-  padding-bottom: 4px;
-}
-
-.qualifierStyle {  //size of the text of the qualifier
-  font-size:14px;
-  padding-left:10px;
-}
-
-.referenceStyle {  //size of the text of the qualifier
-  font-size:14px;
-  padding-left:20px;
-}
-
-.calendarStyle { //size and style of the calendar type of the date
-  font-size:10px;
-  font-style:italic;
+@media (max-width: 959.98px) {
+  //change of styling of the list of statements in a section for small screen
+  .listStyle { // for styling the list
+    padding-left: 5px;
+  }
 }
 
 
-.warningDeprecated {  //warning for deprecated statements
-  font-size:14px !important; 
-  color:#AD1457;
- // font-style:italic;
-}
+  .statementStyle { //size of the text of the statements
+    //color: black;
+    //color:mat-primary;
+    font-size: 16px;
+    padding-left: 15px;
+    padding-top: 2px;
+    padding-bottom: 3px;
+  }
 
-.qualifierTextColor { //color of the text of the qualifier
-  color:black;
-}
+  .descriptionText { //color and weight for the descriptions of the statements and qualifiers
+    font-weight: 321;
+    color: #808080 !important;
+  }
 
-.selectedItemText {
-  font-size:16px;
-  color:white;
-}
+  .qualifierProperty { //size and color of the label of the qualifier
+    font-size: 14px;
+    color: #3F51B5;
+    font-style: italic;
+  }
 
-.selectedItemText2 {
-  font-size:16px;
-  color:white;
- // line-height: 15 px;
- // display:list-item;
-  padding:10 px;
+  .propertyStyle { // size and color or the label of the statement
+    color: #3F51B5;
+    @include font-size();
+    font-weight: 400;
+    padding-bottom: 4px;
+  }
 
-  
-}
+  .qualifierStyle { //size of the text of the qualifier
+    font-size: 14px;
+    padding-left: 10px;
+  }
 
-.search-center {  //style for the links in the search components
-  display: flex;
-  justify-content: center;
-  padding-top: 10px;
-  padding-bottom:10px;
-}
+  .referenceStyle { //size of the text of the reference
+    font-size: 14px;
+    padding-left: 20px;
+  }
 
+  .inlineStyle {
+    display: inline-block;
+  }
 
-.referenceProperty {  //style for the property labels of references
-  font-size:14 px;
-  color:#AD1457;
-  font-style:italic;
-}
-
-
-.labelTitlePadding {  //padding top on the labels of the statements
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.iframeTitlePadding {  //padding bottom on the title of the iframe
-  padding-bottom: 10px;
-}
+  .calendarStyle { //size and style of the calendar type of the date
+    font-size: 10px;
+    font-style: italic;
+  }
 
 
-.mapPadding {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
+  .warningDeprecated { //warning for deprecated statements
+    font-size: 14px !important;
+    color: #AD1457;
+    // font-style:italic;
+  }
 
-.subTitlePadding {  // padding-bottom on the subtitles
-  padding-bottom: 12px;
-}
+  .qualifierTextColor { //color of the text of the qualifier
+    color: black;
+  }
 
-.matCardPadding {  //padding top and left of the mat-card
- // padding-top: 3px;
-  padding-left:3px;
-}
+  .selectedItemText {
+    font-size: 16px;
+    color: white;
+  }
 
-.externalLinksPadding {  //padding top and left of the externalLinks
-   padding-top: 10px;
-   padding-left:3px;
- }
+  .selectedItemText2 {
+    font-size: 16px;
+    color: white;
+    // line-height: 15 px;
+    // display:list-item;
+    padding: 10 px;
+  }
+
+  .search-center { //style for the links in the search components
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+
+  .referenceProperty { //style for the property labels of references
+    font-size: 14 px;
+    color: #AD1457;
+    font-style: italic;
+  }
+
+
+  .labelTitlePadding { //padding top on the labels of the statements
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .iframeTitlePadding { //padding bottom on the title of the iframe
+    padding-bottom: 10px;
+  }
+
+
+  .mapPadding {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .subTitlePadding { // padding-bottom on the subtitles
+    padding-bottom: 12px;
+  }
+
+  .matCardPadding { //padding top and left of the mat-card
+    padding-top: 2px;
+    // padding-left:3px;
+  }
+
+  //// styling the externalLinks
+
+ 
+
+ .externalLinksPadding { //padding top and left of the externalLinks
+    padding-top: 10px;
+    padding-left: 3px;
+  }
 
  .externalLinksText { //styling of the external links and wikis
-  font-size:16px;
-  padding:10px;
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  word-wrap: break-word;
-}
-
-.displayLayout {  // layout des external links and others
-  padding-left:10px;
-  padding-right:10px;
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  word-wrap: break-word;
-}
-
-.url {    // display of the url
-  word-wrap: break-word;
-}
-
-
-@mixin title() {
-
-  padding-bottom: 5px;
-  line-height: 30px;
-}
-
-
-.divisionTitle {  //size and color of the subtitles
-  color: #AD1457;
-  font-size: 2rem;
-  font-weight: 100;
-  @include title();
-  margin-left: auto;
-  padding-top: 5px;
-  line-height: 50px;
-}
-
-.bigTitle {  //size and color of the title of the page of specific projects
-   padding-top: 20px;
-    padding-bottom: 50px;
-  color:#3F51B5;
-   font-size: 3rem;
-  font-weight: 150;
-  @include title();
-  display: flex;
-  justify-content: center;
-}
-
-@media (max-width: 959.98px) {  //change the size of the title for small screen
-  .bigTitle{  //big title of the bibliography of HU
-  font-size:2.5rem;
-  line-height: 45px;
-  padding-top:60px;
-  padding-left:10px;
-  }
-}
-
-.FactGridTitle {  //size and color of the title of the search page of FactGrid
-  padding-top: 20px;
-  padding-bottom: 50px;
-  color:#3F51B5;
-   font-size: 4rem;
-  font-weight: 150;
-  @include title();
-  display: flex;
-  justify-content: center;
-}
-
-@media (max-width:959.98px){
- .FactGridTitle {
-   font-size: 3.5rem;
-    padding-top: 80px;
- }
-}
-
-.subTitle {   // subtitle of the FactGrid title
-  padding-top: 20px;
-  display: flex;
-  justify-content: center;
-  padding-bottom:30px;
-}
-
-
-
-@media (min-width: 959.98px) {  // change the size of the picture for big screen
-.smallPicture {
-   width: 30% ;
-}
-}
-
-.cover {
-  object-fit: cover;
-}
-
-
-@media (max-width: 959.98px) {  //change the size of the subtitles for small screen
-.divisionTitle {  //size and color of the subtitles 
-  font-size: 1.6rem;
-  }
-}
-
-
-.subdivisionTitle {  //size and color of the subsubtitles
-  color: #AD1457;
-  font-size: 1.6rem;
-  font-weight: 100;
-  padding-bottom: 15px;
-  margin-left: auto;
-}
-
-@media (max-width: 959.98px) {  //change the size of the subsubtitles for small screen
-.subdivisionTitle {  //size and color of the subsubtitles
-  font-size: 1.4rem;
-}
-}
-
-.selectedListTitle {  //size and color of the title of selectedList in display
-  color:white;
-  font-size: 1.6rem;
-  font-weight:100;
-  padding:5px;
-  margin-left:auto;
-  margin-bottom: 10px;
-}
-
-.selectedListTitle2 {  //size and color of the title of selectedList in search
-  color: white;
-  font-size: 1.2rem !important;
-  font-weight: 400;
-  padding:5px;
-  margin-top:20px;
-  margin-left:10px;
-  margin-bottom: 10px;
-}
-
-.listTitleStart { align-self: start;  // align left the subtitle linked page in the drawer
+    font-size: 16px;
     padding: 10px;
-};
-
-.iFrameComment{
-  font-size:14px;
-  text-overflow: ellipsis;
-  word-break: normal;
-}
-
-.searchListSize {  // in the search-component for the list of items
-  margin-top:50px;
-  justify-content: center;
-  width: 80%;
-  font-size: 16px;
-}
-
-.search-itemSelected-mat-card { //style the card of selected items
-  height: fit-content;
-  width: 600px;
-  background-color: rgb(99, 98, 98) !important;
-  margin-bottom: 4px;
-  margin-right: 2px;
-  margin-left: 2px;
-}
-
-@media (max-width: 959.98px) {  //change the size of the subsubtitles for small screen
-.search-itemSelected-mat-card {  //size and color of the subsubtitles
-   width: 300px;
-}
-}
-
-.internalLink {
-   cursor: pointer;
-   position: absolute;
-}
-
-.whiteText {
-//  color:white;
-color:#283593;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
   }
 
-.center {   // use in the display-component for buttons on the drawer and new search
-  display: flex;
-  justify-content: center;
-//  padding: 5px;
-//  background-color: rgb(250, 245, 236);
+  ////
+
+@mixin layout() {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.displayLayout { // layout des external links and others
+  @include layout();
 }
 
 
-.blueButton {  //use for the button opening the panel in the displayComponent
+
+  .url { // display of the url
+    word-wrap: break-word;
+  }
+
+
+  @mixin title() {
+    padding-bottom: 5px;
+    line-height: 30px;
+  }
+
+
+  .divisionTitle { //size and color of the subtitles
+    color: #AD1457;
+    font-size: 2rem;
+    font-weight: 100;
+    @include title();
+    margin-left: auto;
+    padding-top: 5px;
+    line-height: 0.8;
+  }
+
+  .bigTitle { //size and color of the title of the page of specific projects
+    padding-top: 20px;
+    padding-bottom: 50px;
+    color: #3F51B5;
+    font-size: 3rem;
+    font-weight: 150;
+    @include title();
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 959.98px) { //change the size of the title for small screen
+    .bigTitle { //big title of the bibliography of HU
+      font-size: 2.5rem;
+      line-height: 45px;
+      padding-top: 60px;
+      padding-left: 10px;
+    }
+  }
+
+  .FactGridTitle { //size and color of the title of the search page of FactGrid
+    padding-top: 20px;
+    padding-bottom: 50px;
+    color: #3F51B5;
+    font-size: 4rem;
+    font-weight: 150;
+    @include title();
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width:959.98px) {
+    .FactGridTitle {
+      font-size: 3.5rem;
+      padding-top: 80px;
+    }
+  }
+
+  .subTitle { // subtitle of the FactGrid title
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+  }
+
+
+
+  @media (min-width: 959.98px) { // change the size of the picture for big screen
+    .smallPicture {
+      width: 30%;
+    }
+  }
+
+  .cover {
+    object-fit: cover;
+  }
+
+
+  @media (max-width: 959.98px) { //change the size of the subtitles for small screen
+    .divisionTitle { //size and color of the subtitles
+      font-size: 1.6rem;
+    }
+  }
+
+
+  .subdivisionTitle { //size and color of the subsubtitles
+    color: #AD1457;
+    font-size: 1.6rem;
+    font-weight: 100;
+    padding-bottom: 15px;
+    margin-left: auto;
+  }
+
+  @media (max-width: 959.98px) { //change the size of the subsubtitles for small screen
+    .subdivisionTitle { //size and color of the subsubtitles
+      font-size: 1.4rem;
+    }
+  }
+
+  .selectedListTitle { //size and color of the title of selectedList in display
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 100;
+    padding: 5px;
+    margin-left: auto;
+    margin-bottom: 10px;
+  }
+
+  .selectedListTitle2 { //size and color of the title of selectedList in search
+    color: white;
+    font-size: 1.2rem !important;
+    font-weight: 400;
+    padding: 5px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+
+  .listTitleStart {
+    align-self: start; // align left the subtitle linked page in the drawer
+    padding: 10px;
+  }
+
+  ;
+
+  .iFrameComment {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    word-break: normal;
+  }
+
+  .searchListSize { // in the search-component for the list of items
+    margin-top: 50px;
+    justify-content: center;
+    width: 80%;
+    font-size: 16px;
+  }
+
+  .search-itemSelected-mat-card { //style the card of selected items
+    height: fit-content;
+    width: 600px;
+    background-color: rgb(99, 98, 98) !important;
+    margin-bottom: 4px;
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  @media (max-width: 959.98px) { //change the size of the subsubtitles for small screen
+    .search-itemSelected-mat-card { //size and color of the subsubtitles
+      width: 300px;
+    }
+  }
+
+  .internalLink {
+    cursor: pointer;
+    position: absolute;
+  }
+
+  .whiteText {
+    //  color:white;
+    color: #283593;
+  }
+
+  .center { // use in the display-component for buttons on the drawer and new search
+    display: flex;
+    justify-content: center;
+    //  padding: 5px;
+    //  background-color: rgb(250, 245, 236);
+  }
+
+
+  .blueButton { //use for the button opening the panel in the displayComponent
     color: #283593;
     font-size: medium;
     line-height: 30px;
-}
+  }
 
 
-.whiteButton { //use for you have visited
-   color: white;
+  .whiteButton { //use for you have visited
+    color: white;
     font-size: medium;
     line-height: 30px;
   }
 
- .basicSize {
+  .basicSize {
     font-size: 16px;
-}
+  }
 
-.spinner {
- // background-color: rgb(250, 245, 236);
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%); 
-}
+  .spinner {
+    // background-color: rgb(250, 245, 236);
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
 
 

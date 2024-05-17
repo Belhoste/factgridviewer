@@ -329,7 +329,36 @@ instancesListTitle_50(u) {  // sparql-display
         if (this.selectedLang === "it") { u = "Opere" };  
         if (this.selectedLang === "hu") { u = "Müvek" };
        return u
-   }
+  }
+
+  pupilTitle(u) {  // sparql-display component
+    if (this.selectedLang === "de") { u = "Schüler/innen" };
+    if (this.selectedLang === "fr") { u = "Élèves et disciples" };
+    if (this.selectedLang === "es") { u = "Alumnos y discípulos" };
+    if (this.selectedLang === "it") { u = "Studenti e discepoli" };
+    if (this.selectedLang === "hu") { u = "Müvek" };
+    return u
+  }
+
+  patientsTitle(u) {  // sparql1-display component
+    if (this.selectedLang === "de") { u = "Patienten/innen" };
+    if (this.selectedLang === "fr") { u = "Patient.e.s" };
+    if (this.selectedLang === "es") { u = "Pacientes" };
+    if (this.selectedLang === "it") { u = "Pazienti" };
+    if (this.selectedLang === "hu") { u = "Páciensek" };
+    return u
+  }
+
+  listTitle(u) {  // sparql1-display component
+    if (this.selectedLang === "de") { u = "Liste" };
+    if (this.selectedLang === "fr") { u = "Liste" };
+    if (this.selectedLang === "es") { u = "Lista" };
+    if (this.selectedLang === "it") { u = "Lista" };
+    if (this.selectedLang === "hu") { u = "Lista" };
+    return u
+  }
+
+
 
 /*
 this.instancesListTitle = "Instanzen (Limit: 200):"; 

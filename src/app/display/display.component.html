@@ -67,193 +67,221 @@
           <div class="parent">
             <div class="child1">
               <div class="matCardPadding">
-                <mat-card appearance="outlined" class=mat-elevation-z12>           
+                <mat-card appearance="outlined" class=mat-elevation-z12>
                   <div class="cardBackground">
 
-                  <mat-card-content>       
-                  <div class="itemTitle">
-                    <span  >{{ label }}</span>
-                    </div>    
-                    <div  [ngClass]="isAliases ? 'hide-division':'show-division'" class="aliases">  
-                     {{ aliases | join }} 
-                    </div>  
-                    <div class="itemDescription">
-                      {{ description }}
-                    </div>
-                    <br>
-                    <div><span class="propertyStyle">FactGrid ID:&nbsp;&nbsp;</span> @if (id) {
-                      <span class="percent4">
-                        <a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
-                      </span>
-                      }
-                    </div>
-                    @for (picture of pictures; track picture) {
-                    <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" class="image">
-                      <div>
-                        <mat-card appearance="outlined" class=mat-elevation-z2>
-                       <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)"> 
-                        </mat-card>
+                    <mat-card-content>
+                      <div class="itemTitle">
+                        <span>{{ label }}</span>
                       </div>
-                    </div>
-                    }                   
-                  </mat-card-content>
-                  <app-header-display [headerDetail]="this.headerDetail"></app-header-display>
-                 </div>            
+                      <div [ngClass]="isAliases ? 'hide-division':'show-division'" class="aliases">
+                        {{ aliases | join }}
+                      </div>
+                      <div class="itemDescription">
+                        {{ description }}
+                      </div>
+                      <br>
+                      <div>
+                        <span class="propertyStyle">FactGrid ID:&nbsp;&nbsp;</span> @if (id) {
+                        <span class="percent4">
+                          <a href="https://database.factgrid.de/wiki/Item:{{id}}" target="_blank" rel="noopener">{{ id }}</a>
+                        </span>
+                        }
+                      </div>
+                      <!---               image on the top for small screens                       --->
+                      @for (picture of pictures; track picture) {
+                      <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" class="image">
+                        <div>
+                          <mat-card appearance="outlined" class=mat-elevation-z2>
+                            <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
+                          </mat-card>
+                        </div>
+                      </div>
+                      }
+                      <!--                   end of image on the top for small screens             --->
+                    </mat-card-content>
+                    <app-header-display [headerDetail]="this.headerDetail"></app-header-display>
+                  </div>
                 </mat-card>
               </div>
               <div>
               </div>
-          
-        <!--********************** section Main  *********************** -->
+
+              <!--********************** section Main  *********************** -->
+
 
               <div class="matCardPadding" [ngClass]="isMain ? 'show-division':'hide-division'">
-              <mat-card appearance="outlined" class= mat-elevation-z12>  
+                <mat-card appearance="outlined" class=mat-elevation-z12>
                   <app-main-display [mainList]="this.mainList" [mainTitle]="this.mainTitle" [list]="this.list"></app-main-display>
-      
-        <!--************************ end of main section *********************-->
-                
-                  @if (this.trans !== "") {   <app-text-display [trans]="this.trans"></app-text-display>   } <!----transcription-->
-
-         <!-- ********************************section Training ******************************-->
-
-                  <div class="matCardPadding" [ngClass]="isTraining ? 'show-division':'hide-division'">  
-                  <app-education-display [education]="this.education" [training]="this.training"></app-education-display>
-                 </div>
-
-     <!--  ******************************* section Career ****************************************  -->
-
-                  <div class="matCardPadding" [ngClass]="isCareer ? 'show-division':'hide-division'">
-                    <app-career-display [careerAndActivities]="this.careerAndActivities" [career]="this.career"></app-career-display>
-                  </div>
-
-  <!---************************************ section Sociability **********************************-->
-
-                  <div  [ngClass]="isSociability ? 'show-division':'hide-division'">
-                   <app-sociability-display [sociabilityAndCulture]="this.sociabilityAndCulture" [sociability]="this.sociability"></app-sociability-display>
-  
-                  </div> 
-
-      <!-- ******************************* iFrames ****************************************  -->
-
-                  <div [ngClass]="isIframes ? 'show-division':'hide-division'">
-                  <app-iframes-display [claims]="this.claims" [urlSafe1]="this.urlSafe1" [urlSafe2]="this.urlSafe2" [urlSafe3]="this.urlSafe3" [urlSafe4]="this.urlSafe4" [urlSafe5]="this.urlSafe5"
-                   [urlSafe6]="this.urlSafe6" [urlSafe7]="this.urlSafe7" [urlSafe8]="this.urlSafe8" [urlSafe9]="this.urlSafe9" [urlSafe10]="this.urlSafe10"
-                   [urlSafe11]="this.urlSafe11" [urlSafe12]="this.urlSafe12" [urlSafe13]="this.urlSafe13" [urlSafe14]="this.urlSafe14" [urlSafe15]="this.urlSafe15"></app-iframes-display>
-                  </div>
-                    <!-- ******************************* end iFrames ****************************************  -->
                 </mat-card>
-             </div>
+              </div>
 
-              <!-- ******************************* sparql ****************************************  -->
-              
-              <div [ngClass]="isSparql ? 'show-division':'hide-division'"  class="cardBackground">
-                      <app-sparql-display [sparqlData]="this.sparqlData" [sparqlSubject]="this.sparqlSubject"></app-sparql-display>
-               </div>
+              <!--************************ end of main section *********************-->
+              @if (this.trans !== "") {   <app-text-display [trans]="this.trans"></app-text-display>   } <!----transcription-->
+              <!-- ********************************section Training ******************************-->
 
-             <!-- ******************************* section Sources ****************************************  -->
+              <div class="matCardPadding" [ngClass]="isTraining ? 'show-division':'hide-division'">
+                <mat-card appearance="outlined" class=mat-elevation-z12>
+                  <app-education-display [education]="this.education" [training]="this.training"></app-education-display>
+                </mat-card>
+              </div>
 
-               <div [ngClass]="isSources ? 'show-division':'hide-division'">
-                 <app-sources-display [sourcesList]="this.sourcesList" [sources]="this.sources"></app-sources-display>
-                  </div>
 
+              <!--  ******************************* section Career ****************************************  -->
+
+              <div class="matCardPadding" [ngClass]="isCareer ? 'show-division':'hide-division'">
+                <mat-card appearance="outlined" class=mat-elevation-z12>
+                  <app-career-display [careerAndActivities]="this.careerAndActivities" [career]="this.career"></app-career-display>
+                </mat-card>
+              </div>
+
+              <!---************************************ section Sociability **********************************-->
+
+              <div class="matCardPadding" [ngClass]="isSociability ? 'show-division':'hide-division'">
+                <mat-card appearance="outlined" class=mat-elevation-z12>
+                  <app-sociability-display [sociabilityAndCulture]="this.sociabilityAndCulture" [sociability]="this.sociability"></app-sociability-display>
+                </mat-card>
+              </div>
+
+              <!-- ******************************* iFrames ****************************************  -->
+
+              <div class="matCardPadding" [ngClass]="isIframes ? 'show-division':'hide-division'">
+                <mat-card appearance="outlined" class=mat-elevation-z12>
+                  <app-iframes-display [claims]="this.claims" [urlSafe1]="this.urlSafe1" [urlSafe2]="this.urlSafe2" [urlSafe3]="this.urlSafe3" [urlSafe4]="this.urlSafe4" [urlSafe5]="this.urlSafe5"
+                                       [urlSafe6]="this.urlSafe6" [urlSafe7]="this.urlSafe7" [urlSafe8]="this.urlSafe8" [urlSafe9]="this.urlSafe9" [urlSafe10]="this.urlSafe10"
+                                       [urlSafe11]="this.urlSafe11" [urlSafe12]="this.urlSafe12" [urlSafe13]="this.urlSafe13" [urlSafe14]="this.urlSafe14" [urlSafe15]="this.urlSafe15"></app-iframes-display>
+                </mat-card>
+              </div>
+
+              <!-- ************************************* sparql0 **************************************** -->
+              <div [ngClass]="isSparql0 ? 'show-division':'hide-division'">
+                <app-sparql0-display [sparqlData]="this.sparqlData0" [sparqlSubject]="this.sparqlSubject0"></app-sparql0-display>
+              </div>
+
+              <!-- ************************************* sparql1 **************************************** -->
+              <div [ngClass]="isSparql1 ? 'show-division':'hide-division'">
+                <mat-card appearance="outlined" class=mat-elevation-z12>
+                  <app-sparql1-display [sparqlData]="this.sparqlData1" [sparqlSubject]="this.sparqlSubject1"></app-sparql1-display>
+                </mat-card>
+              </div>
+
+              <!-- ************************************* sparql2 **************************************** -->
+              <div [ngClass]="isSparql2 ? 'show-division':'hide-division'">
+                <app-sparql2-display [sparqlData]="this.sparqlData2" [sparqlSubject]="this.sparqlSubject2"></app-sparql2-display>
+              </div>
+
+              <!-- ******************************* section Sources ****************************************  -->
+
+              <div [ngClass]="isSources ? 'show-division':'hide-division'">
+                <mat-card appearance="outlined" class=mat-elevation-z12>
+                  <app-sources-display [sourcesList]="this.sourcesList" [sources]="this.sources"></app-sources-display>
+                </mat-card>
+              </div>
+
+              <!--  ************************************* sparql3 ****************************************
+  <div class="matCardPadding" [ngClass]="isSparql0 ? 'show-division':'hide-division'">
+    <mat-card appearance="outlined" class=mat-elevation-z12>
+      <app-sparql3-display [item]="this.item"></app-sparql3-display>
+    </mat-card>
+  </div>-->
               <!-- ******************************* Info ****************************************  -->
-              
-              <div>
-                <div class="ground-div2">
-                  @if (isInfo===false) {
-                    <div class="mat-button.mat-small">
-                    <button mat-icon-button (click)="onClick4()" class="icon whiteText"><mat-icon class="icon whiteButton">expand_less</mat-icon></button>
-                  </div>
-                    }
-                  @if (isInfo===true) {
-                  <div class="icon" class="mat-button.mat-small">
-                    <button mat-icon-button (click)="onClick5()" class="whiteText"><mat-icon class="whiteButton">expand_more</mat-icon></button>
-                  </div>
-                  }
-                </div>
-                <div class="ground-div2" [ngClass]="isInfo ? 'hide-division':'show-division'">
-                    <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
-                </div>
-              </div>
-              </div>
-
-  <!-- ****************************************** Pictures ****************************************  -->
-              <div class="child2">
-              <mat-card appearance="outlined">
-              <div [ngClass]="isPicture ? 'show-division':'hide-division'">
-                @for (picture of pictures; track picture) {
-    <!--            <div>  -->
-                  <mat-card appearance="outlined" class=mat-elevation-z8>
-                    <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
-                  </mat-card>
-       <!--           </div>   -->
-}
-              </div>
-              </mat-card>
-
-  <!-- ************************************* external links ****************************************  -->        
-  <!--          <div>   -->
-              <mat-card appearance="outlined" class="external-links">
-                <mat-card-content  [ngClass]="isExternalLinks ? 'show-division':'hide-division'">
-                <div class="externalLinksPadding"> 
-                  <div class="divisionTitle">{{externalLinksTitle}}</div>
-                    <hr>
-               </div>
-                @for (externalLink of externalLinks; track externalLink) {
-   <!--          <div>   -->
-                  <div class="externalLinksText">
-                      <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
-                  </div>
-     <!--                <br>    -->
-   <!--          </div>   -->
-                  }
-                </mat-card-content>
-                <div></div>
-
-  <!-- ************************************* wikis links ****************************************  -->
-
-                <mat-card-content class="header-spacer" [ngClass]="isWikis ? 'show-division':'hide-division'">
+              <mat-card appearance="outlined" class=mat-elevation-z12>
                 <div>
-                <div class="divisionTitle">Wikis</div>
-                    <hr>
-               </div>
-                @for (wiki of wikis; track wiki) {
-      <!--          <div>   -->
-                    <div class="externalLinksText" >
+                  <div class="ground-div2">
+                    @if (isInfo===false) {
+                    <div class="mat-button.mat-small">
+                      <button mat-icon-button (click)="onClick4()" class="icon whiteText"><mat-icon class="icon whiteButton">expand_less</mat-icon></button>
+                    </div>
+                    }
+                    @if (isInfo===true) {
+                    <div class="icon" class="mat-button.mat-small">
+                      <button mat-icon-button (click)="onClick5()" class="whiteText"><mat-icon class="whiteButton">expand_more</mat-icon></button>
+                    </div>
+                    }
+                  </div>
+                  <div class="ground-div2" [ngClass]="isInfo ? 'hide-division':'show-division'">
+                    <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+
+              <!-- ****************************************** Pictures ****************************************  -->
+              <div class="child2">
+                <mat-card appearance="outlined">
+                  <div [ngClass]="isPicture ? 'show-division':'hide-division'">
+                    @for (picture of pictures; track picture) {
+                    <!--            <div>  -->
+                    <mat-card appearance="outlined" class=mat-elevation-z8>
+                      <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
+                    </mat-card>
+                    <!--           </div>   -->
+                    }
+                  </div>
+                </mat-card>
+
+                <!-- ************************************* external links ****************************************  -->
+                <!--          <div>   -->
+                <mat-card appearance="outlined" class="external-links">
+                  <mat-card-content [ngClass]="isExternalLinks ? 'show-division':'hide-division'">
+                    <div class="externalLinksPadding">
+                      <div class="divisionTitle">{{externalLinksTitle}}</div>
+                      <hr>
+                    </div>
+                    @for (externalLink of externalLinks; track externalLink) {
+                    <!--          <div>   -->
+                    <div class="externalLinksText">
+                      <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
+                    </div>
+                    <!--                <br>    -->
+                    <!--          </div>   -->
+                    }
+                  </mat-card-content>
+
+
+                  <!-- ************************************* wikis links ****************************************  -->
+
+                  <mat-card-content class="header-spacer" [ngClass]="isWikis ? 'show-division':'hide-division'">
+                    <div class="externalLinksPadding">
+                      <div class="divisionTitle">Wikis</div>
+                      <hr>
+                    </div>
+                    @for (wiki of wikis; track wiki) {
+                    <!--          <div>   -->
+                    <div class="externalLinksText">
                       <span>{{wiki.site}}: </span><a href="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
                     </div>
-          <!--                <br>    -->
-        <!--          </div>   -->
-                }
-                </mat-card-content>
-              </mat-card>
-      <!--              </div> -->
-
-   <!-- ************************************* selected items  ****************************************  --> 
-     <!--         <div>  -->
+                    <!--                <br>    -->
+                    <!--          </div>   -->
+                    }
+                  </mat-card-content>
+                </mat-card>
+                <!--              </div> -->
+                <!-- ************************************* selected items  ****************************************  -->
+                <!--         <div>  -->
                 <mat-card appearance="outlined" class="mat-elevation-z8 ">
                   <div class="itemSelected-mat-card">
                     <mat-card-content>
-                    <div class="selectedListTitle">{{formerVisitsTitle}}</div>
-                    <br>
-                    <div>
+                      <div class="selectedListTitle">{{formerVisitsTitle}}</div>
+                      <br>
+                      <div>
                         <div *ngFor="let selectedItem of selectedItemsList">
                           <div>
-                           <span *ngIf="selectedItem" class="selectedItemText">
+                            <span *ngIf="selectedItem" class="selectedItemText">
                               {{selectedItem.label}}
-                            <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon  [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          </span>
+                              <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
                           </div>
                           <br>
                         </div>
-                    </div>
-                  </mat-card-content>
+                      </div>
+                    </mat-card-content>
                   </div>
                 </mat-card>
-    <!--          </div>  -->
-            
+                <!--          </div>  -->
+
+              </div>
             </div>
-          </div>
         </mat-drawer-content>
       </mat-drawer-container>
     </div>

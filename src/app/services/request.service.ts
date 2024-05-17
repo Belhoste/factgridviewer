@@ -9,6 +9,8 @@ import { saveAs } from 'file-saver-es';
   providedIn: 'root'
 })
 
+
+
 export class RequestService {
 
 //  private baseSearchURL = 'https://www.wikidata.org//w/api.php?action=wbsearchentities&search='
@@ -100,8 +102,6 @@ requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesLi
     } 
     
     result=forkJoin([response0$,response1$,response2$,response3$,response4$,response5$,response6$,response7$]);
-
-    result.subscribe(res => console.log(res));
  
     return result
   
@@ -199,20 +199,31 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
 
   //searchItem(label:string, lang:string): Observable<any> { return this.http.get(this.searchUrl(label,lang))} ;
 
-  getItem(re): Observable<any> { return this.http.get(re).pipe(catchError((err)=> {return of(undefined)})) };
+  getAsk(re): Observable<any> {
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
+    let params = new HttpParams()
+   //  .set('format', "json")
+      .set('origin', "*");
+    let u = this.http.get(re).pipe(catchError((err) => { return of(false) }));
+    return u
+  }
+
+  getItem(re): Observable<any> {
+    return this.http.get(re).pipe(catchError((err) => { return of(undefined) }))
+  };
 
  // selectUrl(re:string) {  let selectUrl = re => re == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
  //    "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q10599&format=json&origin=*" : re  };
 
   
-  getList(sparql:string): Observable<any> {   
+  getList(sparql: string): Observable<any> {
     let u;
     let v;
     if(sparql !== undefined){
     let params = new HttpParams()
        .set('format',"json")
       u= this.http.get(sparql, {
-        params: params}).pipe(catchError((err)=> {return of(undefined)})) 
+        params: params}).pipe(catchError((err)=> {return of([])})) 
       } 
       return u
    }

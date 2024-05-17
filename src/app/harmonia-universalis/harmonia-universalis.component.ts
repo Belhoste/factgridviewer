@@ -9,7 +9,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, switchMap, tap, startWith } from 'rxjs/operators';
@@ -95,8 +95,11 @@ export class HarmoniaUniversalisComponent implements OnInit, AfterViewInit {
   myLang:string = "%20.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22"+this.lang.selectedLang+"%22%2C%22en%22.%20%7D%0A%7D%0A";
 
 
-constructor(private setData:SetDataService, private database:HuDatabaseService, private _liveAnnouncer:LiveAnnouncer, private csv:ArrayToCsvService, private lang:SelectedLangService){
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => { return sortingAccessor.nestedCaseInsensitive(data, sortHeaderId);}
+  constructor(
+  //  private setData: SetDataService,
+    private database: HuDatabaseService, private _liveAnnouncer: LiveAnnouncer, private csv: ArrayToCsvService, private lang: SelectedLangService) {
+
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => { return sortingAccessor.nestedCaseInsensitive(data, sortHeaderId); }
     this.dataSource.filterPredicate = (data, filter: string) => {
       return data.author.label.toLocaleLowerCase().includes(filter) ||
          //    data.author.id.toLocaleLowerCase().includes(filter) ||
@@ -165,13 +168,16 @@ this.dateHeader = "Date"
 
   let u =this.database.sparqlBuilding(this.myLang);
   let dataService = this.database.databaseToDisplay(u);
-  let v = dataService.pipe(map(res => this.database.listFromSparql(res)));
+  let v$ = dataService.pipe(map(res => this.database.listFromSparql(res)));
 
-  this.dataSource$ = combineLatest([this.behavior$, v]).pipe(map(res => {
+  v$.subscribe(res => console.log(res));
+
+  this.dataSource$ = combineLatest([this.behavior$, v$]).pipe(map(res => {
                      this.dataSource.filter = res[0]; this.dataSource.data = res[1];
-                     return this.dataSource }));
+                     return this.dataSource })); 
 
-  this.dataSource$.subscribe( res => { console.log(res.filteredData[0]) } );
+
+  this.dataSource$.subscribe(res => { console.log(res.filteredData[0]) });
 
 
 

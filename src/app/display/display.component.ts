@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy,  ChangeDetectionStrategy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Observable, Subscription, Subject, BehaviorSubject, from, forkJoin, of, EMPTY, timer, combineLatest } from 'rxjs';
+import { Observable, Subscription, Subject, isObservable, BehaviorSubject, from, forkJoin, of, EMPTY, timer, combineLatest, delay } from 'rxjs';
 import {
   switchMap, tap, takeUntil, take
 } from 'rxjs/operators';
-import { SetDataService } from '../services/set-data.service'
+import { RequestService } from '../services/request.service'
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { BackListDetailsService } from '../services/back-list-details.service';
+import { ItemSparqlService } from '../services/item-sparql.service';
 import { HeaderDisplayService } from './services/header-display.service';
 import { PlaceDisplayService } from './services/place-display.service';
 import { OrgDisplayService } from './services/org-display.service';
@@ -17,11 +18,11 @@ import { PersonDisplayService } from './services/person-display.service';
 import { CareerDisplayService } from './services/career-display.service';
 import { SociabilityDisplayService } from './services/sociability-display.service';
 import { SourcesDisplayService } from './services/sources-display.service';
-import { SparqlService } from './services/sparql.service';
 import { EventDisplayService } from './services/event-display.service';
 import { ExternalLinksDisplayService } from './services/external-links-display.service';
 import { IframesDisplayService } from './services/iframes-display.service';
 import { WikiDisplayService } from './services/wiki-display.service';
+import { SetDataService } from '../services/set-data.service'
 import { TranscriptDisplayService } from '../services/transcript-display.service';
 import { BackListService } from '../services/back-list.service';
 import { SetSelectedItemsListService } from '../services/set-selected-items-list.service';
@@ -38,7 +39,10 @@ import { MainDisplayComponent } from './main-display/main-display.component';
 import { EducationDisplayComponent } from './education-display/education-display.component';
 import { SociabilityDisplayComponent } from './sociability-display/sociability-display.component';
 import { SourcesDisplayComponent } from './sources-display/sources-display.component';
-import { SparqlDisplayComponent } from './sparql-display/sparql-display.component';
+import { Sparql0DisplayComponent } from './sparql0-display/sparql0-display.component';
+import { Sparql1DisplayComponent } from './sparql1-display/sparql1-display.component';
+import { Sparql2DisplayComponent } from './sparql2-display/sparql2-display.component';
+//import { Sparql3DisplayComponent } from './sparql3-display/sparql3-display.component';
 import { IframesDisplayComponent } from './iframes-display/iframes-display.component';
 import { TextDisplayComponent } from './text-display/text-display.component';
 import { MatCardModule } from '@angular/material/card';
@@ -58,17 +62,20 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./display.component.scss'],
   //  changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent, SparqlDisplayComponent, ItemInfoComponent,
-    MainDisplayComponent, HeaderDisplayComponent, SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, IframesDisplayComponent, AsyncPipe, JoinPipe, UnitPipe]      
+  imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent,
+    Sparql0DisplayComponent, Sparql1DisplayComponent, Sparql2DisplayComponent,
+ //   Sparql3DisplayComponent,
+    ItemInfoComponent, MainDisplayComponent, HeaderDisplayComponent, SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, IframesDisplayComponent, AsyncPipe, JoinPipe, UnitPipe]      
           
 })
 
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  constructor(private lang: SelectedLangService, private router: Router, private route: ActivatedRoute, private setData: SetDataService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
-    private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
+  constructor(private lang: SelectedLangService, private router: Router, private route: ActivatedRoute, private setData: SetDataService, private request: RequestService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
+    private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private itemSparql: ItemSparqlService , private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
     private personDisplay: PersonDisplayService, private educationDisplay: EducationDisplayService, private careerDisplay: CareerDisplayService, private sociabilityDisplay: SociabilityDisplayService,
-    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript: TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService, private sparql: SparqlService, private sanitizer: DomSanitizer, private observer: BreakpointObserver) { }
+    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript: TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService,
+    private sanitizer: DomSanitizer, private observer: BreakpointObserver) { }
 
     //iframe
   urlSafe1: SafeResourceUrl;
@@ -104,19 +111,34 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   unsafeUrls: any[][];
   iframesNumber: any;
 
-  instancesList:any[]; //
-  subclassesList:any[];
-  classesList:any[];
-  natureOfList:any[];
-  classIds:any[];
 
-  placeType:string ="";
+  instancesList:any[]; // for info
+  subclassesList: any[]; // for info
+  classesList: any[]; // for info
+  natureOfList: any[]; // for info and sparql
+  classIds: any[]; // for info
 
-  sparqlData:any[]//data for a sparql query
+  placeType: string = "";
+
+  sparqlQuery: any[];
+
+  sparqlList: Observable<any>[];
+  sparqlEssay: Observable<[]>;
+
+  sparqlData: any[]; //data from a sparql query
+  sparqlData0: any[]; //data from a sparql query
+  sparqlData1: any[]//data from a sparql query
+  sparqlData2: any[] // data from a sparql query
+
   sparqlSubject: string; //id of the property to which the sparql is related
-  zoom:number //define the zoom for the map
+  sparqlSubject0: string; //id of the property to which the sparql is related
+  sparqlSubject1: string; //id of the property to which the sparql is related
+  sparqlSubject2: string; //id of the property to which the sparql is related
+
+  zoom: number //define the zoom for the map
   
-  query:Observable<any> | undefined; //sparql query
+  query1: Observable<any> | undefined; //sparql query
+  query2: Observable<any> | undefined; //sparql query
   subclassesListQuery:Observable<any> | undefined; //sparql query for list of subclasses
   instancesListQuery:Observable<any> | undefined; //sparql query for list of instances
   classesListQuery:Observable<any> | undefined; // sparql query for list of classes
@@ -195,7 +217,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   mainTitle:string;
   listTitle: string;
   list: any[] = [];
-  sparqlList:any[];
+//  sparqlList:any[];
   superClass:string;
 
   //wiki
@@ -249,14 +271,16 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   isIframes: boolean = false;
   isStemma: boolean = false;
   isFamilyTree: boolean = false;
-  isSparql:boolean = false;
+  isSparql0: boolean = false;
+  isSparql1: boolean = false;
+  isSparql2: boolean = false;
   isTranscription:boolean = false;
   isInfo: boolean = false;
   isMobile: boolean = false;
   isAliases: boolean = false;
 
-  onClick2(query) { //handling click for sparql query
-    query = this.setData.sparqlToDisplay(query);
+  onClick2(query) { //handling click for sparql query (it is not used for the moment)
+    query = this.request.getList(query).pipe(map(res => this.listFromSparql(res)));
     if(query.includes("item")){
     query.subscribe(res => {
       if (res !== undefined) {
@@ -278,7 +302,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onClick3(query) { //handling click for sparql query (download)
-    this.setData.sparqlToDownload(query);
+    query = this.newSparqlAddress(query);
+    this.request.downLoadList(query)
   }
 
   onClick4() { 
@@ -306,11 +331,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
 
     this.isSpinner = true ;
-    this.list = [] ;
-    this.isList = false ;
-    this.sparqlList = [];
-    this.sparqlData = [] ;
-    this.sparqlSubject = "";
+
+    this.list = [];
+    this.isList = false;
+    this.sparqlQuery = [];
+    this.sparqlData1 = [];
+    this.sparqlData2 = [];
+    this.sparqlSubject0 = "";
+    this.sparqlSubject1 = "";
+    this.sparqlSubject2 = "";
     this.trans = "";
     
     this.instancesList = [];
@@ -380,12 +409,14 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             )).
           subscribe(res => { this.linkedItems }
           );
-        this.data = this.setData.itemToDisplay(this.itemId)   //handle item
+        this.data = this.setData.itemToDisplay(this.itemId).pipe(delay(1100))   //handle item
         this.subscription2 = this.data.subscribe(item => {
           this.isMain = false;
           this.isOther = false;
           this.isPicture = false;
-          this.isSparql = false;
+          this.isSparql1 = false;
+          this.isSparql2 = false;
+          this.isSparql0 = false;
           this.isSources = false;
           this.isTraining = false;
           this.isCareer = false;
@@ -398,11 +429,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isInfo = false;
           if (item !== undefined) {
             this.item = item;
-            this.claims = item[0].claims
-            console.log(this.item);
-            console.log(this.claims);
+            this.claims = item[0].claims;
+            console.log(item)
+     //       this.sparqlQuery = item[0].sparql;
             this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
-
             if (this.claims.P2 === undefined) { alert("property P2 undefined") };
             if (this.claims.P320 === undefined) { this.hideList() };
             this.superClass = "";
@@ -410,34 +440,45 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.event = this.claims.P2.event;
             this.listTitle = this.claims.P2.listTitle;
             this.main = this.claims.P2.main;
-            if (this.mainTitle == "Humain") {this.mainTitle = "Personne"};
-            if (this.claims.P2[0].mainsnak.datavalue.value.id ==="Q37073" ||
-             this.claims.P2[0].mainsnak.datavalue.value.id ==="Q257052")
-                 {this.mainTitle = this.lang.activity(this.mainTitle) };
+            if (this.mainTitle == "Humain") { this.mainTitle = "Personne" };
+            if (this.claims.P2[0].mainsnak.datavalue.value.id === "Q37073" ||
+              this.claims.P2[0].mainsnak.datavalue.value.id === "Q257052") { this.mainTitle = this.lang.activity(this.mainTitle) };
             this.urlId = this.factGridUrl + this.id;
+
+      // ************************************************** map ************************************
+
             if (this.claims.P48 !== undefined) {
-
-// ************************************************** map ************************************
-
               this.zoom = 12;
-              let xy= this.claims.P2[0].mainsnak.datavalue.value.id   ;
-              if (xy == "Q176131") { this.zoom = 3 } ;
-              if (xy == "Q21925") { this.zoom = 4 } ;
+              let xy = this.claims.P2[0].mainsnak.datavalue.value.id;
+              if (xy == "Q176131") { this.zoom = 3 };
+              if (xy == "Q21925") { this.zoom = 4 };
               if (xy == "Q21876") { this.zoom = 6 }
-              if (xy == "Q16200") { this.zoom = 18 } ;
-              if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380" || xy == "Q375357") {this.zoom = 16 }
+              if (xy == "Q16200") { this.zoom = 18 };
+              if (xy == "Q266101" || xy == "Q469609" || xy == "Q172249" || xy == "Q36239" || xy == "Q164328" || xy == "Q36251" || xy == "Q141472" || xy == "Q395380" || xy == "Q375357") { this.zoom = 16 }
               this.coords = this.claims.P48[0].mainsnak.datavalue.value;
               this.latitude = this.claims.P48[0].mainsnak.datavalue.value.latitude;
               this.longitude = this.claims.P48[0].mainsnak.datavalue.value.longitude;
               this.router.navigate([this.latitude, this.longitude, this.zoom], { relativeTo: this.route });
             }
 
-// ******************************** end of map *******************************
+            // ******************************** end of map *******************************
 
             this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
 
+
+            /************************************** sparql ********************************************************************** */
+       
+        if(this.item[0].sparql ===undefined)  setTimeout (() => {
+            this.sparqlDisplay(this.item[0].sparql);}, 1200) ;
+
+        if (this.item[0].sparql !== undefined) { 
+                this.sparqlDisplay(this.item[0].sparql);
+         }
+
+            //  ****************************info lists *********************************************
+
             if (this.item[0].infoList !== undefined) {
-             
+
               this.instancesList = this.item[0].infoList[0];
               this.subclassesList = this.item[0].infoList[1];
               this.classesList = this.item[0].infoList[2];
@@ -446,18 +487,17 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (this.classesList.length !== undefined || this.subclassesList.length !== undefined || this.instancesList.length !== undefined) { this.isInfo = true };
 
+            /************************************** header ********************************************************************** */
             ///header
 
             this.id = this.item[0].id;
             this.label = this.item[0].label;
             this.description = this.item[0].description;
             this.aliases = this.item[0].aliases;
-            if (this.aliases) {  this.isAliases === true  };
+            if (this.aliases) { this.isAliases === true };
             this.headerDetail = [];
 
             this.headerDisplay.setHeaderDisplay(this.item, this.headerDetail);
-            console.log(this.headerDetail);
-
 
             //  if (this.item[0].claims.P2 !== undefined) {
 
@@ -473,7 +513,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             //person: life and family
 
-           this.lifeAndFamily = []
+            this.lifeAndFamily = []
 
             if (this.claims.P2.person !== undefined) {
               this.personDisplay.setPersonDisplay(this.item, this.lifeAndFamily);
@@ -485,9 +525,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.training = "";
 
             if (this.claims.P2.person !== undefined) {
-               this.educationDisplay.setEducationDisplay(this.item, this.education);
-               if (this.education.length > 0) { this.training = this.claims.P2.training; this.isTraining = true };
-              }
+              this.educationDisplay.setEducationDisplay(this.item, this.education);
+              if (this.education.length > 0) { this.training = this.claims.P2.training; this.isTraining = true };
+            }
 
             //person:career and activities
 
@@ -495,9 +535,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.career = "";
             if (this.claims.P2.person !== undefined) {
               this.careerDisplay.setCareerDisplay(this.item, this.careerAndActivities);
-              if (this.careerAndActivities.length > 0) { 
-                this.career = this.claims.P2.career; 
-                this.isCareer = true };
+              if (this.careerAndActivities.length > 0) {
+                this.career = this.claims.P2.career;
+                this.isCareer = true
+              };
             }
 
             //person: sociability and culture
@@ -512,51 +553,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               }
             }
 
-          ///sparql queries
             
-            this.sparqlSubject = "";
-            this.sparqlData = [];
-            let natureOfIds= Array.from(this.natureOfList, (x) => x.item.id) //create an array with the ids of its classes and the superclasses of its classes in the class hierarchy
 
-            if (natureOfIds.includes("Q12")) { this.natureOf = "Q12" };
-
-            if (this.natureOf == "Q12" || "Q24499" || "Q37073" || "Q146602" || "Q146410" || "Q8" || "Q37131" || "Q16200" || "Q173005" || "Q257052" || "Q20") {
-              if (natureOfIds.includes("Q8") && natureOfIds.includes("Q12")) { this.natureOf = "Q8"};
-              if (this.natureOf == "Q12" && this.claims.P320) { this.natureOf = "" };
-              let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.item[0].id);
-              if (sparqlQuery) {  this.query = this.setData.sparqlToDisplay(sparqlQuery); }
-              this.subscription4 = this.query?.pipe(take(1)).subscribe(res => {
-                this.sparqlData = this.sparql.listFromSparql(res);
-                this.sparqlSubject = this.natureOf;
-                if (this.sparqlData.length > 0) { 
-                  }
-                  this.isSparql = true;
-                }
-              )
-            }
-
-           if (this.natureOf == "Q7") {
-                if(this.claims.P165 !==undefined){
-                 for (let i = 0; i < this.item[0].claims.P165.length; i++) {
-                     if(this.claims.P165[i].mainsnak.datavalue.value.id !== "Q23190") break;
-                     if (this.claims.P165[i].mainsnak.datavalue.value.id == "Q23190") {
-                       let sparqlQuery = this.sparql.sparqlBuilding(this.natureOf, this.claims.P165[i].mainsnak.datavalue.value.id);
-                      this.query = this.setData.sparqlToDisplay(sparqlQuery);
-                      this.subscription4 = this.query?.subscribe(res => {
-                      this.sparqlData = this.sparql.listFromSparql(res);
-                      this.sparqlSubject = this.claims.P165[i].mainsnak.datavalue.value.id;
-                    if (this.sparqlData.length > 0) {
-                      this.isSparql = true;
-                      }
-                    }
-                  )
-                     
-                     }       
-                   }    
-                 }   
-               }
-
-            this.isSparql = false;
 
                
         ///pictures
@@ -635,8 +633,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.iframesDisplay.setIframesDisplay(this.item, this.iframes); // to prevent display of the sparql queries and to populate the array iframe
            // console.log(this.iframesDisplay);
 
-            console.log(this.iframes);
-
             if (this.iframes.length > 0) { this.isIframes = true };
 
             if (this.claims.P309 !== undefined) {
@@ -710,8 +706,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
               this.isMain = true;
            }
 
-
-           
             //wikis
 
             this.wikis = [];
@@ -722,7 +716,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
           // transcription
           
-          if (this.claims.P251 !== undefined) { 
+         if (this.claims.P251 !== undefined) { 
             if(this.claims.P251[0].mainsnak.datavalue.value !== undefined){
             let a = this.transcript.transcript(this.claims.P251[0].mainsnak.datavalue.value);
             this.subscription3 = a.subscribe(res =>{ 
@@ -734,9 +728,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           }  
         }
 
+
         if (this.claims.P251 === undefined) { 
             this.trans="";
         }
+
+        
         
           //spinner
 
@@ -761,6 +758,42 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
      )
    }
 
+   
+
+     sparqlDisplay(u){ console.log(u)
+     if (u[0] !== undefined) {
+                this.sparqlSubject0 = u[0][0];
+                this.sparqlData0 = u[0][1];
+                if (this.sparqlData0 !== undefined) {
+                  if(this.sparqlData0[0] !== undefined) {
+                      this.isSparql0 = true ;
+                  }
+                }
+              }
+        if (u[1] !== undefined) {
+                this.sparqlSubject1 = u[1][0];
+                this.sparqlData1 = u[1][1];
+               if (this.sparqlData1 !== undefined) {
+                  if(this.sparqlData1[0] !== undefined) {
+                      this.isSparql1 = true ;
+                  }
+                }    
+              }
+
+              if (u[2] !== undefined) {
+                this.sparqlSubject2 = u[2][0];
+                this.sparqlData2 = u[2][1];
+                 if (this.sparqlData2 !== undefined) {
+                   if(this.sparqlData2[0] !== undefined) {
+                      this.isSparql2 = true ;
+                  }
+                }          
+              }  
+           }
+
+
+ //  sparqlPromesse = new Promise
+
 
   qualifiersList(u) { //setting the list of qualifiers for a mainsnak
     for (let i = 0; i < u.length; i++) {
@@ -778,6 +811,27 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     if (document.getElementById("listing") != null) {
       document.getElementById("listing").style.visibility = 'hidden';
     }
+  }
+
+  newSparqlAddress(address: string): string {
+
+    const newPrefix = "https://database.factgrid.de/sparql?query=";
+    let oldPrefix = "https://database.factgrid.de/query/#";
+    if (address.includes('embed.html')) { oldPrefix = "https://database.factgrid.de/query/embed.html#" };
+    if (address !== undefined) address = address.replace(oldPrefix, newPrefix);
+    return address
+  }
+
+  listFromSparql(res) {
+    if (res !== undefined) {
+      if (res.results !== undefined) {
+        for (let i = 0; i < res.results.bindings.length; i++) {
+          res.results.bindings[i]["item"].id = res.results.bindings[i]["item"].value.replace(
+            "https://database.factgrid.de/entity/", "");
+        };
+      }
+    }
+    return res.results.bindings
   }
 
   getUrl(u) { return this.sanitizer.bypassSecurityTrustUrl(u) }

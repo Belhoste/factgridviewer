@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SparqlService } from './sparql.service';
+import { ItemSparqlService } from './item-sparql.service';
 
-describe('SparqlService', () => {
-  let service: SparqlService;
+describe('ItemSparqlService', () => {
+  let service: ItemSparqlService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SparqlService);
+    service = TestBed.inject(ItemSparqlService);
   });
 
   it('should be created', () => {

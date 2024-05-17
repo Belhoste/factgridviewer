@@ -112,11 +112,10 @@ export class ItemInfoComponent implements OnChanges {
 
     if(changes.subclassesList && changes.subclassesList.currentValue){        
       this.list1 =  this.subclassesList;
-    //  console.log(this.list1);
       }
 
     if(changes.instancesList && changes.instancesList.currentValue){            
-      this.list2=this.instancesList;
+      this.list2 = this.instancesList;
       }
 
     if(changes.classesList && changes.classesList.currentValue){            
