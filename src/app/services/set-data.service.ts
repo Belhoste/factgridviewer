@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { SetLanguageService } from './set-language.service';
 import { SelectedLangService } from '../selected-lang.service';
 import { RequestService } from './request.service';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map, tap, takeWhile } from 'rxjs/operators';
 import { Observable, Subject, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { CreateCompleteItemService } from './create-complete-item.service';
 import { CreateItemToDisplayService } from './create-item-to-display.service';
@@ -30,7 +30,8 @@ getUrlSuffix= '&format=json&origin=*' ;
     let url = this.baseGetURL + id + this.getUrlSuffix;
     let completeItem = this.request.getItem(url).pipe( // get the item
       map(res => res = Object.values(res.entities)),
-      switchMap(res => completeItem = this.createCompleteItem.completeItem(res)));
+      switchMap(res => completeItem = this.createCompleteItem.completeItem(res)),
+    );
       return completeItem
   }
 
@@ -44,8 +45,8 @@ getUrlSuffix= '&format=json&origin=*' ;
   }
    
   sparqlToDisplay(sparql) {
- let sparqlResult:Observable<any> | undefined;
-   if(sparql.includes("item")){
+      let sparqlResult:Observable<any> | undefined;
+      if(sparql.includes("item")){
     let selectedSparql = this.newSparqlAdress(sparql); //handle sparql queries 1. create the address 
     sparqlResult = this.request.getList(selectedSparql);
       //handle sparql queries 2. list ready to display  

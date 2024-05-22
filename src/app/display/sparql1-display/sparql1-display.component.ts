@@ -91,7 +91,6 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
    databaseToDownload(data){
       let dataToDownload:any[][] = [ ["item.id","item.label","item.description"] ];
       for (let i=0; i<data.length; i++){ dataToDownload[i+1] = [data[i].item.value, data[i].itemLabel.value, data[i].itemDescription.value] } 
-       console.log(dataToDownload);
       return dataToDownload
      }
 

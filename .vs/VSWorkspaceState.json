@@ -5,12 +5,10 @@
     "\\src\\app",
     "\\src\\app\\display",
     "\\src\\app\\display\\item-info",
-    "\\src\\app\\display\\services",
-    "\\src\\app\\display\\sparql-display",
-    "\\src\\app\\display\\sparql2-display",
-    "\\src\\app\\search",
-    "\\src\\app\\services"
+    "\\src\\app\\display\\sparql1-display",
+    "\\src\\app\\harmonia-universalis",
+    "\\src\\app\\search"
   ],
-  "SelectedNode": "\\src\\app\\services\\create-item-to-display.service.ts",
+  "SelectedNode": "\\src\\app\\display\\sparql1-display\\sparql1-display.component.ts",
   "PreviewInSolutionExplorer": false
 }

@@ -358,6 +358,15 @@ instancesListTitle_50(u) {  // sparql-display
     return u
   }
 
+  setTitle(u) {  // sparql1-display component
+    if (this.selectedLang === "de") { u = "Erhalten:" };
+    if (this.selectedLang === "fr") { u = "Inclus :" };
+    if (this.selectedLang === "es") { u = "Incluye:" };
+    if (this.selectedLang === "it") { u = "Include:" };
+    if (this.selectedLang === "hu") { u = "Tartalmazza:" };
+    return u
+  }
+
 
 
 /*

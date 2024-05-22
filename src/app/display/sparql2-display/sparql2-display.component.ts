@@ -32,6 +32,7 @@ export class Sparql2DisplayComponent implements OnChanges, OnDestroy {
   isWorks: boolean = false;
   pupilTitle: string = "Pupils and disciples";
   listTitle: string = "List";
+  setTitle: string = "Include:";
   query:string;
   listWithoutDuplicate:any[];
 
@@ -60,19 +61,27 @@ export class Sparql2DisplayComponent implements OnChanges, OnDestroy {
     }
     if (changes.sparqlSubject && changes.sparqlSubject.currentValue) {
       this.subTitle = this.sparqlSubject;
+      console.log(this.subTitle);
 
 
       if (this.subTitle == "master") {  //pupils and disciples
         this.isWorks = true;
         this.subTitle = this.lang.pupilTitle(this.pupilTitle);
       } else {
-        if (this.subTitle = "Q172192") { //list
+        if (this.subTitle == "Q945258") { //set
+          console.log(this.subTitle);
           this.isWorks = true;
-          this.subTitle = this.lang.listTitle(this.listTitle);
-        }
-        else {
-          this.subTitle = "";
-          this.list = [];
+          this.subTitle = this.lang.setTitle(this.setTitle);
+        } else {
+          if (this.subTitle == "Q172192") { //list
+            console.log(this.subTitle);
+            this.isWorks = true;
+            this.subTitle = this.lang.listTitle(this.listTitle);
+          }
+          else {
+            this.subTitle = "";
+            this.list = [];
+          }
         }
       }
     }
@@ -97,7 +106,6 @@ export class Sparql2DisplayComponent implements OnChanges, OnDestroy {
   databaseToDownload(data){
       let dataToDownload:any[][] = [ ["item.id","item.label","item.description"] ];
       for (let i=0; i<data.length; i++){ dataToDownload[i+1] = [data[i].item.value, data[i].itemLabel.value, data[i].itemDescription.value] } 
-       console.log(dataToDownload);
       return dataToDownload
      }
 

@@ -54,15 +54,10 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
 
     if (changes.sparqlData && changes.sparqlData.currentValue) {
       if (this.sparqlData[0] !== undefined) { this.isList = true };
-
-      console.log(changes.sparqlData.currentValue);
-    
        changes.sparqlData.currentValue.forEach( function (el) {
          if(el.itemDescription === undefined) { el.itemText = el.itemLabel.value }
          else el.itemText = el.itemLabel.value + el.itemDescription.value
        })
-
-       
 
       this.listWithoutDuplicate = [...new Map(changes.sparqlData.currentValue.reverse().map(v => [JSON.stringify([v.itemText]), v])).values()].reverse();  // remove the duplicates 
 
@@ -146,7 +141,6 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
    databaseToDownload(data){
       let dataToDownload:any[][] = [ ["item.id","item.label","item.description"] ];
       for (let i=0; i<data.length; i++){ dataToDownload[i+1] = [data[i].item.id, data[i].itemLabel.value, data[i].itemDescription.value] } 
-       console.log(dataToDownload);
       return dataToDownload
      }
 

@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy,  ChangeDetectionStrategy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Observable, Subscription, Subject, isObservable, BehaviorSubject, from, forkJoin, of, EMPTY, timer, combineLatest, delay } from 'rxjs';
-import {
-  switchMap, tap, takeUntil, take
-} from 'rxjs/operators';
+import {  switchMap, tap, takeUntil, take } from 'rxjs/operators';
 import { RequestService } from '../services/request.service'
 import { map } from 'rxjs/operators';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
@@ -42,7 +40,6 @@ import { SourcesDisplayComponent } from './sources-display/sources-display.compo
 import { Sparql0DisplayComponent } from './sparql0-display/sparql0-display.component';
 import { Sparql1DisplayComponent } from './sparql1-display/sparql1-display.component';
 import { Sparql2DisplayComponent } from './sparql2-display/sparql2-display.component';
-//import { Sparql3DisplayComponent } from './sparql3-display/sparql3-display.component';
 import { IframesDisplayComponent } from './iframes-display/iframes-display.component';
 import { TextDisplayComponent } from './text-display/text-display.component';
 import { MatCardModule } from '@angular/material/card';
@@ -360,9 +357,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   
     this.subscription0 = this.route.paramMap.subscribe(
       params => {
-    //    console.log(params);
         this.itemId = params.get('id'),
-      //  console.log(this.itemId);
         this.subscription1 = this.backList.backList(this.itemId, this.lang.selectedLang). //handle backList
           pipe(
             map(res => {
@@ -409,7 +404,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             )).
           subscribe(res => { this.linkedItems }
           );
-        this.data = this.setData.itemToDisplay(this.itemId).pipe(delay(1100))   //handle item
+        this.data = this.setData.itemToDisplay(this.itemId); //handle item
         this.subscription2 = this.data.subscribe(item => {
           this.isMain = false;
           this.isOther = false;
@@ -431,7 +426,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.item = item;
             this.claims = item[0].claims;
             console.log(item)
-     //       this.sparqlQuery = item[0].sparql;
             this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
             if (this.claims.P2 === undefined) { alert("property P2 undefined") };
             if (this.claims.P320 === undefined) { this.hideList() };
@@ -468,12 +462,11 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
             /************************************** sparql ********************************************************************** */
        
-        if(this.item[0].sparql ===undefined)  setTimeout (() => {
-            this.sparqlDisplay(this.item[0].sparql);}, 1200) ;
 
-        if (this.item[0].sparql !== undefined) { 
-                this.sparqlDisplay(this.item[0].sparql);
-         }
+              this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
+
+           // console.log(this.item[0].sparql)
+
 
             //  ****************************info lists *********************************************
 
@@ -552,10 +545,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.isSociability = true
               }
             }
-
-            
-
-
                
         ///pictures
 
@@ -631,7 +620,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.iframes = []; //list of iframes
 
             this.iframesDisplay.setIframesDisplay(this.item, this.iframes); // to prevent display of the sparql queries and to populate the array iframe
-           // console.log(this.iframesDisplay);
 
             if (this.iframes.length > 0) { this.isIframes = true };
 
@@ -733,8 +721,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
             this.trans="";
         }
 
-        
-        
           //spinner
 
           this.isSpinner = false;
@@ -758,41 +744,41 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
      )
    }
 
-   
-
-     sparqlDisplay(u){ console.log(u)
-     if (u[0] !== undefined) {
-                this.sparqlSubject0 = u[0][0];
-                this.sparqlData0 = u[0][1];
+   sparqlDisplay(u){
+     
+       if (u){
+         if (u[0]) {
+            this.sparqlSubject0 = u[0][0];
+            this.sparqlData0 = u[0][1];
                 if (this.sparqlData0 !== undefined) {
                   if(this.sparqlData0[0] !== undefined) {
                       this.isSparql0 = true ;
                   }
-                }
-              }
-        if (u[1] !== undefined) {
-                this.sparqlSubject1 = u[1][0];
-                this.sparqlData1 = u[1][1];
+               }
+        }
+
+         if (u[1] !== undefined) {
+
+           this.sparqlSubject1 = u[1][0];
+           this.sparqlData1 = u[1][1];
                if (this.sparqlData1 !== undefined) {
                   if(this.sparqlData1[0] !== undefined) {
                       this.isSparql1 = true ;
                   }
-                }    
-              }
+               }    
+        }
 
-              if (u[2] !== undefined) {
-                this.sparqlSubject2 = u[2][0];
-                this.sparqlData2 = u[2][1];
-                 if (this.sparqlData2 !== undefined) {
-                   if(this.sparqlData2[0] !== undefined) {
+        if (u[2] !== undefined) {
+           this.sparqlSubject2 = u[2][0];
+           this.sparqlData2 = u[2][1];
+              if (this.sparqlData2 !== undefined) {
+                 if(this.sparqlData2[0] !== undefined) {
                       this.isSparql2 = true ;
-                  }
-                }          
-              }  
-           }
-
-
- //  sparqlPromesse = new Promise
+                 }
+              }          
+        }  
+       }
+     }
 
 
   qualifiersList(u) { //setting the list of qualifiers for a mainsnak

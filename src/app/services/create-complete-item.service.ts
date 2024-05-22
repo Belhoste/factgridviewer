@@ -24,12 +24,4 @@ export class CreateCompleteItemService {
 
   return u
   }
-
-     
-
- 
-
-  
-
-
 }
