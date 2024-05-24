@@ -31,15 +31,6 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
   instancesListTitle_50 = "Instances (limit: 50):";
   subclassesListTitle = "Subclasses:";
   isWorks:boolean=false ;
-  buildingTitle:string = "Buildings and monuments:" ;
-  familyNameTitle:string = "Bearing this family name:" ;
-  contextTitle:string = "Present in this context:" ;
-  organisationTitle:string = "Members:" ;
-  activityTitle:string = "With this activity:" ;
-  addressTitle:string ="Domiciled at this address:" ;
-  workTitle: string = "Works";
-  pupilTitle: string = "Pupils and disciples";
-  listTitle: string = "List";
   query:string;
   listWithoutDuplicate:any[];
   
@@ -51,6 +42,7 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
    this.query = "";
    this.isWorks = false;
    this.isList = false;
+   this.isSearch = false;
 
     if (changes.sparqlData && changes.sparqlData.currentValue) {
       if (this.sparqlData[0] !== undefined) { this.isList = true };
@@ -65,60 +57,21 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
 
       if(this.list.length > 15) this.isSearch = true;
      
-    }
+    } 
   
     if (changes.sparqlSubject && changes.sparqlSubject.currentValue) {
       this.subTitle = this.sparqlSubject;
           
-    if(this.subTitle == "Q8"){  //location
+      if (this.subTitle == "Q945280"){  //location
       this.isWorks=true; 
-      this.subTitle = this.lang.buildingTitle(this.buildingTitle);
+      this.subTitle = this.lang.subclassesListTitle(this.subclassesListTitle);
       }
-      else {
-        if(this.subTitle == "Q24499"){ //family name
-          this.isWorks=false; 
-         this.subTitle = this.lang.familyNameTitle(this.familyNameTitle);
-          }
-          else { 
-             if (this.subTitle == "Q12") { //organisation
-              this.isWorks=false;
-              if(this.list[0] && this.list[0].activity){  // people active in this organisation
-                  this.subTitle = this.lang.activityTitle(this.activityTitle);
-              }
-              else {   //people members of this organisation
-                this.isWorks = true;
-                 this.subTitle = this.lang.organisationTitle(this.organisationTitle);
-                }
-              }
-            else { if(this.subTitle == "Q37073"){ //activity
-               this.isWorks = true; 
-               this.subTitle = this.lang.activityTitle(this.activityTitle);
-              }
-             else {
-               if (this.subTitle == "Q16200") {  //address
-                 this.isWorks = true; 
-                  this.subTitle = this.lang.addressTitle(this.addressTitle);
-                 }  
-             else {
-                 if (this.subTitle == "Q456376") { //author
-                   this.isWorks = true; 
-                  this.subTitle = this.lang.workTitle(this.workTitle);
-                 }
-               else {
-                   if (this.subTitle = "Q172192") { //list
-                     this.isWorks = true; 
-                   this.subTitle = this.lang.listTitle(this.listTitle);
-               }
+     
                  else {
                       this.subTitle = "";
                       this.list =[]; }
                       }
-                    }   
-                  }
-                } 
-             }     
-           }
-      }
+          
   }
 
   applyFilter(event) {
@@ -149,7 +102,9 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
         this.sparqlSubject = "";
         this.sparqlData = "";
         this.list = [];
-        this.query ="";
+        this.query = "";
+        this.isSearch = false;
+        this.isList = false;
     }
   } 
    

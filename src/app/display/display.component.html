@@ -154,57 +154,62 @@
               </div>
 
               <!-- ************************************* sparql0 **************************************** -->
-              <div [ngClass]="isSparql0 ? 'show-division':'hide-division'">
-                <app-sparql0-display [sparqlData]="this.sparqlData0" [sparqlSubject]="this.sparqlSubject0"></app-sparql0-display>
-              </div>
+            <div [ngClass]="isSparql0 ? 'show-division':'hide-division'">
+              <app-sparql0-display [sparqlData]="this.sparqlData0" [sparqlSubject]="this.sparqlSubject0"></app-sparql0-display>
+            </div>
 
-              <!-- ************************************* sparql1 **************************************** -->
-              <div [ngClass]="isSparql1 ? 'show-division':'hide-division'">
-                <mat-card appearance="outlined" class=mat-elevation-z12>
-                  <app-sparql1-display [sparqlData]="this.sparqlData1" [sparqlSubject]="this.sparqlSubject1"></app-sparql1-display>
-                </mat-card>
-              </div>
+            <!--      ************************************* sparql1 **************************************** -->
+            <div [ngClass]="isSparql1 ? 'show-division':'hide-division'">
+              <mat-card appearance="outlined" class=mat-elevation-z12>
+                <app-sparql1-display [sparqlData]="this.sparqlData1" [sparqlSubject]="this.sparqlSubject1"></app-sparql1-display>
+              </mat-card>
+            </div>
 
-              <!-- ************************************* sparql2 **************************************** -->
-              <div [ngClass]="isSparql2 ? 'show-division':'hide-division'">
-                <app-sparql2-display [sparqlData]="this.sparqlData2" [sparqlSubject]="this.sparqlSubject2"></app-sparql2-display>
-              </div>
+            <!-- ************************************* sparql2 **************************************** -->
+            <div [ngClass]="isSparql2 ? 'show-division':'hide-division'">
+              <app-sparql2-display [sparqlData]="this.sparqlData2" [sparqlSubject]="this.sparqlSubject2"></app-sparql2-display>
+            </div>
 
-              <!-- ******************************* section Sources ****************************************  -->
+            <!-- ************************************* sparql3 **************************************** -->
+            <div [ngClass]="isSparql3 ? 'show-division':'hide-division'">
+              <app-sparql3-display [sparqlData]="this.sparqlData3" [sparqlSubject]="this.sparqlSubject3"></app-sparql3-display>
+            </div>
 
-              <div [ngClass]="isSources ? 'show-division':'hide-division'">
-                <mat-card appearance="outlined" class=mat-elevation-z12>
-                  <app-sources-display [sourcesList]="this.sourcesList" [sources]="this.sources"></app-sources-display>
-                </mat-card>
-              </div>
+            <!-- ******************************* section Sources ****************************************  -->
 
-              <!--  ************************************* sparql3 ****************************************
+            <div [ngClass]="isSources ? 'show-division':'hide-division'">
+              <mat-card appearance="outlined" class=mat-elevation-z12>
+                <app-sources-display [sourcesList]="this.sourcesList" [sources]="this.sources"></app-sources-display>
+              </mat-card>
+            </div>
+
+            <!--  ************************************* sparql3 ****************************************
   <div class="matCardPadding" [ngClass]="isSparql0 ? 'show-division':'hide-division'">
     <mat-card appearance="outlined" class=mat-elevation-z12>
       <app-sparql3-display [item]="this.item"></app-sparql3-display>
     </mat-card>
   </div>-->
-              <!-- ******************************* Info ****************************************  -->
-              <mat-card appearance="outlined" class=mat-elevation-z12>
-                <div>
-                  <div class="ground-div2">
-                    @if (isInfo===false) {
-                    <div class="mat-button.mat-small">
-                      <button mat-icon-button (click)="onClick4()" class="icon whiteText"><mat-icon class="icon whiteButton">expand_less</mat-icon></button>
-                    </div>
-                    }
-                    @if (isInfo===true) {
-                    <div class="icon" class="mat-button.mat-small">
-                      <button mat-icon-button (click)="onClick5()" class="whiteText"><mat-icon class="whiteButton">expand_more</mat-icon></button>
-                    </div>
-                    }
+            <!-- ******************************* Info ****************************************  -->
+            <mat-card appearance="outlined" class=mat-elevation-z12>
+              <div>
+                <div class="ground-div2">
+                  @if (isInfo===false) {
+                  <div class="mat-button.mat-small">
+                    <button mat-icon-button (click)="onClick4()" class="icon whiteText"><mat-icon class="icon whiteButton">expand_less</mat-icon></button>
                   </div>
-                  <div class="ground-div2" [ngClass]="isInfo ? 'hide-division':'show-division'">
-                    <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
+                  }
+                  @if (isInfo===true) {
+                  <div class="icon" class="mat-button.mat-small">
+                    <button mat-icon-button (click)="onClick5()" class="whiteText"><mat-icon class="whiteButton">expand_more</mat-icon></button>
                   </div>
+                  }
                 </div>
-              </mat-card>
-            </div>
+                <div class="ground-div2" [ngClass]="isInfo ? 'hide-division':'show-division'">
+                  <app-item-info [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
+                </div>
+              </div>
+            </mat-card>
+          </div>
 
               <!-- ****************************************** Pictures ****************************************  -->
               <div class="child2">

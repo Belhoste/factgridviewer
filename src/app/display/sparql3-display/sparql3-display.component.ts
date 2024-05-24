@@ -11,15 +11,16 @@ import { SelectedLangService } from '../../selected-lang.service';
 import { ArrayToCsvService } from '../../services/array-to-csv.service';
 
 
+
 @Component({
-  selector: 'app-sparql1-display',
-  templateUrl: 'sparql1-display.component.html',
-  styleUrls: ['sparql1-display.component.scss'],
+  selector: 'app-sparql3-display',
   standalone: true,
+  imports: [MatCardModule, NgClass, NgFor, NgIf, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
+  templateUrl: './sparql3-display.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatCardModule, NgClass, NgFor, NgIf, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule]
+  styleUrl: './sparql3-display.component.scss'
 })
-export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
+export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
 
   @Input() sparqlSubject;
   @Input() sparqlData;
@@ -28,21 +29,12 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
   isList: boolean = false;
   isSearch: boolean = false;
   subTitle: string = "";
-  instancesListTitle_50 = "Instances (limit: 50):";
-  subclassesListTitle = "Subclasses:";
   isWorks: boolean = false;
-  buildingTitle: string = "Buildings and monuments:";
-  familyNameTitle: string = "Bearing this family name:";
-  contextTitle: string = "Present in this context:";
-  organisationTitle: string = "Members:";
-  activityTitle: string = "With this activity:";
-  addressTitle: string = "Domiciled at this address:";
-  workTitle: string = "Works";
   pupilTitle: string = "Pupils and disciples";
   listTitle: string = "List";
+  setTitle: string = "Include:";
   query: string;
   listWithoutDuplicate: any[];
-
 
   constructor(private lang: SelectedLangService, private csv: ArrayToCsvService) { }
 
@@ -51,9 +43,12 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
     this.query = "";
     this.isWorks = false;
     this.isList = false;
+    this.isSearch = false;
 
     if (changes.sparqlData && changes.sparqlData.currentValue) {
+
       if (this.sparqlData[0] !== undefined) { this.isList = true };
+
       changes.sparqlData.currentValue.forEach(function (el) {
         if (el.itemDescription === undefined) { el.itemText = el.itemLabel.value }
         else el.itemText = el.itemLabel.value + el.itemDescription.value
@@ -63,64 +58,32 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
 
       this.list = this.listWithoutDuplicate;
 
-      if (this.list.length > 15) this.isSearch = true;
+      if (this.list.length > 15) this.isSearch = true
 
     }
-
     if (changes.sparqlSubject && changes.sparqlSubject.currentValue) {
       this.subTitle = this.sparqlSubject;
 
-      if (this.subTitle == "Q8") {  //location
+      if (this.subTitle == "master") {  //pupils and disciples
         this.isWorks = true;
-        this.subTitle = this.lang.buildingTitle(this.buildingTitle);
-      }
-      else {
-        if (this.subTitle == "Q24499") { //family name
-          this.isWorks = false;
-          this.subTitle = this.lang.familyNameTitle(this.familyNameTitle);
-        }
-        else {
-          if (this.subTitle == "Q12") { //organisation
-            this.isWorks = false;
-            if (this.list[0] && this.list[0].activity) {  // people active in this organisation
-              this.subTitle = this.lang.activityTitle(this.activityTitle);
-            }
-            else {   //people members of this organisation
-              this.isWorks = true;
-              this.subTitle = this.lang.organisationTitle(this.organisationTitle);
-            }
+        this.subTitle = this.lang.pupilTitle(this.pupilTitle);
+      } else {
+        if (this.subTitle == "Q945258") { //set
+          this.isWorks = true;
+          this.subTitle = this.lang.setTitle(this.setTitle);
+        } else {
+          if (this.subTitle == "Q172192") { //list
+            this.isWorks = true;
+            this.subTitle = this.lang.listTitle(this.listTitle);
           }
-          else {
-            if (this.subTitle == "Q37073") { //activity
-              this.isWorks = true;
-              this.subTitle = this.lang.activityTitle(this.activityTitle);
-            }
             else {
-              if (this.subTitle == "Q16200") {  //address
-                this.isWorks = true;
-                this.subTitle = this.lang.addressTitle(this.addressTitle);
-              }
-              else {
-                if (this.subTitle == "Q456376") { //author
-                  this.isWorks = true;
-                  this.subTitle = this.lang.workTitle(this.workTitle);
-                }
-                else {
-                  if (this.subTitle = "Q172192") { //list
-                    this.isWorks = true;
-                    this.subTitle = this.lang.listTitle(this.listTitle);
-                  }
-                  else {
-                    this.subTitle = "";
-                    this.list = [];
-                  }
-                }
-              }
+              this.subTitle = "";
+              this.list = [];
             }
           }
         }
       }
-    }
+    
   }
 
   applyFilter(event) {
@@ -139,13 +102,11 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
     this.csv.downloadBlob(v, "factGrid", "text/csv;charset=utf-8;")
   }
 
-
   databaseToDownload(data) {
     let dataToDownload: any[][] = [["item.id", "item.label", "item.description"]];
-    for (let i = 0; i < data.length; i++) { dataToDownload[i + 1] = [data[i].item.id, data[i].itemLabel.value, data[i].itemDescription.value] }
+    for (let i = 0; i < data.length; i++) { dataToDownload[i + 1] = [data[i].item.value, data[i].itemLabel.value, data[i].itemDescription.value] }
     return dataToDownload
   }
-
 
   ngOnDestroy(): void {
     this.sparqlSubject = "";
@@ -155,8 +116,5 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
     this.isSearch = false;
     this.isList = false;
   }
-}
 
-
-
-
+} 

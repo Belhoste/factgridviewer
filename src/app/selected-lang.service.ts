@@ -184,10 +184,10 @@ export class SelectedLangService {
 
  instancesListTitle(u) {  // component info
     if (this.selectedLang === "de") { u = "Instanzen (Limit: 200):"; };
-    if (this.selectedLang === "fr") { u = "instances (limite: 200):" };
-    if (this.selectedLang === "es") { u = "entidades (limite: 200):" };
-    if (this.selectedLang === "it") { u = "entità (limite: 200):" };
-    if (this.selectedLang === "hu") { u = "entitások (korlát: 200):" };
+    if (this.selectedLang === "fr") { u = "Instances (limite: 200):" };
+    if (this.selectedLang === "es") { u = "Entidades (limite: 200):" };
+    if (this.selectedLang === "it") { u = "Entità (limite: 200):" };
+    if (this.selectedLang === "hu") { u = "Entitások (korlát: 200):" };
        return u
     }
 
@@ -195,39 +195,39 @@ export class SelectedLangService {
 
 instancesListTitle_50(u) {  // sparql-display 
     if (this.selectedLang === "de") { u = "Instanzen (Limit: 50):"; };
-    if (this.selectedLang === "fr") { u = "instances (limite: 50):" };
-    if (this.selectedLang === "es") { u = "entidades (limite: 50):" };
-    if (this.selectedLang === "it") { u = "entità (limite: 50):" };
-    if (this.selectedLang === "hu") { u = "entitások (korlát: 50):" };
+    if (this.selectedLang === "fr") { u = "Instances (limite: 50):" };
+    if (this.selectedLang === "es") { u = "Entidades (limite: 50):" };
+    if (this.selectedLang === "it") { u = "Entità (limite: 50):" };
+    if (this.selectedLang === "hu") { u = "Entitások (korlát: 50):" };
        return u
     }
 
   subclassesListTitle(u) {  // component info
     if (this.selectedLang === "de") { u = "Unterklassen:" };
-    if (this.selectedLang === "fr") { u = "sous-classes:" };
-    if (this.selectedLang === "es") { u = "subclases:" };
-    if (this.selectedLang === "hu") { u = "alosztályok:" };
-    if (this.selectedLang === "it") { u = "sottoclassi:" };
+    if (this.selectedLang === "fr") { u = "Sous-classes:" };
+    if (this.selectedLang === "es") { u = "Subclases:" };
+    if (this.selectedLang === "hu") { u = "Alosztályok:" };
+    if (this.selectedLang === "it") { u = "Sottoclassi:" };
        return u
     }
 
 
   classesListTitle(u) {  // component info
     if (this.selectedLang === "de") { u = "SuperKlassen:" };
-    if (this.selectedLang === "fr") { u = "superclasses:" };
-    if (this.selectedLang === "es") { u = "superclases:" };
-    if (this.selectedLang === "it") { u = "superclassi:" };
-    if (this.selectedLang === "hu") { u = "szuperosztályok:" };
+    if (this.selectedLang === "fr") { u = "Superclasses:" };
+    if (this.selectedLang === "es") { u = "Superclases:" };
+    if (this.selectedLang === "it") { u = "Superclassi:" };
+    if (this.selectedLang === "hu") { u = "Szuperosztályok:" };
        return u
     }
 
   
   natureOfListTitle(u) {  // component info
     if (this.selectedLang === "de") { u = "Instanz von " };
-    if (this.selectedLang === "fr") { u = "instance de " };
-    if (this.selectedLang === "es") { u = "instancia de " }; 
-    if (this.selectedLang === "it") { u = "istanza de " };
-    if (this.selectedLang === "hu") { u = "példánya a " };
+    if (this.selectedLang === "fr") { u = "Instance de " };
+    if (this.selectedLang === "es") { u = "Instancia de " }; 
+    if (this.selectedLang === "it") { u = "Istanza de " };
+    if (this.selectedLang === "hu") { u = "Példánya a " };
        return u
     }
 
@@ -295,7 +295,7 @@ instancesListTitle_50(u) {  // sparql-display
           return u
    }
 
-     organisationTitle(u) { // sparql-display component
+   organisationTitle(u) { // sparql-display component
          if (this.selectedLang === "de") { u = "Mitglieder:" };
          if (this.selectedLang === "fr") { u = "Membres:" };
          if (this.selectedLang === "es") { u = "Membres:" };
@@ -304,7 +304,7 @@ instancesListTitle_50(u) {  // sparql-display
          return u
    }
 
-    activityTitle(u) { // sparql-display component
+   activityTitle(u) { // sparql-display component
          if (this.selectedLang === "de") { u = "Mit dieser Aktivität:" };
          if (this.selectedLang === "fr") { u = "Ayant cette activité:" };
          if (this.selectedLang === "es") { u = "Con esta actividad:" };
