@@ -5,12 +5,8 @@
     "\\src\\app",
     "\\src\\app\\display",
     "\\src\\app\\display\\item-info",
-    "\\src\\app\\display\\sparql0-display",
-    "\\src\\app\\display\\sparql1-display",
-    "\\src\\app\\display\\sparql2-display",
-    "\\src\\app\\display\\sparql3-display",
-    "\\src\\app\\services"
+    "\\src\\app\\display\\sociability-display"
   ],
-  "SelectedNode": "\\src\\app\\services\\request.service.ts",
+  "SelectedNode": "\\src\\app\\paris-search",
   "PreviewInSolutionExplorer": false
 }

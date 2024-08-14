@@ -133,7 +133,7 @@
               @if (D.datatype==='wikibase-item') {
               <span>
                 {{D.label}}
-                <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;
+                <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
                 @if(D.description){ &nbsp;&nbsp;&nbsp;}
                 {{D.separator}}<span class="descriptionText">{{D.description}}&nbsp;</span>&nbsp;&nbsp;
               </span>

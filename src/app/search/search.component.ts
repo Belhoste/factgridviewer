@@ -57,7 +57,9 @@ export class SearchComponent implements OnInit {
     subtitle:string = "a database for historians";
     advanced_search:string = "advanced search";
     projects:string = "research projects";
-    fields:string = "fields of reserach";
+    fields: string = "fields of reserach";
+
+ 
    
 
     searchInput = new FormControl();
@@ -71,13 +73,17 @@ export class SearchComponent implements OnInit {
     labels
     items = [];
     newItem;
-    itemId:string;
+    itemId: string;
+    pages: any
 
     private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
     private getUrlSuffix= '&format=json&origin=*' ;
 
     formerVisitsTitle:string = "you have visited:";
-    selectedItemsList:any[] = JSON.parse(localStorage.getItem('selectedItems'));
+    selectedItemsList: any[] = JSON.parse(localStorage.getItem('selectedItems'));
+
+  
+  //  this.request.getStat();
 
 
     ngOnInit(): void {
@@ -90,9 +96,15 @@ export class SearchComponent implements OnInit {
 
   this.fields = this.lang.fields(this.fields);
 
-  this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
+      this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
 
-   /*
+      this.pages = this.request.getStat().pipe(map(res => Object.values(res)[1].statistics.pages));
+    //  this.pages.subscribe(res => console.log(res));
+
+   //   this.pages = this.stat();
+
+   //   console.log(this.pages);
+  /*
    this.subtitle = "a database for historians"
     if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
     if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
@@ -167,7 +179,7 @@ export class SearchComponent implements OnInit {
   addParis(re) {
      re = "Paris, "+re;
     // return re
-   }
+  }
 
     ngOnDestroy(): void {
        this.labels.unsubscribe()

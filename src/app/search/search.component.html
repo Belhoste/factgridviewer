@@ -23,9 +23,10 @@
   <mat-card-content>
 <div>
  <div class="search-center2">
-        <mat-form-field>
-            <input matInput placeholder="Ex. Goethe" value="Goethe" [formControl]="searchInput">
-        </mat-form-field>
+   <mat-form-field>
+     <input matInput placeholder="Ex. Goethe" value="Goethe" [formControl]="searchInput">
+     <mat-hint align="end">{{this.pages | async }} items</mat-hint>
+   </mat-form-field>
   </div>
   </div>
   </mat-card-content>

@@ -16,6 +16,7 @@ import { PersonDisplayService } from './services/person-display.service';
 import { CareerDisplayService } from './services/career-display.service';
 import { SociabilityDisplayService } from './services/sociability-display.service';
 import { SourcesDisplayService } from './services/sources-display.service';
+import { TechnicalitiesDisplayService } from './services/technicalities-display.service';
 import { EventDisplayService } from './services/event-display.service';
 import { ExternalLinksDisplayService } from './services/external-links-display.service';
 import { IframesDisplayService } from './services/iframes-display.service';
@@ -71,7 +72,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private lang: SelectedLangService, private router: Router, private route: ActivatedRoute, private setData: SetDataService, private request: RequestService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
     private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private itemSparql: ItemSparqlService , private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
     private personDisplay: PersonDisplayService, private educationDisplay: EducationDisplayService, private careerDisplay: CareerDisplayService, private sociabilityDisplay: SociabilityDisplayService,
-    private sourcesDisplay: SourcesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript: TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService,
+    private sourcesDisplay: SourcesDisplayService, private technicalitiesDisplay: TechnicalitiesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript: TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService,
     private sanitizer: DomSanitizer, private observer: BreakpointObserver) { }
 
     //iframe
@@ -238,6 +239,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   careerAndActivities: any[];
   sociabilityAndCulture: any[];
   locationAndSituation: any[]; // for places
+  technicalities: any[]; // for technicalities
   activityDetail: any[]; //for activities
   eventDetail: any[]; //for events
   documentDetail: any[];//for print publications
@@ -616,7 +618,13 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.isSources = true };
             }
 
-            //  }
+            ///technicalities
+
+            this.technicalities = [];
+         
+              this.technicalitiesDisplay.setTechnicalitiesDisplay(this.item, this.technicalities);
+
+            console.log(this.technicalities);
 
             ///iframes
 
@@ -752,7 +760,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
        if (u){
          if (u[0]) {
             this.sparqlSubject0 = u[0][0];
-            this.sparqlData0 = u[0][1];
+           this.sparqlData0 = u[0][1];
             this.isSparql0 = false;
                 if (this.sparqlData0 !== undefined) {
                   if(this.sparqlData0[0] !== undefined) {

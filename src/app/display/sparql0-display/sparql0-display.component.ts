@@ -62,7 +62,7 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
     if (changes.sparqlSubject && changes.sparqlSubject.currentValue) {
       this.subTitle = this.sparqlSubject;
           
-      if (this.subTitle == "Q945280"){  //location
+      if (this.subTitle == "Q945280" || this.subTitle =="Q960698"){  //FactGrid superclass
       this.isWorks=true; 
       this.subTitle = this.lang.subclassesListTitle(this.subclassesListTitle);
       }

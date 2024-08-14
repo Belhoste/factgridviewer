@@ -182,8 +182,8 @@ export class ItemDetailsService {
             let referencesArray = Object.values(re.claims[itemProperties[i]][j].references[l].snaks);
             for (let m = 0; m < props.length; m++) {
               if (re.claims[itemProperties[i]][j].references2[k][m] === undefined) { continue };
+              let display = []
               for (let n = 0; n < re.claims[itemProperties[i]][j].references[l].snaks[props[m]].length; n++) {
-                let display = []
                 if (re.claims[itemProperties[i]][j].references2[k][m].id === props[m]) {
                   if (re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datavalue.value) {
                     if (re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datatype === "external-id") {
@@ -192,7 +192,7 @@ export class ItemDetailsService {
                     else if (re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datatype === "time") {
                       display.push(re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datavalue.value.date)
                     }
-                    else { display.push(re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datavalue.value) }
+                     else { display.push(re.claims[itemProperties[i]][j].references[l].snaks[props[m]][n].datavalue.value) }
                   }
                   re.claims[itemProperties[i]][j].references2[k][m].display = display
                 }
@@ -202,6 +202,7 @@ export class ItemDetailsService {
         }
       }
     }
+   // console.log(re);
     return re
   }
 

@@ -1,10 +1,12 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { CareerDisplayService } from '../services/career-display.service';
-import { SelectedLangService} from '../../selected-lang.service';
+import { SelectedLangService } from '../../selected-lang.service';
+import { UnitPipe } from '../../unit.pipe';
+
 
 
 
@@ -13,7 +15,7 @@ import { SelectedLangService} from '../../selected-lang.service';
     templateUrl: './item-info.component.html',
     styleUrls: ['./item-info.component.scss'],
     standalone: true,
-    imports: [NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule]
+    imports: [CommonModule, NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule, UnitPipe]
 })
 export class ItemInfoComponent implements OnChanges {
 
@@ -21,6 +23,8 @@ export class ItemInfoComponent implements OnChanges {
   @Input() subclassesList;
   @Input() natureOfList;
   @Input() classesList;
+  @Input() technicalities;
+
   
   selectedLang: string = (localStorage['selectedLang'] === undefined) ? "en" : localStorage['selectedLang'];
   list1:any[] = [];
@@ -43,11 +47,17 @@ export class ItemInfoComponent implements OnChanges {
   natureOfListTitle:string = "instance of";
   prefix1:string = "class hierarchy: class depending on ";
   prefix2:string = "class hierarchy: class with ";
-  suffix1:string = "classes:"
+  suffix1: string = "classes:";
+
+  openImage(image) { //handling click for picture (open in new tab) 
+    window.open(image);
+  }
 
   constructor( private lang:SelectedLangService ) {  }
 
   ngOnChanges(changes: SimpleChanges): void {
+
+   
 
   
   this.instancesListTitle = this.lang.instancesListTitle(this.instancesListTitle);

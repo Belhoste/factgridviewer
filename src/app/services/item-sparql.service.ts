@@ -21,6 +21,7 @@ export class ItemSparqlService {
   listTest: Observable<boolean>; // test list
   setTest: Observable<boolean>; // test set
   superclassTest: Observable<boolean>; // test superclass
+  superclass1Test: Observable<boolean>; // test superclass (1st-order subclasses)
 
   sparql$: Observable<any[]>;
   sparql0$: Observable<any>;    // for component sparql0
@@ -45,34 +46,38 @@ export class ItemSparqlService {
     this.listTest = this.sparqlAsk(this.keywordTest(item.id, "Q945294")).pipe(startWith(false));  // boolean test for item as a list (Q945294)
     this.setTest = this.sparqlAsk(this.keywordTest(item.id, "Q945258")).pipe(startWith(false));  //booleean test for item as a set (Q945258)
     this.superclassTest = this.sparqlAsk(this.keywordTest(item.id, "Q945280")).pipe(startWith(false)); // boolean test for item as a superclass (Q945280)
+    this.superclass1Test = this.sparqlAsk(this.keywordTest(item.id, "Q960698")).pipe(startWith(false)); // boolean test for item as a superclass (1st-order subclasses) (Q945280)
 
-    this.sparql0$ = forkJoin([this.superclassTest]).pipe(switchMap(([res1]) => this.selectSparql0(res1, item)), startWith([undefined, undefined])); // data for the component sparql0: all subclasses of a superclass
+    this.sparql0$ = forkJoin([this.superclassTest, this.superclass1Test]).pipe(switchMap(([test1,test2]) => this.selectSparql0(test1, test2, item)), startWith([undefined, undefined])); // data for the component sparql0: all subclasses of a superclass
 
     this.sparql1$ = forkJoin([this.Q12Test, this.Q37073Test, this.Q456376Test, this.Q24499Test, this.Q16200Test, this.Q8Test]) //data for the component sparql1 : organisations, career statements, creators, family names, localities, addresses
-      .pipe(switchMap(([res1, res2, res3, res4, res5, res6]) => this.selectSparql1(res1, res2, res3, res4, res5, res6, item)), startWith([undefined, undefined]));
+      .pipe(switchMap(([test1, test2, test3, test4, test5, test6]) => this.selectSparql1(test1, test2, test3, test4, test5, test6, item)), startWith([undefined, undefined]));
 
-    this.sparql2$ = forkJoin([this.Q140759Test]).pipe(switchMap(([res1]) => this.selectSparql2(res1, item)), startWith([undefined, undefined]));  // data for the component sparql2 : health pratictioners
+    this.sparql2$ = forkJoin([this.Q140759Test]).pipe(switchMap(([test1]) => this.selectSparql2(test1, item)), startWith([undefined, undefined]));  // data for the component sparql2 : health pratictioners
 
-    this.sparql3$ = forkJoin([this.masterTest, this.listTest, this.setTest]).pipe(switchMap(([res1, res2, res3]) => this.selectSparql3(res1, res2, res3, item)), startWith([undefined, undefined]));  // data for the component sparql3 : pupils and students, list of items of a class, parts of a class
+    this.sparql3$ = forkJoin([this.masterTest, this.listTest, this.setTest]).pipe(switchMap(([test1, test2, test3]) => this.selectSparql3(test1, test2, test3, item)), startWith([undefined, undefined]));  // data for the component sparql3 : pupils and students, list of items of a class, parts of a class
 
       item.sparql = forkJoin([this.sparql0$, this.sparql1$, this.sparql2$, this.sparql3$])
-     // .subscribe(res => { this.sparql = res, item.sparql = this.sparql });
   }
 /*-------------------------------------------------------- select the sparql query depending on the test --------------------------------------------------------------------------*/
 
   // on selectSparql0 and selectSparql1 list and set don't work.
 
-  selectSparql0(test1, item) {  // select the right result for sparql2
+  selectSparql0(test1, test2, item) {  // select the right result for sparql0
     let result: Observable<any[]>;
-
     if (test1 === true) {
-      result = this.superclassSparql(test1, item);  // subclasses
+      result = this.superclassSparql(test1, item);  // all-orders subclasses
     }
-    else result = this.NoResult();
+    else {
+      if (test2 === true) { 
+        result = this.superclass1Sparql(test2, item);   // 1st-order subclasses
+      }
+      else result = this.NoResult();
+    }
     return result
   }
 
-  selectSparql1(test1, test2, test3, test4, test5, test6, item) {  // select the right result for the component sparql 1
+  selectSparql1(test1, test2, test3, test4, test5, test6, item) {  // select the right result for the component sparql1
     let result: Observable<any[]>;
     if (test1 === true) {              // members of organisations
       result = this.Q12Sparql(test1, item);
@@ -230,9 +235,11 @@ export class ItemSparqlService {
 
   setSparql(test, res) {  // query parts of item as set
     if (test === true) {
-      let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP8%20wd%3A"
+      let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP8%20%7C%20wdt%3AP319%20%20wd%3A"
       let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
+      console.log(u);
       return this.sparqlQuery(u).pipe(map(res => ["Q945258", this.listFromSparql(res).results.bindings]))
+      
     }
   }
 
@@ -240,7 +247,18 @@ export class ItemSparqlService {
     if (test === true) {
       let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP3%2B%20wd%3A"
       let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
+
       return this.sparqlQuery(u).pipe(map(res => ["Q945280", this.listFromSparql(res).results.bindings]))
+    }
+  }
+
+  superclass1Sparql(test, res) {  // query 1st-order subclasses of item
+    if (test === true) {
+      let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP3%20wd%3A"
+      let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
+      console.log(u);
+
+      return this.sparqlQuery(u).pipe(map(res => ["Q960698", this.listFromSparql(res).results.bindings]))
     }
   }
 
