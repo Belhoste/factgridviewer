@@ -9,28 +9,32 @@ export class SetLanguageService {
 
   lang: string;
 
-  item(res,lang) { //create an array of elements with id, label, descriptions and aliases in the selected language for the searched items
+  item(res, lang) {  //create an array of elements with id, label, descriptions and aliases in the selected language for the searched items
     let arr = [];
     let aliases = [];
     for (let i = 0; i < res.length; i++) { 
       let propertiesLang=this.changeLang(lang,res[i]);
       aliases = this.aliasPush(propertiesLang[4]);    
       if (propertiesLang[0] !== undefined) {
-        if (propertiesLang[2] === undefined && propertiesLang[4] ===undefined) { arr.push({ id: res[i].id, label: propertiesLang[1], claims: res[i].claims, sitelinks: res[i].sitelinks }) }
-       else if (propertiesLang[2] ===undefined && propertiesLang[4] !==undefined ) { arr.push({ id: res[i].id, label: propertiesLang[1], aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks }) }
-        else if (propertiesLang[0] ===undefined && propertiesLang[2] !==undefined ) { arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3], claims: res[i].claims, sitelinks: res[i].sitelinks }) }
-        else if (propertiesLang[0] !==undefined && propertiesLang[2] !==undefined ) { arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3], aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks })}
+        if (propertiesLang[2] === undefined && propertiesLang[4] === undefined) { arr.push({ id: res[i].id, label: propertiesLang[1], claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype }) }
+        else if (propertiesLang[2] === undefined && propertiesLang[4] !== undefined) { arr.push({ id: res[i].id, label: propertiesLang[1], aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype }) }
+        else if (propertiesLang[0] === undefined && propertiesLang[2] !== undefined) { arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3], claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype }) }
+        else if (propertiesLang[0] !== undefined && propertiesLang[2] !== undefined) { arr.push({ id: res[i].id, label: propertiesLang[1], description: propertiesLang[3], aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype })}
        }	  
       else {
       if (res[i].label === undefined) {break}
-      else if (res[i].descriptions.en=== undefined && res[i].aliases.en ===undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, claims: res[i].claims, sitelinks: res[i].sitelinks }) }
-      else if (res[i].descriptions.en ===undefined && res[i].aliases.en !==undefined ) { arr.push({ id: res[i].id, label: res[i].labels.en.value, aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks })
+      else if (res[i].descriptions.en === undefined && res[i].aliases.en === undefined) { arr.push({ id: res[i].id, label: res[i].labels.en.value, claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype}) }
+      else if (res[i].descriptions.en === undefined && res[i].aliases.en !== undefined) {
+        arr.push({ id: res[i].id, label: res[i].labels.en.value, aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype })
       }
-     else if (res[i].aliases.en !==undefined && res[i].descriptions.en !==undefined ) { arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks }) 
+      else if (res[i].aliases.en !== undefined && res[i].descriptions.en !== undefined) {
+        arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, aliases: aliases, claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype }) 
       }
-        else arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, claims: res[i].claims, sitelinks: res[i].sitelinks })
-      }		 
-  }		
+      else arr.push({ id: res[i].id, label: res[i].labels.en.value, description: res[i].descriptions.en.value, claims: res[i].claims, sitelinks: res[i].sitelinks, datatype: res[i].datatype })
+      }
+  //   if (res[i].datatype !==undefined) { arr.push({ datatype: res[i].datatype}) }
+    }
+  
 return arr
   }
 

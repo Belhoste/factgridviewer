@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RequestService } from './request.service'  ;
 import { SetLanguageService} from './set-language.service';
 import { map, tap } from 'rxjs/operators';
@@ -9,8 +9,9 @@ import { SelectedItemListService } from './selected-item-list.service';
 })
 
 export class DetailsService {
+  private requestService = inject(RequestService);
+  private setLanguage = inject(SetLanguageService);
 
-  constructor(private requestService:RequestService, private setLanguage:SetLanguageService ) { }
 
 getReferenceProperties(u) {
   let values: any[] = Object.values(u.claims) ;

@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IframesDisplayService {
+  private sanitizer = inject(DomSanitizer);
 
-  constructor(private sanitizer: DomSanitizer) { }
   
 
 setIframesDisplay(item, iframes){
@@ -37,7 +37,6 @@ setIframesDisplay(item, iframes){
       item[0].claims.P679[i].mainsnak.datatype=item[0].claims.P679[i].mainsnak.datavalue.value;
       item[0].claims.P679.iframe[i]= item[0].claims.P679[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P679);
-      console.log(iframes);
     }
     
   if (item[0].claims.P693 !==undefined){ //FactGrid map visualisation

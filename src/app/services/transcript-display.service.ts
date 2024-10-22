@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RequestService } from './request.service';
 import { map } from 'rxjs/operators';
 
@@ -6,8 +6,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class TranscriptDisplayService {
+  private request = inject(RequestService);
 
-  constructor( private request:RequestService ) { }
 
   transcript(u){
     let txt;

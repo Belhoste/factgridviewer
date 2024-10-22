@@ -1,0 +1,415 @@
+<!---<div class="cardBackground">
+  <div class="search-center2" id="projects">
+    <mat-form-field>
+      <mat-label>Projects</mat-label>
+      <mat-select [formControl]="projectSearchInput" multiple name="project" (selectionChange)="projectSelect($event)">
+        <mat-option>None</mat-option>
+        @for (project of projectList; track project) {
+        <mat-option [value]="project.item.id">{{project.itemLabel.value}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>
+
+
+  <div [formGroup]="advancedSearchForm">
+  <div formArrayName="searchStatements">
+    <div *ngFor="let statement of searchStatements.controls; let i=index">
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="Ex. Nature of" class="form-control">
+        <mat-hint align="end">property</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="Ex. Human" class="form-control">
+        <mat-hint align="end">value</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+ I tried to add  [formGroupName]="i" and formControlName on each mat-form-field, but it does not work properly with mat-form-field
+
+
+
+<div [formGroup]="advancedSearchForm">
+  <div formArrayName="searchStatements">
+    @for(control of advancedSearchForm.get('searchStatements').controls; track control; let i = $index;) {
+
+    <div [formGroupName]="i">
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="Ex. Nature of" class="form-control" formControlName="property">
+        <mat-hint align="end">property</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <input matInput placeholder="Ex. Human" class="form-control" formControlName="value">
+        <mat-hint align="end">value</mat-hint>
+      </mat-form-field>
+    </div>
+    }
+  </div>
+</div>
+
+
+
+<form [formGroup]="query">
+  <div formArrayName="statements">
+    <div *ngFor="let statement of statementsFormArray.controls; index as i"
+         [formGroupName]="i">
+      <mat-form-field appearance="fill">
+        <mat-label>Label of a detail</mat-label>
+        <input id="detail-label" matInput type="text" formControlName="property" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Description of a detail</mat-label>
+        <input id="detail-description"
+               matInput
+               type="text"
+               formControlName="value" />
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+
+<br />
+
+<button type="button" (click)="addDetails()">+ Add Details</button>
+    ---->
+
+
+<mat-card-content appearance="outline"  class="search-form" id="statements">
+  
+    <form [formGroup]="query">
+      <div formArrayName="statements">
+        <div *ngFor="let statement of statementsFormArray().controls; let i=index"
+             [formGroupName]="i">
+          <mat-form-field>
+            <mat-select [formControl]="propertySearchInput"
+                        placeholder="Property"
+                        [multiple]="true"
+                        #multiSelect
+                        (selectionChange)="onSelection($event)">
+              <mat-option>
+                <ngx-mat-select-search [formControl]="propertyMultiFilterCtrl"
+                                       placeholderLabel="Search"
+                                       noEntriesFoundLabel="Not found"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let property of filteredPropertyMulti | async" [value]="property.item.id">
+                {{property.itemLabel.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+
+
+          <mat-form-field appearance="fill">
+            <mat-label>Statement property</mat-label>
+            <input id="detail-label" matInput type="text" formControlName="property" />
+          </mat-form-field>
+          <span>&nbsp;&nbsp;</span>
+          <mat-form-field>
+            <mat-label>Statement Value</mat-label>
+            <input id="detail-description"
+                   matInput
+                   type="text"
+                   formControlName="value" />
+          </mat-form-field>
+
+          <div formArrayName="qualifiers">
+            <div *ngFor="let qualifier of qualifiersFormArray(i).controls; let j=index"
+                 [formGroupName]="qualifiers">
+              <mat-form-field appearance="fill">
+                <mat-label>Qualifier property</mat-label>
+                <input id="detail-label" matInput type="text" formControlName="qualifierProperty" />
+              </mat-form-field>
+              <span>&nbsp;&nbsp;</span>
+              <mat-form-field>
+                <mat-label>Qualifier Value</mat-label>
+                <input id="detail-description"
+                       matInput
+                       type="text"
+                       formControlName="qualifierValue" />
+              </mat-form-field>
+
+            </div>
+
+          </div>
+          <button mat-mini-fab color="" (click)="addQualifiers(i)">
+            <mat-icon>expand_more</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </form>
+    <div class="button-search-form">
+ 
+      <button mat-mini-fab color="" (click)="addStatements()">
+        <mat-icon>expand_less</mat-icon>
+      </button>
+      <button mat-mini-fab color="" (click)="addStatements()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-mini-fab color="" (click)="removeStatements()">
+        <mat-icon>remove</mat-icon>
+      </button>
+    </div>
+  
+</mat-card-content>
+
+
+
+
+<!--
+@if (this.isStatementDiagramDisplay == true) {
+<div>
+  <span class="arrow-icon">
+    @if (isArrowForwardDisplay == true) {
+    <button mat-icon-button (click)="arrowBack($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_forward</mat-icon>
+    </button>
+    }
+    @if (isArrowBackDisplay == true) {
+    <button mat-icon-button (click)="arrowForward($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_back</mat-icon>
+    </button>
+    }
+    <span class="ellipsis">{{selectedStatementLabel}}</span>
+
+    @if (isArrowForwardDisplay == true) {
+    <button mat-icon-button (click)="arrowBack($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_forward</mat-icon>
+    </button>
+    }
+    @if (isArrowBackDisplay == true) {
+    <button mat-icon-button (click)="arrowForward($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_back</mat-icon>
+    </button>
+    }
+    <span class="ellipsis">{{selectedItemLabel}}</span>
+  </span>
+</div>
+<div class="search-center3">
+  <span class="arrow-icon">
+    ?q
+    @if (isArrowForwardDisplay == true) {
+    <button mat-icon-button (click)="arrowBack($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_forward</mat-icon>
+    </button>
+    }
+    @if (isArrowBackDisplay == true) {
+    <button mat-icon-button (click)="arrowForward($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_back</mat-icon>
+    </button>
+    }
+    {{selectedStatementValue}}
+    @if (isArrowForwardDisplay == true) {
+    <button mat-icon-button (click)="arrowBack($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_forward</mat-icon>
+    </button>
+    }
+    @if (isArrowBackDisplay == true) {
+    <button mat-icon-button (click)="arrowForward($event)">
+      <mat-icon class="icon-size" [inline]="true">arrow_back</mat-icon>
+    </button>
+    }
+    {{selectedItemValue}}
+  </span>
+</div>
+  }
+
+  --->
+<!-----
+
+  <mat-card-content appearance="outline">
+    <form [formGroup]="statement1">
+      <div class="statement-search-form">
+        <mat-form-field>
+          <input matInput placeholder="Ex. Nature of" [formControl]="statement1.controls.property">
+          <mat-hint align="end">property</mat-hint>
+        </mat-form-field>
+
+        @if (statementType == "time") {
+        <mat-form-field>
+          <input matInput placeholder="YYYY-MM-DD" [formControl]="statement1.controls.value">
+          <mat-hint align="end">date</mat-hint>
+        </mat-form-field>
+        }
+        @else {
+        @if (statementType == "quantity") {
+        <mat-form-field>
+          <input matInput placeholder="Ex. 1000" [formControl]="statement1.controls.value">
+          <mat-hint align="end">number</mat-hint>
+        </mat-form-field>
+        }
+        @else {
+        <mat-form-field>
+          <input matInput placeholder="Ex. Human" [formControl]="statement1.controls.value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+        }
+        }
+
+      </div>
+
+      @if (isQualifier1Display == true) {
+      <div class="statement-search-form">
+        <mat-form-field>
+          <input matInput placeholder="Ex. Localisation" [formControl]="statement1.controls.qal1Property">
+          <mat-hint align="end">qualifier 1</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Ex. Paris" [formControl]="statement1.controls.qal1Value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+
+      </div>
+      }
+
+      @if (isQualifier2Display == true) {
+      <div class="statement-search-form">
+        <mat-form-field>
+          <input matInput placeholder="Ex. Date" [formControl]="statement1.controls.qal2Property">
+          <mat-hint align="end">qualifier 2</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Ex. 1800-06-11" [formControl]="statement1.controls.qal2Value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+
+      </div>
+      }
+
+      @if (isQualifier3Display == true) {
+      <div class="statement-search-form">
+        <mat-form-field>
+          <input matInput placeholder="Ex. Context" [formControl]="statement1.controls.qal3Property">
+          <mat-hint align="end">qualifier 3</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Ex. Travel" [formControl]="statement1.controls.qal3Value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+
+      </div>
+      }
+    </form>
+
+    @if (isStatement2Display == true){
+    <form [formGroup]="statement2">
+      <div class="statement-search-form">
+
+        <mat-form-field>
+          <input matInput placeholder="Ex. Nature of" [formControl]="statement2.controls.property">
+          <mat-hint align="end">property</mat-hint>
+        </mat-form-field>
+
+        @if (statementType == "time") {
+        <mat-form-field>
+          <input matInput placeholder="YYYY-MM-DD" [formControl]="statement2.controls.value">
+          <mat-hint align="end">date</mat-hint>
+        </mat-form-field>
+        }
+        @else {
+        @if (statementType == "quantity") {
+        <mat-form-field>
+          <input matInput placeholder="Ex. 1000" [formControl]="statement2.controls.value">
+          <mat-hint align="end">number</mat-hint>
+        </mat-form-field>
+        }
+        @else {
+        <mat-form-field>
+          <input matInput placeholder="Ex. Human" [formControl]="statement2.controls.value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+        }
+        }
+
+      </div>
+
+      @if (isQualifier1Display == true) {
+      <div class="statement-search-form">
+        <mat-form-field>
+          <input matInput placeholder="Ex. Localisation" [formControl]="statement2.controls.qal1Property">
+          <mat-hint align="end">qualifier 1</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Ex. Paris" [formControl]="statement2.controls.qal1Value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+
+      </div>
+      }
+
+      @if (isQualifier2Display == true) {
+      <div class="statement-search-form">
+        <mat-form-field>
+          <input matInput placeholder="Ex. Date" [formControl]="statement2.controls.qal2Property">
+          <mat-hint align="end">qualifier 2</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Ex. 1800-06-11" [formControl]="statement2.controls.qal2Value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+
+      </div>
+      }
+
+      @if (isQualifier3Display == true) {
+      <div class="statement-search-form">
+        <mat-form-field>
+          <input matInput placeholder="Ex. Context" [formControl]="statement2.controls.qal3Property">
+          <mat-hint align="end">qualifier 3</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Ex. Travel" [formControl]="statement2.controls.qal3Value">
+          <mat-hint align="end">value</mat-hint>
+        </mat-form-field>
+
+      </div>
+      }
+    </form>
+    }
+
+
+    @if (isDisplay3 == true) {
+    <div class="search-center2">
+      <button mat-stroked-button (click)="onQualifierButtonSelect()">Qualifier</button>&nbsp;&nbsp;
+      <button mat-stroked-button (click)="onPropertyButtonSelect(item)">New property</button>
+    </div>
+    <div class="search-center2">
+      <button mat-icon-button color="primary" class="internalLink" #content (click)="onResultButton(this.selectedStatement)"><mat-icon color="primary">search</mat-icon></button>
+    </div>
+    }
+  </mat-card-content>
+  ----->
+
+<div class="search-center2">
+  @if (isEntityToSelectDisplay == true) {
+  <div style="margin-top:10px">
+    @for (item of items; track item) {
+    <div>
+      <button class="button"
+              (click)="entitySelect(item)">
+        <span class="search-label">{{item.label}}</span>
+        @if (item.description) {
+        <span class="description-text">, {{item.description }}</span>
+        }
+        @if (item.id === this.selectedPropertyValue){ <mat-icon>done</mat-icon> }
+        @if (item.id === this.selectedItemValue){ <mat-icon>done</mat-icon> }
+      </button>
+    </div>
+    <hr>
+    }
+  </div>
+  }
+</div>
+
+

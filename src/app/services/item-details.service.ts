@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SetTimeService } from './set-time.service';
 import { FactgridSubtitlesService } from './factgrid-subtitles.service'
 import { QualifierDetailsService } from './qualifier-details.service';
@@ -10,10 +10,15 @@ import { LongestWordService } from './longest-word.service'
   providedIn: 'root'
 })
 export class ItemDetailsService {
+  private setDate = inject(SetTimeService);
+  private factgrid = inject(FactgridSubtitlesService);
+  private qualifier = inject(QualifierDetailsService);
+  private typology = inject(TypologyService);
+  private itemInfo = inject(ItemInfoService);
+  private longestLength = inject(LongestWordService);
+
 
   private baseWikimediaURL = 'http://commons.wikimedia.org/wiki/Special:FilePath/';
-
-  constructor(private setDate: SetTimeService, private factgrid: FactgridSubtitlesService, private qualifier: QualifierDetailsService, private typology: TypologyService, private itemInfo: ItemInfoService, private longestLength: LongestWordService) { }
 
   qualifiers2: any[];
 

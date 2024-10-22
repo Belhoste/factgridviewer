@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -18,6 +18,8 @@ import { UnitPipe } from '../../unit.pipe';
     imports: [CommonModule, NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule, UnitPipe]
 })
 export class ItemInfoComponent implements OnChanges {
+  private lang = inject(SelectedLangService);
+
 
   @Input() instancesList;
   @Input() subclassesList;
@@ -52,8 +54,6 @@ export class ItemInfoComponent implements OnChanges {
   openImage(image) { //handling click for picture (open in new tab) 
     window.open(image);
   }
-
-  constructor( private lang:SelectedLangService ) {  }
 
   ngOnChanges(changes: SimpleChanges): void {
 

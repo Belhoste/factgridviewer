@@ -1,6 +1,6 @@
 //service preparing data for display
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SetLanguageService } from './set-language.service';
 import { SelectedLangService } from '../selected-lang.service';
 import { RequestService } from './request.service';
@@ -13,8 +13,12 @@ import { CreateItemToDisplayService } from './create-item-to-display.service';
   providedIn: 'root'
 })
 export class SetDataService {
+  private createItem = inject(CreateItemToDisplayService);
+  private createCompleteItem = inject(CreateCompleteItemService);
+  private setLanguage = inject(SetLanguageService);
+  private request = inject(RequestService);
+  private lang = inject(SelectedLangService);
 
-  constructor(private createItem: CreateItemToDisplayService, private createCompleteItem: CreateCompleteItemService, private setLanguage: SetLanguageService, private request: RequestService, private lang: SelectedLangService) { }
 
 sparqlResult = new Subject(); // In  case of BehaviorSubject I have to give an initial value
 

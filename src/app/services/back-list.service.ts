@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RequestService } from './request.service'  ;
 import { BackListDetailsService} from './back-list-details.service'
 
@@ -7,8 +7,9 @@ import { BackListDetailsService} from './back-list-details.service'
   providedIn: 'root'
 })
 export class BackListService {
+  private requestService = inject(RequestService);
+  private backListDetails = inject(BackListDetailsService);
 
-  constructor(private requestService:RequestService, private backListDetails:BackListDetailsService) { }
 
   linkedItems:any[]; //backList
 

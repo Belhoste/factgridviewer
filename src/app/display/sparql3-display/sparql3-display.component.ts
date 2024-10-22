@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, SimpleChanges, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input';
@@ -21,6 +21,9 @@ import { ArrayToCsvService } from '../../services/array-to-csv.service';
   styleUrl: './sparql3-display.component.scss'
 })
 export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
+  private lang = inject(SelectedLangService);
+  private csv = inject(ArrayToCsvService);
+
 
   @Input() sparqlSubject;
   @Input() sparqlData;
@@ -35,8 +38,6 @@ export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
   setTitle: string = "Include:";
   query: string;
   listWithoutDuplicate: any[];
-
-  constructor(private lang: SelectedLangService, private csv: ArrayToCsvService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
 

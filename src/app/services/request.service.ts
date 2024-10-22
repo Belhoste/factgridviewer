@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin, of } from 'rxjs';
 //import { SetLanguageService } from './set-language.service';
@@ -12,6 +12,8 @@ import { saveAs } from 'file-saver-es';
 
 
 export class RequestService {
+ private http = inject(HttpClient);
+
 
 //  private baseSearchURL = 'https://www.wikidata.org//w/api.php?action=wbsearchentities&search='
 //private baseGetURL = 'https://www.wikidata.org//w/api.php?action=wbgetentities&ids=' ;
@@ -20,11 +22,7 @@ export class RequestService {
  private baseSearchURL = 'https://database.factgrid.de//w/api.php?action=wbsearchentities&search=' ;
  private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
 	private searchUrlSuffix = '&language=en&uselang=fr&limit=50&format=json&origin=*' ;
-  private getUrlSuffix= '&format=json&origin=*' ; 
- // private res:string;
-
-
-  constructor(private http: HttpClient) { }
+  private getUrlSuffix= '&format=json&origin=*' ;
 
 requestProperties(propertiesList0,propertiesList1, propertiesList2, propertiesList3, propertiesList4, propertiesList5, propertiesList6, propertiesList7)
   {  
@@ -190,12 +188,29 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
     .set('uselang',lang)
     .set('limit',"50")
     .set('format',"json")
-    .set('origin',"*");
+      .set('origin', "*");
    return this.http.get('https://database.factgrid.de//w/api.php', {
    //  headers: headers, 
      params: params})   
  // return this.http.get('https://www.wikidata.org//w/api.php', {params: params}) 
-    }
+  }
+
+  searchProperty(label, lang) {
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
+    let params = new HttpParams().set('action', "wbsearchentities")
+      .set('type', "property")
+      .set('search', label)
+      .set('language', lang)
+      .set('uselang', lang)
+      .set('limit', "50")
+      .set('format', "json")
+      .set('origin', "*");
+    return this.http.get('https://database.factgrid.de//w/api.php', {
+      //  headers: headers, 
+      params: params
+    })
+    // return this.http.get('https://www.wikidata.org//w/api.php', {params: params}) 
+  }
 
   //searchItem(label:string, lang:string): Observable<any> { return this.http.get(this.searchUrl(label,lang))} ;
 
@@ -209,7 +224,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
   }
 
   getItem(re): Observable<any> {
-    return this.http.get(re).pipe(catchError((err) => { return of(undefined) }))
+    return this.http.get(re).pipe(catchError((err) => { return of(undefined) }));
   };
 
  // selectUrl(re:string) {  let selectUrl = re => re == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
@@ -225,6 +240,7 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
       u= this.http.get(sparql, {
         params: params}).pipe(catchError((err)=> {return of([])})) 
     }
+   // u.pipe(tap(v => console.log(v)));
       return u
    }
 
@@ -298,7 +314,15 @@ requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,i
         }
 
 
-  
+  getProjectList(re): Observable<any> {
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*')
+    let params = new HttpParams()
+      //  .set('format', "json")
+      .set('origin', "*");
+    let u = this.http.get(re).pipe(catchError((err) => { return of(false) }));
+    return u
+  }
+
 
 
   getBackList(item, lang) : Observable<any> {  

@@ -1,5 +1,5 @@
 //import { importExpr } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap} from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import * as Leaflet from 'leaflet';
@@ -13,6 +13,9 @@ import * as Leaflet from 'leaflet';
 })
 
 export class MapComponent implements OnInit {
+  private changeDetector = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
+
   
   latitude:string;
   longitude: string;
@@ -20,10 +23,6 @@ export class MapComponent implements OnInit {
   lat: number;
   lng: number;
   zoom: number;
- 
-
-  constructor(private changeDetector:ChangeDetectorRef, private route:ActivatedRoute) { 
-  }
 
   ngOnInit(): void {
   

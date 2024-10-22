@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DetailsService } from './details.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SetItemToDisplayService {
+  private details = inject(DetailsService);
 
-  constructor(private details: DetailsService) { }
 
   setItemToDisplay(u) {
 

@@ -237,12 +237,10 @@
                       <hr>
                     </div>
                     @for (externalLink of externalLinks; track externalLink) {
-                    <!--          <div>   -->
                     <div class="externalLinksText">
-                      <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">{{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
+                      <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">
+                        {{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
                     </div>
-                    <!--                <br>    -->
-                    <!--          </div>   -->
                     }
                   </mat-card-content>
 

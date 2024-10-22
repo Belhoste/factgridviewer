@@ -4,7 +4,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms' ;
 import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { SetLanguageService } from './services/set-language.service';
 import { RequestService } from './services/request.service';
 import { SlideUpAnimation } from './slide-up-animation';

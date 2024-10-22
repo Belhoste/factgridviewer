@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SetLanguageService } from './set-language.service';
 import { DetailsService } from  './details.service';
 import { PropertyDetailsService } from './property-details.service';
@@ -19,11 +19,16 @@ import { ItemSparqlService } from './item-sparql.service';
 })
 
 export class CreateItemToDisplayService {
+  private setLanguage = inject(SetLanguageService);
+  private details = inject(DetailsService);
+  private setItem = inject(SetItemToDisplayService);
+  private addPropertyDetails = inject(PropertyDetailsService);
+  private addItemDetails = inject(ItemDetailsService);
+  private itemSparql = inject(ItemSparqlService);
+  private roleOfObject = inject(RoleOfObjectRenderingService);
+  private backList = inject(BackListService);
+  private typology = inject(TypologyService);
 
- // private subject : BehaviorSubject <any> = new BehaviorSubject(null); // useless
-
-  constructor(private setLanguage: SetLanguageService, private details: DetailsService, private setItem: SetItemToDisplayService, 
-    private addPropertyDetails: PropertyDetailsService, private addItemDetails: ItemDetailsService, private itemSparql: ItemSparqlService, private roleOfObject:RoleOfObjectRenderingService, private backList:BackListService, private typology:TypologyService) { }
 
 
     createItemToDisplay(re, selectedLang) {

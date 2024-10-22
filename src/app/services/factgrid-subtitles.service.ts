@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { SelectedLangService } from '../selected-lang.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FactgridSubtitlesService {
+  private lang = inject(SelectedLangService);
 
-  constructor( private lang: SelectedLangService ) { }
 
   //TODO: pass the lang selection to the SelectedLangService
 

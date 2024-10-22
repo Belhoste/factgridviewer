@@ -1,0 +1,15 @@
+.search-center2 {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#projects mat-form-field { //custom width of the form "Projects"
+  width: 60vw;
+}
+
+@media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
+  #projects mat-form-field { //
+    width: 90vw;
+  }
+}

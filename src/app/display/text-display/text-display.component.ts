@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ChangeDetectorRef, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, ChangeDetectorRef, SimpleChanges, SimpleChange, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 
@@ -11,6 +11,8 @@ import { NgClass } from '@angular/common';
     imports: [NgClass, MatCardModule]
 })
 export class TextDisplayComponent implements OnChanges {
+  private changeDetector = inject(ChangeDetectorRef);
+
 
   @Input() trans ;
 
@@ -18,8 +20,6 @@ export class TextDisplayComponent implements OnChanges {
   text:string ="";
   transcription:string
   isTrans:boolean = false;
-
-  constructor(private changeDetector:ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges): void {
           this.transcription = "Transcription";

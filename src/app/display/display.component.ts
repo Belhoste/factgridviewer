@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,  ChangeDetectionStrategy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { Observable, Subscription, Subject, isObservable, BehaviorSubject, from, forkJoin, of, EMPTY, timer, combineLatest, delay } from 'rxjs';
 import {  switchMap, tap, takeUntil, take } from 'rxjs/operators';
 import { RequestService } from '../services/request.service'
@@ -51,7 +51,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf, NgFor, NgClass, NgStyle, AsyncPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { SelectedLangService } from '../selected-lang.service';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule} from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 
 
@@ -68,12 +68,37 @@ import { CommonModule } from '@angular/common';
 })
 
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
+  private lang = inject(SelectedLangService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private setData = inject(SetDataService);
+  private request = inject(RequestService);
+  private setList = inject(SetSelectedItemsListService);
+  private changeDetector = inject(ChangeDetectorRef);
+  private backList = inject(BackListService);
+  private backList2 = inject(BackListService);
+  private backListDetails = inject(BackListDetailsService);
+  private itemSparql = inject(ItemSparqlService);
+  private headerDisplay = inject(HeaderDisplayService);
+  private placeDisplay = inject(PlaceDisplayService);
+  private orgDisplay = inject(OrgDisplayService);
+  private documentDisplay = inject(DocumentDisplayService);
+  private activityDisplay = inject(ActivityDisplayService);
+  private personDisplay = inject(PersonDisplayService);
+  private educationDisplay = inject(EducationDisplayService);
+  private careerDisplay = inject(CareerDisplayService);
+  private sociabilityDisplay = inject(SociabilityDisplayService);
+  private sourcesDisplay = inject(SourcesDisplayService);
+  private technicalitiesDisplay = inject(TechnicalitiesDisplayService);
+  private eventDisplay = inject(EventDisplayService);
+  private changeTranscript = inject(TranscriptionService);
+  private transcript = inject(TranscriptDisplayService);
+  private externalLinksDisplay = inject(ExternalLinksDisplayService);
+  private iframesDisplay = inject(IframesDisplayService);
+  private wikiDisplay = inject(WikiDisplayService);
+  private sanitizer = inject(DomSanitizer);
+  private observer = inject(BreakpointObserver);
 
-  constructor(private lang: SelectedLangService, private router: Router, private route: ActivatedRoute, private setData: SetDataService, private request: RequestService, private setList: SetSelectedItemsListService, private changeDetector: ChangeDetectorRef,
-    private backList: BackListService, private backList2: BackListService, private backListDetails: BackListDetailsService, private itemSparql: ItemSparqlService , private headerDisplay: HeaderDisplayService, private placeDisplay: PlaceDisplayService, private orgDisplay: OrgDisplayService, private documentDisplay: DocumentDisplayService, private activityDisplay: ActivityDisplayService,
-    private personDisplay: PersonDisplayService, private educationDisplay: EducationDisplayService, private careerDisplay: CareerDisplayService, private sociabilityDisplay: SociabilityDisplayService,
-    private sourcesDisplay: SourcesDisplayService, private technicalitiesDisplay: TechnicalitiesDisplayService, private eventDisplay: EventDisplayService, private changeTranscript: TranscriptionService, private transcript: TranscriptDisplayService, private externalLinksDisplay: ExternalLinksDisplayService, private iframesDisplay: IframesDisplayService, private wikiDisplay: WikiDisplayService,
-    private sanitizer: DomSanitizer, private observer: BreakpointObserver) { }
 
     //iframe
   urlSafe1: SafeResourceUrl;
@@ -624,8 +649,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
          
               this.technicalitiesDisplay.setTechnicalitiesDisplay(this.item, this.technicalities);
 
-            console.log(this.technicalities);
-
             ///iframes
 
 
@@ -773,6 +796,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
            this.sparqlSubject1 = u[1][0];
            this.sparqlData1 = u[1][1];
+           console.log(this.sparqlData1);
            this.isSparql1 = false;
                if (this.sparqlData1 !== undefined) {
                   if(this.sparqlData1[0] !== undefined) {

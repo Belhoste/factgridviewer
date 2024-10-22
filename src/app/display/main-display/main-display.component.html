@@ -58,7 +58,7 @@
           &nbsp;&nbsp;&nbsp;
         </span>
         {{M.mainsnak.separator}}
-        <span class="descriptionText">{{M.mainsnak.description}}&nbsp;</span>
+        <span class="description-text">{{M.mainsnak.description}}&nbsp;</span>
         }
         @if (M.rank=='deprecated') {
         <span class="warningDeprecated"> &nbsp;({{M.rank}})</span>
@@ -133,7 +133,7 @@
                 {{D.label}}
                 <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
                 @if(D.description){ &nbsp;&nbsp;&nbsp;}
-                {{D.separator}}<span class="descriptionText">{{D.description}}</span>
+                {{D.separator}}<span class="description-text">{{D.description}}</span>
               </span>
               }
               @if (D.datatype==='commonsMedia') {
@@ -170,7 +170,7 @@
               {{P.label}}
               <mat-icon-button class="internalLink" [routerLink]="['/item', P.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
               <!--         @if(P.description){&nbsp;&nbsp;&nbsp;} @else { &nbsp;&nbsp;&nbsp;}   -->
-              {{P.separator}}<span class="descriptionText">{{P.description}}</span>
+              {{P.separator}}<span class="description-text">{{P.description}}</span>
             </span>
             @if (!isLast) {
             <span>,&nbsp;</span>

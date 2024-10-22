@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CreateItemToDisplayService } from './create-item-to-display.service';
 import { ItemInfoService } from './item-info.service';
 import { SetLanguageService } from './set-language.service';
@@ -11,8 +11,12 @@ import { Observable, forkJoin } from 'rxjs';
   providedIn: 'root'
 })
 export class CreateCompleteItemService {
+  private createItem = inject(CreateItemToDisplayService);
+  private itemInfo = inject(ItemInfoService);
+  private itemSparql = inject(ItemSparqlService);
+  private setLanguage = inject(SetLanguageService);
+  private lang = inject(SelectedLangService);
 
-  constructor(private createItem: CreateItemToDisplayService, private itemInfo: ItemInfoService, private itemSparql: ItemSparqlService, private setLanguage: SetLanguageService, private lang: SelectedLangService) { }
 
   completeItem(res) { 
  

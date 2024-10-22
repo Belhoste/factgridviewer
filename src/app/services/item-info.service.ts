@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Observable, forkJoin } from 'rxjs';
 import { RequestService } from './request.service';
@@ -10,11 +10,9 @@ import { SelectedLangService } from '../selected-lang.service';
   providedIn: 'root'
 })
 export class ItemInfoService {
+  private request = inject(RequestService);
+  private lang = inject(SelectedLangService);
 
-  constructor(
-   private request: RequestService,
-    private lang: SelectedLangService,
-  ) { }
 
  // selectedLang: string = (localStorage['selectedLang'] === undefined) ? "en" : localStorage['selectedLang'];
 

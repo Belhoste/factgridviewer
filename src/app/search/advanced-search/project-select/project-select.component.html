@@ -1,0 +1,24 @@
+
+<div class="cardBackground">
+  <div class="search-center2" id="projects">
+    <mat-form-field>
+      <mat-select [formControl]="projectSearchInput"
+                  placeholder="Projects"
+                  [multiple]="true"
+                  #multiSelect
+                  (selectionChange)="onSelection($event)">
+        <mat-option>
+          <ngx-mat-select-search [formControl]="projectMultiFilterCtrl"
+                                 placeholderLabel="Search"
+                                 noEntriesFoundLabel="Not found"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let project of filteredProjectMulti | async" [value]="project.item.id">
+          {{project.itemLabel.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+
+

@@ -6,8 +6,7 @@
         {{subTitle}}
       </div>
 
-
-      @if(isSearch === true) {
+     @if(isSearch === true) {
       <div class="searchFormPadding">
         <mat-form-field appearance="outline">
           <input matInput (keyup)="applyFilter($event)" placeholder="Search">
@@ -18,26 +17,36 @@
       </div>
       }
       
-      @for (L of list; track L) {
-      <div class="sparql-div statementStyle">
-
+     @for (L of list; track L.item) {
+      <div class="sparql-div statementStyle">.
         <!---      <label>{{L}}</label>   -->
-        @if (L.itemLabel) {
+        @if (L.itemLabel) {
         <label>
-          {{L.itemLabel.value}}
-          <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
-          @if (L.itemDescription) {
-          <span>, {{L.itemDescription.value}}</span>
-          }
-          @if (L.year) {
-          <span>, {{L.year.value}}</span>
-          }
-
-        </label>
+         @if (L.item.entity === "property") {
+          <span>
+            <a href="{{L.item.value}}" target="_blank">
+              {{L.item.id}}</a>
+              : {{L.itemLabel.value}}
+           </span>
+            @if (L.itemDescription) {
+            <span>, {{L.itemDescription.value}}</span>
+            }
         }
+         @else {
+            {{L.itemLabel.value}}
+            <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
+            @if (L.itemDescription) {
+            <span>, {{L.itemDescription.value}}</span>
+            }
+            @if (L.year) {
+            <span>, {{L.year.value}}</span>
+            }
+            }
+        </label>
+     }
         <hr>
-      </div>
-      }
+    </div>
+     }
       <span>
         <button mat-icon-button color="primary" class="internalLink" #content (click)="onClick(this.list)">
           <mat-icon color="primary" [inline]="true">download</mat-icon>

@@ -1,5 +1,5 @@
 //list of selected Items on black ground
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 
@@ -7,8 +7,8 @@ import { Observable, forkJoin } from 'rxjs';
   providedIn: 'root'
 })
 export class SelectedItemListService {
+  private http = inject(HttpClient);
 
-  constructor( private http: HttpClient ) {  }
   
   setPropertiesAndValues(u) {
   

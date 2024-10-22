@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RequestService } from '../../services/request.service';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -7,8 +7,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class HuDatabaseService {
+  private request = inject(RequestService);
 
-  constructor(  private request:RequestService ) { }
 
 
   sparqlBuilding(lang){   // this is the sparql query

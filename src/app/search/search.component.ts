@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject, combineLatest} from 'rxjs';
 import { map, switchMap, tap, debounceTime, takeWhile, filter } from 'rxjs/operators';
@@ -42,14 +42,11 @@ import { SelectedLangService } from '../selected-lang.service';
 
 
 export class SearchComponent implements OnInit {
+ private changeDetector = inject(ChangeDetectorRef);
+ private request = inject(RequestService);
+ private setLanguage = inject(SetLanguageService);
+ private lang = inject(SelectedLangService);
 
- constructor(
-
-   private changeDetector: ChangeDetectorRef, 
-   private request:RequestService, 
-   private setLanguage:SetLanguageService,
-   private lang:SelectedLangService
- ) {}
 
   //  selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
 
@@ -82,77 +79,82 @@ export class SearchComponent implements OnInit {
     formerVisitsTitle:string = "you have visited:";
     selectedItemsList: any[] = JSON.parse(localStorage.getItem('selectedItems'));
 
+
   
   //  this.request.getStat();
 
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-  this.subtitle = this.lang.subtitle(this.subtitle);
+    this.subtitle = this.lang.subtitle(this.subtitle);
 
-  this.advanced_search = this.lang.advanced_search(this.advanced_search);
+    this.advanced_search = this.lang.advanced_search(this.advanced_search);
 
-  this.projects = this.lang.projects(this.projects);
+    this.projects = this.lang.projects(this.projects);
 
-  this.fields = this.lang.fields(this.fields);
+    this.fields = this.lang.fields(this.fields);
 
-      this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
+    this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle)
 
-      this.pages = this.request.getStat().pipe(map(res => Object.values(res)[1].statistics.pages));
+    this.selectedItemsList = this.selectedItemsList.filter(function (el) { return (el !== null) });
+
+    this.pages = this.request.getStat().pipe(map(res => Object.values(res)[1].statistics.pages));
     //  this.pages.subscribe(res => console.log(res));
 
-   //   this.pages = this.stat();
+    //   this.pages = this.stat();
 
-   //   console.log(this.pages);
-  /*
-   this.subtitle = "a database for historians"
-    if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
-    if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
-    if (this.selectedLang === "es") { this.subtitle = "una base de datos para historiadores"}
-    if (this.selectedLang === "it") { this.subtitle = "un database per gli storici"}
+    //   console.log(this.pages);
+    /*
+     this.subtitle = "a database for historians"
+      if (this.selectedLang === "de") { this.subtitle = "eine Databank für Historiker*innen" }
+      if (this.selectedLang === "fr") { this.subtitle = "une base de données pour historien.nes"}
+      if (this.selectedLang === "es") { this.subtitle = "una base de datos para historiadores"}
+      if (this.selectedLang === "it") { this.subtitle = "un database per gli storici"}
+  
+      this.advanced_search = "advanced search"
+      if (this.selectedLang === "de") { this.advanced_search = "erweiterte Suche" }
+      if (this.selectedLang === "fr") { this.advanced_search = "recherche avancée"}
+      if (this.selectedLang === "es") { this.advanced_search = "búsqueda avanzada"}
+      if (this.selectedLang === "it") { this.advanced_search = "ricerca avanzata"}
+  
+      this.projects = "research projects"
+      if (this.selectedLang === "de") { this.projects = "Forschungsprojekten" }
+      if (this.selectedLang === "fr") { this.projects = "projets de recherche"}
+      if (this.selectedLang === "es") { this.projects = "proyectos de investigación"}
+      if (this.selectedLang === "it") { this.projects = "progetti di ricerca"}
+  
+      this.fields = "fields of research"
+      if (this.selectedLang === "de") { this.fields = "Forschungsfelder" }
+      if (this.selectedLang === "fr") { this.fields = "domaines de recherche"}
+      if (this.selectedLang === "es") { this.projects = "campos de investigación"}
+      if (this.selectedLang === "it") { this.projects = "aree di ricerca"}
+        
+      this.formerVisitsTitle = "you have visited:"
+      if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht:"};
+      if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité :"};
+      if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"}
+      if(this.selectedLang === "it") {this.formerVisitsTitle = "hai visitato :"}
+  
+      */
 
-    this.advanced_search = "advanced search"
-    if (this.selectedLang === "de") { this.advanced_search = "erweiterte Suche" }
-    if (this.selectedLang === "fr") { this.advanced_search = "recherche avancée"}
-    if (this.selectedLang === "es") { this.advanced_search = "búsqueda avanzada"}
-    if (this.selectedLang === "it") { this.advanced_search = "ricerca avanzata"}
-
-    this.projects = "research projects"
-    if (this.selectedLang === "de") { this.projects = "Forschungsprojekten" }
-    if (this.selectedLang === "fr") { this.projects = "projets de recherche"}
-    if (this.selectedLang === "es") { this.projects = "proyectos de investigación"}
-    if (this.selectedLang === "it") { this.projects = "progetti di ricerca"}
-
-    this.fields = "fields of research"
-    if (this.selectedLang === "de") { this.fields = "Forschungsfelder" }
-    if (this.selectedLang === "fr") { this.fields = "domaines de recherche"}
-    if (this.selectedLang === "es") { this.projects = "campos de investigación"}
-    if (this.selectedLang === "it") { this.projects = "aree di ricerca"}
-      
-    this.formerVisitsTitle = "you have visited:"
-    if(this.selectedLang === "de") {this.formerVisitsTitle = "Sie haben besucht:"};
-    if(this.selectedLang === "fr") {this.formerVisitsTitle = "vous avez visité :"};
-    if(this.selectedLang === "es") {this.formerVisitsTitle = "has visitado :"}
-    if(this.selectedLang === "it") {this.formerVisitsTitle = "hai visitato :"}
-
-    */
+    console.log(this.selectedItemsList);
 
 
     this.labels = this.searchInput.valueChanges   //search engine
-    .pipe(
-    debounceTime(400),
-    switchMap(label => this.request.searchItem(label, this.lang.selectedLang)), 
-    map( res => this.createList(res)),
-    map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*"? 
-   "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res ),
-    debounceTime(200),
-    switchMap(url => this.request.getItem(url)),
-  //  takeWhile (res => res !== undefined),
-    filter (res => res !== undefined),
-    filter (res => res.entities !== undefined && res.entities !==null),
+      .pipe(
+        debounceTime(400),
+        switchMap(label => this.request.searchItem(label, this.lang.selectedLang)),
+        map(res => this.createList(res)),
+        map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*" ?
+          "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res),
+        debounceTime(200),
+        switchMap(url => this.request.getItem(url)),
+        //  takeWhile (res => res !== undefined),
+        filter(res => res !== undefined),
+        filter(res => res.entities !== undefined && res.entities !==null),
    // filter (res => res.entities !== null),
-    map(res => Object.values(res.entities))
-   )
+        map(res => Object.values(res.entities))
+      )
     .subscribe(re => { 
     this.items = this.setLanguage.item(re, this.lang.selectedLang);
   //  this.items = this.filterResearchField(this.items, this.selectedResearchField);
@@ -176,10 +178,10 @@ export class SearchComponent implements OnInit {
     return url
     }
 
-  addParis(re) {
+  addParis(re) { // used in Paris-search
      re = "Paris, "+re;
     // return re
-  }
+  }c
 
     ngOnDestroy(): void {
        this.labels.unsubscribe()

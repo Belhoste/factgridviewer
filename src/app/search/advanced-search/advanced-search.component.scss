@@ -1,0 +1,60 @@
+
+.search-align{
+    display:flex;
+    flex-direction: row;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-label { // style of the labels of the items
+  font-weight: bold;
+}
+
+.FactGrid-div { // box styling the factgrid title
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FactGridTitle-div { //font of the title FactGrid
+  padding-left: 10px;
+  color: #AD1457;
+  font-weight: 600;
+  font-size: 60px;
+}
+
+.search-itemSelected { // put a margin on top of the box of selected items
+  margin-top: 50px;
+}
+
+#projects mat-form-field { //custom width of the form "Projects"
+  width: 60vw;
+}
+
+@media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
+  #projects mat-form-field { //
+    width: 90vw;
+  }
+}
+
+//style the card of selected items
+
+
+
+.selectedItemSize {
+  font-size: 14px;
+}
+
+.button {
+  background-color: transparent !important;
+  border-color:transparent;
+  font-size:16px;
+}
+
+a.button:hover {
+  background: #383;
+}

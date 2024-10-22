@@ -23,7 +23,8 @@ const routes: Routes = [
   ]
   },
   { path: 'paris', loadComponent: () => import('./paris-search/paris-search.component').then(mod => mod.ParisSearchComponent) },
-  { path: 'harmonia_universalis', loadComponent: () => import('./harmonia-universalis/harmonia-universalis.component').then(mod => mod.HarmoniaUniversalisComponent) }
+  { path: 'harmonia_universalis', loadComponent: () => import('./harmonia-universalis/harmonia-universalis.component').then(mod => mod.HarmoniaUniversalisComponent) },
+  { path: 'advanced_search', loadComponent: () => import('./search/advanced-search/advanced-search.component').then(mod => mod.AdvancedSearchComponent) }
 
 ]
 

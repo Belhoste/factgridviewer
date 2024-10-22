@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject, combineLatest} from 'rxjs';
 import { map, switchMap, tap, debounceTime, takeWhile, filter } from 'rxjs/operators';
@@ -43,14 +43,12 @@ import { SelectedLangService } from '../selected-lang.service';
 
 
 export class ParisSearchComponent implements OnInit {
+ private dataService = inject(ParisDatabaseService);
+ private changeDetector = inject(ChangeDetectorRef);
+ private request = inject(RequestService);
+ private setLanguage = inject(SetLanguageService);
+ private lang = inject(SelectedLangService);
 
- constructor(
-   private dataService: ParisDatabaseService,
-   private changeDetector: ChangeDetectorRef, 
-   private request:RequestService, 
-   private setLanguage:SetLanguageService,
-   private lang:SelectedLangService
- ) {}
 
   //  selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
 

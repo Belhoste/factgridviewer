@@ -1,14 +1,14 @@
 //list of selected Items on black ground
-import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectedItemListService {
+  private http = inject(HttpClient);
 
-  constructor( private http: HttpClient ) {  }
   
   setPropertiesAndValues(u) {
   
@@ -20,10 +20,10 @@ export class SelectedItemListService {
   let mainsnaks = [];
   let mainsnaks2 = [];
 
-	const baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
-	const getUrlSuffix= '&props=labels|descriptions&format=json' ;
+//	const baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
+//	const getUrlSuffix= '&props=labels|descriptions&format=json' ;
 
-  console.log(values);
+//  console.log(values);
   
   for (const val of values) { //mainsnaks
     let i:number;
@@ -43,8 +43,6 @@ for (const val of mainsnaks) { //array of objects {P:Q}
   for (const val of values) { //items Q in the mainsnaks
     { if (val[0].mainsnak.datavalue.value.id === undefined) continue; items.push( val[0].mainsnak.datavalue.value.id) }
    }
-
-
   
   for (const val of values) {   // qualifiers qal in the claims 
     let i: number;

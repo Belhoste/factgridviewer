@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { SetDataService } from '../services/set-data.service';
@@ -57,6 +57,11 @@ export interface HU {
 })
 
 export class HarmoniaUniversalisComponent implements OnInit, AfterViewInit {
+  private database = inject(HuDatabaseService);
+  private _liveAnnouncer = inject(LiveAnnouncer);
+  private csv = inject(ArrayToCsvService);
+  private lang = inject(SelectedLangService);
+
 
   //sessionStorage['selectedPage'] = JSON.stringify([{name:'Harmonia Universalis', address:"harmonia_universalis"}]);
 
@@ -95,9 +100,7 @@ export class HarmoniaUniversalisComponent implements OnInit, AfterViewInit {
   myLang:string = "%20.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22"+this.lang.selectedLang+"%22%2C%22en%22.%20%7D%0A%7D%0A";
 
 
-  constructor(
-  //  private setData: SetDataService,
-    private database: HuDatabaseService, private _liveAnnouncer: LiveAnnouncer, private csv: ArrayToCsvService, private lang: SelectedLangService) {
+  constructor() {
 
     this.dataSource.sortingDataAccessor = (data, sortHeaderId) => { return sortingAccessor.nestedCaseInsensitive(data, sortHeaderId); }
     this.dataSource.filterPredicate = (data, filter: string) => {

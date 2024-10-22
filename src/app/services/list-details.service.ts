@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { RequestService } from './request.service';
 import { map, tap } from 'rxjs/operators';
 
@@ -7,11 +7,11 @@ import { map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ListDetailsService {
+  private request = inject(RequestService);
+
 
   list: any[] 
   object:any[] = [];
-  
-  constructor(private request:RequestService) { }
 
  /* setListDetails(sparql){	
     let observedList = this.request.getList(sparql).pipe(

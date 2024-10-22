@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 
@@ -7,11 +7,11 @@ import { map, tap } from 'rxjs/operators';
     standalone: true,
 })
 export class UnitPipe implements PipeTransform {
+  private http = inject(HttpClient);
+
 
   
   unit:any = null;
-
-  constructor(private http: HttpClient) { }
 
   transform(value: string): any {
     let lang:string = localStorage['selectedLang'];
