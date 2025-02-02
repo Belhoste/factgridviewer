@@ -1,2 +1,0 @@
-import{I as n}from"./chunk-SXRXJZQ7.js";var p=(()=>{class t{constructor(){}arrayToCsv(e){return e.map(r=>r.map(String).map(o=>o.replaceAll('"','""')).join(",")).join(`\r
-`)}downloadBlob(e,r,o){var c=new Blob([e],{type:o}),i=URL.createObjectURL(c),a=document.createElement("a");a.href=i,a.setAttribute("download",r),a.click()}static{this.\u0275fac=function(r){return new(r||t)}}static{this.\u0275prov=n({token:t,factory:t.\u0275fac,providedIn:"root"})}}return t})();export{p as a};
