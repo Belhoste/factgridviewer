@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/services/array-to-csv.service.ts"],
+  "sourcesContent": ["import { Injectable } from '@angular/core';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class ArrayToCsvService {\r\n\r\n  constructor() { }\r\n\r\n  arrayToCsv(data){\r\n  return data.map(row =>\r\n    row\r\n    .map(String)  // convert every value to string\r\n    .map(v => v.replaceAll('\"', '\"\"'))  // escape double quotes\r\n   // .map(v => `\"${v}\"`)  // quote it\r\n    .join(',')  // comma-separated\r\n  ).join('\\r\\n');  // rows starting on new lines\r\n}\r\n\r\n downloadBlob(content, filename, contentType) {\r\n  // Create a blob\r\n  var blob = new Blob([content], { type: contentType });\r\n  var url = URL.createObjectURL(blob);\r\n\r\n  // Create a link to download it\r\n  var pom = document.createElement('a');\r\n  pom.href = url;\r\n  pom.setAttribute('download', filename);\r\n  pom.click();\r\n}\r\n\r\n\r\n// in general content-type is 'text/csv;charset=utf-8;'\r\n\r\n}\r\n"],
+  "mappings": ";;;;;AAKM,IAAO,oBAAP,MAAO,mBAAiB;EAE5B,cAAA;EAAgB;EAEhB,WAAW,MAAI;AACf,WAAO,KAAK;MAAI,SACd,IACC,IAAI,MAAM,EACV,IAAI,OAAK,EAAE,WAAW,KAAK,IAAI,CAAC,EAEhC,KAAK,GAAG;;MACT,KAAK,MAAM;EACf;EAEC,aAAa,SAAS,UAAU,aAAW;AAE1C,QAAI,OAAO,IAAI,KAAK,CAAC,OAAO,GAAG,EAAE,MAAM,YAAW,CAAE;AACpD,QAAI,MAAM,IAAI,gBAAgB,IAAI;AAGlC,QAAI,MAAM,SAAS,cAAc,GAAG;AACpC,QAAI,OAAO;AACX,QAAI,aAAa,YAAY,QAAQ;AACrC,QAAI,MAAK;EACX;;;uCAxBa,oBAAiB;IAAA;EAAA;;4EAAjB,oBAAiB,SAAjB,mBAAiB,WAAA,YAFhB,OAAM,CAAA;EAAA;;",
+  "names": []
+}

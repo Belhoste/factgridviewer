@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/display/sparql0-display/sparql0-display.component.scss"],
+  "sourcesContent": [".property2 {\r\n    color:#3F51B5;\r\n    font-weight:550;\r\n  }\r\n\r\n.hide-division {\r\n    display: none;\r\n    }\r\n  \r\n.show-division {\r\n    display: block;\r\n    }\r\n\r\n.sparql-div {\r\n  display: flex;\r\n  flex-flow: column wrap;\r\n  .sparql-div> *:not(:last-child) {\r\n    margin-bottom: 2px;\r\n   }\r\n  }\r\n\r\n\r\n"],
+  "mappings": ";AAAA,CAAA;AACI,SAAA;AACA,eAAA;;AAGJ,CAAA;AACI,WAAA;;AAGJ,CAAA;AACI,WAAA;;AAGJ,CAAA;AACE,WAAA;AACA,aAAA,OAAA;;AACA,CAHF,WAGE,CAHF,WAGE,EAAA,CAAA,KAAA;AACE,iBAAA;;",
+  "names": []
+}
