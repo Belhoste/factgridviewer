@@ -1,0 +1,42 @@
+<div [ngClass]="isList ? 'show-division':'hide-division'">
+  <mat-card appearance="outlined" class=mat-elevation-z12>
+    <mat-card-content class="cardBackground">
+      <div [ngClass]="isWorks ? 'subdivisionTitle' : 'propertyStyle'">{{subTitle}}</div>
+
+      @if(isSearch === true) {
+     <div class="searchFormPadding">
+        <mat-form-field appearance="outline">
+          <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+        </mat-form-field>
+        <span>
+          &nbsp;&nbsp;&nbsp;{{this.list.length}}
+        </span>
+      </div>
+      }
+     
+      @for (L of list; track L) {
+        <div class="sparql-div statementStyle">
+          @if (L.itemLabel.value) {
+          <label>
+            {{L.itemLabel.value}}
+            <mat-icon-button class="internalLink" [routerLink]="['/item', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;
+            @if (L.itemDescription) {
+            <span>, {{L.itemDescription.value}}</span>
+            }
+            @if (L.year) {
+            <span>, {{L.year.value}}</span>
+            }
+
+          </label>
+          }
+        <hr>
+      </div>
+      }
+      <span>
+        <button mat-icon-button color="primary" class="internalLink" #content (click)="onClick(this.list)">
+          <mat-icon color="primary" [inline]="true">download</mat-icon>
+        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span>
+    </mat-card-content>
+  </mat-card>
+</div>
