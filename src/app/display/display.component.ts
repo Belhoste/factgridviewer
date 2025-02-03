@@ -3,7 +3,7 @@ import { Observable, Subscription, Subject, isObservable, BehaviorSubject, from,
 import {  switchMap, tap, takeUntil, take } from 'rxjs/operators';
 import { RequestService } from '../services/request.service'
 import { map } from 'rxjs/operators';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BackListDetailsService } from '../services/back-list-details.service';
 import { ItemSparqlService } from '../services/item-sparql.service';
 import { HeaderDisplayService } from './services/header-display.service';
@@ -29,7 +29,6 @@ import { TranscriptionService } from './services/transcription.service'
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { UnitPipe } from '../unit.pipe';
 import { JoinPipe } from '../join.pipe';
 import { ItemInfoComponent } from './item-info/item-info.component';
 import { HeaderDisplayComponent } from './header-display/header-display.component';
@@ -42,13 +41,14 @@ import { Sparql0DisplayComponent } from './sparql0-display/sparql0-display.compo
 import { Sparql1DisplayComponent } from './sparql1-display/sparql1-display.component';
 import { Sparql2DisplayComponent } from './sparql2-display/sparql2-display.component';
 import { Sparql3DisplayComponent } from './sparql3-display/sparql3-display.component';
+import { Sparql4DisplayComponent } from './sparql4-display/sparql4-display.component';
 import { IframesDisplayComponent } from './iframes-display/iframes-display.component';
 import { TextDisplayComponent } from './text-display/text-display.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NgIf, NgFor, NgClass, NgStyle, AsyncPipe } from '@angular/common';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { SelectedLangService } from '../selected-lang.service';
 import { MatTabsModule} from '@angular/material/tabs';
@@ -58,13 +58,11 @@ import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-display',
     templateUrl: 'display.component.html',
-    styleUrls: ['./display.component.scss'],
- //  changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-  imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, RouterOutlet, NgStyle, TextDisplayComponent,
-    Sparql0DisplayComponent, Sparql1DisplayComponent, Sparql2DisplayComponent,Sparql3DisplayComponent,
-    ItemInfoComponent, MainDisplayComponent, HeaderDisplayComponent, SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, IframesDisplayComponent, AsyncPipe, JoinPipe, UnitPipe]      
-          
+  styleUrls: ['./display.component.scss'],
+  standalone: true,
+    imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, TextDisplayComponent,
+        Sparql0DisplayComponent, Sparql1DisplayComponent, Sparql2DisplayComponent, Sparql3DisplayComponent, Sparql4DisplayComponent,
+        ItemInfoComponent, MainDisplayComponent, HeaderDisplayComponent, SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, IframesDisplayComponent, JoinPipe]
 })
 
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -153,12 +151,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   sparqlData1: any[]//data from a sparql query
   sparqlData2: any[] // data from a sparql query
   sparqlData3: any[] // data from a sparql query
+  sparqlData4: any[] // data from a sparql query
+
 
   sparqlSubject: string; //id of the property to which the sparql is related
   sparqlSubject0: string; //id of the property to which the sparql is related
   sparqlSubject1: string; //id of the property to which the sparql is related
   sparqlSubject2: string; //id of the property to which the sparql is related
   sparqlSubject3: string; //id of the property to which the sparql is related
+  sparqlSubject4: string; //id of the property to which the sparql is related
 
   zoom: number //define the zoom for the map
   
@@ -299,6 +300,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   isSparql1: boolean = false;
   isSparql2: boolean = false;
   isSparql3: boolean = false;
+  isSparql4: boolean = false;
   isTranscription:boolean = false;
   isInfo: boolean = false;
   isMobile: boolean = false;
@@ -364,10 +366,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sparqlData1 = [];
     this.sparqlData2 = [];
     this.sparqlData3 = [];
+    this.sparqlData4 = [];
     this.sparqlSubject0 = "";
     this.sparqlSubject1 = "";
     this.sparqlSubject2 = "";
     this.sparqlSubject3 = "";
+    this.sparqlSubject4 = "";
     this.trans = "";
     
     this.instancesList = [];
@@ -441,9 +445,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
           this.isMain = false;
           this.isOther = false;
           this.isPicture = false;
-          this.isSparql1 = false;
-          this.isSparql2 = false;
-          this.isSparql0 = false;
+  //        this.isSparql1 = false;
+  //        this.isSparql2 = false;
+  //        this.isSparql0 = false;
           this.isSources = false;
           this.isTraining = false;
           this.isCareer = false;
@@ -780,6 +784,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
    }
 
   sparqlDisplay(u) {
+    console.log(u);
        if (u){
          if (u[0]) {
             this.sparqlSubject0 = u[0][0];
@@ -796,7 +801,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
            this.sparqlSubject1 = u[1][0];
            this.sparqlData1 = u[1][1];
-           console.log(this.sparqlData1);
            this.isSparql1 = false;
                if (this.sparqlData1 !== undefined) {
                   if(this.sparqlData1[0] !== undefined) {
@@ -817,16 +821,32 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         }
 
          if (u[3] !== undefined) {
+           console.log(u[3]);
            this.sparqlSubject3 = u[3][0];
-           this.sparqlData3 = u[3][1];
-           this.isSparql3 = false
-           if (this.sparqlData3 !== undefined) {
-             if (this.sparqlData3[0] !== undefined) {
+        //   this.sparqlData3 = u[3][1];
+          
+           if (u[3].osm_id) {
+             this.sparqlSubject3 = "current address:";
+             let label = { value: u[3].display_name }; let osm_id = { id : "Q1188609" }; let v = { item: osm_id, itemLabel: label };  this.sparqlData3 = [v] } else this.sparqlData3 = u[3][1];
+             this.isSparql3 = false
+             if (this.sparqlData3 !== undefined) {
+               if (this.sparqlData3[0] !== undefined) {
                this.isSparql3 = true;
              }
            }
+         }
+
+         if (u[4] !== undefined) {
+           this.sparqlSubject4 = u[4][0];
+           this.sparqlData4 = u[4][1];
+           this.isSparql4 = false
+           if (this.sparqlData4 !== undefined) {
+             if (this.sparqlData4[0] !== undefined) {
+               this.isSparql4 = true;
+             }
+           }
          } 
-    }
+      }
    }
 
 

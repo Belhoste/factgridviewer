@@ -76,6 +76,10 @@ export class PersonDisplayService {
       item[1].splice(item[1].indexOf("P186"),1);
       lifeAndFamily.push(item[0].claims.P186);
     }
+    if (item[0].claims.P1267 !== undefined) { // signature
+      item[1].splice(item[1].indexOf("P1267"), 1);
+      lifeAndFamily.push(item[0].claims.P1267);
+    }
     if (item[0].claims.P580 !==undefined){ //escape/emigration to
       item[1].splice(item[1].indexOf("P580"),1);
       lifeAndFamily.push(item[0].claims.P580);

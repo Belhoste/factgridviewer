@@ -22,77 +22,15 @@
         <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
         <a [routerLink]="['/harmonia_universalis']">Harmonia Universalis</a>
       </div>
+      <div class="search-center"><mat-icon color="primary">build</mat-icon></div>
 
-      <!--    <div class="cardBackground">
+      <app-project-select [data]="projectsList" (selectionChange)="selectedProjects($event)"></app-project-select>
+      
+      <app-statement-search class="child-container" [qualifierLiteralVariables]="qualifierLiteralVariables" [literalVariables]="literalVariables" 
+                          
+       [itemTypes]="itemTypes"  (propertyDatatype)="propertyDatatype($event)" (selectedQualifierValue)="selectedQualifierValue($event)" (qualifierPropertyDatatype)="qualifierPropertyDatatype($event)" (selectedValue)="selectedValue($event)" (selectedItemType)="selectedItemType($event)"></app-statement-search>
 
-  <div class="search-center2" id="projects">
-    <mat-form-field>
-      <mat-label>Projects</mat-label>
-      <mat-select placeholder="Projects" [formControl]="projectSearchInput" multiple name="project" (selectionChange)="selectedProject($event)">
-        <mat-option>None</mat-option>
-        @for (project of projectsList; track project) {
-        <mat-option [value]="project.item.id">{{project.itemLabel.value}}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="search-center2" id="projects">
-    <mat-form-field>
-      <mat-select placeholder="Projects"
-                  [formControl]="projectSearchCtrl"
-                  [multiple]="true"
-                  #multiSelect>
-        <mat-option>
-          <ngx-mat-select-search [showToggleAllCheckbox]="true"
-                                 [toggleAllCheckboxIndeterminate]="isIndeterminate"
-                                 [toggleAllCheckboxChecked]="isChecked"
-                                 [formControl]="projectMultiFilterCtrl"
-                                 (ngModelChange)="updateProjectsList($event)">
-            <!---synchronisation les données saisies dans le champ du formulaire et la propriété du composant ngxSearchModel ----; si on utilise <form> il suffit d'écrire ngModel?; il faut écrire le nom de la forme name="formName" ou bien écrire [ngModelOptions]="{standalone=true}" ---->
-      <!---      (ngModelChange)="updateOptionsList($event)"
-  ngModelChange est le @Output de la directive NgModel, qui se déclenche quand le modèle change (il faut donc aussi avoir NgModel dans la form) --->
-      <!--    </ngx-mat-select-search> <!--- je ne sais pas ce que cela veut dire; je pense qu'il faut lire: </ngx-mat-select-search> --->
-      <!--        </mat-option>
-  <mat-option [value]="project" *ngFor="let project of filteredProjectsMulti2 | async">
-    {{project.itemLabel.value}}
-  </mat-option>
-  </mat-select>
-  </mat-form-field>
-  </div>
-
-  -->
-      <app-project-select [data]="projectsList"  (selectionChange)="selectedProjects($event)"></app-project-select>
-
-
-      <app-statement-search (selectedStatementOutput)="selectedStatement($event)"></app-statement-search>
-
-
-
-      <!--    <div>
-        <h3>Multiple selection</h3>
-        <p>
-          <mat-form-field>
-            <mat-select [compareWith]="compareFn" [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true" #multiSelect>
-              <mat-option>
-                <ngx-mat-select-search [formControl]="bankMultiFilterCtrl"></ngx-mat-select-search>
-              </mat-option>
-              <mat-option *ngFor="let bank of filteredBanksMulti2 | async" [value]="bank">
-                {{bank.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </p>
-        <p>
-          Selected Banks:
-        </p>
-        <ul *ngFor="let bank of bankMultiCtrl?.value">
-          <li>{{bank.name}}</li>
-        </ul>
-
-
-      </div>
-    -->
+      <!----   <app-essai></app-essai>-->
 
     </mat-card-content>
   

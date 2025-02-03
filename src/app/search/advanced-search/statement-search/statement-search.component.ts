@@ -1,31 +1,41 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ChangeDetectorRef, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, ReactiveFormsModule, FormsModule, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, effect, inject, input } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { Observable, Subject,ReplaySubject, combineLatest } from 'rxjs';
-import { map, switchMap, tap, debounceTime, takeUntil, filter } from 'rxjs/operators';
-import { SetLanguageService } from '../../../services/set-language.service';
-import { RequestService } from '../../../services/request.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatOption } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelect, MatSelectChange, MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { Observable, ReplaySubject, Subject, BehaviorSubject, map, tap, takeUntil, switchMap, debounceTime, combineLatest, forkJoin, filter, iif, of, delay, startWith } from 'rxjs';
+//import { takeUntil } from 'rxjs/operators';
 import { SelectedLangService } from '../../../selected-lang.service';
 import { PropertiesListService } from '../../../services/properties-list.service';
+import { RequestService } from '../../../services/request.service';
 import { SearchEngineService } from '../../../services/search-engine.service';
+import { SetLanguageService } from '../../../services/set-language.service';
+import { DataService } from '../services/data.service';
+import { StatementsControlsService } from '../services/statements-controls.service';
+import { ITEMTYPES, MUTATOR, QUALIFIERTYPES, Selection, Variable } from '../variable';
 
+export interface Statement {
+  itemType: FormControl<string>,
+  properties: FormControl<string[]>,
+  value?: FormGroup,
+  optional: FormControl<boolean>,
+  qualifiers?: FormArray<FormGroup>
+}
 
-export interface QueryData {
-  project: any[];
-  statements: any[];
+export interface Qualifier {
+  qualifierProperty: FormControl<string>,
+  value?: FormGroup
 }
 
 @Component({
-
   selector: 'app-statement-search',
   standalone: true,
   imports: [
@@ -36,77 +46,477 @@ export interface QueryData {
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    MatSelectModule,
     MatFormFieldModule,
     NgxMatSelectSearchModule,
     MatSelect,
+    MatCheckboxModule,
+    MatOption,
+    MatSlideToggleModule,
   ],
   templateUrl: './statement-search.component.html',
   styleUrl: './statement-search.component.scss'
 })
 
 export class StatementSearchComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy {
+
   private changeDetector = inject(ChangeDetectorRef);
   private request = inject(RequestService);
   private setLanguage = inject(SetLanguageService);
   private lang = inject(SelectedLangService);
-  private list = inject(PropertiesListService);
-  private formBuilder = inject(FormBuilder);
+  private propertyList = inject(PropertiesListService);
+  private fb = inject(FormBuilder);
   private searchEngine = inject(SearchEngineService);
+  private data = inject(DataService);
+  private controls = inject(StatementsControlsService);
+  //  private data = inject(DataService);
+  @Output() propertyDatatype: EventEmitter<string[]> = new EventEmitter();
+
+  @Output() selectedItemType: EventEmitter<string[]> = new EventEmitter();
+
+  @Output() selectedValue: EventEmitter<string[]> = new EventEmitter();
 
 
-  
-  //  searchesArray = new FormArray([new FormControl('Propertty', Validators.required), new FormControl('Value')]);
+  @Output() selectedQualifierValue: EventEmitter<string[]> = new EventEmitter();
 
-  @Input() set data(data: any[]) {
-    this._data = data;
-    // load the initial project list
-    this.filteredPropertyMulti.next(this.data.slice());
+  @Output() qualifierPropertyDatatype: EventEmitter<string[]> = new EventEmitter();
+
+  @Output() datatype;
+
+
+
+  itemTypes = input([0, ITEMTYPES]);
+
+  // filteredItemTypes = input();
+
+  currentItemTypes: any[];
+  statementName: number = 0;
+
+  placeholderForLiteralValue: string = "literal value?"
+  placeholderForLiteralString: string = "write string? | date? | number?";
+
+  selections: Selection[][];
+
+  selection: Selection[];
+
+  propertiesValues: any[] = ["property?"];
+  subjectsValues: any[] = ["subject?"];
+
+  /*  get propertiesList(): any[] {
+      return this._propertiesList;
+    }
+    */
+
+  @Input() set literalVariables(literalVariables: any[]) {
+    this._literalVariables = literalVariables;
+    if (this.literalVariables) {
+      this.filteredLiteralVariables.next(this.literalVariables.slice())
+    }
   }
-  get data(): any[] {
-    return this._data;
+
+  @Input() set qualifierLiteralVariables(qualifierLiteralVariables: any[]) {
+    this._qualifierLiteralVariables = qualifierLiteralVariables;
+    if (this.qualifierLiteralVariables) {
+      this.filteredQualifierLiteralVariables.next(this.qualifierLiteralVariables.slice())
+    }
+  }
+  get literalVariables(): any[] {
+    return this._literalVariables;
   }
 
-  private _data: any[];
+  get qualifierLiteralVariables(): any[] {
+    return this._qualifierLiteralVariables;
+  }
 
-  query = this.formBuilder.group({
-    statements: this.formBuilder.array([this.addStatementsFormGroup()])
-  })
-
-  public items = [];
-
-  public isEntityToSelectDisplay: boolean = false;
-  public isQualifier2Display: boolean = false;
-  propertiesList: any[];
-  selectedPropertiesList: string[];
-
-  private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=';
-  private getUrlSuffix = '&format=json&origin=*';
+  private _propertiesList: any[];
+  private propertiesToSelect: any[];
+  private _literalVariables: any[];
+  private _qualifierLiteralVariables: any[];
 
 
-  public propertySearchInput = new FormControl();
+  private qualifierPropertiesToSelect: any[];
+
+  protected entityValues: any[] = []; //
+  protected currentMutator: Variable[][] = MUTATOR;
+
+  protected selectedLiteralVariables: Variable[] = []; // probablement à supprimer
+
+  isWikibaseItemOnStatement: boolean = true;
+  isLiteralOnStatement: boolean = false;
+  isLiteralStringOnStatement: boolean = false;
+ 
+
+  isWikibaseItemOnQualifier: boolean = true;
+  isLiteralOnQualifier: boolean = false;
+  isLiteralStringOnQualifier: boolean = false;
+
+  isLastStatement: boolean = false;
+  isAddStatement: boolean = false;
+  isRemoveStatement: boolean = false;
+
+  isAddQualifier: boolean = false;
+  isRemoveQualifier: boolean = false;
+  isQualifier: boolean = false;
+
+  isItemValue: boolean = true;
+//  isTimeToggle: boolean = false;
+ 
+
+  isLiteralVariableSelected: boolean = true;
+
+ // stringToogle: boolean = true;
+
+  selectedItemTypes: any[] = [];
+
+ // unSelectedItemTypes: any[] = [];
+
+ // itemTypesAsItemValues: any[];
+
+  query = this.fb.group({
+    statements: this.fb.array([this.statement])
+  });
+
+  get statements(): FormArray<FormGroup> { return this.query.get('statements') as FormArray; } // getter for statements as form array
+
+
+  // on pourrait aussi bien écrire : get statements() { return this.query.controls['statements'] as FormArray; }
+  qualifiers(i: number): FormArray<FormGroup> { return this.statements.at(i).get('qualifiers') as FormArray; }
+
+  get lastStatementIndex(): number { return this.statements.length - 1; };
+
+  get statement(): FormGroup<Statement> {
+    return this.fb.group<Statement>(
+      {
+        itemType: new FormControl({ value: "", disabled: false }),
+        properties: new FormControl({ value: [], disabled: true }, [Validators.required, this.datatypeValidator]),
+        value: this.value,
+        optional: new FormControl({ value: false, disabled: false }),
+        qualifiers: this.fb.array([this.qualifier])
+      }
+    );
+  }
+
+  get value(): FormGroup {
+    return this.fb.group({
+      itemValue: new FormControl({ value: "", disabled: true }),
+      literalValue: new FormControl({ value: "", disabled: true }),
+      literalString: new FormControl({ value: "", disabled: true })
+    }
+    );
+  }
+
+  get qualifier(): FormGroup {
+    return this.fb.group({
+      qualifierProperty: new FormControl({ value: "", disabled: false }),
+      value: this.qualifierValue,
+      optional: new FormControl({ value: false, disabled: false }),
+    }
+    );
+  }
+
+  get qualifierValue(): FormGroup {
+    return this.fb.group({
+      qualifierValue: new FormControl({ value: "", disabled: true }),
+      qualifierLiteralValue: new FormControl({ value: "", disabled: true }),
+      qualifierLiteralString: new FormControl({ value: "", disabled: true })
+    }
+    );
+  }
+
+  public itemTypeFilterCtrl: FormControl<string | null> = new FormControl<string>('');
+
+ // public filteredItemTypes: ReplaySubject<any> = new ReplaySubject<any>(1);
+  public filteredItemTypes: ReplaySubject<any> = new ReplaySubject<any>(1);
+
 
   /** control for the MatSelect filter keyword multi-selection */
   public propertytMultiFilterCtrl: FormControl<string> = new FormControl<string>('');
 
-  /** list of projects filtered by search keyword */
+  /** list of properties filtered by search keyword */
   public filteredPropertyMulti: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+  //  public valueSearchInput: FormControl = new FormControl();
+  /** control for the MatSelect filter keyword single-selection */
+  public itemValueFilterCtrl: FormControl<string> = new FormControl<string>('');
+
+  /** value filtered by search keyword */
+  public filteredItemValues: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+  /** control for the MatSelect filter keyword single-selection */
+  public literalFilterCtrl: FormControl<string | null> = new FormControl<string>('');
+
+  /** value filtered by search keyword */
+  public filteredLiteralVariables: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+  /** control for the MatSelect filter keyword single-selection */
+  public qualifierPropertyFilterCtrl: FormControl<string | null> = new FormControl<string>('');
+
+  /** value filtered by search keyword */
+  public filteredQualifierProperties: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+  /** control for the MatSelect filter keyword single-selection */
+  public qualifierValueFilterCtrl: FormControl<string> = new FormControl<string>('');
+
+  /** value filtered by search keyword */
+  public filteredQualifierValues: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+  /** control for the MatSelect filter keyword single-selection */
+  public qualifierLiteralFilterCtrl: FormControl<string> = new FormControl<string>('');
+
+  /** value filtered by search keyword */
+  public filteredQualifierLiteralVariables: ReplaySubject<any> = new ReplaySubject<any>(1);
+
+
+  addStatements() {
+    let formerItemType: Variable[][] = []
+    let itemTypes:Variable[]
+    let itemTypesList;
+    let mutator;
+    this.statements.push(this.statement);
+    this.isRemoveStatement = true;
+    this.data.itemTypes2$.subscribe(res => { 
+      itemTypes = res;
+      formerItemType.push(itemTypes);
+      this.data.updateItemTypes(itemTypes);
+      this.data.updateFormerItemTypes(formerItemType);
+    });
+    this.data.mutatorForNextStatement$.subscribe(res => {
+      mutator = res;
+      console.log(mutator);
+      this.data.updateMutator(mutator);
+      this.data.mutator$.subscribe(res => console.log(res));
+    }
+    )
+  }
+
+  removeStatements(i: number) {
+    this.statements.removeAt(i);
+    let itemTypes: any[] = [];
+    let formerItemTypesList: Variable[][];
+    let formerItemTypes: Variable[];
+    if (i === 0) { this.data.updateMutator(MUTATOR), this.data.updateItemTypes(ITEMTYPES); };
+    this.data.formerItemTypes$.subscribe(res => formerItemTypesList = res);
+    this.data.updateFormerItemTypes(formerItemTypesList.slice(-1));
+    this.data.formerItemTypes$.subscribe(res => formerItemTypesList = res);
+    this.data.updateItemTypes(formerItemTypesList[formerItemTypesList.length -1])
+    this.propertiesValues.splice(i, 1); // à voir de quoi il s'agit.
+  }
+
+  addQualifiers(i: number) {
+    let m = this.qualifiers(i).controls.length -1
+    if (this.qualifiers(i).pristine) { this.qualifiers(i).removeAt(m) };
+    this.isQualifier = true;
+    this.qualifiers(i).push(this.qualifier);
+     let qual = this.controls.qualifiers(this.statements, i);
+      this.isQualifier = true;
+   
+  }
+
+  addFirstQualifier(i) {
+    this.controls.qualifiers(this.statements, i).enable();
+    if (i === 0) { this.isQualifier = true; }
+  }
+
+  removeQualifiers(i: number, j: number) {
+    this.qualifiers(i).removeAt(j);
+  }
+
+  statementControllerDisplay(u, i) {
+    if (u === "WikibaseItem") {
+      this.isWikibaseItemOnStatement = true;
+      this.isLiteralOnStatement = false;
+      this.controls.itemValue(this.statements, i).enable();
+      this.controls.literalValue(this.statements, i).disable();
+      this.controls.literalString(this.statements, i).disable();
+    } else {
+      if (u === "String" || u === "MonolingualText" || u === "Time" || u === "Quantity") {
+        console.log(u);
+        this.controls.itemValue(this.statements, i).disable();
+        this.controls.literalValue(this.statements, i).enable();
+        this.controls.literalString(this.statements, i).enable();
+        this.isWikibaseItemOnStatement = false;
+        this.isLiteralStringOnStatement = false;
+        this.isLiteralOnStatement = true;
+      }
+    }
+  }
+
+  literalControllerDisplay(label, i) {
+    if (label === "write literal string" || label === "write date : YYYY-MM-DD" || label === "write number") {
+      this.controls.literalValue(this.statements, i).enable(); this.controls.literalString(this.statements, i).enable();
+      this.controls.literalValue(this.statements, i).patchValue("");
+      this.isLiteralStringOnStatement = true;
+      this.placeholderForLiteralValue = "write below";
+    }
+    else {
+        this.controls.literalValue(this.statements, i).enable();
+        this.controls.literalString(this.statements, i).disable();
+      this.isLiteralStringOnStatement = false;
+      this.placeholderForLiteralString = "disabled";
+    }
+  }
+
+  qualifierControllerDisplay(u, i, j) {
+    console.log(u);
+    let qual = this.controls.qualifiers(this.statements, i);
+    if (u === "WikibaseItem") {
+      let value = this.controls.qualifierValue(qual, j);
+      console.log(value);
+      this.isWikibaseItemOnQualifier = true;
+      this.isLiteralOnQualifier = false;
+      this.controls.qualifierValue(qual, j).enable();
+      this.controls.qualifierLiteralValue(qual, j).disable();
+      this.controls.qualifierLiteralString(qual, j).disable();
+    //  this.controls.qualifierValue(qual, j).patchvalue(value);
+    } else {
+      if (u === "String" || u === "MonolingualText" || u === "Time" || u === "Quantity") {
+        this.controls.qualifierLiteralValue(qual, j).enable(); 
+        this.controls.qualifierLiteralString(qual, j).enable();
+        this.isWikibaseItemOnQualifier = false;
+        this.isLiteralOnQualifier = true; 
+      }
+    }
+  }
+
+  qualifierLiteralControllerDisplay(label, i, j) {
+    let qual = this.controls.qualifiers(this.statements, i);
+    if (label === "write literal string" || label === "write date : YYYY-MM-DD" || label === "write number" ) {
+      this.controls.qualifierLiteralValue(qual, j).enable(); this.controls.qualifierLiteralString(qual, j).enable();
+  //    this.controls.qualifierLiteralValue(qual, j).patchValue("");
+      this.isLiteralStringOnQualifier = true;
+    }
+    else {
+      this.controls.literalValue(qual, j).enable();
+      this.controls.literalString(qual, j).disable();
+      this.isLiteralStringOnQualifier = false;
+    }
+  }
+
+  onItemTypeSelect(event: MatSelectChange): void {
+    let i = event.value[0]; // name of the statement "i" in the form array "statements"
+   // this.controls.propertyValues(this.statements, i).reset([]); // to reset the control propertyValues of the statement "i" 
+    this.controls.propertyValues(this.statements, i).enable();
+
+   this.selectedItemType.emit(event.value); // output to advanced-search-component (see selectedItemType(itemType))
+  }
+
+  onPropertySelect(event: MatSelectChange): void {
+  //  this.data.updateItemTypes([]); //test TODO il faut rénitialiser au prochain statement.
+    let propertyValue = [];
+    if (event.value[0] !== undefined) {
+      let i = event.value[0][0];
+      this.datatype = event.value[0][2];
+      this.statementControllerDisplay(this.datatype, i); // to display the right controls
+      this.propertyDatatype.emit([i, this.datatype]);  // output to advanced-search-component (see propertyDatatype(itemType))
+      this.controls.itemValue(this.statements, i).enable();
+    //  this.controls.propertyValues(this.statements, i).updateValueAndValidity();
+    }
+  }
+
+  onValueSelect(event: MatSelectChange): void {  // to update the mutator and add the selected value type to the current itemTypes
+    let i = event.value[0];
+    let label = event.value[1];
+    let dataType = event.value[2];
+    console.log(event.value);
+    if (label.charAt(0) === "?") {
+     this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValue(itemType))
+    }
+    this.isAddQualifier = true;
+    this.isAddStatement = true;
+  };
+
+  onLiteralValueSelect(event: MatSelectChange): void {
+    let i = event.value[0];
+    let label = event.value[1];
+    this.placeholderForLiteralString = label;
+    this.literalControllerDisplay(label, i); // to display and enable the right controls
+    if (label.charAt(0) === "?") {
+      console.log(label);
+     this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValueType(itemType)). ?string is not an itemType
+    }
+    this.isAddStatement = true;
+    this.isAddQualifier = true;
+  }
+
+  onQualifierPropertySelect(event: MatSelectChange): void {
+    console.log(event.value);
+    let i = event.value[0];
+    let j = event.value[1];
+    let datatype = event.value[3];
+    this.qualifierPropertyDatatype.emit([i, j, datatype]);
+    this.qualifierControllerDisplay(datatype, i, j); // to display the right controls
+
+  }
+
+  onQualifierValueSelect(event: MatSelectChange): void {
+    console.log(event.value);
+    let i = event.value[0];
+    let j = event.value[1];
+    let dataType = event.value[2];
+    let col = event.value[3];
+    let id = event.value[4];
+    let u = [ i, dataType, col, id ];
+    if (dataType.charAt(0) === "?") {
+      this.selectedQualifierValue.emit(u);
+    }
+    this.isRemoveQualifier = true;
+    let qual = this.controls.qualifiers(this.statements, i);
+    let value = this.controls.qualifierValue(qual, j);
+    console.log(value);
+    this.controls.patchQualifierValue(value, qual, j)
+  };
+
+  onQualifierLiteralValueSelect(event: MatSelectChange): void {
+    console.log(event.value);
+    let i = event.value[0];
+    let label = event.value[2];
+   // let dataType = event.value[2];
+    if (label.charAt(0) === "?") {
+      this.selectedQualifierValue.emit(event.value);
+      this.isLiteralStringOnQualifier = false;
+    } else this.isLiteralStringOnQualifier = true;
+    this.isRemoveQualifier = true;
+  };
+
+  public items = [];
+
+  //  public datatype = "WikibaseItem";
+  public isQualifier2Display: boolean = false;
+  //propertiesList: any[];
+  selectedPropertiesList: string[];
+
+  // private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=';
+  //  private getUrlSuffix = '&format=json&origin=*';
+  //  public selectedItemType: Observable<string>;
+  // public selectedValue: Observable<string>;
+  // public itemTypeSearchInput = new FormControl();
+  @ViewChild('matRef') matRef: MatSelect;
+
+  clear() {
+    this.matRef.options.forEach((data: MatOption) => data.deselect());
+  }
+ 
+
+  @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
 
   @ViewChild('multiSelect', { static: true }) multiSelect: MatSelect;
 
+  //  @Output() typeSelectionChange: EventEmitter<MatSelectChange> = new EventEmitter<MatSelectChange>();
   @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter<MatSelectChange>();
+
+  @Output() propertySelectionChange: EventEmitter<MatSelectChange> = new EventEmitter<MatSelectChange>();
 
   protected _onDestroy = new Subject<void>();
 
-
   ngOnInit(): void {
 
-    this.list.propertiesListBuilding("Q11295").subscribe(res => {
-      console.log(res);
-    this.propertiesList = res;
-    });
+    this.propertyList.qualifierPropertiesListBuilding.subscribe(res => this.qualifierPropertiesToSelect = res);
+
+    this.itemTypeFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterItemTypes();
+      });
 
     this.propertytMultiFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -114,382 +524,413 @@ export class StatementSearchComponent
         this.filterPropertyMulti();
       });
 
-    const form = this.query.get('statements');
+    this.itemValueFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterItemValues();
+      });
 
-    console.log(form);
+    this.literalFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterLiteralVariables();
+      });
 
-    console.log(form.touched);
 
-    console.log(form.events);
+    this.qualifierPropertyFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterQualifierProperties();
+      });
 
-    form.events.subscribe(res => console.log(res));
 
-    form.valueChanges.subscribe(res => console.log(res[0]["property"]));
+    this.qualifierValueFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterQualifierValues();
+      });
 
-    form.valueChanges.subscribe(res => console.log(res[0]["value"]));
+    this.qualifierLiteralFilterCtrl.valueChanges    
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.filterQualifierValues();
+      });
 
- //   form.events.subscribe(res => console.log(res));
-    var propertyValueChanges: Observable<any> =
-      this.query.get('statements').valueChanges
-        .pipe(map(res => res[0]["property"]));
 
-    var valueValueChanges: Observable<any> =
-      this.query.get('statements').valueChanges
-        .pipe(map(res => res[0]["value"]));
+    var propertyValueChanges: Observable<any> = this.query.get('statements').valueChanges
+      .pipe(map(res => res[0]["property"]));
 
-   propertyValueChanges
-      .pipe(
-        debounceTime(400),
-        switchMap(label => this.request.searchProperty(label, this.lang.selectedLang)),
-        map(res => this.createList(res)),
-        //     map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*" ?
-        //      "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res),
-        map(res => this.notFound(res)),
-        debounceTime(200),
-        switchMap(url => this.request.getItem(url)),
-        filter(res => res !== undefined),
-        filter(res => res.entities !== undefined && res.entities !== null),
-        map(res => Object.values(res.entities)),
-      )
-      .subscribe(re => {
-        this.items = this.setLanguage.item(re, this.lang.selectedLang);
-        this.items[0].id == "Q220375" ? this.isEntityToSelectDisplay = false : this.isEntityToSelectDisplay = true;
-        this.changeDetector.detectChanges();
-      })
+    var valueValueChanges: Observable<any> = this.query.get('statements').valueChanges
+      .pipe(map(res => res[0]["itemValue"]));
 
-   /*
+  }
 
-    this.statement.controls.value.valueChanges   //search engine
-      .pipe(
-        debounceTime(400),
-        switchMap(label => this.request.searchItem(label, this.lang.selectedLang)),
-        map(res => this.createList(res)),
-        //      map(res => res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*" ?
-        //             "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res),
-        map(res => this.notFound(res)),
-        debounceTime(200),
-        switchMap(url => this.request.getItem(url)),
-        filter(res => res !== undefined),
-        filter(res => res.entities !== undefined && res.entities !== null),
-        map(res => Object.values(res.entities)),
-      )
-      .subscribe(re => {
-        this.items = this.setLanguage.item(re, this.lang.selectedLang);
-        //  this.items = this.filterResearchField(this.items, this.selectedResearchField);
-        //    this.isEntityToSelectDisplay = true;
-        //if (this.items[0].id == "Q220375") {  };
-        console.log(this.items[0].id);
-        this.items[0].id == "Q220375" ? this.isEntityToSelectDisplay = false : this.isEntityToSelectDisplay = true;
-        this.changeDetector.detectChanges();
-      })
-      */
+  ngAfterViewInit() {
 
+    this.setInitialItemTypeValue();
+    this.setInitialPropertyValue();
+    this.setInitialValueValue();
+    this.setInitialLiteralVariable();
+    this.setInitialQualifierPropertyValue();
+    this.setInitialQualifierValueValue();
+    this.setInitialQualifierLiteralVariable();
+
+  }
+
+  protected setInitialItemTypeValue() {
+  this.data.itemTypes$.subscribe(res => { if (this.lastStatementIndex !== 0) { this.filteredItemTypes.next(res) } });
+    this.filteredItemTypes;
+  }
+
+
+  protected setInitialPropertyValue() {
+    this.filteredPropertyMulti;
+  }
+
+  protected setInitialValueValue() {
+    this.filteredItemValues;
+  }
+
+  protected setInitialLiteralVariable() {
+    this.filteredLiteralVariables;
+  }
+
+  protected setInitialQualifierPropertyValue() {
+    this.filteredQualifierProperties;
+  }
+
+  protected setInitialQualifierValueValue() {
+    this.filteredQualifierValues;
+  }
+
+  protected setInitialQualifierLiteralVariable() {
+    this.filterQualifierLiteralVariables;
+  }
+
+
+
+ protected filterItemTypes() {
+    this.data.itemTypes$.subscribe(res => {
+      this.currentItemTypes = res;
+  //    if (!this.currentItemTypes) { this.currentItemTypes = ITEMTYPES };
+      let search = this.itemTypeFilterCtrl.value;
+      if (!search) {
+           this.currentItemTypes = this.entityValues;
+    //    this.filteredItemTypes.next(this.currentItemTypes.slice());
+      } else {
+        search = search.toLowerCase();
+        // filter the itemTypes
+        this.filteredItemTypes.next(
+          this.currentItemTypes.filter(itemType => itemType.label.toLowerCase().indexOf(search) > -1));
+      }
+    }
+    );
+  }
+
+
+  
+  protected filterPropertyMulti() {
+    this.data.$propertiesList.subscribe(res => {
+      this.propertiesToSelect = res[1];
+      /*   if (!this.propertiesToSelect) {
+           return;
+         }*/
+      let search = this.propertytMultiFilterCtrl.value;
+      if (!search) {
+        this.filteredPropertyMulti.next(this.propertiesToSelect.slice());
+        return;
+      } else {
+        search = search.toLowerCase();
+        // filter the projects
+      
+          this.filteredPropertyMulti.next(
+            this.propertiesToSelect.filter(entity => entity.itemLabel.label.toLowerCase().indexOf(search) > -1));
+        
+      }
+    }
+    );
+  }
+
+/*  protected filterItemValues() {
+    let search = this.itemValueFilterCtrl.value;
+    let firstCharacter = search.charAt(0);
+    let searchLength = search.length;
+  // this.filteredItemValues.next(this.entityValues);
+    if (!search) {
+      this.filteredItemValues.next(this.entityValues);
+      return;
+    } else {
+      if (firstCharacter !== "?") {
+        search = search.toLowerCase();
+        this.itemValueFilterCtrl.valueChanges //search engine
+          .pipe(
+            filter(res => res !== '?'),
+          //  map(res => { if (res.length === 1) { res = firstCharacter } }),
+            debounceTime(400),
+            switchMap(label => this.request.searchItem(label, this.lang.selectedLang, 20)),
+            map(res => this.createList(res)),
+            debounceTime(400),
+            switchMap(url => this.request.getItem(url)),
+           filter(res => res !== undefined && res !== null),
+            filter(res => res.entities !== undefined && res.entities !== null),
+           map(res => Object.values(res.entities)),
+          ).subscribe(re => {
+            this.entityValues = this.setLanguage.item(re, this.lang.selectedLang);
+            this.setSeparator(this.entityValues);
+            this.filteredItemValues.next(this.entityValues.filter(value => value.label.toLowerCase().indexOf(search) > -1));
+          }
+          );
+      }
+      else {
+        if (search.length === 1) { search = '?*' };
+        this.filteredItemValues.next(this.entityValues);
+        this.data.mutator$.subscribe(re => {
+          this.entityValues = re[0];
+          if (search === '?*') {
+            this.filteredItemValues.next(this.entityValues);
+          } else {
+            search = search.slice(1);
+            this.filteredItemValues.next(this.entityValues.filter(value => value.label.toLowerCase().indexOf(search) > -1));
+          }
+        }
+        );
+      }
+    }
+  }
+  */
+
+
+  protected filterItemValues() {
+    let search = this.itemValueFilterCtrl.value;
+    let firstCharacter = search.charAt(0);
+    let searchLength = search.length;
+ //   this.filteredItemValues.next(this.data.itemTypes$);
+    if (!search) {
+      this.filteredItemValues.next(this.entityValues);
+      return;
+    } else {
+      search = search.toLowerCase();
+      this.itemValueFilterCtrl.valueChanges //search engine
+        .pipe(
+          debounceTime(400),
+          switchMap(label => iif(() => label.charAt(0) === "?", this.data.mutator$.pipe(map(re => re[0])), this.itemValuesList2(label, this.lang.selectedLang, 20)))).
+          subscribe(re => {
+            this.entityValues = re;
+            this.setSeparator(this.entityValues);
+            this.filteredItemValues.next(this.entityValues.filter(value => value.label.toLowerCase().indexOf(search) > -1));
+          }
+        )
+     }
+  }
+
+  itemValuesList1(label) { 
+    return  this.data.mutator$.pipe(map(re => re[0]))
+      }
+
+
+  itemValuesList2(label, lang, number) {
+   let entityValues:any[] = [];
+    return  this.request.searchItem(label, lang).pipe(
+      map(res => this.createList(res)),
+      switchMap(url => this.request.getItem(url)),
+      filter(res => res !== undefined && res !== null),
+      filter(res => res.entities !== undefined && res.entities !== null),
+      map(res => Object.values(res.entities)),
+      map(res => this.setLanguage.item(res, this.lang.selectedLang))
+    )
+} 
+
+
+  protected filterLiteralVariables() {
+    if (this.literalVariables === undefined) {
+      return;
+    }
+    // get the search keyword
+    let search = this.literalFilterCtrl.value;
+    if (!search) {
+      this.filteredLiteralVariables.next(this.literalVariables.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    this.filteredLiteralVariables.next(
+      this.literalVariables.filter(variable => variable.label.toLowerCase().indexOf(search) > -1)
+    );
+  }
+
+  protected filterQualifierProperties() {
+
+    if (!this.qualifierPropertiesToSelect) {
+      return;
+    }
+    let search = this.qualifierPropertyFilterCtrl.value;
+    if (!search) {
+      this.filteredQualifierProperties.next(this.qualifierPropertiesToSelect.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    // filter the 
+    this.filteredQualifierProperties.next(
+      this.qualifierPropertiesToSelect.filter(entity => entity.itemLabel.label.toLowerCase().indexOf(search) > -1)
+    );
+  }
+
+  protected filterQualifierValues() {
+    let search = this.qualifierValueFilterCtrl.value;
+    let firstCharacter = search.charAt(0);
+    if (!search) {
+      this.filteredQualifierValues.next(this.entityValues.slice());
+      return;
+    } else {
+      if (firstCharacter !== "?") {
+        search = search.toLowerCase();
+        this.qualifierValueFilterCtrl.valueChanges //search engine
+          .pipe(
+            debounceTime(400),
+            switchMap(label => this.request.searchItem(label, this.lang.selectedLang)),
+            map(res => this.createList(res)),
+            debounceTime(400),
+            switchMap(url => this.request.getItem(url)),
+            filter(res => res !== undefined && res !== null),
+            filter(res => res.entities !== undefined && res.entities !== null),
+            map(res => Object.values(res.entities))
+          ).subscribe(re => {
+            this.entityValues = this.setLanguage.item(re, this.lang.selectedLang);
+            this.setSeparator(this.entityValues);
+            this.filteredQualifierValues.next(this.entityValues.filter(value => value.label.toLowerCase().indexOf(search) > -1));
+          }
+          );
+      }
+      else {
+        this.data.mutator$.subscribe(re => {
+          this.entityValues = re[0];
+          let qualifierEntityValues = [];
+      //    let qualifierTypes: number[] = [1, 5, 6, 8, 10, 13, 16, 17, 19, 20, 21, 23];
+          qualifierEntityValues = this.entityValues.filter(entityValue => QUALIFIERTYPES.includes(entityValue.col))  // filter the options for the qualifier values
+          if (search === '?*') {
+            this.filteredQualifierValues.next(qualifierEntityValues);
+          } else {
+            search = search.slice(1);
+            this.filteredQualifierValues.next(qualifierEntityValues.filter(value => value.label.toLowerCase().indexOf(search) > -1));
+          }
+        }
+        );
+      }
+    }
+  }
+
+  protected filterQualifierLiteralVariables() {
+    console.log(this.qualifierLiteralVariables);
+    if (this.qualifierLiteralVariables === undefined) {
+      return;
+    }
+    // get the search keyword
+    let search = this.qualifierLiteralFilterCtrl.value;
+    console.log(search);
+    if (!search) {
+      console.log(this.qualifierLiteralVariables);
+      this.filteredQualifierLiteralVariables.next(this.qualifierLiteralVariables.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+    this.filteredQualifierLiteralVariables.next(
+      this.qualifierLiteralVariables.filter(variable => variable.label.toLowerCase().indexOf(search) > -1)
+    );
+  }
+
+
+
+  setSeparator(entityValues: any[]) {
+    for (let i = 0; i < entityValues.length; i++) {
+      if (entityValues[i].description) { entityValues[i].separator = ", "; };
+    };
   }
 
   selectedProperties(property) {
     this.selectedPropertiesList = property.value;
   }
 
-  addStatementsFormGroup():FormGroup {
-    return new FormGroup({
-      property: new FormControl(''),
-      value: new FormControl(''),
-      qualifiers: this.formBuilder.array([]),
-    });
+
+
+  datatypeValidator(control: AbstractControl): { [key: string]: boolean; } | null {
+    if (control.value) {
+      if (control.value[0] !== undefined) {
+        let equalDatatype = control.value.every((val: any) => val[2] === control.value[0][2]);
+        if (equalDatatype) { return { 'differentDatatype': true }; }
+      }
+    }
+    return null;
   }
 
+  compare(u, v) {
+    if (u === undefined) { return v } else return u
+}; //TODO: if u = [] then u =v else u = u and return u; (see if its possible to create a method witb filter or something else)
 
-  addQualifiersFormGroup() {
-    return new FormGroup({
-      qualifierProperty: new FormControl(''),
-      qualifierValue: new FormControl(''),
-    });
-
-  }
-
-  protected filterPropertyMulti() {
-    if (!this.data) {
-      return;
+  newQualifier(): FormGroup {
+    return this.fb.group({
+      qualifierProperty: "",
+      qualifierValue: "",
     }
-    // get the search keyword
-    let search = this.propertytMultiFilterCtrl.value;
-    if (!search) {
-      this.filteredPropertyMulti.next(this.data.slice());
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-    // filter the projects
-    this.filteredPropertyMulti.next(
-      this.data.filter(entity => entity.itemLabel.value.toLowerCase().indexOf(search) > -1)
     );
   }
 
- 
 
-  statementsFormArray():FormArray {
-    //    return this.query.controls.statements as FormArray;
-    return this.query.controls.statements as FormArray;
-  }
+  onVariableSelect(event: MatSelectChange): void {
+    console.log(event.value);
+  };
 
- qualifiersFormArray(i):FormArray {
-    return this.statementsFormArray().at(i).get("qualifiers") as FormArray;
-  }
 
-  addStatements() {
-    this.statementsFormArray().push(this.addStatementsFormGroup());
-  }
-
-  addQualifiers(j) {
-    this.qualifiersFormArray(j).push(this.addQualifiersFormGroup())
-
- //   const qualifiersFormArray = this.query.controls.statements.at(i) as FormArray
- //   qualifiersFormArray.push(this.addQualifiersFormGroup());
-  }
-
-  removeStatements () {
-  
-    this.statementsFormArray().removeAt(this.statementsFormArray.length -1);
-  }
-
-/*  removeQualifiers(j) {
-    this.qualifiersFormArray(j).remoteA((this.qualifiersFormArray.length - 1);
+  validateItemValues(control) {
+    //   console.log(control.value.cb);
+    if (!control.value.cb.some((item: any) => item)) {
+      return { checkboxSectionValid: true };
     }
-    */
-
-
-  newQualifier(): FormGroup {
-    return this.formBuilder.group({
-      qualifierProperty: "",
-      qualifierValue:"",
-}
-   
-
-    )
-
+    return null;
   }
-  
-
-
-   
-   
-     
-       
-  
-/*
-
-  addDetailsFormGroup() {
-    return new FormGroup({
-      label: new FormControl(''),
-      description: new FormControl(''),
-    });
-  }
-
-  formMain = this.formBuilder.group({
-    details: this.formBuilder.array([this.addDetailsFormGroup()]),
-  });
-
-
- 
-
-  get detailsFormArray() {
-    return this.formMain.controls.details as FormArray;
-  }
-
-  addDetails() {
-    this.detailsFormArray.push(this.addDetailsFormGroup());
-  }
-
-  */
- 
-
-
-
-  
-
 
   notFound(res) {
     res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*" ?
-      res = "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res
-    return res
+      res = "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=Q220375&format=json&origin=*" : res;
+    return res;
   }
 
-  //addSearch() {
- //   this.advancedSearchForm.push(this.formBuilder.control(''));
-  //}
-
-
- /* onPropertyFocus() {
-    console.log("yes");
-    this.statement1.controls.anyProperty = this.statement1.controls.property
-  }
-  */
-
-  createList(re) {  //create an url whith the elements of an array
-    let list = "";
-    let url = "";
+  createList(re) {
+    let baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=';
+    let getUrlSuffix = '&format=json&origin=*';
+    let list: string = "";
+    let url: string = "";
     let arr = re.search;
-    if (arr === undefined) { arr = [] }
-    else { arr = arr };
+    if (arr === undefined) { arr = []; }
+    else { arr = arr; };
     for (let i = 0; i < arr.length; i++) {
       list = list + "|" + arr[i].id;
     };
     list = list.slice(1);
-    url = this.baseGetURL + list + this.getUrlSuffix;
-    return url
+    url = baseGetURL + list + getUrlSuffix;
+    return url;
   }
 
-  /*projectSelect(proj) {
-    let u = [];
-    this.project.splice(0, 1, proj.value);
-    console.log(this.project);
-    this.selectedQueryData.splice(0, 1, this.project);
-    console.log(this.selectedQueryData);
-  }
-
-  onResultButton(result) {
-    this.statements.push(result);
-    console.log(this.selectedQueryData);
-  }
-  */
-
-  entitySelect(item) {
-/*    if (item !== undefined) {
-      this.isEntityToSelectDisplay = true;
-      let a = item.id.charAt(0);
-      if (a === 'P') {
-     //   this.statement1.controls.property.untouched ;
-        this.selectedPropertyValue = item.id;
-        this.selectedPropertyLabel = item.label;
-        this.selectedPropertyDatatype = item.datatype;
-        if (item.claims.P236 !== undefined) {
-          this.selectedPropertyLink = item.claims.P236[0].mainsnak.datavalue.value;
-        };
-        this.selectedStatementValue = item.id;
-        this.selectedStatementLabel = item.label;
-        this.statementType = item.datatype;
-        this.isEntityToSelectDisplay! = false;
-        if (this.isQualifier3Display == true) {
-          console.log(this.isQualifier3Display);
-          this.selectedQualifier3.push({ id: item.id, datatype: item.datatype, link: this.selectedPropertyLink });
-          console.log(item.datatype);
-          console.log(this.selectedQualifier3);
-          this.statement1.controls.anyProperty = this.statement1.controls.qal3Property
-          
-        }
-        else {
-          if (this.isQualifier2Display == true) {
-            console.log(this.isQualifier2Display);
-            this.selectedQualifier2.push({ id: item.id, datatype: item.datatype, link: this.selectedPropertyLink });
-            console.log(item.datatype);
-            console.log(this.selectedQualifier2);
-            this.statement1.controls.anyProperty = this.statement1.controls.qal2Property;
-          }
-          else {
-            if (this.isQualifier1Display == true) {
-              this.statement1.controls.qal1Property.reset("");
-              console.log(this.isQualifier1Display);
-              this.selectedQualifier1.push({ id: item.id, datatype: item.datatype, link: this.selectedPropertyLink });
-              console.log(item.datatype);
-              console.log(this.selectedQualifier1);
-              this.statement1.controls.anyProperty = this.statement1.controls.qal1Property;
-            } else {
-              this.statement1.controls.property;
-              this.statement1.controls.anyProperty = this.statement1.controls.property;
-              this.selectedStatement.push({ id: item.id, datatype: item.datatype, link: this.selectedPropertyLink });
-              console.log(this.selectedStatement);
-            }
-          }
-        }
-      }
-      if (a === 'Q') {
-        this.isDisplay3 = true;
-        this.selectedItemValue = item.id;
-        this.selectedItemLabel = item.label;
-        // this.isDisplay1! = false;
-        if (this.isQualifier3Display == true) {
-          this.selectedQualifier3.push(this.selectedItemValue);
-          console.log(this.selectedQualifier3);
-        } else {
-          this.selectedQualifier2.push(this.selectedItemValue);
-          console.log(this.selectedQualifier2);
-          if (this.isQualifier1Display == true) {
-            this.selectedQualifier1.push(this.selectedItemValue);
-            console.log(this.selectedQualifier1);
-          } else {
-            this.statement1.controls.value.reset(item.label);
-            this.isStatementDiagramDisplay = true;
-            this.selectedStatement.push(this.selectedItemValue);
-            console.log(item.datatype);
-            console.log(this.selectedStatement);
-          }
-        }
-      }
+  resetField(i: number, field: string) {
+    let j: number;
+    if (j > i && j < this.statements.controls.length) {
+      this.statements.controls[j].get(field).reset();
     }
-    */
   }
-
- /*
-    getProperty(prop) {
-    let property = [];
-    let u = "https://database.factgrid.de//w/api.php?action=wbgetentities&format=json&&origin=*&ids=" + prop;
-    console.log(u);
-    this.request.getItem(u).pipe(map(res => { property = res.entities }));
-    return property
-  }
-  */
 
   onQualifierButtonSelect() {
-
-    this.isEntityToSelectDisplay = false;
-    console.log(this.isQualifier2Display);
-
-
-/*    if (this.isQualifier2Display == true) {
-      this.isQualifier3Display = true;
-    } else {
-      if (this.isQualifier1Display == true) {
-        this.isQualifier2Display = true;
-      } else {
- //       this.statement1.controls.property.reset();
-       
-        this.isQualifier1Display = true;
-      }
-    }
-    */
-  
-
-  /*
-    if (this.isQualifier1Display == true) {
-      if (this.isQualifier2Display == false) {
-        this.isQualifier2Display = true;
-        console.log(this.isQualifier2Display);
-      }
-      if (this.isQualifier2Display == true) { this.isQualifier3Display = true }
-    }
-     else {
-      this.isQualifier1Display = true;
-    }*/
-  }; 
+  };
 
   onPropertyButtonSelect(item) { };
 
-/*  arrowBack($event) {
-      this.isArrowForwardDisplay = false;
-      this.isArrowBackDisplay = true;
-      this.statementDirection = 1;
-  };
 
-  arrowForward($event) {
-      this.isArrowForwardDisplay = true;
-      this.isArrowBackDisplay = false;
-      this.statementDirection = 0;
-  };
-  */
 
   ngOnDestroy(): void {
-//    this.propertyLabelList.unsubscribe();
-//    this.itemLabelList.unsubscribe();
+    this._onDestroy.next(),
+      this._onDestroy.complete();
   }
-  
+
 }
+
+

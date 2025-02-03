@@ -1,140 +1,168 @@
 
 
 
-/*.search-center2 {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-    */
 
-#statements mat-form-field { //custom width of the form "Projects"
-  width: 60vw;
-}
-
-@media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
-  #statements mat-form-field { //
-    width: 90vw;
+  mat-button-toggle-group {
+    margin-left: 12px;
   }
-}
 
+  .search-center2 {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
 
-.search-form {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction:column;
-}
+  .search-center3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-.ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 50px;
-}
+  #itemType mat-form-field { //custom width of the form "Projects"
+    width: 30vw;
+  }
 
-.arrow-icon {
-  display: flex;
-  align-items: center;
-  padding: 0px !important;
-  justify-content: center;
-}
-
-.icon-size {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
-}
-
-.small-icon-button {
-  width: 24px !important;
-  height: 24px !important;
-  padding: 0px !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-
-  & > *[role=img] {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
-
-    svg {
-      width: 16px;
-      height: 16px;
+  @media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
+    #itemType mat-form-field { //
+      width: 80vw;
     }
   }
 
-  .mat-mdc-button-touch-target {
-    width: 24px !important;
-    height: 24px !important;
+  #statements mat-card-content { //custom width of the form "Statements"
+    width: 60vw;
   }
-}
-
-.search-center3 {
-  display: flex;
-  justify-content: center;
-}
-
-.list-search {
-  display: flex;
-  justify-content: left;
-}
-
-.statement-search-form {
-  margin-top: 20px;
-  gap:30px;
-  display: flex;
-  justify-content:center;
-}
-
-.button-search-form {
-  gap: 30px;
-  display: flex;
-  justify-content: center;
-}
 
 
-#projects mat-form-field { //custom width of the form "Projects"
-  width: 60vw;
-}
-
-@media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
-  #projects mat-form-field { //
-    width: 90vw;
+  #statements mat-form-field { //custom width of the form "Statements"
+    width: 30vw;
   }
-}
 
-@media (max-width: 959.98px) { //change the alignment of the statement search form for small screen
-  .statement-search-form {
+  @media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
+    #statements mat-form-field { //
+      width: 90vw;
+    }
+  }
+
+
+  .search-form {
     margin-top: 20px;
     display: flex;
     justify-content: center;
     flex-direction: column;
   }
-}
 
-
-#sopi mat-form-field { //custom width of the form "Projects"
-  width: 60vw;
-}
-
-@media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
-  #sopi mat-form-field { //
-    width: 90vw;
+  .ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50px;
   }
-}
 
-//style the card of selected items
+  .arrow-icon {
+    display: flex;
+    align-items: center;
+    padding: 0px !important;
+    justify-content: center;
+  }
+
+  .icon-size {
+    font-size: 16px;
+    height: 16px;
+    width: 16px;
+  }
+
+  .small-icon-button {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+
+    & > *[role=img] {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .mat-mdc-button-touch-target {
+      width: 24px !important;
+      height: 24px !important;
+    }
+  }
+
+  .search-center3 {
+    display: flex;
+    justify-content: center;
+  }
+
+  .list-search {
+    display: flex;
+    justify-content: left;
+  }
+
+  .statement-search-form {
+    margin-top: 20px;
+    gap: 30px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .button-search-form {
+    gap: 30px;
+    display: flex;
+    justify-content: center;
+  }
 
 
-.button {
-  text-align:start;
-  background-color: transparent !important;
-  border-color: transparent;
-  font-size: 12px;
-}
+  #projects mat-form-field { //custom width of the form "Projects"
+    width: 60vw;
+  }
 
-button:hover {
-//  background:"primary;
-}
+  @media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
+    #projects mat-form-field { //
+      width: 90vw;
+    }
+  }
+
+  @media (max-width: 959.98px) { //change the alignment of the statement search form for small screen
+    .statement-search-form {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+
+
+  #sopi mat-form-field { //custom width of the form "Projects"
+    width: 60vw;
+  }
+
+  @media (max-width: 959.98px) { //change the width of the form "Projects" for small screen
+    #sopi mat-form-field { //
+      width: 90vw;
+    }
+  }
+  //style the card of selected items
+
+
+  .button {
+    text-align: start;
+    background-color: transparent !important;
+    border-color: transparent;
+    font-size: 12px;
+  }
+
+  button:hover {
+    //  background:"primary;
+  }
+  //.ng-invalid:not(form) {
+  // border-left: 5px solid #a94442; /* red */
+  //}

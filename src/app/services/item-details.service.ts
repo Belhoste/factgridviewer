@@ -43,7 +43,7 @@ export class ItemDetailsService {
          
           }*/
 
-        if (itemProperties[i] === "P189" || itemProperties[i] === "P556" || itemProperties[i] === "P181") {
+        if (itemProperties[i] === "P189" || itemProperties[i] === "P556" || itemProperties[i] === "P181" || itemProperties[i] === "P1267") {
           re.claims[itemProperties[i]][j].picture = this.baseWikimediaURL + re.claims[itemProperties[i]][j].mainsnak.datavalue.value
         }
         if (itemProperties[i] === "P188") {

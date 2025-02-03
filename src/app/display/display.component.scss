@@ -1,30 +1,37 @@
-.header-spacer {   //keep in display-component.scss
-//  padding-top: 5px;
+
+
+body {
+  margin-top:24px;
 }
 
-.drawer-container {  // style the mat-drawer-container
+.header-spacer { //keep in display-component.scss
+  //  padding-top: 5px;
+}
+
+.drawer-container { // style the mat-drawer-container
   width: 100%;
   height: 100%;
   margin: 0px;
   border: 1px solid #555;
 }
 
-.parent {   // layout of the parent box of the drawer-container (containing two items)
+.parent { // layout of the parent box of the drawer-container (containing two items)
   display: flex;
-  flex-flow: row;
 }
 
-@media (max-width: 959.98px) {  //change the layout of the parent box  and create the layout for the picture for small screen
+@media (max-width: 813px) { //change the layout of the parent box  and create the layout for the picture for small screen
   .parent {
     display: flex;
     flex-flow: column;
-    align-items: stretch;
-  }
-  .image {
-    width: 100%;
-    margin-top: 10px;
   }
 }
+
+.img2 {
+  //   width: 95%;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
 
 /*.main {   // deprecate
   display: flex;
@@ -32,89 +39,110 @@
 } */
 
 .child1 { // determine the size of the first column
-  flex: 2.5;
-//  background-color: grey !important;
+  flex: 2;
+  background-color: lightgrey !important;
+//  width: 75%;
 }
+
+@media (max-width: 813px) { //change the layout of the parent box  and create the layout for the picture for small screen
+  .child1 {
+    flex-flow: column;
+    align-items: stretch;
+    background-color: lightgrey !important;
+  }
+}
+
+
+@media (min-width: 1280px ) { //change the layout of the parent box  and create the layout for the picture for big screen
+  .child1 {
+    flex: 3;
+    width: 75%;
+    //   flex-flow: column;
+    //    align-items: stretch;
+  }
+  }
+
+
 
 .child2 {
   display: flex;
   flex: 1;
   flex-flow: column;
-  flex-grow: 1;
+  // flex-grow:  1;
 }
 
 
-.ground-div1 { //bande grise for the drawer
-  display: flex;
-  background-color: whitesmoke;
-  justify-content: flex-start;
-}
-
-.ground-div2 {  //bande bleue
-  background-color: rgb(155, 177, 225);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.itemTitle{  // styling the big title of the item
-  padding-top:10px;
-  margin-bottom: 10px;
-  font-size:50px;
-  color:#283593;
-  line-height: 50px;
-}
-
-@media (max-width: 959.98px) {  //change the size of the title for small screen
-  .itemTitle{  //big title of the item
-  font-size:37px;
-  line-height: 45px;
+  .ground-div1 { //bande grise for the drawer
+    display: flex;
+    background-color: whitesmoke;
+    justify-content: flex-start;
   }
-}
 
-.aliases {  //styling the aliases of the item
-  font-size:16px;
-  margin-bottom: 15px;
-  font-weight: 500;
-}
+  .ground-div2 { //bande bleue
+    background-color: rgb(155, 177, 225);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.itemDescription {   // styling the description of the itmm
-  font-size:16px;
-  // padding-top:5px
-}
+  .itemTitle { // styling the big title of the item
+    padding-top: 10px;
+    margin-bottom: 10px;
+    font-size: 50px;
+    color: #283593;
+    line-height: 50px;
+  }
 
-/*.drawerBackground {  //background color of the drawer
+  @media (max-width: 959.98px) { //change the size of the title for small screen
+    .itemTitle { //big title of the item
+      font-size: 37px;
+      line-height: 45px;
+    }
+  }
+
+  .aliases { //styling the aliases of the item
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+
+  .itemDescription { // styling the description of the itmm
+    font-size: 16px;
+    // padding-top:5px
+  }
+
+  /*.drawerBackground {  //background color of the drawer
   background-color: lightgray;
 }
     */
 
 
-/*  TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.  */
-/*  TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.  */
-/*  TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.  */
-mat-card img {
-  object-fit: contain; /*this makes the image in src fit to the size specified below*/
-  width: 100%;
-  margin: 5px;
-}
+  /*  TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.  */
+  /*  TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.  */
+  /*  TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version.  */
+  mat-card img {
+    object-fit: contain; /*this makes the image in src fit to the size specified below*/
+    width: 100%;
+    margin: 5px;
+  }
 
-.itemSelected-mat-card{
-  height: fit-content;
-  background-color:rgb(99, 98, 98) !important;
-  margin-bottom: 4px;
-  margin-right: 2px;
-  margin-left: 2px;
-}
+  .itemSelected-mat-card {
+    height: fit-content;
+    background-color: rgb(99, 98, 98) !important;
+    margin-bottom: 4px;
+    margin-right: 2px;
+    margin-left: 2px;
+  }
 
-.external-links { // styling the box of the external links
-  height: fit-content;
-  background-color: rgb(250, 235, 187);
-  margin-bottom: 4px;
-  margin-right: 2px;
-  margin-left: 2px;
-}
+  .external-links { // styling the box of the external links
+    height: fit-content;
+    background-color: rgb(250, 235, 187);
+    margin-bottom: 4px;
+    margin-right: 2px;
+    margin-left: 2px;
+  }
 
-/*
+  /*
 
     .externalLinks-title {  // styling the titles of the external links
   color:#AD1457;
@@ -130,7 +158,7 @@ mat-card img {
 
 
 
-/*
+  /*
  .external-links-details { //size of the text of the statements in the external links
   font-size: 14px;
   padding: 10px;
@@ -138,22 +166,24 @@ mat-card img {
 }
     */
 
-.icon.mat-mdc-button.mat-small {}
+  .icon.mat-mdc-button.mat-small {
+  }
 
-.details2.percent2 {}
+  .details2.percent2 {
+  }
 
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
 
-table {          // for the mat-tab if I use it
-  width: 100%;
-}
+  table { // for the mat-tab if I use it
+    width: 100%;
+  }
 
 
-/*
+  /*
     .linksToItem-mat-card{
   height: fit-content;
   background-color:#e1f5fe !important;
@@ -164,17 +194,17 @@ table {          // for the mat-tab if I use it
 
 */
 
-.map-container {
-  position: absolute;
-  margin: 30px;
-}
+  .map-container {
+    position: absolute;
+    margin: 30px;
+  }
 
-.map-frame {
-  border: 2px solid black;
-  height: 100%;
-}
+  .map-frame {
+    border: 2px solid black;
+    height: 100%;
+  }
 
-/*
+  /*
     #c1{
   float:right;
 }​
@@ -187,23 +217,23 @@ table {          // for the mat-tab if I use it
 
 
 
-.img {
-  width: 40%;
-  height: 100px;
-  margin: 10px;
-}
-
-
-
-.hide-division {
-  display: none;
+  .img {
+    width: 40%;
+    height: 100px;
+    margin: 10px;
   }
 
-.show-division {
-    display: block;
-    }
 
-/*
+
+  .hide-division {
+    display: none;
+  }
+
+  .show-division {
+    display: block;
+  }
+
+  /*
  .padding1 {
   padding: 6 px;
   margin-right: 20 px;
@@ -219,137 +249,141 @@ table {          // for the mat-tab if I use it
 
 
 
-.mat-list-base.inline-list {
-  display: flex;   /*inline list*/
-  padding: 2 px;
-}
-
-
-.blue-text {
-  color:#283593;
+  .mat-list-base.inline-list {
+    display: flex; /*inline list*/
+    padding: 2 px;
   }
 
-.blue-text2 {
-    color:#283593;
+
+  .blue-text {
+    color: #283593;
+  }
+
+  .blue-text2 {
+    color: #283593;
     font-size: 120%;
     font-weight: 600;
-    }
+  }
 
-.mdheadline .subdivision-title{}
-
-
-
-
-.commonsMediaStyle {
-  padding: 10px;
-  margin: 10px;
-  text-overflow: ellipsis;
-  word-break: normal;
-}
-
-.percent2.white-text {}
+  .mdheadline .subdivision-title {
+  }
 
 
 
-.details > label {
-  overflow-wrap: break-word;
-  padding:0px;
-}
+
+  .commonsMediaStyle {
+    padding: 10px;
+    margin: 10px;
+    text-overflow: ellipsis;
+    word-break: normal;
+  }
+
+  .percent2.white-text {
+  }
 
 
-.example-spacer {
+
+  .details > label {
+    overflow-wrap: break-word;
+    padding: 0px;
+  }
+
+
+  .example-spacer {
     flex: 1 1 auto;
   }
 
-.example-form {
+  .example-form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
   }
-  
-.example-full-width {
+
+  .example-full-width {
     width: 20%;
   }
 
-ul.inline {
+  ul.inline {
     display: inline
-    }
+  }
 
-.percent {
+  .percent {
     font-size: 60%;
   }
 
-.percent3 {
-  padding: 15px;
-  font-size: 150%;
-  font-weight: 321;
-}
+  .percent3 {
+    padding: 15px;
+    font-size: 150%;
+    font-weight: 321;
+  }
 
- /*.percent5 {
+  /*.percent5 {
     font-size: 12px !important;
   }---*/
 
-.percent4 {   // display FactGrid id
-    color:#3F51B5;
-    margin-bottom:2px;
+  .percent4 { // display FactGrid id
+    color: #3F51B5;
+    margin-bottom: 2px;
     font-size: 140%;
     font-weight: 400;
   }
 
 
-.mw-headline{
-  color:#3F51B5;
-  font-weight:550;
-}
-
-.referenceProperty {
-  color:#AD1457;
-}
-
-
-
-#leaflet-map {
-  flex: 5;
-  height: 100%;
-  width: 100%
-}
-
-button{
-  font-size:10px;
-  height: auto;
-  width:170px;
-  line-height: 16px !important;
-  padding: 2px 2px 2px 10px !important;
-  margin-right:5px;
-   }
-
-button-content{
-  text-overflow: ellipsis;
+  .mw-headline {
+    color: #3F51B5;
+    font-weight: 550;
   }
 
- .icon {
+  .referenceProperty {
+    color: #AD1457;
+  }
+
+
+
+  #leaflet-map {
+    flex: 5;
+    height: 100%;
+    width: 100%
+  }
+
+  button {
+    font-size: 10px;
+    height: auto;
+    width: 170px;
+    line-height: 16px !important;
+    padding: 2px 2px 2px 10px !important;
+    margin-right: 5px;
+  }
+
+  button-content {
+    text-overflow: ellipsis;
+  }
+
+  .icon {
     font-size: 30px !important;
-   }
+  }
 
- .icon .white-text {}
-
- 
-
-   /*  TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.  */
-   /*  TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.  */
-   ::ng-deep .mat-button-focus-overlay {
-    background-color: transparent!important;
-}
-
-.mat-mdc-button.mat-small {
-  min-width: 10px !important; 
-  max-width: 20px !important; 
-}
+  .icon .white-text {
+  }
 
 
 
-.example-additional-selection {
+  /*  TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.  */
+  /*  TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version.  */
+  ::ng-deep .mat-button-focus-overlay {
+    background-color: transparent !important;
+  }
+
+  .mat-mdc-button.mat-small {
+    min-width: 10px !important;
+    max-width: 20px !important;
+  }
+
+
+
+  .example-additional-selection {
     font-size: 0.5em;
   }
 
-.mat-elevation-z8 .external-links { }
+  .mat-elevation-z8 .external-links {
+  }

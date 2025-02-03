@@ -281,7 +281,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -298,10 +298,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
@@ -330,7 +326,8 @@
               "RelativeToolTip": "src\\app\\app.component.ts",
               "ViewState": "AgIAAAYAAAAAAAAAAAAYwAkAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-03T13:37:20.829Z"
+              "WhenOpened": "2025-02-03T13:37:20.829Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -342,7 +339,8 @@
               "RelativeToolTip": "src\\app\\app.component.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-02-03T13:30:37.558Z"
+              "WhenOpened": "2025-02-03T13:30:37.558Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -354,7 +352,8 @@
               "RelativeToolTip": "angular.json",
               "ViewState": "AgIAAEgAAAAAAAAAAAAiwFkAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-03T13:03:57.375Z"
+              "WhenOpened": "2025-02-03T13:03:57.375Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -362,11 +361,12 @@
               "Title": "request.service.ts",
               "DocumentMoniker": "C:\\Users\\bbelh\\source\\repos\\master\\src\\app\\services\\request.service.ts",
               "RelativeDocumentMoniker": "src\\app\\services\\request.service.ts",
-              "ToolTip": "C:\\Users\\bbelh\\source\\repos\\master\\src\\app\\services\\request.service.ts",
-              "RelativeToolTip": "src\\app\\services\\request.service.ts",
+              "ToolTip": "C:\\Users\\bbelh\\source\\repos\\master\\src\\app\\services\\request.service.ts*",
+              "RelativeToolTip": "src\\app\\services\\request.service.ts*",
               "ViewState": "AgIAALIAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-03T12:59:20.212Z"
+              "WhenOpened": "2025-02-03T12:59:20.212Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -378,7 +378,8 @@
               "RelativeToolTip": "src\\app\\services\\properties-list.service.ts",
               "ViewState": "AgIAAEkAAAAAAAAAAAAAwF8AAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T22:43:06.439Z"
+              "WhenOpened": "2025-02-02T22:43:06.439Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -390,7 +391,8 @@
               "RelativeToolTip": "src\\app\\search\\advanced-search\\statement-search\\statement-search.component.ts",
               "ViewState": "AgIAAA0DAAAAAAAAAAAuwBkDAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T22:05:01.175Z"
+              "WhenOpened": "2025-02-02T22:05:01.175Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -402,7 +404,8 @@
               "RelativeToolTip": "src\\app\\search\\advanced-search\\advanced-search.component.ts",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAANsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T22:30:40.691Z"
+              "WhenOpened": "2025-02-02T22:30:40.691Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -414,7 +417,8 @@
               "RelativeToolTip": "src\\app\\display\\sparql4-display\\sparql4-display.component.ts",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T22:28:23.027Z"
+              "WhenOpened": "2025-02-02T22:28:23.027Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -426,7 +430,8 @@
               "RelativeToolTip": "src\\app\\display\\sparql3-display\\sparql3-display.component.ts",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T21:02:14.524Z"
+              "WhenOpened": "2025-02-02T21:02:14.524Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -438,7 +443,8 @@
               "RelativeToolTip": "src\\app\\display\\display.component.ts",
               "ViewState": "AgIAAC0AAAAAAAAAAAAAAD0AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T21:07:35.38Z"
+              "WhenOpened": "2025-02-02T21:07:35.38Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -450,7 +456,8 @@
               "RelativeToolTip": "src\\app\\display\\services\\person-display.service.ts",
               "ViewState": "AgIAAD4AAAAAAAAAAAAowFEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T21:59:51.774Z"
+              "WhenOpened": "2025-02-02T21:59:51.774Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -462,7 +469,8 @@
               "RelativeToolTip": "src\\app\\display\\sparql3-display\\sparql3-display.component.html",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-02-02T21:05:25.67Z"
+              "WhenOpened": "2025-02-02T21:05:25.67Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -474,7 +482,8 @@
               "RelativeToolTip": "src\\app\\selected-lang.service.ts",
               "ViewState": "AgIAAGIBAAAAAAAAAAAcwHQBAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-02-02T21:59:02.217Z"
+              "WhenOpened": "2025-02-02T21:59:02.217Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -486,7 +495,8 @@
               "RelativeToolTip": "src\\app\\display\\main-display\\main-display.component.scss",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
-              "WhenOpened": "2024-02-04T19:46:12.783Z"
+              "WhenOpened": "2024-02-04T19:46:12.783Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -498,7 +508,8 @@
               "RelativeToolTip": "src\\app\\display\\map\\map.component.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-02-02T21:58:23.175Z"
+              "WhenOpened": "2025-02-02T21:58:23.175Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

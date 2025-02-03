@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, Subject, ReplaySubject, BehaviorSubject, combineLatest, of } from 'rxjs';
+import { Observable, Subject, ReplaySubject, BehaviorSubject, merge, combineLatest, of } from 'rxjs';
 import { map, switchMap, tap, debounceTime, takeWhile, filter, take, takeUntil, mergeAll } from 'rxjs/operators';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSelect } from '@angular/material/select';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -12,7 +11,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 //import { RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { SetLanguageService } from '../../services/set-language.service';
@@ -21,47 +19,43 @@ import { SelectedLangService } from '../../selected-lang.service';
 import { ProjectsListService } from '../../services/projects-list.service';
 import { PropertiesListService } from '../../services/properties-list.service';
 import { ProjectSelectComponent } from './project-select/project-select.component';
-import { AdvancedSearchListComponent } from './advanced-search-list/advanced-search-list.component';
+//import { StatementSearchComponent } from './statement-search/StatementSearchComponent';
 import { StatementSearchComponent } from './statement-search/statement-search.component';
-import { Bank, BANKS } from './bank';
-
-
+import { Variable, LITERALS, ITEMTYPES, MUTATOR, Selection, Data } from './variable';
+import { DataService } from './services/data.service'
+import { MutatorService } from './services/mutator.service'
 
 
 @Component({
   selector: 'app-advanced-search',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatTableModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatSelect,
-    MatSelectModule,
-    NgxMatSelectSearchModule,
-    CdkListbox,
-    CdkOption,
-    ProjectSelectComponent,
-    AdvancedSearchListComponent,
-    StatementSearchComponent,
-  ],
-  templateUrl: './advanced-search.component.html',
-  styleUrls: ['./advanced-search.component.scss']
+    imports: [
+        CommonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatTableModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatSelectModule,
+        NgxMatSelectSearchModule,
+        ProjectSelectComponent,
+        StatementSearchComponent,
+    ],
+    templateUrl: './advanced-search.component.html',
+    styleUrls: ['./advanced-search.component.scss']
 })
 
 export class AdvancedSearchComponent implements OnInit, OnDestroy {
-  private changeDetector = inject(ChangeDetectorRef);
-  private request = inject(RequestService);
-  private setLanguage = inject(SetLanguageService);
+
   private lang = inject(SelectedLangService);
-  private list = inject(ProjectsListService);
+  private projectList = inject(ProjectsListService);
   private propertyList = inject(PropertiesListService);
+  private data = inject(DataService);
+  private mutator = inject(MutatorService)
 
 
   title = 'factgrid';
@@ -69,20 +63,42 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
   basic_search: string = "search";
   projects: string = "research projects";
   fields: string = "fields of reserach";
+ // datatype: string;
+  
   
   public selectedItem: Observable<any>;
+  public formerSelectedCol: number;
   public isDisplay: boolean = false;
 
+  itemTypes: any[] ;
+  $currentItemTypes: Observable<string[]>;
+
+  selections: Selection[][] = [];
+  statementSelection: Selection[] = [];
+
+  formData: Data[] = [{ statement: 0, types: { options: ITEMTYPES, selections: [] }, values: { options: ITEMTYPES, selections: [] } }]
+
+
+
  // data$ = new Observable<string[]>();
- // searchQuery$ = new BehaviorSubject<string>('');
+  // searchQuery$ = new BehaviorSubject<string>('');
 
- projectsList: any[] = [];
-selectedStatementList: string[];
+  protected literals: Variable[] = LITERALS;
+
+  //protected mutator: Variable[][] = MUTATOR;
+
+  itemTypesAfterSelection: Variable[];
+
+  protected literalVariables;
+  protected qualifierLiteralVariables;
+
+  projectsList: any[] = [];
+  propertiesList: any[] = [];
+  selectedStatementList: string[];
+
+  // public filteredItemTypes: ReplaySubject<any> = new ReplaySubject<any>(1);
+  public replay: ReplaySubject<any> = new ReplaySubject<any>(1);
  
-
-  private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=';
-  private getUrlSuffix = '&format=json&origin=*';
-
 
   ngOnInit(): void {
 
@@ -92,36 +108,117 @@ selectedStatementList: string[];
 
     this.fields = this.lang.fields(this.fields);
 
-    this.list.projectsListBuilding("Q11295").subscribe(res => this.projectsList = res); // list of projects
+    this.projectList.projectsListBuilding("Q11295").subscribe(res => this.projectsList = res); // list of projects
 
-    this.propertyList.propertiesListBuilding("Q12"); //list of properties
+    //  this.propertyList.propertiesListBuilding("Q12"); //list of properties;
 
+    //this.data.currentItemTypesAfterSelection.subscribe(res => console.log(res));
+    console.log(this.selections);
+
+   
   }
 
+  selectedItemType(itemType) {
+    let i = itemType[0];
+    
+    let selection = { label: itemType[1], id: itemType[3] };
+    this.formData[i].types.selections.push(selection);
+    this.formData[i].values.options.push(selection); 
+
+ //   let newMutator = [];
+ //   if (i === 0) {
+  //    newMutator = this.mutator.mutator(itemType);  // create the  new mutator;
+  //    console.log(newMutator);
+ //     this.data.updateMutatorForItemValue(newMutator); // update the mutator for itemValue;
+      // this.data.mutator$.subscribe(res => console.log(res));
+ //   }
+  //  let selection0: Selection = { variable: [itemType[0], itemType[2], 0], label: itemType[1], id: itemType[3] };
+  //  if (!this.statementSelection[0]) { this.statementSelection.push(selection0) } else this.statementSelection.splice(0, 1, selection0);
+  //  let newItemType: Variable = { label: itemType[1], col: itemType[2], id: itemType[3] };
+  //  let currentItemTypes: Variable[];
+  //  if (i === 0) { // update the itemTypes1 only for statement 0;
+  //    this.data.updateItemTypes1([newItemType]);
+  //  };
+    this.propertyList.propertiesListBuilding(itemType[3]).subscribe(res => {  // create the list of properties; useless?
+      this.propertiesList = [itemType[0], this.propertyList.changeList(res)];
+      this.data.updatePropertiesList([itemType[0], this.propertyList.changeList(res)]);
+    })
+  }
+
+  propertyDatatype(u) { //  
+    this.literalVariables = this.literals.filter((literal) => ( literal.type === u[1] || literal.type === "Any" ) && literal.col === u[0]);
+    return this.literalVariables
+  }
+
+  qualifierPropertyDatatype(u) { //
+    this.qualifierLiteralVariables = this.literals.filter((literal) => (literal.type === u[2] || literal.type === "Any") && literal.col === u[0]);
+    return this.qualifierLiteralVariables
+  }
 
   selectedProjects(projects) {
     console.log(projects.value);
   }
 
-  selectedStatement(statement) {
-    if (statement !== undefined) {
-      this.selectedStatementList = [statement[0],statement[1]];
-    }
+  selectedValue(value) {
+    console.log(value);
+    this.data.itemTypes1$.subscribe(res => console.log(res));
+    let i = value[0];
+    let selection1: Selection = { variable: [value[0], this.updateValue(this.statementSelection[0].variable[2],value[2]), 1], label: value[1], id: value[3] }; //TODO: value[2], which is the order of the unknown, must be updated in a function to take in account value[2] in selection1
+    if (!this.statementSelection[1]) { this.statementSelection.push(selection1) } else this.statementSelection.splice(1, 1, selection1);
+    this.selections.push(this.statementSelection); // maybe not here;
+ //   if (value[1] === "?string" || value[1] === "?date") { value[1] = "" };
+    let currentItemTypes: any[];
+    let newItemType = { label: value[1], col: value[2], id: value[3] };
+    let $newItemType = of(newItemType);
+      $newItemType.subscribe(res => console.log(res));
+      combineLatest([$newItemType, this.data.itemTypes1$]).subscribe(([res1, res2]) => { res2.push(res1); currentItemTypes = res2 });
+      this.data.updateItemTypes2(currentItemTypes);
+ //     this.data.itemTypes2$.subscribe(res => console.log(res));
+    //   this.data.itemTypes1$.subscribe(res => console.log(res));
+ //this.data.updateMutator()
+   let newMutator = this.mutator.mutator(value);
+    this.data.updateMutatorForNextStatement(newMutator); 
+
+  
+    
+   /* this.data.itemTypes1$.subscribe(res => {  // get the current itemTypes from the data service
+      currentItemTypes = res
+    });It:
+    console.log(currentItemTypes);
+    let newItemType: Variable = { label: value[1], col: value[2], id: value[3] };
+    currentItemTypes.push(newItemType);
+    console.log(currentItemTypes);
+    this.data.updateItemTypes2(currentItemTypes);
+    this.data.itemTypes1$.subscribe(res => console.log(res))*/
   }
- 
-  createList(re) {  //create an url whith the elements of an array
-    let list = "";
-    let url = "";
-    let arr = re.search;
-    if (arr === undefined) { arr = [] }
-    else { arr = arr };
-    for (let i = 0; i < arr.length; i++) {
-      list = list + "|" + arr[i].id;
-    };
-    list = list.slice(1);
-    url = this.baseGetURL + list + this.getUrlSuffix;
-    return url
+
+  selectedQualifierValue(itemType) {
+    let i = itemType[0];
+    let qualifierItemType = [itemType[1], itemType[2], itemType[3], ""];
+    let newMutator = this.mutator.mutator(qualifierItemType);
+    console.log(newMutator);
+    let newItemType: Variable = { label: itemType[1], id: itemType[2], col: itemType[3] };
+    let currentItem: any[];
+    this.data.itemTypes$.subscribe(res => {
+      currentItem = res;
+      if (i === 0) { currentItem = [newItemType] };
+      //  if (!currentItem[i + 1]) { currentItem.push(u); } else currentItem.splice(i+1, 1, u);
+    });
+    this.data.updateItemTypes(currentItem);
+    this.data.updateMutator(newMutator);
+    this.data.mutator$.subscribe(res => console.log(res));
   }
+
+  updateValue(value0, value1) {
+    let u;
+    if (value0 = value1) { 
+      u = value1 + 1
+    } else u = value1;
+  return u
+  }
+
+
+
 
   ngOnDestroy(): void {
 

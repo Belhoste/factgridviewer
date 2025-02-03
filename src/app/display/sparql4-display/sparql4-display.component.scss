@@ -1,0 +1,22 @@
+/*.property2 {
+  color: #3F51B5;
+  font-weight: 550;
+}
+
+.hide-division {
+  display: none;
+}
+
+.show-division {
+  display: block;
+}
+
+.sparql-div {
+  display: flex;
+  flex-flow: column wrap;
+
+  .sparql-div > *:not(:last-child) {
+    margin-bottom: 2px;
+  }
+}
+*/

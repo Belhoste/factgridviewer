@@ -366,6 +366,15 @@ instancesListTitle_50(u) {  // sparql-display
     if (this.selectedLang === "hu") { u = "Tartalmazza:" };
     return u
   }
+  
+  currentAddress(u) {  // sparql1-display component
+    if (this.selectedLang === "de") { u = "Aktuelle Adresse:" };
+    if (this.selectedLang === "fr") { u = "Adresse actuelle :" };
+    if (this.selectedLang === "es") { u = "Dirección actual:" };
+    if (this.selectedLang === "it") { u = "Indirizzo attuale:" };
+    if (this.selectedLang === "hu") { u = "Jelenlegi cím:" };
+    return u
+  }
 
 
 

@@ -1,4 +1,12 @@
 
+.child-container {
+    width: 70vw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+
 .search-align{
     display:flex;
     flex-direction: row;
@@ -7,6 +15,7 @@
 .search-container {
   display: flex;
   flex-direction: column;
+  align-items:center
 }
 
 .search-label { // style of the labels of the items

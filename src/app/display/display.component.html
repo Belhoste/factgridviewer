@@ -89,12 +89,12 @@
                         }
                       </div>
                       <!---               image on the top for small screens                       --->
-                      @for (picture of pictures; track picture) {
-                      <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" class="image">
-                        <div>
-                          <mat-card appearance="outlined" class=mat-elevation-z2>
-                            <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
-                          </mat-card>
+                      @for (picture of pictures; track picture.picture) {
+                      <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" >
+                        <div class="img2">
+                          <!--                  <mat-card appearance="outlined" class=mat-elevation-z2>   -->
+                          <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
+                          <!--                  </mat-card>   -->
                         </div>
                       </div>
                       }
@@ -170,13 +170,15 @@
                 </mat-card>
               </div>
 
-
               <!-- ************************************* sparql2 **************************************** -->
               <div [ngClass]="isSparql2 ? 'show-division':'hide-division'">
                 <app-sparql2-display [sparqlData]="this.sparqlData2" [sparqlSubject]="this.sparqlSubject2"></app-sparql2-display>
               </div>
 
-
+              <!-- ************************************* sparql4 **************************************** -->
+              <div [ngClass]="isSparql4 ? 'show-division':'hide-division'">
+                <app-sparql4-display [sparqlData]="this.sparqlData4" [sparqlSubject]="this.sparqlSubject4"></app-sparql4-display>
+              </div>
 
               <!-- ******************************* section Sources ****************************************  -->
 
@@ -217,76 +219,77 @@
               <!-- ****************************************** Pictures ****************************************  -->
               <div class="child2">
                 <mat-card appearance="outlined">
-                  <div [ngClass]="isPicture ? 'show-division':'hide-division'">
+                  <div class="img2" [ngClass]="isPicture ? 'show-division':'hide-division'">
                     @for (picture of pictures; track picture) {
-                    <!--            <div>  -->
-                    <mat-card appearance="outlined" class=mat-elevation-z8>
+                    <div>
+                      <!---     <mat-card appearance="outlined" class=mat-elevation-z8> --->
                       <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
-                    </mat-card>
-                    <!--           </div>   -->
-                    }
-                  </div>
-                </mat-card>
-
-                <!-- ************************************* external links ****************************************  -->
-                <!--          <div>   -->
-                <mat-card appearance="outlined" class="external-links">
-                  <mat-card-content [ngClass]="isExternalLinks ? 'show-division':'hide-division'">
-                    <div class="externalLinksPadding">
-                      <div class="divisionTitle">{{externalLinksTitle}}</div>
-                      <hr>
+                      <!---</mat-card> --->
                     </div>
-                    @for (externalLink of externalLinks; track externalLink) {
-                    <div class="externalLinksText">
-                      <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">
-                        {{externalLink[0].mainsnak.datavalue.value}}</a><span>&nbsp;&nbsp;</span>
-                    </div>
-                    }
-                  </mat-card-content>
+                  }
+               </div>
+            </mat-card>
 
-
-                  <!-- ************************************* wikis links ****************************************  -->
-
-                  <mat-card-content class="header-spacer" [ngClass]="isWikis ? 'show-division':'hide-division'">
-                    <div class="externalLinksPadding">
-                      <div class="divisionTitle">Wikis</div>
-                      <hr>
-                    </div>
-                    @for (wiki of wikis; track wiki) {
-                    <!--          <div>   -->
-                    <div class="externalLinksText">
-                      <span>{{wiki.site}}: </span><a href="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
-                    </div>
-                    <!--                <br>    -->
-                    <!--          </div>   -->
-                    }
-                  </mat-card-content>
-                </mat-card>
-                <!--              </div> -->
-                <!-- ************************************* selected items  ****************************************  -->
-                <!--         <div>  -->
-                <mat-card appearance="outlined" class="mat-elevation-z8 ">
-                  <div class="itemSelected-mat-card">
-                    <mat-card-content>
-                      <div class="selectedListTitle">{{formerVisitsTitle}}</div>
-                      <br>
-                      <div>
-                        <div *ngFor="let selectedItem of selectedItemsList">
-                          <div>
-                            <span *ngIf="selectedItem" class="selectedItemText">
-                              {{selectedItem.label}}
-                              <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            </span>
+  <!-- ************************************* external links ****************************************  -->
+                      <!--          <div>   -->
+                      <mat-card appearance="outlined" class="external-links">
+                        <mat-card-content [ngClass]="isExternalLinks ? 'show-division':'hide-division'">
+                          <div class="externalLinksPadding">
+                            <div class="divisionTitle">{{externalLinksTitle}}</div>
+                            <hr>
                           </div>
-                          <br>
-                        </div>
-                      </div>
-                    </mat-card-content>
-                  </div>
-                </mat-card>
-                <!--          </div>  -->
+                          @for (externalLink of externalLinks; track externalLink) {
+                          <div class="externalLinksText">
+                            <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">
+                              {{externalLink[0].mainsnak.datavalue.value}}
+                            </a><span>&nbsp;&nbsp;</span>
+                          </div>
+                          }
+                        </mat-card-content>
 
-              </div>
+
+                        <!-- ************************************* wikis links ****************************************  -->
+
+                        <mat-card-content class="header-spacer" [ngClass]="isWikis ? 'show-division':'hide-division'">
+                          <div class="externalLinksPadding">
+                            <div class="divisionTitle">Wikis</div>
+                            <hr>
+                          </div>
+                          @for (wiki of wikis; track wiki) {
+                          <!--          <div>   -->
+                          <div class="externalLinksText">
+                            <span>{{wiki.site}}: </span><a href="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>
+                          </div>
+                          <!--                <br>    -->
+                          <!--          </div>   -->
+                          }
+                        </mat-card-content>
+                      </mat-card>
+                      <!--              </div> -->
+                      <!-- ************************************* selected items  ****************************************  -->
+                      <!--         <div>  -->
+                      <mat-card appearance="outlined" class="mat-elevation-z8 ">
+                        <div class="itemSelected-mat-card">
+                          <mat-card-content>
+                            <div class="selectedListTitle">{{formerVisitsTitle}}</div>
+                            <br>
+                            <div>
+                              <div *ngFor="let selectedItem of selectedItemsList">
+                                <div>
+                                  <span *ngIf="selectedItem" class="selectedItemText">
+                                    {{selectedItem.label}}
+                                    <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                  </span>
+                                </div>
+                                <br>
+                              </div>
+                            </div>
+                          </mat-card-content>
+                        </div>
+                      </mat-card>
+                      <!--          </div>  -->
+
+                    </div>
             </div>
         </mat-drawer-content>
       </mat-drawer-container>

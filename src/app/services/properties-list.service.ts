@@ -16,13 +16,37 @@ export class PropertiesListService {
   langService: string = "%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22" + this.lang.selectedLang + "%22%2C%22en%22.%20%7D%0A";
 
 
- propertiesListBuilding(id) {
+  propertiesListBuilding(id) {
+    let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FpropertyType%20WHERE%20%7B";
+    //  let suffix = "%3Fitem%20wdt%3AP8%20wd%3A";
+    let prefix2 = "VALUES%20%3Fproperties%20%7B%20wd%3A";
+    let suffix = "%20wd%3AQ1089730%7D%20%3Fitem%20wdt%3AP8%20%3Fproperties%3B%20wikibase%3ApropertyType%20%3FpropertyType%20MINUS%20%7B%20%3Fproperty%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AExternalId%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGlobeCoordinate%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGeoShape%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3ACommonsMedia%20%7D%20%7D%20ORDER%20BY%20%3FitemLabel%0A";
+    //  let suffix2 = "%3B%20wikibase%3ApropertyType%20%3FpropertyType%20MINUS%20%7B%20%3Fproperty%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20";
+    //  let suffix3 = "MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AExternalId%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3ACommonsMedia%20%7D%20%7D%20ORDER%20BY%20%3FitemLabel%0A";
+    //  let suffix3 = "MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AExternalId%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGlobeCoordinate%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGeoShape%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3ACommonsMedia%20%7D%20%7D%20ORDER%20BY%20%3FitemLabel%0A"
+    //  let address = prefix + this.langService + suffix + id + suffix2 + suffix3;
+    let address = prefix + this.langService + prefix2 + id + suffix;
+    let u = this.newSparqlAddress(address);
+    return this.request.getList(u).pipe(map(res => this.listFromSparql(res)));
+  }
+
+  propertiesList2Building(id) {
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20WHERE%20%7B";
     let suffix = "%3Fitem%20wdt%3AP2%20wd%3A";
     let suffix2 = ".%7D%0A";
     let u = this.newSparqlAddress(prefix + this.langService + suffix + id + suffix2);
     return this.request.getList(u).pipe(map(res => this.listFromSparql(res)));
   }
+
+  get qualifierPropertiesListBuilding() {
+    let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FpropertyType%20%20WHERE%20%7B%20"
+    let suffix = "%20VALUES%20%3Fqualifier%20%7B%20wd%3AQ514317%20wd%3AQ21403%20%7D%0A%20%3Fitem%20wikibase%3ApropertyType%20%3FpropertyType%3B%0A%20%20%20%20%20%20%20%20%20%20%20wdt%3AP8%20%3Fqualifier.%0A%7D%0AORDER%20BY%20%3FitemLabel";
+    let v: any[];
+    let u = this.newSparqlAddress(prefix + this.langService + suffix);
+    //  this.request.getList(u).pipe(map(res => this.listFromSparql(res)), map(res => this.changeList(res))).subscribe(res => console.log(res));
+    return this.request.getList(u).pipe(map(res => this.listFromSparql(res)), map(res => this.changeList(res)));
+  }
+
  
 
   listFromSparql(res) {
@@ -51,6 +75,24 @@ export class PropertiesListService {
     if (address.includes('embed.html')) { oldPrefix = "https://database.factgrid.de/query/embed.html#" };
     if (address !== undefined) address = address.replace(oldPrefix, newPrefix);
     return address
+  }
+
+  deepNatureOf() {
+    let u = "Instance of (deep search)"
+    if (this.lang.selectedLang === "de") { u = "Ist ein(e) (vertiefte Suche)" };
+    if (this.lang.selectedLang === "fr") { u = "Nature de l'élément (recherche approfondie)" };
+    if (this.lang.selectedLang === "es") { u = "Instancia de (investigación en profundidad)" };
+    if (this.lang.selectedLang === "it") { u = "È (ricerca approfondita)" };
+    return u
+  }
+
+  changeList(data) {
+    if (data !== undefined) {
+      for (let i = 0; i < data.length; i++) {
+        data[i]["itemLabel"].label = data[i]["itemLabel"].value + " (" + data[i]["propertyType"].id + ")"
+      };
+    }
+    return data
   }
 }
 
