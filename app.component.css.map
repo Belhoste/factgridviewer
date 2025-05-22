@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/app.component.scss"],
+  "sourcesContent": ["\r\n.custom-toolbar {\r\n  display: flex;\r\n  flex-flow: row;\r\n  padding-top: 50px;\r\n  padding-bottom:20px;\r\n  background-color:white;\r\n\r\n}\r\n\r\n.toolbar-spacer {\r\n  flex: 1 1 auto;\r\n}\r\n\r\n\r\n"],
+  "mappings": ";AACA,CAAA;AACE,WAAA;AACA,aAAA;AACA,eAAA;AACA,kBAAA;AACA,oBAAA;;AAIF,CAAA;AACE,QAAA,EAAA,EAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/display/map/map.component.scss"],
+  "sourcesContent": [":host {\r\n    height: 100%;\r\n}\r\n\r\n#map{\r\n    width: 100%;\r\n    height: 400px;\r\n}"],
+  "mappings": ";AAAA;AACI,UAAA;;AAGJ,CAAA;AACI,SAAA;AACA,UAAA;;",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/harmonia-universalis/harmonia-universalis.component.scss"],
+  "sourcesContent": [".mat-elevation-z8.container {\r\n  width: 100%;\r\n  overflow-x: auto;\r\n}\r\n\r\n  @media (max-width: 600px) {\r\n \r\n   .mat-header-row {\r\n      display: none;\r\n    }\r\n\r\n    .responsive-cell {\r\n      display: block;\r\n      width: 100%;\r\n      padding: 0 16px;\r\n      margin: 16px 0;\r\n      border: 0 none;\r\n    }\r\n\r\n    .responsive-row {\r\n      display: block;\r\n      overflow: hidden;\r\n      height: auto;\r\n      position: relative;\r\n      box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);\r\n      border-radius: 3px;\r\n      margin-bottom: 24px;\r\n      + .responsive-row {\r\n        margin-top: 24px;\r\n      }\r\n    }\r\n\r\n      mat-paginator {\r\n        margin-top: 24px;\r\n      }\r\n    }\r\n"],
+  "mappings": ";AAAA,CAAA,gBAAA,CAAA;AACE,SAAA;AACA,cAAA;;AAGA,OAAA,CAAA,SAAA,EAAA;AAEC,GAAA;AACG,aAAA;;AAGF,GAAA;AACE,aAAA;AACA,WAAA;AACA,aAAA,EAAA;AACA,YAAA,KAAA;AACA,YAAA,EAAA;;AAGF,GAAA;AACE,aAAA;AACA,cAAA;AACA,YAAA;AACA,cAAA;AACA;MAAA,EAAA,IAAA,IAAA,KAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,IAAA;MAAA,EAAA,IAAA,IAAA,EAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA,KAAA;MAAA,EAAA,IAAA,IAAA,EAAA,KAAA,CAAA,EAAA,CAAA,EAAA,CAAA,EAAA;AACA,mBAAA;AACA,mBAAA;;AACA,GARF,eAQE,EAAA,CARF;AASI,gBAAA;;AAIF;AACE,gBAAA;;;",
+  "names": []
+}

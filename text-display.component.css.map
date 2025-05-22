@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/display/text-display/text-display.component.scss"],
+  "sourcesContent": [".subdivision-title {\r\n    color:#AD1457;\r\n    font-size: 20px !important;\r\n    font-weight: 360;\r\n    padding: 5 px;\r\n    margin-left: auto;\r\n    height:40px;\r\n    display:flex;\r\n    align-items: center;\r\n  }"],
+  "mappings": ";AAAA,CAAA;AACI,SAAA;AACA,aAAA;AACA,eAAA;AACA,WAAA,EAAA;AACA,eAAA;AACA,UAAA;AACA,WAAA;AACA,eAAA;;",
+  "names": []
+}
