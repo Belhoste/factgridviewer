@@ -32,6 +32,16 @@ body {
   margin-right: 15px;
 }
 
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+
+
 
 /*.main {   // deprecate
   display: flex;

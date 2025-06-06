@@ -1,3 +1,5 @@
+//service to set the subtitles of the FactGrid queries. It is used in the item-details.service.ts
+
 import { Injectable, inject } from '@angular/core';
 import { SelectedLangService } from '../selected-lang.service';
 
@@ -37,9 +39,9 @@ export class FactgridSubtitlesService {
   }
 
 setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition on the value of a property (in general the property P2)
-  let j=number;
+  let j = number;
   if (re.claims[propertyId][j].mainsnak.datavalue.value.id == "Q7") { //person
-  re.claims[propertyId].person = "person";
+    re.claims[propertyId].person = "person";
     if ( lang === "en") {re.claims[propertyId].main = "Life and family"}
     else if ( lang === "de") {re.claims[propertyId].main = "Leben und Familie"}
     else if ( lang === "fr") {re.claims[propertyId].main = "Vie et famille"}
@@ -177,8 +179,8 @@ setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition o
         else if ( lang === "it") {re.claims[propertyId].main = "Documento"}
         else if ( lang === "hu") {re.claims[propertyId].main = "Dokumentum"};
           }
-//  else re.claims[propertyId].document = undefined;
-    }
+  //  else re.claims[propertyId].document = undefined;
+  }
 }
 
     

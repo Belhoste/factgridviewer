@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EventDisplayService } from './event-display.service';
+import { BlockDisplayService } from './block-display.service';
 
-describe('EventDisplayService', () => {
-  let service: EventDisplayService;
+describe('BlockDisplayService', () => {
+  let service: BlockDisplayService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EventDisplayService);
+    service = TestBed.inject(BlockDisplayService);
   });
 
   it('should be created', () => {

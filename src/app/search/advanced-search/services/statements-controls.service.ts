@@ -8,11 +8,17 @@ export class StatementsControlsService {
 
   constructor() { }
 
-  itemType(statements, i: number) { return statements.at(i).get('value.itemType') };
+  itemType(statements: FormArray, i: number) {
+    if (statements && statements.length > i) {
+      return statements.at(i).get('value.itemType');
+    }
+    return null;
+  }
+
 
   itemValue(statements, i: number) { return statements.at(i).get('value.itemValue') };
 
-  propertyValues(statements, i: number) { return statements.at(i).get('properties') };
+  propertyValues(statements, i: number) { return statements.at(i).get('properties') as FormControl };
 
   literalValue(statements, i: number) { return statements.at(i).get('value.literalValue') };
 

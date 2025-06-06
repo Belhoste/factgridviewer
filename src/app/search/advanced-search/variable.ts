@@ -17,6 +17,8 @@ export interface Variable {
   type?: string;
   order?: number;
   col?: number;
+  originalLabel?: string;
+
 }
 
 
@@ -58,6 +60,8 @@ export const ITEMTYPES: Variable[] = [
 { label: '?profession', id: 'Q256699', order: 0 },
   { label: '?publication', id: 'Q77502', order: 0 },
 ];
+
+
 
 
 export const LITERALS: Variable[] = [

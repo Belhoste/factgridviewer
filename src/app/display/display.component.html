@@ -44,7 +44,7 @@
           <div class="subdivisionTitle">{{linkedPagesTitle}}</div>   
 }
             </div>
-              @for (item of linkedItems; track item) {
+              @for (item of linkedItems; track item.id) {
            <div>   
                 <span>
                   &nbsp;&nbsp;{{ item.label }}, {{ item.id }}
@@ -89,11 +89,18 @@
                         }
                       </div>
                       <!---               image on the top for small screens                       --->
-                      @for (picture of pictures; track picture.picture) {
+                      @for (picture of pictures; track picture.uniqueKey) {
                       <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" >
                         <div class="img2">
-                          <!--                  <mat-card appearance="outlined" class=mat-elevation-z2>   -->
-                          <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
+                          <!--                  <mat-card appearance="outlined" class=mat-elevation-z2>
+  <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">-->
+
+                          <img mat-card-image [src]="picture.thumbnail"
+                               [attr.data-src]="picture.full"
+                               loading="lazy"
+                               alt="Image description"
+                               (error)="onImageError($event)"
+                               (click)="openImage(picture.picture)" />
                           <!--                  </mat-card>   -->
                         </div>
                       </div>
@@ -115,6 +122,8 @@
                   <app-main-display [mainList]="this.mainList" [mainTitle]="this.mainTitle" [list]="this.list"></app-main-display>
                 </mat-card>
               </div>
+
+
 
               <!--************************ end of main section *********************-->
               @if (this.trans !== "") {   <app-text-display [trans]="this.trans"></app-text-display>   } <!----transcription-->
@@ -182,7 +191,7 @@
 
               <!-- ******************************* section Sources ****************************************  -->
 
-              <div [ngClass]="isSources ? 'show-division':'hide-division'">
+              <div [ngClass]="isSource ? 'show-division':'hide-division'">
                 <mat-card appearance="outlined" class=mat-elevation-z12>
                   <app-sources-display [sourcesList]="this.sourcesList" [sources]="this.sources"></app-sources-display>
                 </mat-card>
@@ -220,10 +229,20 @@
               <div class="child2">
                 <mat-card appearance="outlined">
                   <div class="img2" [ngClass]="isPicture ? 'show-division':'hide-division'">
-                    @for (picture of pictures; track picture) {
+                    @for (picture of pictures; track picture.uniqueKey) {
                     <div>
-                      <!---     <mat-card appearance="outlined" class=mat-elevation-z8> --->
-                      <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">
+                      <!---     <mat-card appearance="outlined" class=mat-elevation-z8>
+  <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">--->
+
+
+                      <img mat-card-image [src]="picture.thumbnail"
+                           [attr.data-src]="picture.full"
+                           loading="lazy"
+                           alt="Image description"
+                           (load)="onThumbnailLoad(picture)"
+                           (error)="onImageError($event)"
+                           (click)="openImage(picture.picture)" />
+
                       <!---</mat-card> --->
                     </div>
                   }
@@ -238,7 +257,7 @@
                             <div class="divisionTitle">{{externalLinksTitle}}</div>
                             <hr>
                           </div>
-                          @for (externalLink of externalLinks; track externalLink) {
+                          @for (externalLink of externalLinks; track externalLink.label) {
                           <div class="externalLinksText">
                             <span>{{externalLink.label}}: </span><a href="{{externalLink.url}}" target="_blank">
                               {{externalLink[0].mainsnak.datavalue.value}}
@@ -255,7 +274,7 @@
                             <div class="divisionTitle">Wikis</div>
                             <hr>
                           </div>
-                          @for (wiki of wikis; track wiki) {
+                          @for (wiki of wikis; track wiki.url) {
                           <!--          <div>   -->
                           <div class="externalLinksText">
                             <span>{{wiki.site}}: </span><a href="{{wiki.url}}" target="_blank">{{wiki.title}}</a><span>&nbsp;&nbsp;</span>

@@ -1,256 +1,227 @@
 import { Injectable, inject } from '@angular/core';
-import { RequestService } from './request.service'  ;
-import { SetLanguageService} from './set-language.service';
-import { map, tap } from 'rxjs/operators';
-import { SelectedItemListService } from './selected-item-list.service';
+import { RequestService } from './request.service';
+import { SetLanguageService } from './set-language.service';
+import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+
+/** Interfaces pour un typage fort */
+interface Snak {
+  property: string;
+  datatype?: string;
+  datavalue?: { value: { id: string } };
+}
+
+interface Reference {
+  'snaks-order': string[];
+  snaks: { [key: string]: Snak[] };
+}
+
+interface Claim {
+  mainsnak: Snak;
+  qualifiers?: { [key: string]: Snak[] };
+  'qualifiers-order'?: string[];
+  references?: Reference[];
+}
+
+interface ClaimsObject {
+  [property: string]: Claim[];
+}
+
+interface Entity {
+  claims: ClaimsObject;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class DetailsService {
   private requestService = inject(RequestService);
   private setLanguage = inject(SetLanguageService);
 
-
-getReferenceProperties(u) {
-  let values: any[] = Object.values(u.claims) ;
-  let referenceProperties = [];
-
-  for (const val of values){
-    for (const u of val) {
-    if (u.references === undefined) {continue}
-     for (const ref of u.references ){
-    referenceProperties = referenceProperties.concat(ref["snaks-order"]);
-
-     }
-    }
-   }
-
-  referenceProperties =this.uniq(referenceProperties);
-  return referenceProperties
-}
-
-setPropertiesList(u) { //create the list of properties in the statements
-  let values: any[] = Object.values(u.claims) ;
-  let properties = [];
-  let qualifierProperties =[];
-  let referenceProperties = [];
-  
-  for (const val of values) { //properties P in the mainsnaks
-    for (const u  of val )
-      properties.push(u.mainsnak.property) 
-  } 
-
-  for (const val of values) {
-    for (const u of val )
-      qualifierProperties=qualifierProperties.concat(u["qualifiers-order"]);
+  /**
+   * Retourne la liste unique des propriétés de référence d’une entité.
+   */
+  getReferenceProperties(u: Entity): string[] {
+    const referenceProperties = Object.values(u.claims)
+      .flatMap(val => val)
+      .flatMap(claim => claim.references ?? [])
+      .flatMap(ref => ref['snaks-order'] ?? []);
+    return this.uniq(referenceProperties);
   }
 
-  for (const val of values){
-    for (const u of val) {
-    if (u.references === undefined) {continue}
-     for (const ref of u.references ){
-    referenceProperties = referenceProperties.concat(ref["snaks-order"]);
-     }
-    }
-   }
- 
- qualifierProperties =this.uniq(qualifierProperties);
+  /**
+   * Crée la liste des propriétés dans les statements, qualifiers et références.
+   * Retourne un Observable des propriétés enrichies.
+   */
+  setPropertiesList(u: Entity): Observable<any[]> {
+    const claimsArray = Object.values(u.claims);
 
- referenceProperties =this.uniq(referenceProperties);
- 
- properties = properties.concat(qualifierProperties).concat(referenceProperties) // get items in the statements
- properties = this.uniq(properties); // remove the duplicates
- properties = this.lessThanFifty(properties); //create several arrays of at most fifty properties
+    let properties = claimsArray.flatMap(val => val.map(claim => claim.mainsnak.property));
+    let qualifierProperties = claimsArray.flatMap(val => val.flatMap(claim => claim['qualifiers-order'] ?? []));
+    let referenceProperties = claimsArray
+      .flatMap(val => val)
+      .flatMap(claim => claim.references ?? [])
+      .flatMap(ref => ref['snaks-order'] ?? []);
 
-let propertiesList0 = this.createList(properties[0]).slice(1); // create a array of string lists of properties and remove the first |
-let propertiesList1 = this.createList(properties[1]).slice(1); // create a array of string lists of properties and remove the first |
-let propertiesList2 = this.createList(properties[2]).slice(1); // id
-let propertiesList3 = this.createList(properties[3]).slice(1); // create a array of string lists of properties and remove the first |
-let propertiesList4 = this.createList(properties[4]).slice(1); // id
-let propertiesList5 = this.createList(properties[5]).slice(1); // id
-let propertiesList6 = this.createList(properties[6]).slice(1); // id
-let propertiesList7 = this.createList(properties[7]).slice(1); // id
-if ( properties[8] !== undefined) { alert("too many statements") };
+    qualifierProperties = this.uniq(qualifierProperties);
+    referenceProperties = this.uniq(referenceProperties);
 
-let result = this.requestService.requestProperties(propertiesList0,propertiesList1,propertiesList2,propertiesList3,propertiesList4,propertiesList5,propertiesList6,propertiesList7)
-.pipe
-(
-map(res => this.mergeObjects(res)),
-map(res => Object.values(res))
-);
+    properties = this.uniq([...properties, ...qualifierProperties, ...referenceProperties]);
+    const propertiesChunks = this.lessThanFifty(properties);
 
-return result
-}
-
-
-setItemsList(u) {  //create the list of items in the statements
-  let values: any[] = Object.values(u.claims) ;
-  let items = [];
-  let qualifierProperties =[];
-  let referenceProperties = [];
-  for (const val of values) { //items Q in the mainsnaks
-       for (const u of val) {
-        if (u.mainsnak.datavalue.value.id === undefined) continue;
-      items.push(u.mainsnak.datavalue.value.id)
-    }
-   }
-
-   
-  
-  for (const val of values) {
-     for(const u of val) {
-    qualifierProperties=qualifierProperties.concat(u["qualifiers-order"]);
-     }
-  }
- 
- for (const val of values){
-   for (const u of val) {
-   if (u.references === undefined) {continue}
-    for (const ref of u.references ){
-      for (const prop of ref["snaks-order"]) {
-       referenceProperties.push(prop);
-         }
-       }
-      }
+    if (propertiesChunks.length > 8) {
+      return throwError(() => new Error('Trop de statements (plus de 8 groupes de 50 propriétés)'));
     }
 
-  qualifierProperties =this.uniq(qualifierProperties);
-  referenceProperties =this.uniq(referenceProperties);
+    const propertiesLists = propertiesChunks.map(list => this.createList(list).slice(1));
+    while (propertiesLists.length < 8) propertiesLists.push('');
 
-let qualifierItems = this.setQualifierItems(values,qualifierProperties).filter(function( element ) {  //get items in the qualifiers, remove the undefined
-    return element !== undefined; 
-});
+    return this.requestService.requestProperties(propertiesLists)
+      .pipe(
+        map(res => this.mergeObjects(res as any[])), // <--- cast ici
+        map(res => Object.values(res))
+      );
 
+  }
 
- let referenceItems = this.setReferenceItems(values,referenceProperties).filter(function( element ) { //get items in the references, remove the undefined
-    return element !== undefined;
- });
- 
- items = items.concat(qualifierItems).concat(referenceItems)  // get items in the statements
- items = this.uniq(items) // remove the duplicates
- items = this.lessThanFifty(items); //create several arrays of at most fifty items
+  /**
+   * Crée la liste des items dans les statements, qualifiers et références.
+   * Retourne un Observable des items enrichis.
+   */
+  setItemsList(u: Entity): Observable<any[]> {
+    const claimsArray = Object.values(u.claims);
 
-let itemsList0 = this.createList(items[0]).slice(1); //create an arrray of  string lists of items
-let itemsList1 = this.createList(items[1]).slice(1); //create an arrray of  string lists of items
-let itemsList2 = this.createList(items[2]).slice(1); //create an arrray of  string lists of items
-let itemsList3 = this.createList(items[3]).slice(1); //create an arrray of  string lists of items
-let itemsList4 = this.createList(items[4]).slice(1); //create an arrray of  string lists of items
-let itemsList5 = this.createList(items[5]).slice(1); //create an arrray of  string lists of items
-let itemsList6 = this.createList(items[6]).slice(1); //create an arrray of  string lists of items
-let itemsList7 = this.createList(items[7]).slice(1); //create an arrray of  string lists of items
-if ( items[8] !== undefined) { alert("too many statements") };
+    let items = claimsArray.flatMap(val =>
+      val
+        .filter(claim => claim.mainsnak.datavalue?.value?.id !== undefined)
+        .map(claim => claim.mainsnak.datavalue.value.id)
+    );
 
-let result = this.requestService.requestItems(itemsList0,itemsList1,itemsList2,itemsList3,itemsList4,itemsList5,itemsList6,itemsList7)
-.pipe(map(res => this.mergeObjects(res)),
-map(res =>Object.values(res))
-);
-   return result
-}
+    let qualifierProperties = claimsArray.flatMap(val => val.flatMap(claim => claim['qualifiers-order'] ?? []));
+    let referenceProperties = claimsArray
+      .flatMap(val => val)
+      .flatMap(claim => claim.references ?? [])
+      .flatMap(ref => ref['snaks-order'] ?? []);
 
- setProperties(arr){ // create an array of the properties in the qualifiers and references. It is used in setPropertiesList
-    let result = []; 
-    let a =[];
- for (let i=0; i<arr.length; i++){
-    let a =Object.keys(arr[i]);
-    for (let j=0; j<a.length; j++){
-       result.push(a[j])
+    qualifierProperties = this.uniq(qualifierProperties);
+    referenceProperties = this.uniq(referenceProperties);
+
+    const qualifierItems = this.setQualifierItems(claimsArray, qualifierProperties).filter(Boolean);
+    const referenceItems = this.setReferenceItems(claimsArray, referenceProperties).filter(Boolean);
+
+    items = this.uniq([...items, ...qualifierItems, ...referenceItems]);
+    const itemsChunks = this.lessThanFifty(items);
+
+    if (itemsChunks.length > 8) {
+      return throwError(() => new Error('Trop de statements (plus de 8 groupes de 50 items)'));
     }
-  }
-  return result;
-}    
 
-mergeObjects(res){ // merge the objects contained in the forkjoint arrays to create a single object
-  let u=res[0].entities;
-  for (let i=0;i<res.length;i++){
-  if (res[i].entities===undefined){continue}
-  u = { ...u, ... res[i].entities };
-  }
-return u
+    const itemsLists = itemsChunks.map(list => this.createList(list).slice(1));
+    while (itemsLists.length < 8) itemsLists.push('');
+
+    return this.requestService.requestItems(itemsLists)
+      .pipe(
+        map(res => this.mergeObjects(res as any[])), // <--- cast ici
+        map(res => Object.values(res))
+      );
+
   }
 
-setQualifierItems(values,arr){ // create an array of the items in the qualifiers and references. It is used in setItemsList
-      arr = arr.filter(Boolean);
-      let result = [];
-          for (const val of values){ 
-            for (const u of val){
-              for (let j=0; j<arr.length;j++) {  
-                 if (u.qualifiers === undefined){ continue }
-                 if (u.qualifiers[arr[j]] !== undefined) {
-                 for (let k=0; k<arr[j].length;k++) { 
-                   if (u.qualifiers[arr[j]][k] === undefined) { continue }
-                     result.push(u.qualifiers[arr[j]][k].datavalue.value.id);  }         
-           }
-          } 
-        }
-      }
-    return result 
-  };
+  /**
+   * Retourne la liste unique des propriétés dans les qualifiers et références.
+   */
+  setProperties(arr: any[]): string[] {
+    return arr.flatMap(obj => Object.keys(obj));
+  }
 
-  setReferenceItems(values,arr){ // create an array of the items in the qualifiers and references. It is used in setItemsList
+  /**
+   * Fusionne les objets contenus dans un tableau pour créer un seul objet.
+   */
+  mergeObjects(res: any[]): any {
+    // Filtrer les objets valides qui possèdent la propriété 'entities'
+    const validObjects = (res ?? []).filter(obj => obj && obj.entities);
+    let u = validObjects.length > 0 ? validObjects[0].entities : {};
+    for (const obj of validObjects.slice(1)) {
+      u = { ...u, ...obj.entities };
+    }
+    return u;
+  }
+
+
+  /**
+   * Retourne la liste des items dans les qualifiers.
+   */
+  setQualifierItems(values: Claim[][], arr: string[]): string[] {
     arr = arr.filter(Boolean);
-    let result = [];
-      for (const val of values){ 
-        for (const u of val){ 
-             if (u.references === undefined){ continue }
-              for (let i=0; i<u.references.length; i++) {
-                for (let j=0; j<arr.length; j++) {
-                 if (u.references[i] !== undefined) {
-                   if (u.references[i].snaks[arr[j]] !== undefined) {
-                   if (u.references[i].snaks[arr[j]].datatype ="wikibase-item")
-                     for (let k=0; k<arr[j].length; k++) {
-                        if (u.references[i].snaks[arr[j]][k] !==undefined){
-                        result.push(u.references[i].snaks[arr[j]][k].datavalue.value.id)
-                        }
-                       }
-                     }
-                  }  
-                }               
-             }
+    const result: string[] = [];
+    for (const val of values) {
+      for (const claim of val) {
+        for (const prop of arr) {
+          if (claim.qualifiers?.[prop]) {
+            for (const snak of claim.qualifiers[prop]) {
+              if (snak?.datavalue?.value?.id) {
+                result.push(snak.datavalue.value.id);
+              }
+            }
           }
         }
-      return result 
-    };
-  
-  createList(arr){  //create a string whith the elements of an array. It is used in setPropertiesList and setItemsList
-    arr = [...new Set(arr)];
-    let list = "";
-    for (let i = 0; i < arr.length; i++) {
-     list = list+"|"+arr[i] }
-    return list;
-    };
-    
-   uniq(a){  //remove duplicates in an array / it is used in setPropertiesList and setItemsList
-      var seen = {};
-      a = a.filter(Boolean);
-      return a.filter(function(item) {
-          return seen.hasOwnProperty(item) ? false : (seen[item] = true);
-      });
+      }
+    }
+    return result;
   }
 
-  addDetails(properties,claims){ //is it useful?
-    for (let i = 0; i < properties.length; i++) {
-    let p=properties[i];
-    claims[i].label = properties[i].label;
-    }
-    return claims
-    }
-
-  lessThanFifty(arr:string[]){ //split the array in subarrays of 50 items. It is used in setPropertiesList and setItemsList
-      let result = []
-      let u = arr.length
-      if (u<50 && u>0) result.push(arr); //push the items if the length of the array is less than 50;
-      while (u>49) {
-      result.push(arr.slice(0,50));
-      arr= arr.slice(50,u);
-      u = arr.length;
-      if (u<50 && u>0) result.push(arr); //push the remaining items
+  /**
+   * Retourne la liste des items dans les références.
+   */
+  setReferenceItems(values: Claim[][], arr: string[]): string[] {
+    arr = arr.filter(Boolean);
+    const result: string[] = [];
+    for (const val of values) {
+      for (const claim of val) {
+        if (!claim.references) continue;
+        for (const ref of claim.references) {
+          for (const prop of arr) {
+            const snaks = ref.snaks[prop];
+            if (snaks && snaks[0]?.datatype === 'wikibase-item') {
+              for (const snak of snaks) {
+                if (snak?.datavalue?.value?.id) {
+                  result.push(snak.datavalue.value.id);
+                }
+              }
+            }
+          }
+        }
       }
-      return result
     }
+    return result;
+  }
 
+  /**
+   * Crée une chaîne de caractères à partir d’un tableau, séparée par '|'.
+   */
+  createList(arr: string[]): string {
+    return Array.from(new Set(arr)).reduce((list, item) => list + '|' + item, '');
+  }
+
+  /**
+   * Retourne un tableau sans doublons.
+   */
+  uniq<T>(a: T[]): T[] {
+    return Array.from(new Set(a.filter(Boolean)));
+  }
+
+  /**
+   * Découpe un tableau en sous-tableaux de 50 éléments maximum.
+   */
+  lessThanFifty<T>(arr: T[]): T[][] {
+    const result: T[][] = [];
+    let u = arr.length;
+    let tempArr = arr.slice();
+    while (u > 0) {
+      result.push(tempArr.slice(0, 50));
+      tempArr = tempArr.slice(50);
+      u = tempArr.length;
+    }
+    return result;
+  }
 }
- 
-
-

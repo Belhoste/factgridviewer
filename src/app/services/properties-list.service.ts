@@ -18,22 +18,20 @@ export class PropertiesListService {
 
   propertiesListBuilding(id) {
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FpropertyType%20WHERE%20%7B";
-    //  let suffix = "%3Fitem%20wdt%3AP8%20wd%3A";
     let prefix2 = "VALUES%20%3Fproperties%20%7B%20wd%3A";
     let suffix = "%20wd%3AQ1089730%7D%20%3Fitem%20wdt%3AP8%20%3Fproperties%3B%20wikibase%3ApropertyType%20%3FpropertyType%20MINUS%20%7B%20%3Fproperty%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AExternalId%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGlobeCoordinate%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGeoShape%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3ACommonsMedia%20%7D%20%7D%20ORDER%20BY%20%3FitemLabel%0A";
-    //  let suffix2 = "%3B%20wikibase%3ApropertyType%20%3FpropertyType%20MINUS%20%7B%20%3Fproperty%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20";
-    //  let suffix3 = "MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AExternalId%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3ACommonsMedia%20%7D%20%7D%20ORDER%20BY%20%3FitemLabel%0A";
-    //  let suffix3 = "MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AExternalId%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AUrl%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGlobeCoordinate%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3AGeoShape%20%7D%20MINUS%20%7B%20%3Fitem%20wikibase%3ApropertyType%20wikibase%3ACommonsMedia%20%7D%20%7D%20ORDER%20BY%20%3FitemLabel%0A"
-    //  let address = prefix + this.langService + suffix + id + suffix2 + suffix3;
     let address = prefix + this.langService + prefix2 + id + suffix;
+    console.log(address);
     let u = this.newSparqlAddress(address);
-    return this.request.getList(u).pipe(map(res => this.listFromSparql(res)));
+    console.log(u);
+    return this.request.getList(u).pipe(map(res => this.transformListFromSparql(res)));
   }
 
   propertiesList2Building(id) {
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20WHERE%20%7B";
     let suffix = "%3Fitem%20wdt%3AP2%20wd%3A";
     let suffix2 = ".%7D%0A";
+    console.log(prefix + this.langService + suffix + id + suffix2);
     let u = this.newSparqlAddress(prefix + this.langService + suffix + id + suffix2);
     return this.request.getList(u).pipe(map(res => this.listFromSparql(res)));
   }
@@ -44,7 +42,7 @@ export class PropertiesListService {
     let v: any[];
     let u = this.newSparqlAddress(prefix + this.langService + suffix);
     //  this.request.getList(u).pipe(map(res => this.listFromSparql(res)), map(res => this.changeList(res))).subscribe(res => console.log(res));
-    return this.request.getList(u).pipe(map(res => this.listFromSparql(res)), map(res => this.changeList(res)));
+    return this.request.getList(u).pipe(map(res => this.listFromSparql(res)), map(res => this.transformListFromSparql(res)));
   }
 
  
@@ -89,10 +87,38 @@ export class PropertiesListService {
   changeList(data) {
     if (data !== undefined) {
       for (let i = 0; i < data.length; i++) {
-        data[i]["itemLabel"].label = data[i]["itemLabel"].value + " (" + data[i]["propertyType"].id + ")"
+        let type = this.removeSubstring(data[i]["propertyType"].value, "http://wikiba.se/ontology#");
+        data[i]["itemLabel"].label = data[i]["itemLabel"].value + " (" + type + ")"
       };
     }
     return data
   }
+
+  transformListFromSparql(res) {
+    if (res !== undefined && res.results !== undefined) {
+      let v = res.results.bindings;
+      return v.map(item => {
+        const value = item.itemLabel.value;
+        const type = item.propertyType.value.replace("http://wikiba.se/ontology#", "");
+        return {
+          value: value,
+          id: item.item.value.replace("https://database.factgrid.de/entity/", ""),
+          type: type,
+          label: `${value} (${type})` // Ajouter la propriété label
+        };
+      }).sort((a, b) => {
+        if (a.value.toUpperCase() < b.value.toUpperCase()) { return -1; }
+        if (a.value.toUpperCase() > b.value.toUpperCase()) { return 1; }
+        return 0;
+      });
+    }
+    return [];
+  }
+
+
+ removeSubstring(str, substring) {
+  const regex = new RegExp(substring, 'g');
+  return str.replace(regex, '');
+}
 }
 

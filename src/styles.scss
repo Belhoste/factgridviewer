@@ -183,7 +183,7 @@ margin-left: 24px;
 // background-color: white ;
 }
 
-@media (max-width: 959.98px) { //change the padding for small screen
+@media screen and (max-width: 959.98px) { //change the padding for small screen
   .cardBackground { // for styling card
     height: fit-content;
     margin-right: 2px;
@@ -235,14 +235,64 @@ margin-left: 24px;
     padding-left: 10px;
   }
 
-  .referenceStyle { //size of the text of the reference
-    font-size: 14px;
-    padding-left: 20px;
-  }
+.referenceStyle { //size of the text of the reference
+  font-size: 14px;
+  padding-left: 20px;
+}
 
-  .inlineStyle {
-    display: inline-block;
+.references-toggle-btn { // button for displaying/hiding references
+  background: #fff !important; // white background
+  // color: #3F51B5 !important; // blue text
+  color: #AD1457 !important; // red text
+  font-size: 0.80rem;
+  font-style: italic;
+  font-weight: 400;
+  border: none !important; // no border
+  box-shadow: none !important;
+  border-radius: 4px;
+  margin-left: 4px;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  text-transform: none;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+
+  &:hover, &:focus {
+    background: #f6f8fd !important; // blue background on hover/focus
+   // color: #3F51B5 !important; // blue text on hover/focus
+    color: #AD1457 !important; // red text
+    box-shadow: none !important;
   }
+}
+
+.triangle-icon {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 7px solid #AD1457; // red triangle
+  //border-left: 7px solid #3F51B5; // blue triangle
+  transition: transform 0.2s;
+
+  &.open {
+    transform: rotate(90deg); // triangle vers le bas quand ouvert
+  }
+}
+
+.colored-reference {
+  background: #f6f8fd; // bleu primary très clair
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-top: 2px;
+}
+
+.inlineStyle {
+  display: inline-block;
+}
 
   .calendarStyle { //size and style of the calendar type of the date
     font-size: 10px;
@@ -562,5 +612,29 @@ margin-left: 24px;
     -webkit-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
   }
+
+// Effet de survol générique pour fond clair
+.hover-bg-light {
+  transition: background-color 0.2s;
+}
+
+.hover-bg-light:hover, .hover-bg-light:focus {
+  background-color: #f5f5f5 !important; // gris très clair
+  cursor: pointer;
+}
+
+// Effet de survol générique pour fond accentué (exemple)
+.hover-bg-accent {
+  transition: background-color 0.2s;
+}
+
+.hover-bg-accent:hover, .hover-bg-accent:focus {
+  background-color: #e3eafc !important; // bleu très clair
+  cursor: pointer;
+}
+
+.separatorStyle {
+  margin-left: 1em; // ou la valeur qui convient, par exemple 8px ou 16px
+}
 
 

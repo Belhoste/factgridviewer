@@ -65,13 +65,13 @@ export class DataService {
 
   propertiesList:BehaviorSubject<any[]> = new BehaviorSubject([]);
 
-  $propertiesList = this.propertiesList.asObservable();
+  propertiesList$ = this.propertiesList.asObservable();
 
   updatePropertiesList(list) { this.propertiesList.next(list) }
 
   currentStatement: BehaviorSubject<number> = new BehaviorSubject(0);
 
-  $currentStatement: Observable<number> = this.currentStatement.asObservable();
+  currentStatement$: Observable<number> = this.currentStatement.asObservable();
 
   updateCurrentStatement(i) { this.currentStatement.next(i) };
 

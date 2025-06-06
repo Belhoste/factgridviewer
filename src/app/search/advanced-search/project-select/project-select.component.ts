@@ -80,16 +80,13 @@ export class ProjectSelectComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit() {
     this.setInitialValue();
-    console.log(this.setInitialValue())
   }
 
   protected setInitialValue() {
     this.filteredProjectMulti;
-    console.log(this.filteredProjectMulti)
   }
 
   onSelectChange($event): void {
-    console.log($event);
   }
   
   protected filterProjectMulti() {

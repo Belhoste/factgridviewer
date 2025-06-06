@@ -64,6 +64,7 @@ export class ItemDetailsService {
         this.factgrid.setSubtitle2(re, itemProperties[i], number, lang)
         for (let k = 0; k < items.length; k++) {
           if (re.claims[itemProperties[i]][j].mainsnak.datavalue.value.id === items[k].id) {
+       //     re.claims[itemProperties[i]][j].mainsnak.id = items[k].id;
             re.claims[itemProperties[i]][j].mainsnak.label = items[k].label;
             if (items[k].description !== undefined)
               re.claims[itemProperties[i]][j].mainsnak.description = items[k].description;

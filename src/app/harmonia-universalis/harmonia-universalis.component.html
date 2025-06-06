@@ -1,199 +1,124 @@
+
 <head>
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+				rel="stylesheet">
 
 </head>
 
 <body>
- 
-      <div class="cardBackground">
-        <div class="bigTitle">{{biblioHU}}</div>
-           <div class="search-center">
-                    <a href="https://database.factgrid.de/query/#%23model%0A%0ASELECT%20%3Fitem%20%3Fviewer%20%3FitemLabel%20%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP2%20wd%3AQ7%3B%0A%20%20%20%20%20%20%20%20wdt%3AP247%20wd%3AQ24708.%0A%20%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%0A%20%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%0A%7D%0A">
-                    sparql query</a>
-                     <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>            
-                    <a [routerLink]="['']">FactGrid</a>  <!-- new route -->
-           </div>
-       </div>
-     
 
-    <mat-card  appearance="outlined" class=mat-elevation-z12>
-       <mat-card-content  class="cardBackground">
-
-    <div  class="labelTitlePadding">
-      <mat-form-field appearance="outline">
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search">
-      </mat-form-field>
-    </div>
-    
+	<div class="cardBackground">
+		<div class="bigTitle">{{biblioHU}}</div>
+		<div class="search-center">
+			<a href="https://database.factgrid.de/query/#%23model%0A%0ASELECT%20%3Fitem%20%3Fviewer%20%3FitemLabel%20%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP2%20wd%3AQ7%3B%0A%20%20%20%20%20%20%20%20wdt%3AP247%20wd%3AQ24708.%0A%20%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%0A%20%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%0A%7D%0A">
+				sparql query
+			</a>
+			<span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+			<a [routerLink]="['']">FactGrid</a>  <!-- new route -->
+		</div>
+	</div>
 
 
-   <div class="mat-elevation-z2"> 
+	<mat-card appearance="outlined" class=mat-elevation-z12>
+		<mat-card-content class="cardBackground">
 
-     <table
-      class="user-table"
-      mat-table
-      [dataSource]="dataSource$ | async" 
-      matSort
-      matSortActive="title"
-      matSortDirection="asc"
-      >
-
-     <ng-container matColumnDef="author">
-        <th mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header="author.label">
-        {{authorHeader}}
-        </th>
-        <td mat-cell *matCellDef="let biblio" class="text">
-       {{biblio.author.label}}
-        <mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.author.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-       </td>
-      </ng-container>
-
-      <ng-container matColumnDef="title">
-       <th mat-header-cell
-       *matHeaderCellDef
-       mat-sort-header="title.label">
-       {{titleHeader}}
-       </th>
-       <td mat-cell *matCellDef="let biblio">
-       {{biblio.title.label}}
-         <mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.title.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button> 
-       </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="place">
-        <th mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header="location.label">
-       {{locationHeader}}
-        </th>
-        <td mat-cell *matCellDef="let biblio">
-       {{biblio.location.label}}
-         <mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.location.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-         </td>
-       </ng-container>a
-
-        <ng-container matColumnDef="date">
-         <th mat-header-cell
-         *matHeaderCellDef
-         mat-sort-header="date.value">
-         {{dateHeader}}
-         </th>
-         <td mat-cell  *matCellDef="let biblio">
-        {{biblio.date.value}}
-         </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let biblio; columns: displayedColumns"></tr>
-      </table>
-
-         <mat-paginator #paginator
-               class="demo-paginator"
-               (page)="handlePageEvent($event)"
-               [length]="length"
-               [pageSize]="pageSize"
-               [disabled]="disabled"
-               [showFirstLastButtons]="showFirstLastButtons"
-               [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
-               [hidePageSize]="hidePageSize"
-               [pageIndex]="pageIndex"
-               aria-label="Select page">
-          </mat-paginator>
-
-          </div>
-
-           <div>
-              <span><button mat-icon-button color="primary" class="internalLink" #content (click)="onClick(this.dataSource.filteredData)"><mat-icon color ="primary" [inline]="true">download</mat-icon></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-         </div>
-
-          </mat-card-content>
-
-      </mat-card>
-
-
-      <!--
-      <span><mat-icon-button color="primary" class="internalLink" #content (click)="onClick2(M.mainsnak.datavalue.value)"><mat-icon color ="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                      <span>{{clickToDownload}}</span>
-      -->
-
-   
+			<div class="labelTitlePadding">
+				<mat-form-field appearance="outline">
+					<input matInput (keyup)="applyFilter($event)" placeholder="Search">
+				</mat-form-field>
+			</div>
 
 
 
-      </body>
+			<div class="mat-elevation-z8 container">
+
+				<table mat-table class="mat-table"
+							 [dataSource]="dataSource$ | async"
+							 matSort
+							 matSortActive="title"
+							 matSortDirection="asc">
+
+					<!-- Author Column -->
+					<ng-container matColumnDef="author">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header="author.label">
+							{{authorHeader}}
+						</th>
+						<td mat-cell *matCellDef="let biblio" class="responsive-cell">
+							<span>
+								{{biblio.author.label}}
+								<mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.author.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
+							</span>
+						</td>
+					</ng-container>
+
+					<!-- Title Column -->
+					<ng-container matColumnDef="title">
+						<th mat-header-cell *matHeaderCellDef
+								mat-sort-header="title.label">
+							{{titleHeader}}
+						</th>
+						<td mat-cell *matCellDef="let biblio" class="responsive-cell">
+							<span>
+								{{biblio.title.label}}
+								<mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.title.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
+							</span>
+						</td>
+					</ng-container>
+
+					<!-- Place Column -->
+					<ng-container matColumnDef="place">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header="location.label">
+							{{locationHeader}}
+						</th>
+						<td mat-cell *matCellDef="let biblio" class="responsive-cell">
+							<span>
+								{{biblio.location.label}}
+								<mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.location.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
+							</span>
+						</td>
+					</ng-container>
+
+					<!-- Date Column -->
+					<ng-container matColumnDef="date">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header="date.value">
+							{{dateHeader}}
+						</th>
+						<td mat-cell *matCellDef="let biblio" class="responsive-cell">
+							{{biblio.date.value}}
+						</td>
+					</ng-container>
+
+					<tr mat-header-row class="mat-header-row"  *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+					<tr mat-row *matRowDef="let biblio; columns: displayedColumns" class="responsive-row"></tr>
+				</table>
+
+				<mat-paginator #paginator
+											 class="demo-paginator"
+											 (page)="handlePageEvent($event)"
+											 [length]="length"
+											 [pageSize]="pageSize"
+											 [disabled]="disabled"
+											 [showFirstLastButtons]="showFirstLastButtons"
+											 [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+											 [hidePageSize]="hidePageSize"
+											 [pageIndex]="pageIndex"
+											 aria-label="Select page">
+				</mat-paginator>
+
+			</div>
+
+			<div>
+				<span><button mat-icon-button color="primary" class="internalLink" #content (click)="onClick(this.dataSource.filteredData)"><mat-icon color="primary" [inline]="true">download</mat-icon></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			</div>
+
+		</mat-card-content>
+
+	</mat-card>
 
 
 
-
-<!--
-
-   <mat-table
-      mat-table
-      [dataSource]="dataSource$ | async" 
-      matSort
-      matSortActive="title"
-      matSortDirection="asc"
-    >
+</body>
 
 
-     <ng-container matColumnDef="author">
-        <mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header="author.label">
-        {{ authorHeader }}
-        </mat-header-cell>
-        <mat-cell *matCellDef="let biblio" class="text">
-		<span class="mobile-label">{{ biblio.author.label }}</span>
-        <mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.author.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-       
-       </mat-cell>
-      </ng-container>
 
-
-      <ng-container matColumnDef="title">
-       <mat-header-cell
-       *matHeaderCellDef
-       mat-sort-header="title.label">
-       {{ titleHeader }}
-       </mat-header-cell>
-       <mat-cell *matCellDef="let biblio">
-	   <span class="mobile-label">{{biblio.title.label}}</span>
-         <mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.title.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-       
-       </mat-cell>
-      </ng-container>
-  
-      <ng-container matColumnDef="place">
-        <mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header="location.label">
-        {{ locationHeader }}
-        </mat-header-cell>
-        <mat-cell *matCellDef="let biblio">
-		<span class="mobile-label">{{biblio.location.label}}</span>
-         <mat-icon-button class="internalLink" [routerLink]="'/item/' + biblio.location.id"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-        
-         </mat-cell>
-       </ng-container>a
-
-        <ng-container matColumnDef="date">
-         <mat-header-cell
-         *matHeaderCellDef
-         mat-sort-header="date.value">
-         {{ dateHeader }}
-         </mat-header-cell>
-         <mat-cell *matCellDef="let biblio">
-		 <span class="mobile-label">{{biblio.date.value}}</span>
-         </mat-cell>
-        </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row *matRowDef="let biblio; columns: displayedColumns"></mat-row>
-    </mat-table>
-    
-    -->
-   

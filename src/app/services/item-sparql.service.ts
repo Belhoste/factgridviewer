@@ -18,6 +18,7 @@ export class ItemSparqlService {
   Q456376Test: Observable<boolean>;  // test subclasses of creator
   Q24499Test: Observable<boolean>; // test adresses
   Q77457Test: Observable<boolean>; // test class of FactGrid properties
+  GOVTest: Observable<boolean>; // test GOV
   Q8Test: Observable<boolean>; // test subclasses of locality
   Q16200Test: Observable<boolean>; // test addresses
   Q140759Test: Observable<boolean>; // test health practitioners
@@ -38,17 +39,21 @@ export class ItemSparqlService {
   langService: string = "%20.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22" + this.lang.selectedLang + "%22%2C%22en%22.%20%7D%0A%7D%0A";
 
   itemSparql(item) {  // get a list depending of the type of the item
-
     let a: boolean = false;
     this.Q16200Test = this.Q16200TestGet(item);  //boolean test for addresses
     this.Q24499Test = this.Q24499TestGet(item);  // boolean test for family names
     this.Q77457Test = this.Q77457TestGet(item);  // boolean test for classes of FactGrid properties
+    this.GOVTest = this.GOVTestGet(item); //boolean test for GOV
     //   this.Q8Test = this.sparqlAsk(this.subclassTest(item.claims.P2[0].mainsnak.datavalue.value.id, "Q8")).pipe(startWith(false), tap(res => console.log(res)));  // boolean test for Q8 (locality)
     //   this.Q12Test = this.sparqlAsk(this.subclassTest(item.claims.P2[0].mainsnak.datavalue.value.id, "Q12")).pipe(startWith(false), tap(res => console.log(res)));  // boolean test for Q12 (organisation)
     //   this.Q37073Test = this.sparqlAsk(this.subclassTest(item.claims.P2[0].mainsnak.datavalue.value.id, "Q37073")).pipe(startWith(false), tap(res => console.log(res))); // boolean test for Q37073 (career statemnent)
 
     this.Q8Test = this.sparqlAsk(this.subclassTest(item.id, "Q8")).pipe(startWith(false));  // boolean test for Q8 (locality)
-    this.Q12Test = this.sparqlAsk(this.subclassTest(item.id, "Q12")).pipe(startWith(false));// boolean test for Q12 (organisation)
+ //   this.Q12Test = this.sparqlAsk(this.subclassTest(item.id, "Q12")).pipe(startWith(false));// boolean test for Q12 (organisation)
+
+
+    this.Q12Test = this.sparqlAsk(this.Q12TestGet(item.id)).pipe(startWith(false));// boolean test for Q12 (organisation)
+
     this.Q37073Test = this.sparqlAsk(this.subclassTest(item.id, "Q37073")).pipe(startWith(false)); // boolean test for Q37073 (career statemnent)
 
     this.Q456376Test = this.activitiesTest(item)[0]; //boolean test for Q456376 (creators)
@@ -61,14 +66,14 @@ export class ItemSparqlService {
 
     this.sparql0$ = forkJoin([this.superclassTest, this.superclass1Test]).pipe(switchMap(([test1, test2]) => this.selectSparql0(test1, test2, item)), startWith([undefined, undefined])); // data for the component sparql0: all subclasses of a superclass
 
-    this.sparql1$ = forkJoin([this.Q12Test, this.Q37073Test, this.Q456376Test, this.Q24499Test, this.Q16200Test, this.Q77457Test]) //data for the component sparql1 : organisations, career statements, creators, family names, localities, addresses
+    this.sparql1$ = forkJoin([this.Q12Test, this.Q37073Test, this.Q456376Test, this.Q24499Test, this.Q16200Test, this.Q77457Test]) //data for the component sparql1 : organisations, career statements, creators, family names, addressses, classes of FactGrid properties
       .pipe(switchMap(([test1, test2, test3, test4, test5, test6]) => this.selectSparql1(test1, test2, test3, test4, test5, test6, item)), startWith([undefined, undefined]));
 
-    this.sparql2$ = forkJoin([this.Q140759Test, this.Q8Test, this.Q16200Test]).pipe(switchMap(([test1, test2, test3]) => this.selectSparql2(test1, test2, test3, item)), startWith([undefined, undefined]));  // data for the component sparql2 : health pratictioners
+    this.sparql2$ = forkJoin([this.Q140759Test, this.Q16200Test]).pipe(switchMap(([test1, test2]) => this.selectSparql2(test1, test2, item)), startWith([undefined, undefined]));  // data for the component sparql2 : health pratictioners, current address
 
     this.sparql3$ = forkJoin([this.masterTest, this.listTest, this.setTest, this.Q16200Test]).pipe(switchMap(([test1, test2, test3, test4]) => this.selectSparql3(test1, test2, test3, test4, item)), startWith([undefined, undefined]));  // data for the component sparql3 : pupils and students, list of items of a class, parts of a class
 
-    this.sparql4$ = forkJoin([this.Q8Test]).pipe(switchMap(([test1]) => this.selectSparql4(test1, item)), startWith([undefined, undefined]));  // data for the component sparql4: locality (buildings, etc.)
+    this.sparql4$ = forkJoin([this.Q8Test, this.GOVTest]).pipe(switchMap(([test1, test2]) => this.selectSparql4(test1, test2, item)), startWith([undefined, undefined]));  // data for the component sparql4: locality (buildings, etc.)
   
     item.sparql = forkJoin([this.sparql0$, this.sparql1$, this.sparql2$, this.sparql3$, this.sparql4$])
   }
@@ -91,9 +96,9 @@ export class ItemSparqlService {
   }
 
   selectSparql1(test1, test2, test3, test4, test5, test6, item) {  // select the right result for the component sparql1
+    console.log(test1, test2, test3, test4, test5, test6);
     let result: Observable<any[]>;
     if (test5 === true) {  // addresses
-  //    console.log(item.claims.P48[0].mainsnak.datavalue.value);// geographical coordinates of the address
       result = this.Q16200Sparql(item);
     }
     else {
@@ -125,26 +130,24 @@ export class ItemSparqlService {
     return result
   }
 
-  selectSparql2(test1, test2, test3, item) {  // select the right result for sparql2
+  selectSparql2(test1, test2, item) {  // select the right result for sparql2
+    console.log(test1, test2);
     let result: Observable<any[]>;
     if (test1 === true) {
       result = this.Q140759Sparql(test1, item);  // health practitioners
-      //  result = this.superclassSparql(test1, item);  // set
     } else {
-      if (test2 === true) {
-        result = this.Q8Sparql(item);
-      } else {
-        if (test3 === true) {
-          result = this.currentAddress(item);
-        }
-        else result = this.noResult();
+      if (test2 === true) {    // current address for an old address
+   //     result = this.currentAddress(item);
+        result = this.noResult();
       }
+        else result = this.noResult();
     }
-  
+    
     return result
   }
 
   selectSparql3(test1, test2, test3, test4, item) {  // select the right result for sparql3
+    console.log(test1, test2, test3, test4);
     let result: Observable<any[]>;
     if (test1 === true) {
       result = this.masterSparql(test1, item);  // master
@@ -160,6 +163,7 @@ export class ItemSparqlService {
         else {
           if (test4 === true) {
            result = this.currentAddress(item);
+    //        result = this.noResult();
           }
           else result = this.noResult();
         }
@@ -168,12 +172,17 @@ export class ItemSparqlService {
     return result
   }
 
-  selectSparql4(test1, item) {
+  selectSparql4(test1, test2, item) {
     let result: Observable<any[]>;
-    if (test1 === true) {
+    if (test1 === true) {           // locality
       result = this.Q8Sparql(item);
     }
-    else result = this.noResult();
+    else {
+      if (test2 === true) { // GOV 
+        result = this.GOVSparql(item);
+      }
+      else result = this.noResult();
+    }
     return result
   }
 
@@ -197,6 +206,7 @@ export class ItemSparqlService {
     return of(test)
   }
 
+ 
   Q16200TestGet(item) {     // to get the boolean test for Q16200 (address);
     let test: boolean = false;
     if (item.claims.P2[0].mainsnak.datavalue.value.id == "Q16200") {
@@ -221,6 +231,14 @@ export class ItemSparqlService {
     return of(test)
   }
 
+  GOVTestGet(item) {
+    let test: boolean = false;
+    if (item.claims.P2[0].mainsnak.datavalue.value.id == "Q780657") {
+      test = true
+    };
+    return of(test);
+  }
+
   
 
   /********************************* queries with specific tests  **********************************************************/
@@ -233,6 +251,7 @@ export class ItemSparqlService {
       let prefix4 = "%20%7D%20UNION%20%7B%20%3Fitem%20wdt%3AP315%20wd%3A";
       let suffix = "%20.%20%7D%0A%3Fitem%20wdt%3AP247%20%3Ff";
       let u = prefix1 + res.id + prefix2 + res.id + prefix3 + res.id + prefix4 + res.id + suffix + this.langService + "ORDER%20BY%20%3FfLabel";
+      console.log(u);
       return this.sparqlQuery(u).pipe(map(res => ["Q12", this.listFromSparql(res).results.bindings]))
     }
   }
@@ -248,6 +267,7 @@ export class ItemSparqlService {
       let u = prefix1 + res.id + prefix2 + res.id + suffix +
         this.langService
         + "ORDER%20by%20%3FfamilyNameLabel%20%0ALIMIT%2010000";
+      console.log(u);
       return this.sparqlQuery(u).pipe(map(res => ["Q37073", this.listFromSparql(res).results.bindings]))
     }
   }
@@ -299,7 +319,6 @@ export class ItemSparqlService {
     if (test === true) {
       let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP3%2B%20wd%3A"
       let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
-
       return this.sparqlQuery(u).pipe(map(res => ["Q945280", this.listFromSparql(res).results.bindings]))
     }
   }
@@ -317,6 +336,7 @@ export class ItemSparqlService {
     let suffix = "ORDER%20by%20%3FitemLabel";
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%20WHERE%20%7B%20%20%3Fitem%20wdt%3AP247%2Fwdt%3AP3%2a%20wd%3A";
     u = prefix + res.id + this.langService + suffix;
+    console.log(u);
     return this.sparqlQuery(u).pipe(map(res => ["Q24499", this.listFromSparql(res).results.bindings]));
   }
 
@@ -325,20 +345,33 @@ export class ItemSparqlService {
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%0A%7B%3Fitem%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ160381%3B%20wdt%3AP83%20%7C%20wdt%3AP47%20wd%3A";
     let suffix = "ORDER%20by%20%3FitemLabel";
     u = prefix + res.id + this.langService + suffix;
+    console.log(u);
     return this.sparqlQuery(u).pipe(map(res => ["Q8", this.listFromSparql(res).results.bindings]));
+  }
+
+  GOVSparql(res) {  //query GOV
+    console.log(res.id);
+    let u = "";
+    let prefix = "https://database.factgrid.de/query/#SELECT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%20WHERE%20%7B%3Fitem%20wdt%3AP1075%20wd%3A"
+    let suffix = "ORDER%20by%20%3FitemLabel";
+    u = prefix + res.id + this.langService + suffix;
+    console.log(u);
+    return this.sparqlQuery(u).pipe(map(res => ["GOV", this.listFromSparql(res).results.bindings]));
   }
 
   Q16200Sparql(res) { // query address
     let u = "";
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%0AWHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP208%20wd%3A"
     u = prefix + res.id + this.langService + "ORDER%20BY%20%3FfitemLabel";
+    console.log(u);
     return this.sparqlQuery(u).pipe(map(res => ["Q16200", this.listFromSparql(res).results.bindings]));
   }
 
 
   Q77457Sparql(res) {  //  // query class of FactGrid properties: the list of the properties belonging to the class
       let prefix = "https://database.factgrid.de/query/#SELECT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP8%20wd%3A"
-      let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
+    let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
+    console.log(u);
       let v = this.sparqlQuery(u).pipe(map(res => ["Q77457", this.listFromSparql(res).results.bindings]));
       return v
   }
@@ -351,7 +384,7 @@ export class ItemSparqlService {
     // sparql query to get a list to display : used in Q8Test(), etc...
     sparql = this.newSparqlAdress(sparql);
     return this.request.getList(sparql).pipe(
-      map(res => this.listFromSparql(res)));
+    map(res => this.listFromSparql(res)));
   }
 
   sparqlAsk(sparql) {    // sparql query for a boolean test;
@@ -377,6 +410,12 @@ export class ItemSparqlService {
   }
 
 /*-------------------------------------- Tests ----------------------------------------------------*/
+
+  Q12TestGet(a) {
+    let u =  "https://database.factgrid.de/query/#ASK%20%7Bwd%3A" + a + "%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ12.%20FILTER%28NOT%20EXISTS%20%7Bwd%3A" + a +"%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ8%7D%29%20%7D%0A%20"
+    return u
+  }
+
 
   subclassTest(a, type) {  // to test to check whether the class of an item is the subclass of a given superclass (in the hierarchy of classes)
     //  let u = "https://database.factgrid.de/query/#ASK%20%7Bwd%3A" + a + "%20wdt%3AP3%2a%20wd%3A" + type + ".%7D%0A%20";

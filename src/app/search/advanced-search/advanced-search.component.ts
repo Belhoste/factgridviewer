@@ -70,6 +70,14 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
   public formerSelectedCol: number;
   public isDisplay: boolean = false;
 
+
+  lonos: number[][];
+  constructor() {
+    // Initialiser lonos avec le premier élément étant les valeurs de la propriété order dans ITEMTYPES
+    this.lonos = [ITEMTYPES.map(item => item.order)];
+
+  }
+
   itemTypes: any[] ;
   $currentItemTypes: Observable<string[]>;
 
@@ -113,17 +121,21 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
     //  this.propertyList.propertiesListBuilding("Q12"); //list of properties;
 
     //this.data.currentItemTypesAfterSelection.subscribe(res => console.log(res));
-    console.log(this.selections);
 
    
   }
 
   selectedItemType(itemType) {
+    console.log(itemType);
     let i = itemType[0];
+
+    let u = ITEMTYPES.findIndex(item => item.id === itemType[3]);
     
     let selection = { label: itemType[1], id: itemType[3] };
-    this.formData[i].types.selections.push(selection);
-    this.formData[i].values.options.push(selection); 
+
+    console.log(itemType[3]);
+  //  this.formData[i].types.selections.push(selection);
+   // this.formData[i].values.options.push(selection); 
 
  //   let newMutator = [];
  //   if (i === 0) {
@@ -140,8 +152,10 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
   //    this.data.updateItemTypes1([newItemType]);
   //  };
     this.propertyList.propertiesListBuilding(itemType[3]).subscribe(res => {  // create the list of properties; useless?
-      this.propertiesList = [itemType[0], this.propertyList.changeList(res)];
-      this.data.updatePropertiesList([itemType[0], this.propertyList.changeList(res)]);
+ //     this.propertiesList = [itemType[0], this.propertyList.changeList(res)];
+      //   console.log(this.propertiesList);
+      console.log(res);
+      //     this.data.updatePropertiesList([itemType[0], this.propertyList.changeList(res)]);
     })
   }
 
@@ -216,6 +230,27 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
     } else u = value1;
   return u
   }
+
+ findIndexById(a, id) {
+  return a.findIndex(item => item.id === id);
+  }
+
+  incrementElement(a, b) {
+    if (a.length !== b.length) {
+        throw new Error("Les listes a et b doivent avoir la même longueur");
+    }
+
+    let c = [...b]; // Crée une copie de la liste b
+    for (let i = 0; i < a.length; i++) {
+        if (a[i] === 1) {
+            c[i] = b[i] + 1; // Incrémente l'élément i-ème de b
+            break; // Sort de la boucle après avoir trouvé l'élément égal à 1
+        }
+    }
+
+    return c;
+}
+
 
 
 

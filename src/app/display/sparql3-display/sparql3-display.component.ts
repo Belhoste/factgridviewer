@@ -46,9 +46,6 @@ export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
     this.isList = false;
     this.isSearch = false;
 
-    console.log(changes.sparqlData);
-    console.log(changes.sparqlSubject);
-
     if (changes.sparqlData && changes.sparqlData.currentValue) {
 
       if (this.sparqlData()[0] !== undefined) { this.isList = true };

@@ -70,7 +70,51 @@ export class StatementSearchComponent
   private data = inject(DataService);
   private controls = inject(StatementsControlsService);
   //  private data = inject(DataService);
+  @Output() propertyDatatype: EventEmitter<string[]> = new EventEmitter();
 
+  @Output() selectedItemType: EventEmitter<string[]> = new EventEmitter();
+
+  @Output() selectedValue: EventEmitter<string[]> = new EventEmitter();
+
+
+  @Output() selectedQualifierValue: EventEmitter<string[]> = new EventEmitter();
+
+  @Output() qualifierPropertyDatatype: EventEmitter<string[]> = new EventEmitter();
+
+  @Output() datatype;
+
+
+  dropdownOptions: BehaviorSubject<any[]> = new BehaviorSubject(ITEMTYPES);
+
+
+  itemTypes = input([0, ITEMTYPES]);
+
+  dynamicInfoList: BehaviorSubject<{ itemTypes: number[], itemValues: number[] }[]> = new BehaviorSubject([]);
+
+  previousItemTypes: string[] = []; // propriété stockant les itemTypes précédents
+  previousItemValues: string[] = []; // propriété stockant les itemTypes précédents
+
+
+
+  // filteredItemTypes = input();
+
+  currentItemTypes: any[];
+  statementName: number = 0;
+
+  placeholderForLiteralValue: string = "literal value?"
+  placeholderForLiteralString: string = "write string? | date? | number?";
+
+  selections: Selection[][];
+
+  selection: Selection[];
+
+  propertiesValues: any[] = ["property?"];
+  subjectsValues: any[] = ["subject?"];
+
+  /*  get propertiesList(): any[] {
+      return this._propertiesList;
+    }
+    */
 
   @Input() set literalVariables(literalVariables: any[]) {
     this._literalVariables = literalVariables;
@@ -93,23 +137,13 @@ export class StatementSearchComponent
     return this._qualifierLiteralVariables;
   }
 
-  @Output() datatype;
-
-
-  @Output() selectedItemType: EventEmitter<string[]> = new EventEmitter();
-
-
-  protected currentItemTypes: any[] = [];
-  protected currentItemTypesArray: any[][] = [];
-
-  public statementOptions: BehaviorSubject<any[]>[] = [];
-
+  private isUpdatingDynamicInfoList = false;
+ 
 
   private _propertiesList: any[];
   private propertiesToSelect: any[];
   private _literalVariables: any[];
   private _qualifierLiteralVariables: any[];
-  propertiesList: any[];
 
 
   private qualifierPropertiesToSelect: any[];
@@ -122,7 +156,7 @@ export class StatementSearchComponent
   isWikibaseItemOnStatement: boolean = true;
   isLiteralOnStatement: boolean = false;
   isLiteralStringOnStatement: boolean = false;
-
+ 
 
   isWikibaseItemOnQualifier: boolean = true;
   isLiteralOnQualifier: boolean = false;
@@ -137,16 +171,18 @@ export class StatementSearchComponent
   isQualifier: boolean = false;
 
   isItemValue: boolean = true;
-
+//  isTimeToggle: boolean = false;
+ 
 
   isLiteralVariableSelected: boolean = true;
 
+ // stringToogle: boolean = true;
+
   selectedItemTypes: any[] = [];
 
+ // unSelectedItemTypes: any[] = [];
 
-
-  placeholderForLiteralValue: string = "literal value?"
-  placeholderForLiteralString: string = "write string? | date? | number?";
+ // itemTypesAsItemValues: any[];
 
   query = this.fb.group({
     statements: this.fb.array([this.statement])
@@ -158,11 +194,8 @@ export class StatementSearchComponent
   // on pourrait aussi bien écrire : get statements() { return this.query.controls['statements'] as FormArray; }
   qualifiers(i: number): FormArray<FormGroup> { return this.statements.at(i).get('qualifiers') as FormArray; }
 
-  get lastStatementIndex(): number {
-    const index = this.statements.length > 0 ? this.statements.length - 1 : 0;
-    console.log('lastStatementIndex:', index);
-    return index;
-  }
+  get lastStatementIndex(): number { return this.statements.length > 0 ? this.statements.length - 1 : 0; }
+
 
 
   get statement(): FormGroup<Statement> {
@@ -208,27 +241,27 @@ export class StatementSearchComponent
     const statementGroup = this.statements.at(index) as FormGroup;
     const propertiesControl = statementGroup.get('properties') as FormControl;
     return propertiesControl.invalid
-    //      && (propertiesControl.dirty || propertiesControl.touched);
+//      && (propertiesControl.dirty || propertiesControl.touched);
   }
 
   public itemTypeFilterCtrl: FormControl<string | null> = new FormControl<string>('');
 
-  public filteredItemTypesArray: ReplaySubject<any[]>[] = [];
-
+ // public filteredItemTypes: ReplaySubject<any> = new ReplaySubject<any>(1);
+  public filteredItemTypes: ReplaySubject<any> = new ReplaySubject<any>(1);
 
 
   /** control for the MatSelect filter keyword multi-selection */
   public propertytMultiFilterCtrl: FormControl<string> = new FormControl<string>('');
 
-  public filteredPropertyMultiArray: ReplaySubject<any[]>[] = [];
-
+  /** list of properties filtered by search keyword */
+  public filteredPropertyMulti: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   //  public valueSearchInput: FormControl = new FormControl();
   /** control for the MatSelect filter keyword single-selection */
   public itemValueFilterCtrl: FormControl<string> = new FormControl<string>('');
 
   /** value filtered by search keyword */
-  public filteredItemValuesArray: ReplaySubject<any[]>[] = [];
+  public filteredItemValues: ReplaySubject<any> = new ReplaySubject<any>(1);
 
   /** control for the MatSelect filter keyword single-selection */
   public literalFilterCtrl: FormControl<string | null> = new FormControl<string>('');
@@ -256,45 +289,57 @@ export class StatementSearchComponent
 
 
   addStatements() {
+    let formerItemType: Variable[][] = []
+    let itemTypes:Variable[]
+    let itemTypesList;
+    let mutator;
     this.statements.push(this.statement);
-    console.log('Added statement, new statements length:', this.statements.length);
     this.isRemoveStatement = true;
-    this.filteredItemTypesArray.push(new ReplaySubject<any[]>(1)); // Initialiser un nouveau ReplaySubject pour la nouvelle déclaration
-    this.filteredItemValuesArray.push(new ReplaySubject<any[]>(1)); // Initialiser un nouveau ReplaySubject pour la nouvelle déclaration
-    this.filteredPropertyMultiArray.push(new ReplaySubject<any[]>(1)); // Initialiser un nouveau ReplaySubject pour la nouvelle déclaration
-    this.statementOptions.push(new BehaviorSubject<any[]>([])); // Initialiser un nouveau BehaviorSubject pour la nouvelle déclaration
+
+    // Initialiser dynamicInfoList pour la nouvelle déclaration
+    const initialDynamicInfo = { itemTypes: Array(ITEMTYPES.length).fill(0), itemValues: Array(ITEMTYPES.length).fill(0) };
+    const currentDynamicInfoList = this.dynamicInfoList.getValue();
+    currentDynamicInfoList.push(initialDynamicInfo);
+    this.dynamicInfoList.next(currentDynamicInfoList);
 
 
-    // Initialiser les valeurs des nouveaux ReplaySubject avec une liste vide pour filterItemTypes et un observable de liste vide pour filterPropertyMulti
-    this.filteredItemTypesArray[this.lastStatementIndex].next([]);
-    this.filteredItemValuesArray[this.lastStatementIndex].next([]);
-    this.filteredPropertyMultiArray[this.lastStatementIndex].next([]);
 
-
-    this.setCurrentItemTypes(this.lastStatementIndex);
-    this.filterItemTypes(this.lastStatementIndex);
-    this.filterItemValues(this.lastStatementIndex);
-    this.filterPropertyMulti(this.lastStatementIndex, of([]));
+    this.data.itemTypes2$.subscribe(res => { 
+      itemTypes = res;
+      formerItemType.push(itemTypes);
+      this.data.updateItemTypes(itemTypes);
+      this.data.updateFormerItemTypes(formerItemType);
+    });
+    this.data.mutatorForNextStatement$.subscribe(res => {
+      mutator = res;
+      console.log(mutator);
+      this.data.updateMutator(mutator);
+      this.data.mutator$.subscribe(res => console.log(res));
+    }
+    )
   }
-
 
   removeStatements(i: number) {
     this.statements.removeAt(i);
-    console.log('Removed statement at index', i, 'new statements length:', this.statements.length);
-    this.currentItemTypesArray.splice(i, 1); // Supprimer les currentItemTypes correspondants
-    this.filteredItemTypesArray.splice(i, 1); // Supprimer le ReplaySubject correspondant
-    this.setCurrentItemTypes(this.lastStatementIndex);
-    this.filterItemTypes(this.lastStatementIndex);
+    let itemTypes: any[] = [];
+    let formerItemTypesList: Variable[][];
+    let formerItemTypes: Variable[];
+    if (i === 0) { this.data.updateMutator(MUTATOR), this.data.updateItemTypes(ITEMTYPES); };
+    this.data.formerItemTypes$.subscribe(res => formerItemTypesList = res);
+    this.data.updateFormerItemTypes(formerItemTypesList.slice(-1));
+    this.data.formerItemTypes$.subscribe(res => formerItemTypesList = res);
+    this.data.updateItemTypes(formerItemTypesList[formerItemTypesList.length -1])
+    this.propertiesValues.splice(i, 1); // à voir de quoi il s'agit.
   }
 
   addQualifiers(i: number) {
-    let m = this.qualifiers(i).controls.length - 1
+    let m = this.qualifiers(i).controls.length -1
     if (this.qualifiers(i).pristine) { this.qualifiers(i).removeAt(m) };
     this.isQualifier = true;
     this.qualifiers(i).push(this.qualifier);
-    let qual = this.controls.qualifiers(this.statements, i);
-    this.isQualifier = true;
-
+     let qual = this.controls.qualifiers(this.statements, i);
+      this.isQualifier = true;
+   
   }
 
   addFirstQualifier(i) {
@@ -307,21 +352,18 @@ export class StatementSearchComponent
   }
 
   statementControllerDisplay(u, i) {
-    const statement = this.statements.at(i) as FormGroup;
-    const itemValueControl = statement.get('value.itemValue') as FormControl;
-
     if (u === "WikibaseItem") {
       this.isWikibaseItemOnStatement = true;
       this.isLiteralOnStatement = false;
-      itemValueControl.enable();
-      statement.get('value.literalValue').disable();
-      statement.get('value.literalString').disable();
+      this.controls.itemValue(this.statements, i).enable();
+      this.controls.literalValue(this.statements, i).disable();
+      this.controls.literalString(this.statements, i).disable();
     } else {
       if (u === "String" || u === "MonolingualText" || u === "Time" || u === "Quantity") {
         console.log(u);
-        itemValueControl.disable();
-        statement.get('value.literalValue').enable();
-        statement.get('value.literalString').enable();
+        this.controls.itemValue(this.statements, i).disable();
+        this.controls.literalValue(this.statements, i).enable();
+        this.controls.literalString(this.statements, i).enable();
         this.isWikibaseItemOnStatement = false;
         this.isLiteralStringOnStatement = false;
         this.isLiteralOnStatement = true;
@@ -329,17 +371,16 @@ export class StatementSearchComponent
     }
   }
 
-
   literalControllerDisplay(label, i) {
     if (label === "write literal string" || label === "write date : YYYY-MM-DD" || label === "write number") {
       this.controls.literalValue(this.statements, i).enable(); this.controls.literalString(this.statements, i).enable();
       this.controls.literalValue(this.statements, i).patchValue("");
       this.isLiteralStringOnStatement = true;
-      this.placeholderForLiteralString = "write below";
+      this.placeholderForLiteralValue = "write below";
     }
     else {
-      this.controls.literalValue(this.statements, i).enable();
-      this.controls.literalString(this.statements, i).disable();
+        this.controls.literalValue(this.statements, i).enable();
+        this.controls.literalString(this.statements, i).disable();
       this.isLiteralStringOnStatement = false;
       this.placeholderForLiteralString = "disabled";
     }
@@ -356,22 +397,22 @@ export class StatementSearchComponent
       this.controls.qualifierValue(qual, j).enable();
       this.controls.qualifierLiteralValue(qual, j).disable();
       this.controls.qualifierLiteralString(qual, j).disable();
-      //  this.controls.qualifierValue(qual, j).patchvalue(value);
+    //  this.controls.qualifierValue(qual, j).patchvalue(value);
     } else {
       if (u === "String" || u === "MonolingualText" || u === "Time" || u === "Quantity") {
-        this.controls.qualifierLiteralValue(qual, j).enable();
+        this.controls.qualifierLiteralValue(qual, j).enable(); 
         this.controls.qualifierLiteralString(qual, j).enable();
         this.isWikibaseItemOnQualifier = false;
-        this.isLiteralOnQualifier = true;
+        this.isLiteralOnQualifier = true; 
       }
     }
   }
 
   qualifierLiteralControllerDisplay(label, i, j) {
     let qual = this.controls.qualifiers(this.statements, i);
-    if (label === "write literal string" || label === "write date : YYYY-MM-DD" || label === "write number") {
+    if (label === "write literal string" || label === "write date : YYYY-MM-DD" || label === "write number" ) {
       this.controls.qualifierLiteralValue(qual, j).enable(); this.controls.qualifierLiteralString(qual, j).enable();
-      //    this.controls.qualifierLiteralValue(qual, j).patchValue("");
+  //    this.controls.qualifierLiteralValue(qual, j).patchValue("");
       this.isLiteralStringOnQualifier = true;
     }
     else {
@@ -382,68 +423,38 @@ export class StatementSearchComponent
   }
 
   onItemTypeSelect(event: MatSelectChange): void {
-    console.log(event.value),
-      console.log('Selected itemType:', event.value);
+    console.log('Selected itemType:', event.value);
     let i = event.value[0]; // name of the statement "i" in the form array "statements"
     this.controls.propertyValues(this.statements, i).enable();
-    const options$ = this.propertyList.propertiesListBuilding(event.value[3]); // create the list of properties; useless?
-    this.filterPropertyMulti(i, options$); // Appeler filterPropertyMulti avec l'observable
     this.selectedItemType.emit(event.value); // output to advanced-search-component (see selectedItemType(itemType))
     this.statements.at(i).get('itemType').setValue(event.value, { emitEvent: false }); // Mettre à jour la valeur du contrôle
     console.log('Updated itemType control value:', this.statements.at(i).get('itemType').value);
     this.changeDetector.detectChanges(); // Forcer la détection des changements
   }
 
-
   onPropertySelect(event: MatSelectChange): void {
+  //  this.data.updateItemTypes([]); //test TODO il faut rénitialiser au prochain statement.
     let propertyValue = [];
-    console.log('Event value:', event.value);
-    let i = event.value[0][0];
-    console.log(i);
-
-    // Itérer sur chaque élément de event.value
-    for (let j = 0; j < event.value.length; j++) {
-      if (event.value[j] !== undefined) {
-        let propertyType = event.value[j][3];
-        console.log(propertyType);
-        if (propertyType) {
-          this.statementControllerDisplay(propertyType, i); // to display the right control
-          this.controls.itemValue(this.statements, i).enable();
-        } else {
-          console.error('Property type is undefined or invalid:', event.value[j][1].propertyType);
-        }
-      } else {
-        console.error('Event value[' + j + '] is undefined:', event.value);
-      }
+    if (event.value[0] !== undefined) {
+      let i = event.value[0][0];
+      this.datatype = event.value[0][2];
+      this.statementControllerDisplay(this.datatype, i); // to display the right controls
+      this.propertyDatatype.emit([i, this.datatype]);  // output to advanced-search-component (see propertyDatatype(itemType))
+      this.controls.itemValue(this.statements, i).enable();
+    //  this.controls.propertyValues(this.statements, i).updateValueAndValidity();
     }
   }
-
- 
-
 
   onValueSelect(event: MatSelectChange): void {  // to update the mutator and add the selected value type to the current itemTypes
     let i = event.value[0];
     let label = event.value[1];
     let dataType = event.value[2];
     console.log(event.value);
-
-    // Mettre à jour la valeur du contrôle itemValue
-    const itemValueControl = this.statements.at(i).get('value.itemValue') as FormControl;
-  //  itemValueControl.setValue(label, { emitEvent: false });
-
-    // Déclencher la détection des changements pour mettre à jour le template
-    this.changeDetector.detectChanges();
-
-
-
     if (label.charAt(0) === "?") {
- //    this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValue(itemType))
+     this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValue(itemType))
     }
     this.isAddQualifier = true;
     this.isAddStatement = true;
-    // Appeler resetPreviousItemValues après la mise à jour du contrôle itemValue
-    this.resetPreviousItemValues(i);
-    console.log(this.resetPreviousItemValues(i))
   };
 
   onLiteralValueSelect(event: MatSelectChange): void {
@@ -453,7 +464,7 @@ export class StatementSearchComponent
     this.literalControllerDisplay(label, i); // to display and enable the right controls
     if (label.charAt(0) === "?") {
       console.log(label);
-      //    this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValueType(itemType)). ?string is not an itemType
+     this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValueType(itemType)). ?string is not an itemType
     }
     this.isAddStatement = true;
     this.isAddQualifier = true;
@@ -464,7 +475,7 @@ export class StatementSearchComponent
     let i = event.value[0];
     let j = event.value[1];
     let datatype = event.value[3];
-    //   this.qualifierPropertyDatatype.emit([i, j, datatype]);
+    this.qualifierPropertyDatatype.emit([i, j, datatype]);
     this.qualifierControllerDisplay(datatype, i, j); // to display the right controls
 
   }
@@ -476,9 +487,9 @@ export class StatementSearchComponent
     let dataType = event.value[2];
     let col = event.value[3];
     let id = event.value[4];
-    let u = [i, dataType, col, id];
+    let u = [ i, dataType, col, id ];
     if (dataType.charAt(0) === "?") {
-      //      this.selectedQualifierValue.emit(u);
+      this.selectedQualifierValue.emit(u);
     }
     this.isRemoveQualifier = true;
     let qual = this.controls.qualifiers(this.statements, i);
@@ -491,9 +502,9 @@ export class StatementSearchComponent
     console.log(event.value);
     let i = event.value[0];
     let label = event.value[2];
-    // let dataType = event.value[2];
+   // let dataType = event.value[2];
     if (label.charAt(0) === "?") {
-      //     this.selectedQualifierValue.emit(event.value);
+      this.selectedQualifierValue.emit(event.value);
       this.isLiteralStringOnQualifier = false;
     } else this.isLiteralStringOnQualifier = true;
     this.isRemoveQualifier = true;
@@ -506,13 +517,17 @@ export class StatementSearchComponent
   //propertiesList: any[];
   selectedPropertiesList: string[];
 
-
+  // private baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=';
+  //  private getUrlSuffix = '&format=json&origin=*';
+  //  public selectedItemType: Observable<string>;
+  // public selectedValue: Observable<string>;
+  // public itemTypeSearchInput = new FormControl();
   @ViewChild('matRef') matRef: MatSelect;
 
   clear() {
     this.matRef.options.forEach((data: MatOption) => data.deselect());
   }
-
+ 
 
   @ViewChild('singleSelect', { static: true }) singleSelect: MatSelect;
 
@@ -525,29 +540,52 @@ export class StatementSearchComponent
 
   protected _onDestroy = new Subject<void>();
 
-
-
   ngOnInit(): void {
-    console.log('Initial statements length:', this.statements.length);
+    console.log(ITEMTYPES);
+    this.statements.controls.forEach((statement, index) => {
+      this.subscribeToStatementChanges(statement, index);
+      // Initialiser dynamicInfoList avec des valeurs par défaut
+      const initialDynamicInfo = { itemTypes: Array(ITEMTYPES.length).fill(0), itemValues: Array(ITEMTYPES.length).fill(0) };
+      const currentDynamicInfoList = this.dynamicInfoList.getValue();
+      currentDynamicInfoList[index] = initialDynamicInfo;
+      this.dynamicInfoList.next(currentDynamicInfoList);
+    });
+
+    // Initialiser les ITEMTYPES indépendamment
+    this.filteredItemValues.next(this.addOrderToItemValues(ITEMTYPES));
+
+    console.log(this.dynamicInfoList);
+
 
     this.propertyList.qualifierPropertiesListBuilding.subscribe(res => this.qualifierPropertiesToSelect = res);
+
+    // S'abonner aux changements de dynamicInfoList
+    this.dynamicInfoList
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() => {
+        this.updateDropdownOptions();
+      });
+
+
+  
+
 
     this.itemTypeFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
-        this.filterItemTypes(this.lastStatementIndex);
+        this.filterItemTypes();
       });
 
     this.propertytMultiFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
-        this.filterPropertyMulti(this.lastStatementIndex, of([]));
+        this.filterPropertyMulti();
       });
 
     this.itemValueFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
-        this.filterItemValues(this.lastStatementIndex);
+        this.filterItemValues();
       });
 
     this.literalFilterCtrl.valueChanges
@@ -556,11 +594,13 @@ export class StatementSearchComponent
         this.filterLiteralVariables();
       });
 
+
     this.qualifierPropertyFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterQualifierProperties();
       });
+
 
     this.qualifierValueFilterCtrl.valueChanges
       .pipe(takeUntil(this._onDestroy))
@@ -568,69 +608,62 @@ export class StatementSearchComponent
         this.filterQualifierValues();
       });
 
-    this.qualifierLiteralFilterCtrl.valueChanges
+    this.qualifierLiteralFilterCtrl.valueChanges    
       .pipe(takeUntil(this._onDestroy))
       .subscribe(() => {
         this.filterQualifierValues();
       });
 
-    // Initialiser statementOptions pour l'index 0
-    this.statementOptions[0] = new BehaviorSubject<any[]>([]);
 
-    // Problème 1 et 2: Ajouter le deuxième argument manquant pour filterPropertyMulti
-    
+    var propertyValueChanges: Observable<any> = this.query.get('statements').valueChanges
+      .pipe(map(res => res[0]["property"]));
 
-    // Problème 3, 4 et 5: Corriger l'initialisation des ReplaySubject
-    this.filteredItemTypesArray.push(new ReplaySubject<any[]>(1));
-   this.filteredItemValuesArray.push(new ReplaySubject<any[]>(1));
-    this.filteredPropertyMultiArray.push(new ReplaySubject<any[]>(1));
-   
+    var valueValueChanges: Observable<any> = this.query.get('statements').valueChanges
+      .pipe(map(res => res[0]["itemValue"]));
 
-    this.setCurrentItemTypes(this.lastStatementIndex);
-    this.filterItemTypes(this.lastStatementIndex);
-    this.filterItemValues(this.lastStatementIndex);
-    this.filterPropertyMulti(this.lastStatementIndex, of([]));
   }
 
-
+  ngAfterContentInit() {
+    console.log('ngAfterContentInit called');
+  }
 
   ngAfterViewInit() {
 
-    console.log('Statements length after view init:', this.statements.length);
+    console.log('ngAfterViewInit called');
 
- //   this.setInitialItemTypeValue();
- //   this.setInitialPropertyValue();
-//    this.setInitialItemValue();
-    this.setInitialLiteralVariable();
-    this.setInitialQualifierPropertyValue();
-    this.setInitialQualifierValueValue();
-    this.setInitialQualifierLiteralVariable();
+    // Utiliser setTimeout pour différer l'exécution
+    setTimeout(() => {
+      this.setInitialItemTypeValue();
+      this.setInitialPropertyValue();
+      this.setInitialValueValue();
+      this.setInitialLiteralVariable();
+      this.setInitialQualifierPropertyValue();
+      this.setInitialQualifierValueValue();
+      this.setInitialQualifierLiteralVariable();
+
+      // Réappliquer les valeurs sélectionnées après l'initialisation de la vue
+     
+
+      // Forcer la détection des changements
+      this.changeDetector.detectChanges();
+    }, 0);
+  
 
   }
-
 
   protected setInitialItemTypeValue() {
-    this.data.itemTypes$.subscribe(res => {
-      this.filteredItemTypesArray.forEach((filteredItemTypes, index) => {
-        console.log(res);
-        filteredItemTypes.next(res);
-        this.filterItemTypes(index);
-      });
-    });
+  this.data.itemTypes$.subscribe(res => { if (this.lastStatementIndex !== 0) { this.filteredItemTypes.next(res) } });
+    this.filteredItemTypes;
   }
 
+
   protected setInitialPropertyValue() {
-    this.filteredPropertyMultiArray.forEach((filteredProperties, index) => {
-      filteredProperties
-    });
-}
+    this.filteredPropertyMulti;
+  }
 
-
-  protected setInitialItemValue() {
-    this.filteredItemValuesArray.forEach((filteredItemValues, index) => {
-      filteredItemValues;
-  });
-}
+  protected setInitialValueValue() {
+    this.filteredItemValues;
+  }
 
   protected setInitialLiteralVariable() {
     this.filteredLiteralVariables;
@@ -649,264 +682,147 @@ export class StatementSearchComponent
   }
 
 
-  protected filterItemTypes(index: number) {
-    console.log('Calling setCurrentItemTypes with index:', index);
-    this.setCurrentItemTypes(index);
-    console.log('currentItemTypes after setCurrentItemTypes:', this.currentItemTypesArray[index]);
+  private addOrderToItemValues(itemValues: any[]): any[] {
+    const dynamicInfoListValue = this.dynamicInfoList.getValue();
+    if (this.statements.length === 0 || !dynamicInfoListValue[this.lastStatementIndex]) {
+      return itemValues;
+    }
+    return itemValues.map((itemValue, itemIndex) => {
+      if (itemValue && dynamicInfoListValue[this.lastStatementIndex].itemValues[itemIndex] !== undefined) {
+        const newItemValue = { ...itemValue }; // Cloner l'objet itemValue
+        newItemValue.order = dynamicInfoListValue[this.lastStatementIndex].itemValues[itemIndex];
+        newItemValue.originalLabel = itemValue.label; // Stocker la valeur originale du label
+        newItemValue.label = `${newItemValue.label}${newItemValue.order.toString()}`; // Concaténer le label et l'ordre
+        return newItemValue;
+      }
+      return itemValue;
+    });
+  }
 
+  private updateDropdownOptions() {
+    const dynamicInfoListValue = this.dynamicInfoList.getValue();
+    if (this.statements.length === 0 || !dynamicInfoListValue[this.lastStatementIndex]) {
+      this.dropdownOptions.next(ITEMTYPES);
+      return;
+    }
+    const updatedItemValues = ITEMTYPES.map((itemValue, itemIndex) => {
+      if (itemValue && dynamicInfoListValue[this.lastStatementIndex].itemValues[itemIndex] !== undefined) {
+        const newItemValue: Variable = { ...itemValue }; // Cloner l'objet itemValue
+        newItemValue.order = dynamicInfoListValue[this.lastStatementIndex].itemValues[itemIndex];
+        newItemValue.originalLabel = this.getOriginalItemLabel(itemValue.label); // Utiliser getOriginalItemLabel pour obtenir l'étiquette originale
+        newItemValue.label = `${newItemValue.originalLabel}${newItemValue.order.toString()}`; // Concaténer le label et l'ordre
+        return newItemValue;
+      }
+      return itemValue;
+    });
+
+    // Mettre à jour itemTypes dans dynamicInfoList
+    const updatedItemTypes = ITEMTYPES.map((itemType, itemIndex) => {
+      if (itemType && dynamicInfoListValue[this.lastStatementIndex].itemTypes[itemIndex] !== undefined) {
+        const newItemType: Variable = { ...itemType }; // Cloner l'objet itemType
+        newItemType.order = dynamicInfoListValue[this.lastStatementIndex].itemTypes[itemIndex];
+        newItemType.originalLabel = this.getOriginalItemLabel(itemType.label); // Utiliser getOriginalItemLabel pour obtenir l'étiquette originale
+        newItemType.label = `${newItemType.originalLabel}${newItemType.order.toString()}`; // Concaténer le label et l'ordre
+        return newItemType;
+      }
+      return itemType;
+    });
+
+    // Mettre à jour dynamicInfoList avec les nouvelles valeurs de itemTypes
+    dynamicInfoListValue[this.lastStatementIndex].itemTypes = updatedItemTypes.map(item => item.order).filter(order => order !== null);
+
+    this.dropdownOptions.next(updatedItemValues);
+  }
+
+
+
+
+  protected filterItemTypes() {
     let search = this.itemTypeFilterCtrl.value;
+    const selectedValues = this.statements.controls.map(statement => statement.get('itemType').value); // Conserver les valeurs sélectionnées
+
+    this.dropdownOptions.pipe(takeUntil(this._onDestroy)).subscribe((options) => {
+      if (!search) {
+        this.filteredItemTypes.next(options);
+      } else {
+        search = search.toLowerCase();
+        this.filteredItemTypes.next(
+          options.filter(itemType => itemType.label.toLowerCase().indexOf(search) > -1)
+        );
+      }
+
+      // Réappliquer les valeurs sélectionnées
+      this.statements.controls.forEach((statement, index) => {
+        statement.get('itemType').setValue(selectedValues[index], { emitEvent: false });
+      });
+    });
+  }
+
+
+
+ 
+// Fonction utilitaire pour obtenir le label original
+  getOriginalItemLabel(itemLabel: string): string {
+    if (itemLabel.length > 1) {
+      const lastChar = itemLabel.charAt(itemLabel.length - 1);
+      const secondLastChar = itemLabel.charAt(itemLabel.length - 2);
+      if (!isNaN(parseInt(lastChar)) && !isNaN(parseInt(secondLastChar))) {
+        return itemLabel.slice(0, -2); // Supprimer les 2 derniers caractères
+      } else if (!isNaN(parseInt(lastChar))) {
+        return itemLabel.slice(0, -1); // Supprimer le dernier caractère si c'est un chiffre
+      }
+    }
+    return itemLabel;
+  }
+
+
+
+  
+  protected filterPropertyMulti() {
+    this.data.$propertiesList.subscribe(res => {
+      this.propertiesToSelect = res[1];
+      console.log(this.propertiesToSelect);
+      /*   if (!this.propertiesToSelect) {
+           return;
+         }*/
+      let search = this.propertytMultiFilterCtrl.value;
+      if (!search) {
+        this.filteredPropertyMulti.next(this.propertiesToSelect.slice());
+        return;
+      } else {
+        search = search.toLowerCase();
+        // filter the projects
+      
+          this.filteredPropertyMulti.next(
+            this.propertiesToSelect.filter(entity => entity.itemLabel.label.toLowerCase().indexOf(search) > -1));
+      }
+    }
+    );
+  }
+
+
+  protected filterItemValues() {
+    let search = this.itemValueFilterCtrl.value;
     if (!search) {
-      this.filteredItemTypesArray[index].next(this.currentItemTypesArray[index].slice());
+      this.filteredItemValues.next(this.addOrderToItemValues([...ITEMTYPES, ...this.entityValues]));
+      return;
     } else {
       search = search.toLowerCase();
-      this.filteredItemTypesArray[index].next(
-        this.currentItemTypesArray[index].filter(itemType => itemType.label.toLowerCase().indexOf(search) > -1)
-      );
-    }
-
-    this.changeDetector.detectChanges();
-  }
-
-
-
-  /**
- * Initialise et met à jour la liste des types d'éléments disponibles pour chaque déclaration.
- * Cette fonction est appelée chaque fois qu'une nouvelle déclaration est ajoutée ou qu'une déclaration existante est modifiée.
- * Elle s'assure que la liste des types d'éléments est toujours à jour et reflète les sélections actuelles.
- * 
- * @param index L'index de la déclaration pour laquelle les types d'éléments doivent être mis à jour.
- */
-  protected setCurrentItemTypes(index: number): void {
-    console.log('setCurrentItemTypes called with index:', index);
-    if (index === 0) {
-      if (!ITEMTYPES || ITEMTYPES.length === 0) {
-        console.error('ITEMTYPES is undefined or empty');
-        this.currentItemTypesArray[index] = [];
-      } else {
-        this.currentItemTypesArray[index] = ITEMTYPES;
-        console.log('Updated currentItemTypes:', this.currentItemTypesArray[index]);
-      }
-    } else {
-      let labels: any[] = [];
-
-      for (let j = 0; j < index; j++) {
-        const itemTypeControl = this.statements.at(j).get('itemType') as FormControl;
-        const itemValueControl = this.statements.at(j).get('value.itemValue') as FormControl;
-
-        console.log('itemTypeControl at index', j, ':', itemTypeControl);
-        console.log('itemValueControl at index', j, ':', itemValueControl);
-
-        if (itemTypeControl && itemTypeControl.value) {
-          const itemTypeValue = itemTypeControl.value[1]; // Extraire l'objet unique
-          console.log(`itemTypeControl value at index ${j}:`, itemTypeValue);
-          labels.push({ label: itemTypeValue });
-        }
-
-        if (itemValueControl && itemValueControl.value) {
-          const itemValue = itemValueControl.value[1]; // Extraire l'objet unique
-          if (typeof itemValue === 'string' && itemValue.startsWith('?')) {
-            labels.push({ label: itemValue });
-          }
-        }
-      }
-
-      // Supprimer les doublons en comparant les propriétés des objets
-      const uniqueLabels = Array.from(new Set(labels.map(label => JSON.stringify(label))))
-        .map(str => JSON.parse(str));
-
-      // Trier les objets par ordre alphabétique selon leurs propriétés
-      this.currentItemTypesArray[index] = uniqueLabels.sort((a, b) => a.label.localeCompare(b.label));
-      console.log('Updated currentItemTypes:', this.currentItemTypesArray[index]);
+      this.itemValueFilterCtrl.valueChanges // moteur de recherche
+        .pipe(
+          debounceTime(400),
+          switchMap(label => this.itemValuesList2(label, this.lang.selectedLang, 20)),
+          map(re => {
+            this.entityValues = re;
+            this.setSeparator(this.entityValues);
+            return this.addOrderToItemValues([...ITEMTYPES, ...this.entityValues]).filter(value => value.label.toLowerCase().includes(search));
+          })
+        ).subscribe(filteredItems => {
+          this.filteredItemValues.next(filteredItems);
+        });
     }
   }
 
-
-
-  protected filterPropertyMulti(index: number, options$: Observable<any[]>): void {
-    options$
-      .pipe(
-        switchMap(options => {
-          if (!options || options.length === 0) {
-            console.error("Les données ne sont pas correctement chargées dans options.");
-            return of([]);
-          }
-          console.log(options);
-
-          let search = this.propertytMultiFilterCtrl.value;
-          if (!search) {
-            return of(options.slice());
-          } else {
-            search = search.toLowerCase();
-            // filter the projects
-            return of(options.filter(entity => entity.value.toLowerCase().indexOf(search) > -1));
-          }
-        })
-      )
-      .subscribe(filteredOptions => {
-        this.filteredPropertyMultiArray[index].next(filteredOptions);
-      });
-  }
-
-
-/*  protected filterItemValues(index: number) {
-    const initialSearch = this.itemValueFilterCtrl.value ? this.itemValueFilterCtrl.value.toLowerCase() : '';
-    this.itemValueFilterCtrl.valueChanges
-      .pipe(
-        startWith(initialSearch),
-        debounceTime(400),
-        switchMap(search => {
-          search = search ? search.toLowerCase() : '';
-          return this.itemValuesList2(search, this.lang.selectedLang, 20).pipe(
-            map(filteredItems => {
-              const selectedOptions = this.getSelectedOptionsUpToIndex(index); // Utiliser l'index actuel
-              const selectedLabels = this.getLabelsFromSelectedOptions(selectedOptions);
-              const augmentedItems = [...selectedLabels.map(label => ({ label, col: null, id: null, separator: '' })), ...filteredItems];
-
-              if (search.startsWith('?')) {
-                return augmentedItems.filter(item => item.label.toLowerCase().startsWith(search));
-              } else {
-                return augmentedItems.filter(item => item.label.toLowerCase().includes(search));
-              }
-            }),
-            map(items => {
-              const uniqueItems = items.filter((item, index, self) =>
-                index === self.findIndex((t) => (
-                  t.label === item.label
-                ))
-              );
-              if (!this.statementOptions[index]) {
-                this.statementOptions[index] = new BehaviorSubject<any[]>([]);
-              }
-              this.statementOptions[index].next(uniqueItems); // Stocker les options dans le BehaviorSubject
-              return uniqueItems;
-            })
-          );
-        })
-      )
-      .subscribe(augmentedItems => {
-        console.log(`Augmented Items for statement ${index}:`, augmentedItems);
-        if (!this.filteredItemValuesArray[index]) {
-          this.filteredItemValuesArray[index] = new ReplaySubject<any[]>(1);
-        }
-        this.filteredItemValuesArray[index].next(augmentedItems); // Utiliser l'index actuel
-        this.resetPreviousItemValues(index); // Réinitialiser les valeurs des statements précédents
-      });
-
-    // Utiliser les options stockées lors des changements
-    if (this.statementOptions[index]) {
-      this.statementOptions[index].subscribe(options => {
-        this.filteredItemValuesArray[index].next(options);
-      });
-    }
-  } */
-
-
-  protected filterItemValues(index: number) {
-    // Obtenir les options sélectionnées jusqu'à l'index actuel
-    const selectedOptions = this.getSelectedOptionsUpToIndex(index);
-
-    // Obtenir les labels des options sélectionnées
-    const selectedLabels = this.getLabelsFromSelectedOptions(selectedOptions);
-
-    // Créer les éléments augmentés à partir des labels sélectionnés
-    const augmentedItems = selectedLabels.map(label => ({ label, col: null, id: null, separator: '' }));
-
-    console.log(augmentedItems)
-
-    // Mettre à jour le BehaviorSubject avec les éléments augmentés
-    if (!this.statementOptions[index]) {
-      this.statementOptions[index] = new BehaviorSubject<any[]>([]);
-    }
-    this.statementOptions[index].next(augmentedItems);
-
-    // Mettre à jour le ReplaySubject avec les éléments augmentés
-    if (!this.filteredItemValuesArray[index]) {
-      this.filteredItemValuesArray[index] = new ReplaySubject<any[]>(1);
-    }
-    this.filteredItemValuesArray[index].next(augmentedItems);
-
-    // Réinitialiser les valeurs des statements précédents
-   this.resetPreviousItemValues(index);
-  }
-
-
-
-
-  protected resetPreviousItemValues(currentIndex: number): void {
-    for (let i = 0; i < currentIndex; i++) {
-      const itemValueControl = this.statements.at(i).get('value.itemValue') as FormControl;
-      if (itemValueControl && itemValueControl.value) {
-        itemValueControl.setValue(itemValueControl.value, { emitEvent: false });
-      }
-    }
-  }
-
-
-
-  getSelectedOptionsUpToIndex(i: number): any[] {
-    let selectedOptions = [];
-    const lastItemTypeControl = this.statements.at(i).get('itemType') as FormControl;
-    const lastItemTypeValue = lastItemTypeControl ? lastItemTypeControl.value[1] : null;
-
-    for (let index = 0; index <= i; index++) {
-      const itemTypeControl = this.statements.at(index).get('itemType') as FormControl;
-      const itemValueControl = this.statements.at(index).get('value.itemValue') as FormControl;
-      if (itemTypeControl && itemTypeControl.value) {
-        let itemTypeValue = [...itemTypeControl.value]; // Cloner la valeur pour éviter de modifier l'original
-        let label = itemTypeValue[1]; // Supposons que le label soit à l'index 1
-
-        // Vérifier si itemValue commence par ? et se termine par un nombre
-        if (itemValueControl && itemValueControl.value) {
-          const itemValue = itemValueControl.value[1];
-          const match = itemValue.match(/^\?(.+?)(\d+)$/);
-          if (match) {
-            const baseValue = match[1];
-            const number = parseInt(match[2]);
-            const itemTypeBase = itemTypeControl.value[1].slice(0, -1);
-            if (baseValue === itemTypeBase) {
-              label = baseValue + (number + 1);
-            }
-          }
-        }
-
-        // Modifier le label selon les règles spécifiées
-        const lastChar = label.charAt(label.length - 1);
-        if (/[a-zA-Z]$/.test(lastChar)) {
-          label += '1';
-        } else if (/[0-9]$/.test(lastChar)) {
-          const number = parseInt(lastChar);
-          label = label.slice(0, -1) + (number + 1);
-        }
-        itemTypeValue[1] = label; // Mettre à jour le label dans la valeur itemType clonée
-
-        // Ne pas ajouter au tableau si le label mis à jour est égal à la valeur du contrôle itemType du dernier statement
-        if (index < i && label === lastItemTypeValue) {
-          continue;
-        }
-
-        // Ajouter la valeur du contrôle du statement i en remplaçant le dernier caractère par ce nombre incrémenté de 1
-        if (index < i && itemValueControl && itemValueControl.value) {
-          const itemValue = itemValueControl.value[1];
-          const match = itemValue.match(/^\?(.+?)(\d+)$/);
-          if (match) {
-            const baseValue = match[1];
-            const number = parseInt(match[2]);
-            const newLabel = baseValue + (number + 1);
-            if (!selectedOptions.some(option => option[1] === newLabel)) {
-              selectedOptions.push([itemTypeControl.value[0], newLabel]);
-            }
-          }
-        }
-
-        selectedOptions.push(itemTypeValue);
-      }
-    }
-    return selectedOptions;
-  }
-
-  getLabelsFromSelectedOptions(options: any[]): string[] {
-    return options.map(option => option[1]); // Supposons que le label soit à l'index 1
-  }
 
 
   itemValuesList1(label) { 
@@ -1041,17 +957,87 @@ export class StatementSearchComponent
 
 
   datatypeValidator(control: AbstractControl): { [key: string]: boolean; } | null {
-    if (control.value && control.value.length > 1) {
-      const firstType = control.value[0][3]; // Supposons que le type soit à l'index 3
-      const allSameType = control.value.every((val: any) => val[3] === firstType);
-      if (!allSameType) {
-        return { 'differentDatatype': true };
+    if (control.value) {
+      if (control.value[0] !== undefined) {
+        let equalDatatype = control.value.every((val: any) => val[2] === control.value[0][2]);
+        if (equalDatatype) { return { 'differentDatatype': true }; }
       }
     }
     return null;
   }
 
+  subscribeToStatementChanges(statement: AbstractControl, index: number): void {
+    this.previousItemTypes[index] = statement.get('itemType').value;
+    this.previousItemValues[index] = statement.get('value').get('itemValue').value;
+  }
 
+  
+
+
+
+  isCircular(obj: any): boolean {
+  const seenObjects = new WeakSet();
+
+  function detect(obj: any): boolean {
+    if (obj && typeof obj === 'object') {
+      if (seenObjects.has(obj)) {
+        return true;
+      }
+      seenObjects.add(obj);
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key) && detect(obj[key])) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  return detect(obj);
+  }
+
+  safeStringify(obj: any): string {
+    const seen = new WeakSet();
+    return JSON.stringify(obj, (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return "[Circular]";
+        }
+        seen.add(value);
+      }
+      return value;
+    });
+  }
+
+
+  
+
+
+  compare(u, v) {
+    if (u === undefined) { return v } else return u
+}; //TODO: if u = [] then u =v else u = u and return u; (see if its possible to create a method witb filter or something else)
+
+  newQualifier(): FormGroup {
+    return this.fb.group({
+      qualifierProperty: "",
+      qualifierValue: "",
+    }
+    );
+  }
+
+
+  onVariableSelect(event: MatSelectChange): void {
+    console.log(event.value);
+  };
+
+
+  validateItemValues(control) {
+    //   console.log(control.value.cb);
+    if (!control.value.cb.some((item: any) => item)) {
+      return { checkboxSectionValid: true };
+    }
+    return null;
+  }
 
   notFound(res) {
     res == "https://database.factgrid.de//w/api.php?action=wbgetentities&ids=&format=json&origin=*" ?
@@ -1075,7 +1061,18 @@ export class StatementSearchComponent
     return url;
   }
 
- 
+  resetField(i: number, field: string) {
+    let j: number;
+    if (j > i && j < this.statements.controls.length) {
+      this.statements.controls[j].get(field).reset();
+    }
+  }
+
+  onQualifierButtonSelect() {
+  };
+
+  onPropertyButtonSelect(item) { };
+
 
 
   ngOnDestroy(): void {

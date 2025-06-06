@@ -47,7 +47,7 @@
           <div class="search-center3 cardGreyBackground"
                [formGroupName]="i">
 
-         @if( i === statements.length -1){    
+            <!---    @if( i === statements.length -1){     --->
 
             <div class="listStyle">Statement {{ i + 1 }} <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<mat-checkbox formControlName="optional">Optional</mat-checkbox></span>:</div>
             <!--- form field for selecting the type of the item with search --->
@@ -61,7 +61,7 @@
                                          [formControl]="itemTypeFilterCtrl"
                                          [noEntriesFoundLabel]=noDataFoundLabel></ngx-mat-select-search>
                 </mat-option>
-                <mat-option *ngFor="let itemType of filteredItemTypes | async" [value]="[i, itemType.label, itemType.value, itemType.id]">
+                <mat-option *ngFor="let itemType of filteredItemTypesArray[i] | async" [value]="[i, itemType.label, itemType.value, itemType.id, itemType.order]">
                   {{itemType.label}}
                 </mat-option>
               </mat-select>
@@ -69,7 +69,6 @@
 
             <!--- form field for multi-selecting the property of the statement with search --->
             <mat-form-field appearance="fill">
-
               <!---             <mat-select placeholder={{this.propertiesValues[i]}} --->
               <mat-select placeholder="properties?"
                           formControlName="properties" required
@@ -80,14 +79,15 @@
                                          [formControl]="propertytMultiFilterCtrl"
                                          noEntriesFoundLabel="Not found"></ngx-mat-select-search>
                 </mat-option>
-
-                <mat-option *ngFor="let property of filteredPropertyMulti | async" [value]="[i,property.id, property.propertyType.id, property.itemLabel.value]">
-                  @if (statement.get("properties")!.valid){
-                  <p class="validatorWarning"> select several properties only if they have the type</p>
-                  }
-                  {{property.itemLabel.label}}
+                <mat-option *ngFor="let property of filteredPropertyMultiArray[i] | async" [value]="[i, property.value, property.id, property.type]">
+                  {{ property.label }}
                 </mat-option>
               </mat-select>
+              @if (statements.at(i).get('properties').hasError('differentDatatype')) {
+              <div class="validatorWarning">
+                Select several properties only if they have the same type
+              </div>
+              }
             </mat-form-field>
 
             <!--- form field for single-selecting the wikibase value of the statement with search --->
@@ -103,7 +103,7 @@
                                            [formControl]="itemValueFilterCtrl"
                                            noEntriesFoundLabel="Not found"></ngx-mat-select-search>
                   </mat-option>
-                  <mat-option *ngFor="let itemValue of filteredItemValues | async" [value]="[i, itemValue.label, itemValue.col, itemValue.id]">
+                  <mat-option *ngFor="let itemValue of filteredItemValuesArray[i] | async" [value]="[i, itemValue.label, itemValue.col, itemValue.id]">
                     {{itemValue.label}}{{itemValue.separator}}{{itemValue.description}}
                   </mat-option>
                 </mat-select>
@@ -136,9 +136,9 @@
             </div>
 
             <!---        <mat-form-field appearance="fill">
-    <mat-checkbox formControlName="optional">
-      Optional
-    </mat-checkbox> -->
+  <mat-checkbox formControlName="optional">
+    Optional
+  </mat-checkbox> -->
             <!----------------------------------------------start of qualifiers------------------------------------------------------->
             @if(isQualifier === true){
             <div formArrayName="qualifiers">
@@ -231,13 +231,13 @@
             </div>
             }
 
-     }     
+            <!---   }     -->
             <!----       @if (isAddQualifier) {
-           <div class="search-center">
-             <button type="button" (click)="addFirstQualifier(i)">Add first qualifier</button>
-           </div>
-           }
-    -->
+         <div class="search-center">
+           <button type="button" (click)="addFirstQualifier(i)">Add first qualifier</button>
+         </div>
+         }
+  -->
             <!-------------------------------------------------end of qualifier-------------------------------------------------------->
 
 

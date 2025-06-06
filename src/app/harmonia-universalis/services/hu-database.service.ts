@@ -11,20 +11,17 @@ export class HuDatabaseService {
 
 
 
-  sparqlBuilding(lang){   // this is the sparql query
-
-let u="https://database.factgrid.de/query/#%23biblio%0ASELECT%20%3Ftitle%20%3FtitleLabel%20%3Fauthor%20%3FauthorLabel%20%3Fdate%20%3Flocation%20%3FlocationLabel%20%3Fcountry%20%3FcountryLabel%0AWHERE%20%0A%7B%0A%20%20%3Ftitle%20wdt%3AP2%20wd%3AQ20%3B%0A%20%20%20%20%20%20%20%20wdt%3AP243%20wd%3AQ172203%3B%0A%20%20%20%20%20%20%20%20wdt%3AP21%20%3Fauthor%3B%0A%20%20%20%20%20%20%20%20wdt%3AP222%20%3Fdate%3B%0A%20%20%20%20%20%20%20%20wdt%3AP241%20%3Flocation%20.%0A%20%20%3Fcountry%20%5Ewdt%3AP297%20%3Flocation%3B%0A%20%20%20%20%20%20%20%20%20%20wdt%3AP2%20%20%20wd%3AQ21925%20"+lang;
-
+ sparqlBuilding(lang){   // this is the sparql query
+   let u = "https://database.factgrid.de/query/#%23biblio%0ASELECT%20DISTINCT%20%3Ftitle%20%3FtitleLabel%20%3Fauthor%20%3FauthorLabel%20%3Fdate%20%3Flocation%20%3FlocationLabel%20%3F" +
+     "country%20%3FcountryLabel%0AWHERE%20%0A%7B%20VALUES%20%3Fc%20%7B%20wd%3AQ21925%20wd%3AQ11317%20%7D%0A%20%20%3Ftitle%20wdt%3AP2%20wd%3AQ20%3B%0A%20%20%20%20%20%20%20%20wdt%3AP243%20wd%3AQ172203%3B%0A%20%20%20%20%20%20%20%20wdt%3AP21%20%3F" +
+     "author%3B%0A%20%20%20%20%20%20%20%20wdt%3AP222%20%3Fdate%3B%0A%20%20%20%20%20%20%20%20wdt%3AP241%20%3Flocation%20.%0A%20%20%3Fcountry%20%5Ewdt%3AP297%20%3Flocation%3B%0A%20%20%20%20%20%20%20%20%20%20wdt%3AP2%20%20%20%3Fc%20%20" + lang;
     return u
   }
 
   listFromSparql(res) {  // create the qid in the results.bindings
-  
   if (res !== undefined){
     if (res.results !== undefined) {
-   
      for (let i = 0; i < res.results.bindings.length; i++) {
-       
       res.results.bindings[i]["author"].id = res.results.bindings[i]["author"].value.replace(
          "https://database.factgrid.de/entity/", "");
       res.results.bindings[i]["author"].label = res.results.bindings[i]["authorLabel"].value;

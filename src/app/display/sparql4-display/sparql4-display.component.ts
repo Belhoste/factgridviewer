@@ -35,6 +35,7 @@ export class Sparql4DisplayComponent implements OnChanges, OnDestroy {
   buildingTitle: string = "Buildings and monuments:";
   query: string;
   listWithoutDuplicate: any[];
+  listTitle: string = "List";
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -62,16 +63,25 @@ export class Sparql4DisplayComponent implements OnChanges, OnDestroy {
     if (changes.sparqlSubject && changes.sparqlSubject.currentValue) {
       this.subTitle = this.sparqlSubject();
 
-    
-        if (this.subTitle == "Q8") {  //location
+
+      if (this.subTitle == "Q8") {  //location
+        this.isWorks = true;
+        this.subTitle = this.lang.buildingTitle(this.buildingTitle);
+      }
+      else {
+
+        if (this.subTitle == "GOV") {  //GOV
           this.isWorks = true;
-          this.subTitle = this.lang.buildingTitle(this.buildingTitle);
+          //      this.subTitle = this.lang.buildingTitle(this.buildingTitle
+          this.subTitle = this.lang.listTitle(this.listTitle);
         }
+
         else {
           this.subTitle = "";
           this.list = [];
         }
       }
+    }
   }
 
   applyFilter(event) {
