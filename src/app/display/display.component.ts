@@ -90,7 +90,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   sources: any;
   mainList: any[] = [];
   list: any[] = [];
-  selectedItemsList: any[];
+  selectedItemsList: Observable<any>;
   wikis: any[] = [];
   pictures: any[] = [];
   sourcesList: any[] = [];
@@ -113,6 +113,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   subclassesList: any[] = [];
   classesList: any[] = [];
   natureOfList: any[] = [];
+  selectedItems: any[]
+
  
 
   // Affichage
@@ -170,6 +172,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   urlSafe14: SafeResourceUrl;
   urlSafe15: SafeResourceUrl;
 
+  
+
   // SPARQL
   sparqlData0: any[] = [];
   sparqlData1: any[] = [];
@@ -202,6 +206,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.isSpinner = true;
+    this.newSearch = this.lang.newSearch(this.newSearch);
+    this.linkedPagesTitle = this.lang.linkedPagesTitle(this.linkedPagesTitle);
+    this.mainPage = this.lang.mainPage(this.mainPage);
+    this.factGridQuery = this.lang.factGridQuery(this.factGridQuery);
+    this.externalLinksTitle = this.lang.externalLinksTitle(this.externalLinksTitle);
+    this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
+    this.clickToDownload = this.lang.clickToDownload(this.clickToDownload);
+    this.clickToDisplay = this.lang.clickToDisplay(this.clickToDisplay);
+    this.stemma = this.lang.stemma(this.stemma);
     this.subscription0 = this.route.paramMap.subscribe(params => {
       this.itemId = params.get('id');
       this.loadBackList();
@@ -241,6 +254,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (!item) return;
       this.item = item;
+      console.log("item", item);
+      this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
       this.claims = item[0].claims;
       this.setList.addToSelectedItemsList(item[0]);
       if (!this.claims.P2) { alert("property P2 undefined"); return; }
@@ -279,6 +294,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         this.longitude = this.coords.longitude;
         this.router.navigate([this.latitude, this.longitude, this.zoom], { relativeTo: this.route });
       }
+
+      // Selected Items
+      this.selectedItemsList = JSON.parse(localStorage.getItem('selectedItems'));
 
       // Images
       this.pictures = this.claims.P189
@@ -331,6 +349,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       this.isInfo = !!(this.classesList.length || this.subclassesList.length || this.instancesList.length);
 
+      // sparql lists
+      this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
+
       // Spinner
       this.isSpinner = false;
 
@@ -351,7 +372,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   onThumbnailLoad(picture: any): void { }
 
   sparqlDisplay(u) {
+    console.log("sparqlDisplay", u);
     if (!u) return;
+  
     if (u[0]) {
       this.sparqlSubject0 = u[0][0];
       this.sparqlData0 = u[0][1];
@@ -385,6 +408,10 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sparqlData4 = u[4][1];
       this.isSparql4 = !!(this.sparqlData4 && this.sparqlData4[0]);
     }
+  }
+
+  toggleInfo(): void {
+    this.isInfo = !this.isInfo;
   }
 
   hideList() {

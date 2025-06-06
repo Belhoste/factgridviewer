@@ -24,7 +24,8 @@ export class CreateCompleteItemService {
   
     this.itemInfo.infoListBuilding(res);
 
-    this.itemSparql.itemSparql(res);  
+    this.itemSparql.itemSparql(res);
+
 
   return u
   }

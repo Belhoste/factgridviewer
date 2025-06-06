@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { FooterComponent } from './footer/footer.component'; 
 
 
 export interface Lang {
@@ -28,7 +29,7 @@ export interface Lang {
     styleUrls: ['./app.component.scss'],
     animations: [SlideUpAnimation],
     standalone: true,
-    imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, NgFor, NgIf, RouterModule, RouterLink ]
+    imports: [MatToolbarModule, MatButtonModule, MatMenuModule, MatIconModule, NgFor, NgIf, RouterModule, RouterLink, FooterComponent ]
 })
 
 

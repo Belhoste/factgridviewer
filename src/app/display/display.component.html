@@ -32,9 +32,14 @@
       <mat-drawer-container class="drawer-container">
         <mat-drawer #drawer mode="push">
           <div class="ground-div0">
-            <div class="icon mat-button" style="display: flex; align-items: center;">
-              <span class="blueButton">{{mainPage}}</span><button mat-icon-button (click)="drawer.toggle()"><mat-icon class="blueButton">chevron_right</mat-icon></button>
+            <div class="icon mat-button"
+                 style="display: flex; align-items: center; justify-content: flex-end;">
+              <span class="blueButton">{{mainPage}}</span>
+              <button mat-icon-button (click)="drawer.toggle()">
+                <mat-icon class="blueButton">chevron_right</mat-icon>
+              </button>
             </div>
+
           </div>
           <div>
           <mat-card appearance="outlined" class=mat-elevation-z12>
@@ -90,10 +95,10 @@
                       </div>
                       <!---               image on the top for small screens                       --->
                       @for (picture of pictures; track picture.uniqueKey) {
-                      <div [ngClass]="isTopPicture ? 'show-division':'hide-division'" >
+                      <div [ngClass]="isTopPicture ? 'show-division':'hide-division'">
                         <div class="img2">
                           <!--                  <mat-card appearance="outlined" class=mat-elevation-z2>
-  <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">-->
+              <img mat-card-image src={{picture.picture}} (click)="openImage(picture.picture)">-->
 
                           <img mat-card-image [src]="picture.thumbnail"
                                [attr.data-src]="picture.full"
@@ -204,25 +209,28 @@
     </mat-card>
   </div>-->
               <!-- ******************************* Info ****************************************  -->
-              <mat-card appearance="outlined" class=mat-elevation-z12>
+              <mat-card appearance="outlined" class="mat-elevation-z12">
                 <div>
                   <div class="ground-div2">
-                    @if (isInfo===false) {
-                    <div class="mat-button.mat-small">
-                      <button mat-icon-button (click)="onClick4()" class="icon whiteText"><mat-icon class="icon whiteButton">expand_less</mat-icon></button>
+                    <div class="mat-button mat-small">
+                      <button mat-icon-button (click)="toggleInfo()" class="icon whiteText">
+                        <mat-icon class="icon whiteButton">
+                          {{ isInfo ? 'expand_less' : 'expand_more' }}
+                        </mat-icon>
+                      </button>
                     </div>
-                    }
-                    @if (isInfo===true) {
-                    <div class="icon" class="mat-button.mat-small">
-                      <button mat-icon-button (click)="onClick5()" class="whiteText"><mat-icon class="whiteButton">expand_more</mat-icon></button>
-                    </div>
-                    }
                   </div>
-                  <div class="ground-div2" [ngClass]="isInfo ? 'hide-division':'show-division'">
-                    <app-item-info [technicalities]="this.technicalities" [classesList]="this.classesList" [instancesList]="this.instancesList" [subclassesList]="this.subclassesList" [natureOfList]="this.natureOfList"></app-item-info>
+                  <div class="ground-div2" [ngClass]="isInfo ? 'show-division' : 'hide-division'">
+                    <app-item-info [technicalities]="this.technicalities"
+                                   [classesList]="this.classesList"
+                                   [instancesList]="this.instancesList"
+                                   [subclassesList]="this.subclassesList"
+                                   [natureOfList]="this.natureOfList">
+                    </app-item-info>
                   </div>
                 </div>
               </mat-card>
+
             </div>
 
               <!-- ****************************************** Pictures ****************************************  -->

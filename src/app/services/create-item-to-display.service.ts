@@ -45,8 +45,7 @@ export class CreateItemToDisplayService {
           let referenceProperties = this.details.getReferenceProperties(re);  // number of properties of the references
           this.addItemDetails.addSitelinksDetails(re);  // add the sitelinks with their hyperlinks
           this.addPropertyDetails.addClaimPropertyDetails(propertiesDetails, re, itemProperties);  // add the properties to the statements
-            console.log(this.addPropertyDetails.addClaimPropertyDetails(propertiesDetails, re, itemProperties).claims["P2"]);//
-            this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, itemProperties)[0];  // 
+          this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, itemProperties)[0];  // 
           this.addPropertyDetails.addQualifier2PropertyDetails(propertiesDetails, re, itemProperties)[1];
           this.addPropertyDetails.addReferencePropertyDetails(propertiesDetails, re, itemProperties);
           this.addPropertyDetails.addReference2PropertyDetails(propertiesDetails, re, itemProperties);
@@ -60,7 +59,6 @@ export class CreateItemToDisplayService {
           this.addItemDetails.addReferenceItemDetails(itemsDetails, re, itemProperties, selectedLang); // selected item with all the properties (with their labels and descriptions) of the mainsnaks
             let item = this.addItemDetails.addReference2ItemDetails(itemsDetails, re, itemProperties);
             //         item.essay = itemSparql;
-            console.log('Objet enrichi final :', item);
           return [item, itemProperties, qualifierProperties, referenceProperties]     
             }
           )
