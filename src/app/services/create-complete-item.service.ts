@@ -26,7 +26,6 @@ export class CreateCompleteItemService {
 
     this.itemSparql.itemSparql(res);
 
-
   return u
   }
 }

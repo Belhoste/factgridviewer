@@ -96,7 +96,6 @@ export class ItemSparqlService {
   }
 
   selectSparql1(test1, test2, test3, test4, test5, test6, item) {  // select the right result for the component sparql1
-    console.log(test1, test2, test3, test4, test5, test6);
     let result: Observable<any[]>;
     if (test5 === true) {  // addresses
       result = this.Q16200Sparql(item);
@@ -131,7 +130,6 @@ export class ItemSparqlService {
   }
 
   selectSparql2(test1, test2, item) {  // select the right result for sparql2
-    console.log(test1, test2);
     let result: Observable<any[]>;
     if (test1 === true) {
       result = this.Q140759Sparql(test1, item);  // health practitioners
@@ -147,7 +145,6 @@ export class ItemSparqlService {
   }
 
   selectSparql3(test1, test2, test3, test4, item) {  // select the right result for sparql3
-    console.log(test1, test2, test3, test4);
     let result: Observable<any[]>;
     if (test1 === true) {
       result = this.masterSparql(test1, item);  // master

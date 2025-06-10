@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
@@ -18,11 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class CareerDisplayComponent {
 
  @Input() careerAndActivities;
-  @Input() career;
-
-  ngOnChanges() {
-    console.log('careerAndActivities:', this.careerAndActivities);
-  }
+ @Input() career;
 
   showReferences = false; // état du volet
 

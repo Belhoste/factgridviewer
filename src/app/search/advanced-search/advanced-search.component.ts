@@ -110,11 +110,11 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.subtitle = this.lang.subtitle(this.subtitle);
+    this.subtitle = this.lang.subtitle();
 
-    this.projects = this.lang.projects(this.projects);
+    this.projects = this.lang.projects();
 
-    this.fields = this.lang.fields(this.fields);
+    this.fields = this.lang.fields();
 
     this.projectList.projectsListBuilding("Q11295").subscribe(res => this.projectsList = res); // list of projects
 

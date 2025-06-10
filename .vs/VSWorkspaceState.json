@@ -4,10 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\sparql3-display",
-    "\\src\\app\\display\\sparql4-display",
+    "\\src\\app\\display\\iframes-display",
+    "\\src\\app\\display\\main-display",
+    "\\src\\app\\display\\services",
+    "\\src\\app\\paris-search",
+    "\\src\\app\\search",
     "\\src\\app\\services"
   ],
-  "SelectedNode": "\\src\\app\\services\\request.service.ts",
+  "SelectedNode": "\\src\\app\\display\\services\\iframes-display.service.ts",
   "PreviewInSolutionExplorer": false
 }

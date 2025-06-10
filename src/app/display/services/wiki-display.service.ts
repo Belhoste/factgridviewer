@@ -10,7 +10,6 @@ export class WikiDisplayService {
   constructor() { }
 
   setWikiDisplay(item, wikis) {
-    console.log("setWikiDisplay", item, wikis);
 
     if (item[0].sitelinks !== undefined) {
 

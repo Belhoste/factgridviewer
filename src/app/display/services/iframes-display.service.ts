@@ -1,14 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class IframesDisplayService {
-  private sanitizer = inject(DomSanitizer);
-
-  
-
+ 
 setIframesDisplay(item, iframes){
 
   if (item[0].claims.P309 !==undefined){  //FactGrid table of contents     
@@ -31,7 +28,6 @@ setIframesDisplay(item, iframes){
   
     
   if (item[0].claims.P679 !==undefined){ //house numbers
-    console.log(item[0].claims.P679);
     item[1].splice(item[1].indexOf("P679"),1);
     for (let i=0; i<item[0].claims.P679[i].length; i++){
       item[0].claims.P679[i].mainsnak.datatype=item[0].claims.P679[i].mainsnak.datavalue.value;

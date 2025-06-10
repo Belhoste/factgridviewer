@@ -27,8 +27,6 @@ export class BlockDisplayService {
       if (item[0].claims[property] !== undefined) {
         item[1].splice(item[1].indexOf(property), 1);
         targetArray.push(item[0].claims[property]);
-  //      console.log(`Property ${property} found and added to targetArray.`); // Debug log
-  //      console.log(`Current targetArray:`, targetArray); // Debug log
       }
     }
     return targetArray;
@@ -55,9 +53,6 @@ export class BlockDisplayService {
   }
 
   setEducationDisplay(item: any, education: any[]): any[] {
-    console.log('>>> setEducationDisplay called');
-    console.log('Setting education display with item:', item);
-    console.log('Education array before population:', education);
     return this.populateDisplay(item, education, EDUCATION_DISPLAY_PROPERTIES);
   }
 
@@ -81,8 +76,90 @@ export class BlockDisplayService {
     return this.populateDisplay(item, sourcesList, SOURCES_DISPLAY_PROPERTIES);
   }
 
-  setExternalLinksDisplay(item: any, externalLinks: any[]): any[] {
-    return this.populateDisplay(item, externalLinks, EXTERNAL_LINKS_DISPLAY_PROPERTIES);
+ 
+
+
+  setItemInfoDisplay(item: any, target: any): void {
+    const infoList = item[0]?.infoList || [];
+
+    target.instancesList = Array.isArray(infoList[0]) ? [...infoList[0]] : [];
+    target.subclassesList = Array.isArray(infoList[1]) ? [...infoList[1]] : [];
+    target.classesList = Array.isArray(infoList[2]) ? [...infoList[2]] : [];
+    target.natureOfList = Array.isArray(infoList[3]) ? [...infoList[3]] : [];
+
   }
+
+
+
+  setExternalLinksDisplay(item: any, externalLinks: any[]): any[] {
+    return this.setUrlDisplay(item, externalLinks);
+  }
+
+  setUrlDisplay(item: any, externalLinks: any[]): any[] {
+    const properties = Object.keys(item[0].claims);
+    for (const prop of properties) {
+      if (prop === 'P1306' || prop === 'P650') continue; // Exclure les propriétés obsolètes
+      const claim = item[0].claims[prop];
+      if (!claim || claim.datatype !== "external-id") continue;
+
+      // Retirer la propriété de l'affichage général
+      item[1].splice(item[1].indexOf(prop), 1);
+
+      // Générer l'URL selon la logique métier
+      this.setUrl(item, prop);
+
+      // Ajouter à la liste des liens externes
+      externalLinks.push(claim);
+    }
+    return externalLinks;
+  }
+
+  private setUrl(item: any, p: string): void {
+    const claim = item[0].claims[p];
+    if (!claim) return;
+
+    if (claim.externalLink !== undefined) {
+      claim.url = claim.externalLink.replace("$1", claim[0].mainsnak.datavalue.value);
+    }
+
+    if (item[0].claims.P76 !== undefined) {
+      item[0].claims.P76.url = "https://explore.gnd.network/gnd/" + item[0].claims.P76[0].mainsnak.datavalue.value;
+    }
+    if (item[0].claims.P368 !== undefined) {
+      item[0].claims.P368.url = 'http://gateway-bayern.de/VD16+' + item[0].claims.P368[0].mainsnak.datavalue.value;
+    }
+    if (item[0].claims.P369 !== undefined) {
+      item[0].claims.P369.url = 'https://kxp.k10plus.de/DB=1.28/CMD?ACT=SRCHA&IKT=8079&TRM=%27:' +
+        item[0].claims.P369[0].mainsnak.datavalue.value + "%27";
+    }
+    if (item[0].claims.P370 !== undefined) {
+      item[0].claims.P370.url = 'https://kxp.k10plus.de/DB=1.65/CMD?ACT=SRCHA&IKT=8080&TRM=VD18' +
+        item[0].claims.P370[0].mainsnak.datavalue.value;
+    }
+    if (item[0].claims.P650 !== undefined) {
+      let value = item[0].claims.P650[0].mainsnak.datavalue.value;
+      let province = value.slice(0, 2);
+      let municipality = value.slice(2, 5);
+      let parish = value.slice(5, 7);
+      let es = value.slice(7, 9);
+      if (item[0].claims.P650.externalLink !== undefined) {
+        let url = item[0].claims.P650.externalLink.replace("$1", province)
+          .replace("$2", municipality)
+          .replace("$3", parish)
+          .replace("$4", es)
+          .replace("$5", "00");
+        console.log("URL for P650:", url); // Debug log
+        item[0].claims.P650.url = url;
+      }
+    }
+    if (item[0].claims.P882 !== undefined) {
+      item[0].claims.P882.url = 'https://drw-www.adw.uni-heidelberg.de/drw-cgi/zeige?index=lemmata&term=' +
+        item[0].claims.P882[0].mainsnak.datavalue.value + '&darstellung=V';
+    }
+  }
+
+
 }
+
+
 

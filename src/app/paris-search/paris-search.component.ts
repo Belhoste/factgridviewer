@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
 import { SelectedLangService } from '../selected-lang.service';
+import { Router } from '@angular/router';
 
 
 
@@ -48,6 +49,8 @@ export class ParisSearchComponent implements OnInit {
  private request = inject(RequestService);
  private setLanguage = inject(SetLanguageService);
  private lang = inject(SelectedLangService);
+ private router = inject(Router);
+
 
 
   //  selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localStorage['selectedLang']; //initialization of the storage of the selected language (english)
@@ -70,10 +73,16 @@ export class ParisSearchComponent implements OnInit {
     private getUrlSuffix= '&format=json&origin=*' ;
 
     formerVisitsTitle:string ="you have visited:";
-    selectedParisItemsList:any[] = JSON.parse(localStorage.getItem('selectedItems'));
+    selectedParisItemsList: any[] = (JSON.parse(localStorage.getItem('selectedItems')) || []).filter(item => item && item.value && item.value.id);
 
 
-    ngOnInit(): void {
+  openItem(item: any) {
+    console.log('openItem called with:', item);
+    sessionStorage.setItem('from', 'paris-search');
+    this.router.navigate(['/item', item.id], { state: { from: 'paris-search' } });
+  }
+
+  ngOnInit(): void {
 
    /*
     this.formerVisitsTitle = "you have visited:"
@@ -83,7 +92,8 @@ export class ParisSearchComponent implements OnInit {
     if(this.selectedLang === "it") {this.formerVisitsTitle = "hai visitato :"}
     */
 
-    this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
+      this.formerVisitsTitle = this.lang.formerVisitsTitle();
+      console.log('selectedParisItemsList:', this.selectedParisItemsList);
 
     this.labels = this.searchInput.valueChanges   //search engine
     .pipe(
@@ -131,7 +141,12 @@ export class ParisSearchComponent implements OnInit {
   addParis(re) {
      re = "Paris, "+re;
     // return re
-   }
+  }
+
+  trackById(index: number, item: any): any {
+    return item && item.value ? item.value.id : index;
+  }
+
 
     ngOnDestroy(): void {
        this.labels.unsubscribe()

@@ -68,19 +68,19 @@ export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle == "master") {  //pupils and disciples
         this.isWorks = true;
-        this.subTitle = this.lang.pupilTitle(this.pupilTitle);
+        this.subTitle = this.lang.pupilTitle();
       } else {
         if (this.subTitle == "Q945258") { //set
           this.isWorks = true;
-          this.subTitle = this.lang.setTitle(this.setTitle);
+          this.subTitle = this.lang.setTitle();
         } else {
           if (this.subTitle == "Q172192") { //list
             this.isWorks = true;
-            this.subTitle = this.lang.listTitle(this.listTitle);
+            this.subTitle = this.lang.listTitle();
           } else {
             if (this.subTitle == "current address:") { //current address
               this.isWorks = false;
-              this.subTitle = this.lang.currentAddress(this.currentAddress);
+              this.subTitle = this.lang.currentAddress();
               console.log(this.subTitle);
             }
             else {

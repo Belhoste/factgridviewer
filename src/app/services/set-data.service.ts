@@ -26,18 +26,32 @@ selectedLang: string = (localStorage['selectedLang']===undefined)? "en": localSt
 baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=' ;
 getUrlSuffix= '&format=json&origin=*' ; 
 	
-	itemToDisplay(id) {
+  itemToDisplay(id) {
+    let labelLength: number = 0
+    let url = this.baseGetURL + id + this.getUrlSuffix;
+    let completeItem = this.request.getItem(url).pipe(
+      map(res => Object.values(res.entities)),
+      map(res => {
+        // Réordonne qualifiers-order pour chaque claim de chaque propriété
+        res.forEach((entity: any) => {
+          if (entity.claims) {
+            Object.values(entity.claims).forEach((claimArray: any[]) => {
+              claimArray.forEach((claim: any) => {
+                if (claim["qualifiers-order"]) {
+                  claim["qualifiers-order"] = this.reorderQualifiersOrder(claim["qualifiers-order"]);
+                }
+              });
+            });
+          }
+        });
 
-		//let sparql = this.sparql.sparqlToDisplay(id).subscribe(res => console.log(res));
+        return res;
+      }),
+      switchMap(res => this.createCompleteItem.completeItem(res)),
+    );
+    return completeItem;
+  }
 
-		let labelLength: number = 0
-		let url = this.baseGetURL + id + this.getUrlSuffix;
-		let completeItem = this.request.getItem(url).pipe( // get the item
-			map(res => res = Object.values(res.entities)),
-			switchMap(res => completeItem = this.createCompleteItem.completeItem(res)),
-		);
-			return completeItem
-	}
 
  sparqlAsk(sparql) {
 		let u = "";
@@ -70,5 +84,18 @@ getUrlSuffix= '&format=json&origin=*' ;
 			if (address.includes('embed.html')){oldPrefix ="https://database.factgrid.de/query/embed.html#"};
 			if (address !== undefined) address = address.replace(oldPrefix, newPrefix);
 			return address
-			} 
+  }
+
+
+  reorderQualifiersOrder(qualifiersOrder: string[]): string[] {
+  const timePropsOrder = [
+    "P290", "P77", "P49", "P45", "P1124", "P1126", "P06", "P412", "P", "P41", "P38", "P50", "P1123", "P1125", "P291", "P612"
+  ];
+  let ordered: string[] = [];
+  if (qualifiersOrder.includes("P47")) ordered.push("P47");
+  for (const p of timePropsOrder) if (qualifiersOrder.includes(p) && !ordered.includes(p)) ordered.push(p);
+  for (const p of qualifiersOrder) if (!ordered.includes(p)) ordered.push(p);
+  return ordered;
+}
+
 	}

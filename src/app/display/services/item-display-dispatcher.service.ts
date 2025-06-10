@@ -18,7 +18,7 @@ export interface DisplayFlags {
   isOther: boolean;
   isMain: boolean;
   isWikis: boolean;
-  isTechnicality: boolean;
+  isInfoList: boolean;
   isFrames: boolean;
   isExternalLinks: boolean;
 }
@@ -33,7 +33,7 @@ export class ItemDisplayDispatcherService {
 
   dispatch(item: any, target: any): DisplayFlags {
     const claims = item[0].claims;
-    console.log('Claims:', claims);
+  
     // Header
     target.headerDetail = [];
     this.blockDisplay.setHeaderDisplay(item, target.headerDetail);
@@ -51,7 +51,6 @@ export class ItemDisplayDispatcherService {
     let isCareer = false;
     let isSociability = false;
     let isTraining = false;
-    console.log('claims.P2:', claims.P2);
     if (claims.P2?.person !== undefined) {
       this.blockDisplay.setPersonDisplay(item, target.lifeAndFamily);
 
@@ -75,11 +74,8 @@ export class ItemDisplayDispatcherService {
       target.education = [];
       this.blockDisplay.setEducationDisplay(item, target.education);
       isTraining = target.education.length > 0;
-      console.log('isTraining:', isTraining, 'claims.P2?.training:', claims.P2?.training);
-      console.log('Education:', target.education);
       if (isTraining && claims.P2?.training !== undefined) {
         target.training = claims.P2.training;
-        console.log('Training:', target.training);
       }
     }
 
@@ -121,8 +117,6 @@ export class ItemDisplayDispatcherService {
     this.blockDisplay.setSourcesDisplay(item, target.sourcesList);
     isSource = target.sourcesList.length > 0;
     target.sources = claims.P2?.sources;
-    console.log('Sources:', target.sources);
-    console.log('SourcesList:', target.sourcesList);
 
     // External links
     target.externalLinks = [];
@@ -146,6 +140,10 @@ export class ItemDisplayDispatcherService {
       isOther = target.otherClaims.length > 0;
     }
 
+    // Item info
+
+
+
     // MainList
     target.mainList = [];
     let isMain = false;
@@ -163,12 +161,21 @@ export class ItemDisplayDispatcherService {
           target.activityDetail || [],
           target.eventDetail || [],
           target.documentDetail || [],
-        );
+          target.otherClaims || []
+      );
+
+ /*     Object.keys(claims).forEach(key => {
+        if (key.startsWith('Q') && Array.isArray(claims[key])) {
+          // Par exemple, pour les ajouter à mainList :
+          target.mainList.push(claims[key]);
+        }
+      });
+      */
+
     }
     isMain = target.mainList.length > 0;
     if (claims.P2 !== undefined && claims.P2[0]?.mainsnak?.label !== undefined) {
       target.mainTitle = claims.P2[0].mainsnak.label;
-      console.log('mainTitle:', target.mainTitle);
     }
 
     // ... après la construction de target.mainList
@@ -184,11 +191,29 @@ export class ItemDisplayDispatcherService {
     isFrames = target.iframes.length > 0;
     */
 
-    // Technicalities
-    target.technicalities = [];
-    let isTechnicality = false;
-    this.technicalitiesDisplay.setTechnicalitiesDisplay(item, target.technicalities);
-    isTechnicality = target.technicalities.length > 0;
+    // InfoList
+   
+    this.blockDisplay.setItemInfoDisplay(item, target);
+
+    let technicalities: any[] = [];
+    this.technicalitiesDisplay.setTechnicalitiesDisplay(item, technicalities);
+
+    target.infoList = {
+      instancesList: target.instancesList,
+      subclassesList: target.subclassesList,
+      classesList: target.classesList,
+      natureOfList: target.natureOfList,
+      technicalities: technicalities
+    };
+
+    // Flag unique pour l'affichage
+    let isInfoList =
+      (target.infoList.instancesList && target.infoList.instancesList.length > 0) ||
+      (target.infoList.subclassesList && target.infoList.subclassesList.length > 0) ||
+      (target.infoList.classesList && target.infoList.classesList.length > 0) ||
+      (target.infoList.natureOfList && target.infoList.natureOfList.length > 0) ||
+      (target.infoList.technicalities && target.infoList.technicalities.length > 0);
+
 
     // Wikis
     target.wikis = [];
@@ -212,7 +237,7 @@ export class ItemDisplayDispatcherService {
       isSource,
       isOrg,
       isOther,
-      isTechnicality,
+      isInfoList,
       isMain,
       isWikis,
       isFrames,

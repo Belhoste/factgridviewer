@@ -1,19 +1,15 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewChecked, AfterViewInit, EventEmitter, Output, ViewChild, inject } from '@angular/core';
-import { Observable, Subscription, Subject, isObservable, BehaviorSubject, from, forkJoin, of, EMPTY, timer, combineLatest, delay } from 'rxjs';
-import { switchMap, tap, takeUntil, take } from 'rxjs/operators';
-import { RequestService } from '../services/request.service'
+import { Component, OnInit, OnDestroy, AfterViewInit, inject } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BackListDetailsService } from '../services/back-list-details.service';
-import { ItemSparqlService } from '../services/item-sparql.service';
 import { IframesDisplayService } from './services/iframes-display.service';
-import { SetDataService } from '../services/set-data.service'
+import { SetDataService } from '../services/set-data.service';
 import { TranscriptDisplayService } from '../services/transcript-display.service';
 import { BackListService } from '../services/back-list.service';
 import { SetSelectedItemsListService } from '../services/set-selected-items-list.service';
-import { TranscriptionService } from './services/transcription.service'
-import { Router } from '@angular/router';
-import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
+import { TranscriptionService } from './services/transcription.service';
+import { DomSanitizer } from '@angular/platform-browser';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { JoinPipe } from '../join.pipe';
 import { ItemInfoComponent } from './item-info/item-info.component';
@@ -40,26 +36,34 @@ import { SelectedLangService } from '../selected-lang.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { ItemDisplayDispatcherService } from './services/item-display-dispatcher.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-display',
   templateUrl: 'display.component.html',
   styleUrls: ['./display.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatTabsModule, MatButtonModule, RouterLink, NgIf, MatProgressSpinnerModule, MatSidenavModule, MatIconModule, MatCardModule, NgFor, NgClass, TextDisplayComponent, Sparql0DisplayComponent, Sparql1DisplayComponent, Sparql2DisplayComponent, Sparql3DisplayComponent, Sparql4DisplayComponent, ItemInfoComponent, MainDisplayComponent, HeaderDisplayComponent, SociabilityDisplayComponent, SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, IframesDisplayComponent, JoinPipe]
+  imports: [
+    CommonModule, MatTabsModule, MatButtonModule, RouterModule, NgIf, MatProgressSpinnerModule, MatSidenavModule,
+    MatIconModule, MatCardModule, NgFor, NgClass, TextDisplayComponent, Sparql0DisplayComponent,
+    Sparql1DisplayComponent, Sparql2DisplayComponent, Sparql3DisplayComponent, Sparql4DisplayComponent,
+    ItemInfoComponent, MainDisplayComponent, HeaderDisplayComponent, SociabilityDisplayComponent,
+    SourcesDisplayComponent, EducationDisplayComponent, CareerDisplayComponent, IframesDisplayComponent, JoinPipe
+  ]
 })
 export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  public from: string;
+
   // Services
   private lang = inject(SelectedLangService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private setData = inject(SetDataService);
-  private request = inject(RequestService);
   private setList = inject(SetSelectedItemsListService);
-  private changeDetector = inject(ChangeDetectorRef);
   private backList = inject(BackListService);
   private backListDetails = inject(BackListDetailsService);
-  private itemDisplayDispatcher = inject(ItemDisplayDispatcherService); 
+  private itemDisplayDispatcher = inject(ItemDisplayDispatcherService);
   private changeTranscript = inject(TranscriptionService);
   private transcript = inject(TranscriptDisplayService);
   private iframesDisplay = inject(IframesDisplayService);
@@ -90,7 +94,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   sources: any;
   mainList: any[] = [];
   list: any[] = [];
-  selectedItemsList: Observable<any>;
+  selectedItemsList: any;
   wikis: any[] = [];
   pictures: any[] = [];
   sourcesList: any[] = [];
@@ -113,9 +117,9 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   subclassesList: any[] = [];
   classesList: any[] = [];
   natureOfList: any[] = [];
-  selectedItems: any[]
+  selectedItems: any[];
+  infoList: any;
 
- 
 
   // Affichage
   isSpinner = false;
@@ -156,23 +160,21 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   latitude: number;
   longitude: number;
   coords: any;
-  urlSafe1: SafeResourceUrl;
-  urlSafe2: SafeResourceUrl;
-  urlSafe3: SafeResourceUrl;
-  urlSafe4: SafeResourceUrl;
-  urlSafe5: SafeResourceUrl;
-  urlSafe6: SafeResourceUrl;
-  urlSafe7: SafeResourceUrl;
-  urlSafe8: SafeResourceUrl;
-  urlSafe9: SafeResourceUrl;
-  urlSafe10: SafeResourceUrl;
-  urlSafe11: SafeResourceUrl;
-  urlSafe12: SafeResourceUrl;
-  urlSafe13: SafeResourceUrl;
-  urlSafe14: SafeResourceUrl;
-  urlSafe15: SafeResourceUrl;
-
-  
+  urlSafe1: string;
+  urlSafe2: string;
+  urlSafe3: string;
+  urlSafe4: string;
+  urlSafe5: string;
+  urlSafe6: string;
+  urlSafe7: string;
+  urlSafe8: string;
+  urlSafe9: string;
+  urlSafe10: string;
+  urlSafe11: string;
+  urlSafe12: string;
+  urlSafe13: string;
+  urlSafe14: string;
+  urlSafe15: string;
 
   // SPARQL
   sparqlData0: any[] = [];
@@ -205,16 +207,23 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   factGridLogo: string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
   ngOnInit(): void {
+
+    const selectedResearchField = localStorage.getItem('selectedResearchField');
+
+    this.from = (selectedResearchField === 'Q10441') ? 'paris' : 'search';
+
     this.isSpinner = true;
-    this.newSearch = this.lang.newSearch(this.newSearch);
-    this.linkedPagesTitle = this.lang.linkedPagesTitle(this.linkedPagesTitle);
-    this.mainPage = this.lang.mainPage(this.mainPage);
-    this.factGridQuery = this.lang.factGridQuery(this.factGridQuery);
-    this.externalLinksTitle = this.lang.externalLinksTitle(this.externalLinksTitle);
-    this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle);
-    this.clickToDownload = this.lang.clickToDownload(this.clickToDownload);
-    this.clickToDisplay = this.lang.clickToDisplay(this.clickToDisplay);
-    this.stemma = this.lang.stemma(this.stemma);
+    this.isInfo = false;
+    this.newSearch = this.lang.newSearch();
+    this.linkedPagesTitle = this.lang.linkedPagesTitle();
+    this.mainPage = this.lang.mainPage();
+    this.factGridQuery = this.lang.factGridQuery();
+    this.externalLinksTitle = this.lang.externalLinksTitle();
+    this.formerVisitsTitle = this.lang.formerVisitsTitle();
+    this.clickToDownload = this.lang.clickToDownload();
+    this.clickToDisplay = this.lang.clickToDisplay();
+    this.stemma = this.lang.stemma();
+
     this.subscription0 = this.route.paramMap.subscribe(params => {
       this.itemId = params.get('id');
       this.loadBackList();
@@ -223,12 +232,12 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private loadBackList() {
-    this.subscription1 = this.backList.backList(this.itemId, this.lang.selectedLang)
+    this.subscription1 = this.backList.backList(this.itemId)
       .pipe(map(res => {
         if (res[0].query !== undefined) {
           this.linkedItems = this.backListDetails.setBackList(res[0].query.pages);
         } else {
-          this.linkedItems = [{ id: "Q21898", label: this.getNoneLabel(this.lang.selectedLang) }];
+          this.linkedItems = [{ id: "Q21898", label: this.lang.noneLabel() }];
         }
       }))
       .subscribe();
@@ -254,8 +263,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (!item) return;
       this.item = item;
-      console.log("item", item);
-      this.setList.addToSelectedItemsList(item[0]);  //handle list of selected items
+      console.log('Item loaded:', this.item); 
+      this.setList.addToSelectedItemsList(item[0]);
       this.claims = item[0].claims;
       this.setList.addToSelectedItemsList(item[0]);
       if (!this.claims.P2) { alert("property P2 undefined"); return; }
@@ -266,7 +275,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       this.main = this.claims.P2.main;
       if (this.mainTitle == "Humain") { this.mainTitle = "Personne"; }
       if (["Q37073", "Q257052"].includes(this.claims.P2[0].mainsnak.datavalue.value.id)) {
-        this.mainTitle = this.lang.activity(this.mainTitle);
+        this.mainTitle = this.lang.activity();
       }
       this.urlId = this.factGridUrl + this.id;
 
@@ -274,7 +283,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       this.label = this.item[0].label;
       this.description = this.item[0].description;
       this.aliases = this.item[0].aliases;
-      if (this.aliases) { this.isAliases === true };
+      if (this.aliases) { this.isAliases === true; }
 
       // Flags d'affichage
       const flags = this.itemDisplayDispatcher.dispatch(this.item, this);
@@ -323,11 +332,27 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
 
-
       // Iframes
       this.iframes = [];
       this.iframesDisplay.setIframesDisplay(this.item, this.iframes);
       this.isIframes = this.iframes.length > 0;
+
+      // Extraction des URLs brutes pour les iframes
+      this.urlSafe1 = this.claims.P309?.[0]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe2 = this.claims.P309?.[1]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe3 = this.claims.P309?.[2]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe4 = this.claims.P320?.[0]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe5 = this.claims.P320?.[1]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe6 = this.claims.P320?.[2]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe7 = this.claims.P679?.[0]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe8 = this.claims.P679?.[1]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe9 = this.claims.P679?.[2]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe10 = this.claims.P693?.[0]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe11 = this.claims.P693?.[1]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe12 = this.claims.P693?.[2]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe13 = this.claims.P720?.[0]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe14 = this.claims.P720?.[1]?.mainsnak?.datavalue?.value || '';
+      this.urlSafe15 = this.claims.P720?.[2]?.mainsnak?.datavalue?.value || '';
 
       // Transcription
       if (this.claims.P251 && this.claims.P251[0].mainsnak.datavalue.value) {
@@ -347,7 +372,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         this.classesList = this.item[0].infoList[2];
         this.natureOfList = this.item[0].infoList[3];
       }
-      this.isInfo = !!(this.classesList.length || this.subclassesList.length || this.instancesList.length);
 
       // sparql lists
       this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
@@ -372,9 +396,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   onThumbnailLoad(picture: any): void { }
 
   sparqlDisplay(u) {
-    console.log("sparqlDisplay", u);
     if (!u) return;
-  
     if (u[0]) {
       this.sparqlSubject0 = u[0][0];
       this.sparqlData0 = u[0][1];

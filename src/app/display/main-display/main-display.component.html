@@ -3,7 +3,7 @@
 
   <router-outlet></router-outlet>
 
-  @for (P of mainList; track P) {
+  @for (P of mainList; track P.id) {
   <div class="listStyle">
     <div class="labelTitlePadding">
       <span class="propertyStyle hover-bg-light"

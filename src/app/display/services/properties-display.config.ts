@@ -121,6 +121,8 @@ export const ORG_DISPLAY_PROPERTIES = [
 export const PERSON_DISPLAY_PROPERTIES = [
   { property: 'P154', comment: 'sex' },
   { property: 'P247', comment: 'name' },
+  { property: "Q266694", comment: 'birth name' },
+  { property: "Q468366", comment: 'married name' },
   { property: 'P248', comment: 'forenames' },
   { property: 'P140', comment: 'Illuminati code name' },
   { property: 'P139', comment: 'Illuminati code name of' },
@@ -145,6 +147,8 @@ export const PERSON_DISPLAY_PROPERTIES = [
   { property: 'P84', comment: 'marriage' },
   { property: 'P200', comment: 'number of children' },
   { property: 'P150', comment: 'children' },
+  { property: 'P150', comment: 'brother or sister-in-law' },
+  { property: 'Q400624', comment: 'children' },
   { property: 'P172', comment: 'religion' },
   { property: 'P83', comment: 'place (residence)' },
   { property: 'P296', comment: 'sejour' },

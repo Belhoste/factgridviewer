@@ -17,6 +17,7 @@ body {
 
 .parent { // layout of the parent box of the drawer-container (containing two items)
   display: flex;
+  padding-bottom: 45px;
 }
 
 @media (max-width: 813px) { //change the layout of the parent box  and create the layout for the picture for small screen

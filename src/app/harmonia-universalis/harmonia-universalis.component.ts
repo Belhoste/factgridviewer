@@ -121,12 +121,12 @@ paginator ;
 
 ngOnInit() {
 
-  this.biblioHU = this.lang.biblioHU(this.biblioHU);
+  this.biblioHU = this.lang.biblioHU();
 
-  this.authorHeader = this.lang.authorHeader(this.authorHeader);
-  this.titleHeader = this.lang.titleHeader(this.titleHeader);
-  this.locationHeader = this.lang.locationHeader(this.locationHeader);
-  this.dateHeader = this.lang.dateHeader(this.dateHeader);
+  this.authorHeader = this.lang.authorHeader();
+  this.titleHeader = this.lang.titleHeader();
+  this.locationHeader = this.lang.locationHeader();
+  this.dateHeader = this.lang.dateHeader();
   
 
 //this.isSpinner = true;

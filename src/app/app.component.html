@@ -1,7 +1,7 @@
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
     rel="stylesheet">
-  <body>
+  
 
     <mat-toolbar class="custom-toolbar">
 
@@ -13,39 +13,41 @@
         <mat-icon>info</mat-icon>
       </button>
 
-      <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Example icon-button with a menu">
+      <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Sélection de la langue">
         <mat-icon>language</mat-icon>
       </button>
-      <mat-menu #menuLanguage="matMenu">
+      <mat-menu #menuLanguage="matMenu" class="language-menu">
         @for (lang of langs; track lang) {
-        <button (click)="langSetting(lang)" mat-menu-item>
-          <span>{{lang.name}}</span>
-          @if (lang.code === this.selectedLang){ <mat-icon>done</mat-icon> }
+        <button (click)="langSetting(lang)" mat-menu-item [class.selected-lang]="lang.code === this.selectedLang">
+          <!-- Optionnel : Affichage d'un drapeau si tu as une propriété lang.flag -->
+          <!-- <img *ngIf="lang.flag" [src]="lang.flag" width="24" height="16" style="margin-right:8px; border-radius:2px;"> -->
+          <span style="flex:1; font-weight: 500;">{{lang.name}}</span>
+          <mat-icon *ngIf="lang.code === this.selectedLang" color="primary">check_circle</mat-icon>
         </button>
         }
       </mat-menu>
-      <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Example icon-button with a menu">
+
+
+      <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Sélection du champ de recherche">
         <mat-icon>settings</mat-icon>
       </button>
-      <mat-menu #menuResearchField="matMenu">
-        @for (researchField of researchFields; track researchField) {
-
-        <div class='displayLayout'>
-          <span>{{researchField.name}}</span>
-          @if (researchField.name == "Paris") {
-          <mat-icon-button class="internalLink" [routerLink]="'/paris'"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-          }
-          @if (researchField.name == "Harmonia Universalis") {
-          <mat-icon-button class="internalLink" [routerLink]="'/harmonia_universalis'"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>
-          }
-        </div>
+      <mat-menu #menuResearchField="matMenu" class="researchfield-menu">
+        @for (researchField of researchFieldsSorted; track researchField.id) {
+        <button mat-menu-item
+                (click)="researchFieldSelect(researchField)"
+                [disabled]="!isResearchFieldEnabled(researchField)"
+                [class.selected-researchfield]="researchField.id === selectedResearchField">
+          <span style="flex:1; font-weight: 500;">{{researchField.name}}</span>
+          <mat-icon *ngIf="researchField.id === selectedResearchField" color="primary" style="margin-left:8px;">check_circle</mat-icon>
+        </button>
         }
-
       </mat-menu>
+
+
     </mat-toolbar>
 
     <router-outlet></router-outlet>
     <app-footer></app-footer>
 
-  </body>
+  
 

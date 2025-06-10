@@ -86,15 +86,15 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.subtitle = this.lang.subtitle(this.subtitle);
+    this.subtitle = this.lang.subtitle();
 
-    this.advanced_search = this.lang.advanced_search(this.advanced_search);
+    this.advanced_search = this.lang.advanced_search();
 
-    this.projects = this.lang.projects(this.projects);
+    this.projects = this.lang.projects();
 
-    this.fields = this.lang.fields(this.fields);
+    this.fields = this.lang.fields();
 
-    this.formerVisitsTitle = this.lang.formerVisitsTitle(this.formerVisitsTitle)
+    this.formerVisitsTitle = this.lang.formerVisitsTitle()
 
     this.selectedItemsList = this.selectedItemsList.filter(function (el) { return (el !== null) });
 
