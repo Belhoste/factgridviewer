@@ -1,0 +1,877 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>factgrid documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">factgrid documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >PropertyDetailsService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/property-details.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addClaimPropertyDetails" >addClaimPropertyDetails</a>
+                            </li>
+                            <li>
+                                <a href="#addQualifier2PropertyDetails" >addQualifier2PropertyDetails</a>
+                            </li>
+                            <li>
+                                <a href="#addQualifierPropertyDetails" >addQualifierPropertyDetails</a>
+                            </li>
+                            <li>
+                                <a href="#addReference2PropertyDetails" >addReference2PropertyDetails</a>
+                            </li>
+                            <li>
+                                <a href="#addReferencePropertyDetails" >addReferencePropertyDetails</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/app/services/property-details.service.ts:6</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addClaimPropertyDetails"></a>
+                    <span class="name">
+                        <span ><b>addClaimPropertyDetails</b></span>
+                        <a href="#addClaimPropertyDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addClaimPropertyDetails(properties, re, itemProperties)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="10"
+                                    class="link-to-prism">src/app/services/property-details.service.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>properties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>itemProperties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addQualifier2PropertyDetails"></a>
+                    <span class="name">
+                        <span ><b>addQualifier2PropertyDetails</b></span>
+                        <a href="#addQualifier2PropertyDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addQualifier2PropertyDetails(properties, re, itemProperties)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/app/services/property-details.service.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Ajoute à chaque statement un tableau qualifiers2 enrichi avec les métadonnées
+(id, label, description, aliases, externalLink) des propriétés de qualifiers,
+en respectant l&#39;ordre défini dans &quot;qualifiers-order&quot;.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>properties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Liste des propriétés enrichies (avec label, description, etc.)</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>L&#39;objet item à enrichir</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>itemProperties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Liste des propriétés à traiter (ex: [&quot;P247&quot;, ...])</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>L&#39;objet item enrichi</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addQualifierPropertyDetails"></a>
+                    <span class="name">
+                        <span ><b>addQualifierPropertyDetails</b></span>
+                        <a href="#addQualifierPropertyDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addQualifierPropertyDetails(properties, re, itemProperties)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="28"
+                                    class="link-to-prism">src/app/services/property-details.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>properties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>itemProperties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{}</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addReference2PropertyDetails"></a>
+                    <span class="name">
+                        <span ><b>addReference2PropertyDetails</b></span>
+                        <a href="#addReference2PropertyDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addReference2PropertyDetails(properties, re, itemProperties)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/app/services/property-details.service.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>properties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>itemProperties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addReferencePropertyDetails"></a>
+                    <span class="name">
+                        <span ><b>addReferencePropertyDetails</b></span>
+                        <a href="#addReferencePropertyDetails"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addReferencePropertyDetails(properties, re, itemProperties)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="115"
+                                    class="link-to-prism">src/app/services/property-details.service.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>properties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>itemProperties</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class PropertyDetailsService {
+
+  constructor() { }
+
+  addClaimPropertyDetails(properties, re, itemProperties) { // add labels, descriptions and aliases to the properties in the mainsnaks
+   for (let i &#x3D; 0; i &lt; itemProperties.length; i++) {
+      for (let j &#x3D; 0; j &lt; properties.length; j++) {     
+        if (itemProperties[i] &#x3D;&#x3D;&#x3D; properties[j].id) {
+          re.claims[itemProperties[i]].id &#x3D; properties[j].id;
+          re.claims[itemProperties[i]].label &#x3D; properties[j].label;
+          if (properties[j].description !&#x3D;&#x3D; undefined)
+            re.claims[itemProperties[i]].description &#x3D; properties[j].description;
+          if (properties[j].aliases !&#x3D;&#x3D; undefined)
+            re.claims[itemProperties[i]].aliases &#x3D; properties[j].aliases;
+          if (properties[j].externalLink !&#x3D;&#x3D; undefined)
+            re.claims[itemProperties[i]].externalLink &#x3D; properties[j].externalLink;
+        }
+      }
+    }
+    return re
+  }
+
+  addQualifierPropertyDetails(properties, re, itemProperties) {  //add labels, definitions and aliases of properties in the qualifiers/* 
+    let qualifierPropertyArray &#x3D; [];
+    for (let i &#x3D; 0; i &lt; itemProperties.length; i++) {
+      for (let j &#x3D; 0; j &lt; re.claims[itemProperties[i]].length; j++) {
+        if (re.claims[itemProperties[i]][j].qualifiers &#x3D;&#x3D;&#x3D; undefined) { continue }
+        qualifierPropertyArray &#x3D; Object.keys(re.claims[itemProperties[i]][j].qualifiers);
+        let qualifiersArray &#x3D; Object.values(re.claims[itemProperties[i]][j].qualifiers);
+        for (let l &#x3D; 0; l &lt; properties.length; l++) {
+          for (let k &#x3D; 0; k &lt; qualifierPropertyArray.length; k++) {
+            let prop &#x3D; qualifierPropertyArray[k]
+            if (qualifiersArray[k][0].property &#x3D;&#x3D;&#x3D; properties[l].id) {
+              re.claims[itemProperties[i]][j].qualifiers[prop].label &#x3D; properties[l].label;
+              if (properties[l].description !&#x3D;&#x3D; undefined)
+                re.claims[itemProperties[i]][j].qualifiers[prop].description &#x3D; properties[l].description;
+              if (properties[l].aliases !&#x3D;&#x3D; undefined)
+                re.claims[itemProperties[i]][j].qualifiers[prop].aliases &#x3D; properties[l].aliases;
+              if (properties[l].externalLink !&#x3D;&#x3D; undefined)
+                re.claims[itemProperties[i]][j].qualifiers[prop].externalLink &#x3D; properties[l].externalLink;
+            }
+          }
+        }
+
+      }
+    }
+    return [re, qualifierPropertyArray]
+  }
+
+  /**
+  * Ajoute à chaque statement un tableau qualifiers2 enrichi avec les métadonnées
+  * (id, label, description, aliases, externalLink) des propriétés de qualifiers,
+  * en respectant l&#x27;ordre défini dans &quot;qualifiers-order&quot;.
+  *
+  * @param properties      Liste des propriétés enrichies (avec label, description, etc.)
+  * @param re              L&#x27;objet item à enrichir
+  * @param itemProperties  Liste des propriétés à traiter (ex: [&quot;P247&quot;, ...])
+  * @returns               L&#x27;objet item enrichi
+  */
+
+
+  addQualifier2PropertyDetails(properties, re, itemProperties) {
+    for (let i &#x3D; 0; i &lt; itemProperties.length; i++) {
+      const prop &#x3D; itemProperties[i];
+      if (!re.claims[prop]) continue;
+
+      for (let j &#x3D; 0; j &lt; re.claims[prop].length; j++) {
+        const statement &#x3D; re.claims[prop][j];
+        if (!statement.qualifiers) continue;
+
+        statement.qualifiers2 &#x3D; [];
+        const qualifierOrder &#x3D; statement[&quot;qualifiers-order&quot;];
+        if (!Array.isArray(qualifierOrder)) continue;
+
+        for (let k &#x3D; 0; k &lt; qualifierOrder.length; k++) {
+          const qualifierId &#x3D; qualifierOrder[k];
+          const propertyMeta &#x3D; properties.find(p &#x3D;&gt; p.id &#x3D;&#x3D;&#x3D; qualifierId);
+
+          // Toujours créer un nouvel objet pour chaque qualifier2
+          const qualifier2Obj &#x3D; {
+            id: propertyMeta ? propertyMeta.id : qualifierId,
+            label: propertyMeta ? propertyMeta.label : qualifierId,
+            description: propertyMeta ? propertyMeta.description : &quot;&quot;,
+            aliases: propertyMeta ? propertyMeta.aliases : [],
+            externalLink: propertyMeta ? propertyMeta.externalLink : undefined,
+            value: {
+              id: undefined,
+              time: undefined,
+              string: undefined,
+              label: undefined,
+              description: undefined,
+              aliases: undefined
+            }
+          };
+
+          statement.qualifiers2.push(qualifier2Obj);
+        }
+
+        // Debug
+        console.log(&#x27;qualifiers-order:&#x27;, qualifierOrder);
+        console.log(&#x27;qualifiers2 créé:&#x27;, statement.qualifiers2);
+      }
+    }
+    return re;
+  }
+
+
+
+
+  addReferencePropertyDetails(properties, re, itemProperties) {  //add labels, definitions and aliases of properties in the references
+    for (let i &#x3D; 0; i &lt; itemProperties.length; i++) {
+      for (let j &#x3D; 0; j &lt; re.claims[itemProperties[i]].length; j++) {
+        if (re.claims[itemProperties[i]][j].references &#x3D;&#x3D;&#x3D; undefined) { continue }
+        for (let k &#x3D; 0; k &lt; re.claims[itemProperties[i]][j].references.length; k++) {
+          let props &#x3D; Object.keys(re.claims[itemProperties[i]][j].references[k].snaks);
+          for (let l &#x3D; 0; l &lt; props.length; l++) {
+            for (let m &#x3D; 0; m &lt; properties.length; m++) {
+              if (props[l] &#x3D;&#x3D;&#x3D; properties[m].id) {
+                if (re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0] !&#x3D;&#x3D; undefined) {
+                  re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].label &#x3D; properties[m].label;
+                  if (properties[m].description !&#x3D;&#x3D; undefined)
+                    re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].description &#x3D; properties[m].description;
+                  if (properties[m].aliases !&#x3D;&#x3D; undefined)
+                    re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].aliases &#x3D; properties[m].aliases;
+                  if (properties[m].externalLink !&#x3D;&#x3D; undefined)
+                    re.claims[itemProperties[i]][j].references[k].snaks[props[l]][0].externalLink &#x3D; properties[m].externalLink;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return re
+  }
+
+  addReference2PropertyDetails(properties, re, itemProperties) {  //add labels, definitions and aliases of properties to the new array references2
+    let references2PropertyArray &#x3D; [];// à verifier si c&#x27;est correct; peut-être plusieurs arrays de propriétés
+    let references2: any[] &#x3D; [];
+    for (let i &#x3D; 0; i &lt; itemProperties.length; i++) {
+      for (let j &#x3D; 0; j &lt; re.claims[itemProperties[i]].length; j++) {
+        if (re.claims[itemProperties[i]][j].references &#x3D;&#x3D;&#x3D; undefined) { continue }
+        re.claims[itemProperties[i]][j].references2 &#x3D; [];
+        for (let k &#x3D; 0; k &lt; re.claims[itemProperties[i]][j].references.length; k++) {  //boucle sur les references relatives au claim itemProperties[i][j]
+          re.claims[itemProperties[i]][j].references2[k] &#x3D; [];
+          references2[k] &#x3D; [];
+          let props &#x3D; re.claims[itemProperties[i]][j].references[k][&quot;snaks-order&quot;];
+          for (let r &#x3D; 0; r &lt; props.length; r++) {
+            let reference &#x3D; re.claims[itemProperties[i]][j].references[k].snaks[props[r]][0]; //ici on sélectionne l&#x27;array des propriétés relatives aux références ci-dessus
+            references2[k][r] &#x3D; { datatype: undefined, id: undefined, label: undefined, description: undefined, aliases: undefined };   //ici on définit l&#x27;objet item reference                                                
+            references2[k][r].datatype &#x3D; reference.datatype;
+            references2[k][r].id &#x3D; reference.property;
+            references2[k][r].label &#x3D; reference.label;
+            if (reference.description !&#x3D;&#x3D; undefined)
+              references2[k][r].description &#x3D; reference.description;
+            if (reference.aliases !&#x3D;&#x3D; undefined)
+              references2[k][r].aliases &#x3D; reference.aliases;
+            if (reference.externalLink !&#x3D;&#x3D; undefined)
+              references2[k][r].externalLink &#x3D; reference.externalLink;
+            re.claims[itemProperties[i]][j].references2[k].push(references2[k][r]); //ici je peuple references2 avec les l items
+          }
+        }
+      }
+    }
+    return re
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'PropertyDetailsService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

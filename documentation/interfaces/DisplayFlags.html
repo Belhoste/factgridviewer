@@ -1,0 +1,1072 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>factgrid documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">factgrid documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  DisplayFlags</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/display/services/item-display-dispatcher.service.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#isActivity" 
+>
+                                            isActivity
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isCareer" 
+>
+                                            isCareer
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isDocument" 
+>
+                                            isDocument
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isEvent" 
+>
+                                            isEvent
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isExternalLinks" 
+>
+                                            isExternalLinks
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isFrames" 
+>
+                                            isFrames
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isInfoList" 
+>
+                                            isInfoList
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isMain" 
+>
+                                            isMain
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isOrg" 
+>
+                                            isOrg
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isOther" 
+>
+                                            isOther
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isPlace" 
+>
+                                            isPlace
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isSociability" 
+>
+                                            isSociability
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isSource" 
+>
+                                            isSource
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isTraining" 
+>
+                                            isTraining
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#isWikis" 
+>
+                                            isWikis
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isActivity"></a>
+                                        <span class="name "><b>isActivity</b>
+                                            <a href="#isActivity">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isActivity:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isCareer"></a>
+                                        <span class="name "><b>isCareer</b>
+                                            <a href="#isCareer">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isCareer:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isDocument"></a>
+                                        <span class="name "><b>isDocument</b>
+                                            <a href="#isDocument">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isDocument:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isEvent"></a>
+                                        <span class="name "><b>isEvent</b>
+                                            <a href="#isEvent">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isEvent:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isExternalLinks"></a>
+                                        <span class="name "><b>isExternalLinks</b>
+                                            <a href="#isExternalLinks">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isExternalLinks:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isFrames"></a>
+                                        <span class="name "><b>isFrames</b>
+                                            <a href="#isFrames">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isFrames:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isInfoList"></a>
+                                        <span class="name "><b>isInfoList</b>
+                                            <a href="#isInfoList">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isInfoList:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isMain"></a>
+                                        <span class="name "><b>isMain</b>
+                                            <a href="#isMain">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isMain:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isOrg"></a>
+                                        <span class="name "><b>isOrg</b>
+                                            <a href="#isOrg">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isOrg:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isOther"></a>
+                                        <span class="name "><b>isOther</b>
+                                            <a href="#isOther">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isOther:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isPlace"></a>
+                                        <span class="name "><b>isPlace</b>
+                                            <a href="#isPlace">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isPlace:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isSociability"></a>
+                                        <span class="name "><b>isSociability</b>
+                                            <a href="#isSociability">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isSociability:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isSource"></a>
+                                        <span class="name "><b>isSource</b>
+                                            <a href="#isSource">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isSource:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isTraining"></a>
+                                        <span class="name "><b>isTraining</b>
+                                            <a href="#isTraining">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isTraining:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="isWikis"></a>
+                                        <span class="name "><b>isWikis</b>
+                                            <a href="#isWikis">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>isWikis:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, inject } from &#x27;@angular/core&#x27;;
+import { BlockDisplayService } from &#x27;./block-display.service&#x27;;
+//import { IframesDisplayService } from &#x27;./iframes-display.service&#x27;;
+import { TechnicalitiesDisplayService } from &#x27;./technicalities-display.service&#x27;;
+import { WikiDisplayService } from &#x27;./wiki-display.service&#x27;;
+
+
+export interface DisplayFlags {
+  isPlace: boolean;
+  isCareer: boolean;
+  isSociability: boolean;
+  isTraining: boolean;
+  isOrg: boolean;
+  isActivity: boolean;
+  isEvent: boolean;
+  isSource: boolean;
+  isDocument: boolean;
+  isOther: boolean;
+  isMain: boolean;
+  isWikis: boolean;
+  isInfoList: boolean;
+  isFrames: boolean;
+  isExternalLinks: boolean;
+}
+
+@Injectable({ providedIn: &#x27;root&#x27; })
+export class ItemDisplayDispatcherService {
+  
+  private blockDisplay &#x3D; inject(BlockDisplayService);
+  private wikiDisplay &#x3D; inject(WikiDisplayService);
+ // private iframesDisplay &#x3D; inject(IframesDisplayService);
+  private technicalitiesDisplay &#x3D; inject(TechnicalitiesDisplayService);
+
+  dispatch(item: any, target: any): DisplayFlags {
+    const claims &#x3D; item[0].claims;
+  
+    // Header
+    target.headerDetail &#x3D; [];
+    this.blockDisplay.setHeaderDisplay(item, target.headerDetail);
+
+    // Place
+    target.locationAndSituation &#x3D; [];
+    let isPlace &#x3D; false;
+    if (claims.P2?.place !&#x3D;&#x3D; undefined) {
+      this.blockDisplay.setPlaceDisplay(item, target.locationAndSituation);
+      isPlace &#x3D; target.locationAndSituation.length &gt; 0;
+    }
+
+    // Person
+    target.lifeAndFamily &#x3D; [];
+    let isCareer &#x3D; false;
+    let isSociability &#x3D; false;
+    let isTraining &#x3D; false;
+    if (claims.P2?.person !&#x3D;&#x3D; undefined) {
+      this.blockDisplay.setPersonDisplay(item, target.lifeAndFamily);
+
+      // Career
+      target.careerAndActivities &#x3D; [];
+      this.blockDisplay.setCareerDisplay(item, target.careerAndActivities);
+      isCareer &#x3D; target.careerAndActivities.length &gt; 0;
+      if (isCareer &amp;&amp; claims.P2?.career !&#x3D;&#x3D; undefined) {
+        target.career &#x3D; claims.P2.career;
+      }
+
+      // Sociability
+      target.sociabilityAndCulture &#x3D; [];
+      this.blockDisplay.setSociabilityDisplay(item, target.sociabilityAndCulture);
+      isSociability &#x3D; target.sociabilityAndCulture.length &gt; 0;
+      if (isSociability &amp;&amp; claims.P2?.sociability !&#x3D;&#x3D; undefined) {
+        target.sociability &#x3D; claims.P2.sociability;
+      }
+
+      // Education
+      target.education &#x3D; [];
+      this.blockDisplay.setEducationDisplay(item, target.education);
+      isTraining &#x3D; target.education.length &gt; 0;
+      if (isTraining &amp;&amp; claims.P2?.training !&#x3D;&#x3D; undefined) {
+        target.training &#x3D; claims.P2.training;
+      }
+    }
+
+    // Organization
+    target.locationAndContext &#x3D; [];
+    let isOrg &#x3D; false;
+    if (claims.P2?.org !&#x3D;&#x3D; undefined) {
+      this.blockDisplay.setOrgDisplay(item, target.locationAndContext);
+      isOrg &#x3D; target.locationAndContext.length &gt; 0;
+    }
+
+    // Activity
+    target.activityDetail &#x3D; [];
+    let isActivity &#x3D; false;
+    if (claims.P2?.activity !&#x3D;&#x3D; undefined) {
+      this.blockDisplay.setActivityDisplay(item, target.activityDetail);
+      isActivity &#x3D; target.activityDetail.length &gt; 0;
+    }
+
+    // Event
+    target.eventDetail &#x3D; [];
+    let isEvent &#x3D; false;
+    if (claims.P2?.event !&#x3D;&#x3D; undefined) {
+      this.blockDisplay.setEventDisplay(item, target.eventDetail);
+      isEvent &#x3D; target.eventDetail.length &gt; 0;
+    }
+
+    // Document
+    target.documentDetail &#x3D; [];
+    let isDocument &#x3D; false;
+    if (claims.P2?.document !&#x3D;&#x3D; undefined) {
+      this.blockDisplay.setDocumentDisplay(item, target.documentDetail);
+      isDocument &#x3D; target.documentDetail.length &gt; 0;
+    }
+
+    // Sources
+    target.sourcesList &#x3D; [];
+    let isSource &#x3D; false;
+    this.blockDisplay.setSourcesDisplay(item, target.sourcesList);
+    isSource &#x3D; target.sourcesList.length &gt; 0;
+    target.sources &#x3D; claims.P2?.sources;
+
+    // External links
+    target.externalLinks &#x3D; [];
+    let isExternalLinks &#x3D; false;
+    this.blockDisplay.setExternalLinksDisplay(item, target.externalLinks);
+    isExternalLinks &#x3D; target.externalLinks.length &gt; 0;
+
+    // Others
+    target.otherClaims &#x3D; [];
+    let isOther &#x3D; false;
+    if (item[1] &amp;&amp; Array.isArray(item[1])) {
+      for (let i &#x3D; 0; i &lt; item[1].length; i++) {
+        const P: string &#x3D; item[1][i];
+        if (claims[P] !&#x3D;&#x3D; undefined) {
+          target.otherClaims.push(claims[P]);
+        }
+      }
+      if (claims.P2?.other !&#x3D;&#x3D; undefined) {
+        target.other &#x3D; claims.P2.other;
+      }
+      isOther &#x3D; target.otherClaims.length &gt; 0;
+    }
+
+    // Item info
+
+
+
+    // MainList
+    target.mainList &#x3D; [];
+    let isMain &#x3D; false;
+
+    if (claims.P2 &#x3D;&#x3D;&#x3D; undefined) {
+      if (claims.P3 !&#x3D;&#x3D; undefined) {
+        target.mainList.push(claims.P3);
+      }
+    } else {
+      target.mainList &#x3D; []
+        .concat(
+          target.lifeAndFamily || [],
+          target.locationAndContext || [],
+          target.locationAndSituation || [],
+          target.activityDetail || [],
+          target.eventDetail || [],
+          target.documentDetail || [],
+          target.otherClaims || []
+      );
+
+ /*     Object.keys(claims).forEach(key &#x3D;&gt; {
+        if (key.startsWith(&#x27;Q&#x27;) &amp;&amp; Array.isArray(claims[key])) {
+          // Par exemple, pour les ajouter à mainList :
+          target.mainList.push(claims[key]);
+        }
+      });
+      */
+
+    }
+    isMain &#x3D; target.mainList.length &gt; 0;
+    if (claims.P2 !&#x3D;&#x3D; undefined &amp;&amp; claims.P2[0]?.mainsnak?.label !&#x3D;&#x3D; undefined) {
+      target.mainTitle &#x3D; claims.P2[0].mainsnak.label;
+    }
+
+    // ... après la construction de target.mainList
+
+
+
+    let isFrames &#x3D; false;
+
+    /* iframes
+    target.iframes &#x3D; [];
+    
+    this.iframesDisplay.setIframesDisplay(item, target.iframes);
+    isFrames &#x3D; target.iframes.length &gt; 0;
+    */
+
+    // InfoList
+   
+    this.blockDisplay.setItemInfoDisplay(item, target);
+
+    let technicalities: any[] &#x3D; [];
+    this.technicalitiesDisplay.setTechnicalitiesDisplay(item, technicalities);
+
+    target.infoList &#x3D; {
+      instancesList: target.instancesList,
+      subclassesList: target.subclassesList,
+      classesList: target.classesList,
+      natureOfList: target.natureOfList,
+      technicalities: technicalities
+    };
+
+    // Flag unique pour l&#x27;affichage
+    let isInfoList &#x3D;
+      (target.infoList.instancesList &amp;&amp; target.infoList.instancesList.length &gt; 0) ||
+      (target.infoList.subclassesList &amp;&amp; target.infoList.subclassesList.length &gt; 0) ||
+      (target.infoList.classesList &amp;&amp; target.infoList.classesList.length &gt; 0) ||
+      (target.infoList.natureOfList &amp;&amp; target.infoList.natureOfList.length &gt; 0) ||
+      (target.infoList.technicalities &amp;&amp; target.infoList.technicalities.length &gt; 0);
+
+
+    // Wikis
+    target.wikis &#x3D; [];
+    let isWikis &#x3D; false;
+    this.wikiDisplay.setWikiDisplay(item, target.wikis);
+    isWikis &#x3D; target.wikis.length &gt; 0;
+
+
+    // ... (autres propriétés comme dans votre code)
+
+
+    // Retourne les flags utiles
+    return {
+      isPlace,
+      isCareer,
+      isSociability,
+      isTraining,
+      isActivity,
+      isDocument,
+      isEvent,
+      isSource,
+      isOrg,
+      isOther,
+      isInfoList,
+      isMain,
+      isWikis,
+      isFrames,
+      isExternalLinks
+    };
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'DisplayFlags.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,1461 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>factgrid documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">factgrid documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Sparql3DisplayComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/display/sparql3-display/sparql3-display.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnChanges</code>
+                <code>OnDestroy</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-sparql3-display</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>MatCardModule</code>
+                            <code>NgClass</code>
+                            <code>RouterLink</code>
+                            <code>MatIconModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatButtonModule</code>
+                            <code>FormsModule</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./sparql3-display.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./sparql3-display.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#csv" >csv</a>
+                            </li>
+                            <li>
+                                <a href="#currentAddress" >currentAddress</a>
+                            </li>
+                            <li>
+                                <a href="#isList" >isList</a>
+                            </li>
+                            <li>
+                                <a href="#isSearch" >isSearch</a>
+                            </li>
+                            <li>
+                                <a href="#isWorks" >isWorks</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#lang" >lang</a>
+                            </li>
+                            <li>
+                                <a href="#list" >list</a>
+                            </li>
+                            <li>
+                                <a href="#listTitle" >listTitle</a>
+                            </li>
+                            <li>
+                                <a href="#listWithoutDuplicate" >listWithoutDuplicate</a>
+                            </li>
+                            <li>
+                                <a href="#pupilTitle" >pupilTitle</a>
+                            </li>
+                            <li>
+                                <a href="#query" >query</a>
+                            </li>
+                            <li>
+                                <a href="#setTitle" >setTitle</a>
+                            </li>
+                            <li>
+                                <a href="#sparqlData" >sparqlData</a>
+                            </li>
+                            <li>
+                                <a href="#sparqlSubject" >sparqlSubject</a>
+                            </li>
+                            <li>
+                                <a href="#subTitle" >subTitle</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#applyFilter" >applyFilter</a>
+                            </li>
+                            <li>
+                                <a href="#databaseToDownload" >databaseToDownload</a>
+                            </li>
+                            <li>
+                                <a href="#filterItem" >filterItem</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#onClick" >onClick</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#sparqlData" >sparqlData</a>
+                            </li>
+                            <li>
+                                <a href="#sparqlSubject" >sparqlSubject</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sparqlData"></a>
+                        <b>sparqlData</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:28</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="sparqlSubject"></a>
+                        <b>sparqlSubject</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:27</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyFilter"></a>
+                    <span class="name">
+                        <span ><b>applyFilter</b></span>
+                        <a href="#applyFilter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>applyFilter(event)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="97"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="databaseToDownload"></a>
+                    <span class="name">
+                        <span ><b>databaseToDownload</b></span>
+                        <a href="#databaseToDownload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>databaseToDownload(data)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="113"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>data</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{}</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filterItem"></a>
+                    <span class="name">
+                        <span ><b>filterItem</b></span>
+                        <a href="#filterItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>filterItem(arr: any[], query)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arr</td>
+                                            <td>
+                                                        <code>any[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>query</td>
+                                            <td>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges(changes: SimpleChanges)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>changes</td>
+                                            <td>
+                                                        <code>SimpleChanges</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="119"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onClick"></a>
+                    <span class="name">
+                        <span ><b>onClick</b></span>
+                        <a href="#onClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onClick(query)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>query</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="csv"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>csv</b></span>
+                        <a href="#csv"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ArrayToCsvService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentAddress"></a>
+                    <span class="name">
+                        <span ><b>currentAddress</b></span>
+                        <a href="#currentAddress"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;Current address&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isList"></a>
+                    <span class="name">
+                        <span ><b>isList</b></span>
+                        <a href="#isList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isSearch"></a>
+                    <span class="name">
+                        <span ><b>isSearch</b></span>
+                        <a href="#isSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isWorks"></a>
+                    <span class="name">
+                        <span ><b>isWorks</b></span>
+                        <a href="#isWorks"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lang"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>lang</b></span>
+                        <a href="#lang"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SelectedLangService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="list"></a>
+                    <span class="name">
+                        <span ><b>list</b></span>
+                        <a href="#list"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listTitle"></a>
+                    <span class="name">
+                        <span ><b>listTitle</b></span>
+                        <a href="#listTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;List&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listWithoutDuplicate"></a>
+                    <span class="name">
+                        <span ><b>listWithoutDuplicate</b></span>
+                        <a href="#listWithoutDuplicate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pupilTitle"></a>
+                    <span class="name">
+                        <span ><b>pupilTitle</b></span>
+                        <a href="#pupilTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;Pupils and disciples&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="query"></a>
+                    <span class="name">
+                        <span ><b>query</b></span>
+                        <a href="#query"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setTitle"></a>
+                    <span class="name">
+                        <span ><b>setTitle</b></span>
+                        <a href="#setTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;Include:&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sparqlData"></a>
+                    <span class="name">
+                        <span ><b>sparqlData</b></span>
+                        <a href="#sparqlData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sparqlSubject"></a>
+                    <span class="name">
+                        <span ><b>sparqlSubject</b></span>
+                        <a href="#sparqlSubject"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subTitle"></a>
+                    <span class="name">
+                        <span ><b>subTitle</b></span>
+                        <a href="#subTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnChanges, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, SimpleChanges, inject, input } from &#x27;@angular/core&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import { NgClass } from &#x27;@angular/common&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { SelectedLangService } from &#x27;../../selected-lang.service&#x27;;
+import { ArrayToCsvService } from &#x27;../../services/array-to-csv.service&#x27;;
+
+
+
+@Component({
+   selector: &#x27;app-sparql3-display&#x27;,
+   standalone: true,
+    imports: [MatCardModule, NgClass, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
+    templateUrl: &#x27;./sparql3-display.component.html&#x27;,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrl: &#x27;./sparql3-display.component.scss&#x27;
+})
+export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
+  private lang &#x3D; inject(SelectedLangService);
+  private csv &#x3D; inject(ArrayToCsvService);
+
+  sparqlSubject &#x3D; input&lt;string&gt;();
+  sparqlData &#x3D; input();
+
+  list: any[] &#x3D; [];
+  isList: boolean &#x3D; false;
+  isSearch: boolean &#x3D; false;
+  subTitle: string &#x3D; &quot;&quot;;
+  isWorks: boolean &#x3D; false;
+  pupilTitle: string &#x3D; &quot;Pupils and disciples&quot;;
+  currentAddress: string &#x3D; &quot;Current address&quot;;
+  listTitle: string &#x3D; &quot;List&quot;;
+  setTitle: string &#x3D; &quot;Include:&quot;;
+  query: string;
+  listWithoutDuplicate: any[];
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    this.query &#x3D; &quot;&quot;;
+    this.isWorks &#x3D; false;
+    this.isList &#x3D; false;
+    this.isSearch &#x3D; false;
+
+    if (changes.sparqlData &amp;&amp; changes.sparqlData.currentValue) {
+
+      if (this.sparqlData()[0] !&#x3D;&#x3D; undefined) { this.isList &#x3D; true };
+
+        changes.sparqlData.currentValue.forEach(function (el) {
+          if (el.itemDescription &#x3D;&#x3D;&#x3D; undefined) { el.itemText &#x3D; el.itemLabel.value }
+          else el.itemText &#x3D; el.itemLabel.value + el.itemDescription.value
+        })
+
+        this.listWithoutDuplicate &#x3D; [...new Map(changes.sparqlData.currentValue.reverse().map(v &#x3D;&gt; [JSON.stringify([v.itemText]), v])).values()].reverse();  // remove the duplicates 
+
+        this.list &#x3D; this.listWithoutDuplicate;
+       
+      if (this.list.length &gt; 15) this.isSearch &#x3D; true
+
+    }
+    if (changes.sparqlSubject &amp;&amp; changes.sparqlSubject.currentValue) {
+      this.subTitle &#x3D; this.sparqlSubject();
+      console.log(this.subTitle);
+
+      if (this.subTitle &#x3D;&#x3D; &quot;master&quot;) {  //pupils and disciples
+        this.isWorks &#x3D; true;
+        this.subTitle &#x3D; this.lang.pupilTitle();
+      } else {
+        if (this.subTitle &#x3D;&#x3D; &quot;Q945258&quot;) { //set
+          this.isWorks &#x3D; true;
+          this.subTitle &#x3D; this.lang.setTitle();
+        } else {
+          if (this.subTitle &#x3D;&#x3D; &quot;Q172192&quot;) { //list
+            this.isWorks &#x3D; true;
+            this.subTitle &#x3D; this.lang.listTitle();
+          } else {
+            if (this.subTitle &#x3D;&#x3D; &quot;current address:&quot;) { //current address
+              this.isWorks &#x3D; false;
+              this.subTitle &#x3D; this.lang.currentAddress();
+              console.log(this.subTitle);
+            }
+            else {
+            this.subTitle &#x3D; &quot;&quot;;
+            this.list &#x3D; [];
+          }
+         }
+        }
+       }
+     }
+    
+  }
+
+  applyFilter(event) {
+    this.query &#x3D; event.target.value.trim().toLowerCase();
+    this.list &#x3D; this.filterItem(this.listWithoutDuplicate, this.query);
+  }
+
+  filterItem(arr: any[], query) {
+    return arr.filter((el) &#x3D;&gt; el.itemText.toLowerCase().includes(this.query.toLowerCase()))
+  }
+
+  onClick(query) { //handling click for downlooding the filtered data
+    let u &#x3D; query;
+    u &#x3D; this.databaseToDownload(query);
+    let v &#x3D; this.csv.arrayToCsv(u);
+    this.csv.downloadBlob(v, &quot;factGrid&quot;, &quot;text/csv;charset&#x3D;utf-8;&quot;)
+  }
+
+  databaseToDownload(data) {
+    let dataToDownload: any[][] &#x3D; [[&quot;item.id&quot;, &quot;item.label&quot;, &quot;item.description&quot;]];
+    for (let i &#x3D; 0; i &lt; data.length; i++) { dataToDownload[i + 1] &#x3D; [data[i].item.value, data[i].itemLabel.value, data[i].itemDescription.value] }
+    return dataToDownload
+  }
+
+  ngOnDestroy(): void {
+//    this.sparqlSubject() &#x3D; &quot;&quot;;
+//    this.sparqlData() &#x3D; &quot;&quot;;
+    this.list &#x3D; [];
+    this.query &#x3D; &quot;&quot;;
+    this.isSearch &#x3D; false;
+    this.isList &#x3D; false;
+  }
+} 
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div [ngClass]&#x3D;&quot;isList ? &#x27;show-division&#x27;:&#x27;hide-division&#x27;&quot;&gt;
+  &lt;mat-card appearance&#x3D;&quot;outlined&quot; class&#x3D;mat-elevation-z12&gt;
+    &lt;mat-card-content class&#x3D;&quot;cardBackground&quot;&gt;
+      &lt;div [ngClass]&#x3D;&quot;isWorks ? &#x27;subdivisionTitle&#x27; : &#x27;propertyStyle&#x27;&quot;&gt;{{subTitle}}&lt;/div&gt;
+
+      @if(isSearch &#x3D;&#x3D;&#x3D; true) {
+     &lt;div class&#x3D;&quot;searchFormPadding&quot;&gt;
+        &lt;mat-form-field appearance&#x3D;&quot;outline&quot;&gt;
+          &lt;input matInput (keyup)&#x3D;&quot;applyFilter($event)&quot; placeholder&#x3D;&quot;Search&quot;&gt;
+        &lt;/mat-form-field&gt;
+        &lt;span&gt;
+          &amp;nbsp;&amp;nbsp;&amp;nbsp;{{this.list.length}}
+        &lt;/span&gt;
+      &lt;/div&gt;
+      }
+     
+      @for (L of list; track L) {
+        &lt;div class&#x3D;&quot;sparql-div statementStyle&quot;&gt;
+          @if (L.itemLabel.value) {
+          &lt;label&gt;
+            {{L.itemLabel.value}}
+            &lt;mat-icon-button class&#x3D;&quot;internalLink&quot; [routerLink]&#x3D;&quot;[&#x27;/item&#x27;, L.item.id]&quot;&gt;&lt;mat-icon color&#x3D;&quot;primary&quot; [inline]&#x3D;&quot;true&quot;&gt;open_in_new&lt;/mat-icon&gt;&lt;/mat-icon-button&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+            @if (L.itemDescription) {
+            &lt;span&gt;, {{L.itemDescription.value}}&lt;/span&gt;
+            }
+            @if (L.year) {
+            &lt;span&gt;, {{L.year.value}}&lt;/span&gt;
+            }
+
+          &lt;/label&gt;
+          }
+        &lt;hr&gt;
+      &lt;/div&gt;
+      }
+      &lt;span&gt;
+        &lt;button mat-icon-button color&#x3D;&quot;primary&quot; class&#x3D;&quot;internalLink&quot; #content (click)&#x3D;&quot;onClick(this.list)&quot;&gt;
+          &lt;mat-icon color&#x3D;&quot;primary&quot; [inline]&#x3D;&quot;true&quot;&gt;download&lt;/mat-icon&gt;
+        &lt;/button&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+      &lt;/span&gt;
+    &lt;/mat-card-content&gt;
+  &lt;/mat-card&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div [ngClass]="isList ? \'show-division\':\'hide-division\'">  <mat-card appearance="outlined" class=mat-elevation-z12>    <mat-card-content class="cardBackground">      <div [ngClass]="isWorks ? \'subdivisionTitle\' : \'propertyStyle\'">{{subTitle}}</div>      @if(isSearch === true) {     <div class="searchFormPadding">        <mat-form-field appearance="outline">          <input matInput (keyup)="applyFilter($event)" placeholder="Search">        </mat-form-field>        <span>          &nbsp;&nbsp;&nbsp;{{this.list.length}}        </span>      </div>      }           @for (L of list; track L) {        <div class="sparql-div statementStyle">          @if (L.itemLabel.value) {          <label>            {{L.itemLabel.value}}            <mat-icon-button class="internalLink" [routerLink]="[\'/item\', L.item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;            @if (L.itemDescription) {            <span>, {{L.itemDescription.value}}</span>            }            @if (L.year) {            <span>, {{L.year.value}}</span>            }          </label>          }        <hr>      </div>      }      <span>        <button mat-icon-button color="primary" class="internalLink" #content (click)="onClick(this.list)">          <mat-icon color="primary" [inline]="true">download</mat-icon>        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      </span>    </mat-card-content>  </mat-card></div></div>'
+    var COMPONENTS = [{'name': 'AdvancedSearchComponent', 'selector': 'app-advanced-search'},{'name': 'AdvancedSearchListComponent', 'selector': 'app-advanced-search-list'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CareerDisplayComponent', 'selector': 'app-career-display'},{'name': 'DisplayComponent', 'selector': 'app-display'},{'name': 'EducationDisplayComponent', 'selector': 'app-education-display'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'HarmoniaUniversalisComponent', 'selector': 'app-harmonia-universalis'},{'name': 'HeaderDisplayComponent', 'selector': 'app-header-display'},{'name': 'IframesDisplayComponent', 'selector': 'app-iframes-display'},{'name': 'ItemInfoComponent', 'selector': 'app-item-info'},{'name': 'MainDisplayComponent', 'selector': 'app-main-display'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'ParisSearchComponent', 'selector': 'app-paris-search'},{'name': 'ProjectSelectComponent', 'selector': 'app-project-select'},{'name': 'SearchComponent', 'selector': 'app-search'},{'name': 'SociabilityDisplayComponent', 'selector': 'app-sociability-display'},{'name': 'SourcesDisplayComponent', 'selector': 'app-sources-display'},{'name': 'Sparql0DisplayComponent', 'selector': 'app-sparql0-display'},{'name': 'Sparql1DisplayComponent', 'selector': 'app-sparql1-display'},{'name': 'Sparql2DisplayComponent', 'selector': 'app-sparql2-display'},{'name': 'Sparql3DisplayComponent', 'selector': 'app-sparql3-display'},{'name': 'Sparql4DisplayComponent', 'selector': 'app-sparql4-display'},{'name': 'StatementSearchComponent', 'selector': 'app-statement-search'},{'name': 'StatementSearchComponent', 'selector': 'app-statement-search'},{'name': 'TextDisplayComponent', 'selector': 'app-text-display'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'Sparql3DisplayComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Sparql3DisplayComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

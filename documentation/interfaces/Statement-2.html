@@ -1,0 +1,1535 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>factgrid documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">factgrid documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  Statement</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/search/advanced-search/statement-search/statement-search.component.ts</code>
+        </p>
+
+
+
+
+        <section data-compodoc="block-index">
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
+                <tbody>
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Properties</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#itemType" 
+>
+                                            itemType
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#optional" 
+>
+                                            optional
+                                        </a>
+                                </li>
+                                <li>
+                                        <a href="#properties" 
+>
+                                            properties
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#qualifiers" 
+>
+                                            qualifiers
+                                        </a>
+                                </li>
+                                <li>
+                                            <span class="modifier">Optional</span>
+                                        <a href="#value" 
+>
+                                            value
+                                        </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+
+            <section data-compodoc="block-properties">
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="itemType"></a>
+                                        <span class="name "><b>itemType</b>
+                                            <a href="#itemType">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>itemType:     <code>FormControl&lt;string&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>FormControl&lt;string&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="optional"></a>
+                                        <span class="name "><b>optional</b>
+                                            <a href="#optional">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>optional:     <code>FormControl&lt;boolean&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>FormControl&lt;boolean&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="properties"></a>
+                                        <span class="name "><b>properties</b>
+                                            <a href="#properties">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>properties:     <code>FormControl&lt;string[]&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>FormControl&lt;string[]&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="qualifiers"></a>
+                                        <span class="name "><b>qualifiers</b>
+                                            <a href="#qualifiers">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>qualifiers:     <code>FormArray&lt;FormGroup&gt;</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>FormArray&lt;FormGroup&gt;</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="value"></a>
+                                        <span class="name "><b>value</b>
+                                            <a href="#value">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>value:     <code>FormGroup</code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code>FormGroup</code>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Optional</i>
+                                        </td>
+                                    </tr>
+
+
+
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CommonModule } from &#x27;@angular/common&#x27;;
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild, effect, inject, input, AfterViewInit } from &#x27;@angular/core&#x27;;
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from &#x27;@angular/forms&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatCheckboxModule } from &#x27;@angular/material/checkbox&#x27;;
+import { MatOption } from &#x27;@angular/material/core&#x27;;
+import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatSelect, MatSelectChange, MatSelectModule } from &#x27;@angular/material/select&#x27;;
+import { MatSlideToggleModule } from &#x27;@angular/material/slide-toggle&#x27;;
+import { NgxMatSelectSearchModule } from &#x27;ngx-mat-select-search&#x27;;
+import { Observable, ReplaySubject, Subject, BehaviorSubject, map, tap, takeUntil, switchMap, debounceTime, combineLatest, forkJoin, filter, iif, of, delay, startWith } from &#x27;rxjs&#x27;;
+//import { takeUntil } from &#x27;rxjs/operators&#x27;;
+import { SelectedLangService } from &#x27;../../../selected-lang.service&#x27;;
+import { PropertiesListService } from &#x27;../../../services/properties-list.service&#x27;;
+import { RequestService } from &#x27;../../../services/request.service&#x27;;
+import { SearchEngineService } from &#x27;../../../services/search-engine.service&#x27;;
+import { SetLanguageService } from &#x27;../../../services/set-language.service&#x27;;
+import { DataService } from &#x27;../services/data.service&#x27;;
+import { StatementsControlsService } from &#x27;../services/statements-controls.service&#x27;;
+import { ITEMTYPES, MUTATOR, QUALIFIERTYPES, Selection, Variable } from &#x27;../variable&#x27;;
+
+export interface Statement {
+  itemType: FormControl&lt;string&gt;,
+  properties: FormControl&lt;string[]&gt;,
+  value?: FormGroup,
+  optional: FormControl&lt;boolean&gt;,
+  qualifiers?: FormArray&lt;FormGroup&gt;
+}
+
+export interface Qualifier {
+  qualifierProperty: FormControl&lt;string&gt;,
+  value?: FormGroup
+}
+
+@Component({
+  selector: &#x27;app-statement-search&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    NgxMatSelectSearchModule,
+    MatSelect,
+    MatCheckboxModule,
+    MatOption,
+    MatSlideToggleModule,
+  ],
+  templateUrl: &#x27;./statement-search.component.html&#x27;,
+  styleUrl: &#x27;./statement-search.component.scss&#x27;
+})
+
+export class StatementSearchComponent
+  implements OnInit, OnDestroy, AfterViewInit {
+
+  private changeDetector &#x3D; inject(ChangeDetectorRef);
+  private request &#x3D; inject(RequestService);
+  private setLanguage &#x3D; inject(SetLanguageService);
+  private lang &#x3D; inject(SelectedLangService);
+  private propertyList &#x3D; inject(PropertiesListService);
+  private fb &#x3D; inject(FormBuilder);
+  private searchEngine &#x3D; inject(SearchEngineService);
+  private data &#x3D; inject(DataService);
+  private controls &#x3D; inject(StatementsControlsService);
+  //  private data &#x3D; inject(DataService);
+
+
+  @Input() set literalVariables(literalVariables: any[]) {
+    this._literalVariables &#x3D; literalVariables;
+    if (this.literalVariables) {
+      this.filteredLiteralVariables.next(this.literalVariables.slice())
+    }
+  }
+
+  @Input() set qualifierLiteralVariables(qualifierLiteralVariables: any[]) {
+    this._qualifierLiteralVariables &#x3D; qualifierLiteralVariables;
+    if (this.qualifierLiteralVariables) {
+      this.filteredQualifierLiteralVariables.next(this.qualifierLiteralVariables.slice())
+    }
+  }
+  get literalVariables(): any[] {
+    return this._literalVariables;
+  }
+
+  get qualifierLiteralVariables(): any[] {
+    return this._qualifierLiteralVariables;
+  }
+
+  @Output() datatype;
+
+
+  @Output() selectedItemType: EventEmitter&lt;string[]&gt; &#x3D; new EventEmitter();
+
+
+  protected currentItemTypes: any[] &#x3D; [];
+  protected currentItemTypesArray: any[][] &#x3D; [];
+
+  public statementOptions: BehaviorSubject&lt;any[]&gt;[] &#x3D; [];
+
+
+  private _propertiesList: any[];
+  private propertiesToSelect: any[];
+  private _literalVariables: any[];
+  private _qualifierLiteralVariables: any[];
+  propertiesList: any[];
+
+
+  private qualifierPropertiesToSelect: any[];
+
+  protected entityValues: any[] &#x3D; []; //
+  protected currentMutator: Variable[][] &#x3D; MUTATOR;
+
+  protected selectedLiteralVariables: Variable[] &#x3D; []; // probablement à supprimer
+
+  isWikibaseItemOnStatement: boolean &#x3D; true;
+  isLiteralOnStatement: boolean &#x3D; false;
+  isLiteralStringOnStatement: boolean &#x3D; false;
+
+
+  isWikibaseItemOnQualifier: boolean &#x3D; true;
+  isLiteralOnQualifier: boolean &#x3D; false;
+  isLiteralStringOnQualifier: boolean &#x3D; false;
+
+  isLastStatement: boolean &#x3D; false;
+  isAddStatement: boolean &#x3D; false;
+  isRemoveStatement: boolean &#x3D; false;
+
+  isAddQualifier: boolean &#x3D; false;
+  isRemoveQualifier: boolean &#x3D; false;
+  isQualifier: boolean &#x3D; false;
+
+  isItemValue: boolean &#x3D; true;
+
+
+  isLiteralVariableSelected: boolean &#x3D; true;
+
+  selectedItemTypes: any[] &#x3D; [];
+
+
+
+  placeholderForLiteralValue: string &#x3D; &quot;literal value?&quot;
+  placeholderForLiteralString: string &#x3D; &quot;write string? | date? | number?&quot;;
+
+  query &#x3D; this.fb.group({
+    statements: this.fb.array([this.statement])
+  });
+
+  get statements(): FormArray&lt;FormGroup&gt; { return this.query.get(&#x27;statements&#x27;) as FormArray; } // getter for statements as form array
+
+
+  // on pourrait aussi bien écrire : get statements() { return this.query.controls[&#x27;statements&#x27;] as FormArray; }
+  qualifiers(i: number): FormArray&lt;FormGroup&gt; { return this.statements.at(i).get(&#x27;qualifiers&#x27;) as FormArray; }
+
+  get lastStatementIndex(): number {
+    const index &#x3D; this.statements.length &gt; 0 ? this.statements.length - 1 : 0;
+    console.log(&#x27;lastStatementIndex:&#x27;, index);
+    return index;
+  }
+
+
+  get statement(): FormGroup&lt;Statement&gt; {
+    return this.fb.group&lt;Statement&gt;(
+      {
+        itemType: new FormControl({ value: &quot;&quot;, disabled: false }),
+        properties: new FormControl({ value: [], disabled: true }, [Validators.required, this.datatypeValidator]),
+        value: this.value,
+        optional: new FormControl({ value: false, disabled: false }),
+        qualifiers: this.fb.array([this.qualifier])
+      }
+    );
+  }
+
+  get value(): FormGroup {
+    return this.fb.group({
+      itemValue: new FormControl({ value: &quot;&quot;, disabled: true }),
+      literalValue: new FormControl({ value: &quot;&quot;, disabled: true }),
+      literalString: new FormControl({ value: &quot;&quot;, disabled: true })
+    }
+    );
+  }
+
+  get qualifier(): FormGroup {
+    return this.fb.group({
+      qualifierProperty: new FormControl({ value: &quot;&quot;, disabled: false }),
+      value: this.qualifierValue,
+      optional: new FormControl({ value: false, disabled: false }),
+    }
+    );
+  }
+
+  get qualifierValue(): FormGroup {
+    return this.fb.group({
+      qualifierValue: new FormControl({ value: &quot;&quot;, disabled: true }),
+      qualifierLiteralValue: new FormControl({ value: &quot;&quot;, disabled: true }),
+      qualifierLiteralString: new FormControl({ value: &quot;&quot;, disabled: true })
+    }
+    );
+  }
+
+  isPropertiesInvalid(index: number): boolean {
+    const statementGroup &#x3D; this.statements.at(index) as FormGroup;
+    const propertiesControl &#x3D; statementGroup.get(&#x27;properties&#x27;) as FormControl;
+    return propertiesControl.invalid
+    //      &amp;&amp; (propertiesControl.dirty || propertiesControl.touched);
+  }
+
+  public itemTypeFilterCtrl: FormControl&lt;string | null&gt; &#x3D; new FormControl&lt;string&gt;(&#x27;&#x27;);
+
+  public filteredItemTypesArray: ReplaySubject&lt;any[]&gt;[] &#x3D; [];
+
+
+
+  /** control for the MatSelect filter keyword multi-selection */
+  public propertytMultiFilterCtrl: FormControl&lt;string&gt; &#x3D; new FormControl&lt;string&gt;(&#x27;&#x27;);
+
+  public filteredPropertyMultiArray: ReplaySubject&lt;any[]&gt;[] &#x3D; [];
+
+
+  //  public valueSearchInput: FormControl &#x3D; new FormControl();
+  /** control for the MatSelect filter keyword single-selection */
+  public itemValueFilterCtrl: FormControl&lt;string&gt; &#x3D; new FormControl&lt;string&gt;(&#x27;&#x27;);
+
+  /** value filtered by search keyword */
+  public filteredItemValuesArray: ReplaySubject&lt;any[]&gt;[] &#x3D; [];
+
+  /** control for the MatSelect filter keyword single-selection */
+  public literalFilterCtrl: FormControl&lt;string | null&gt; &#x3D; new FormControl&lt;string&gt;(&#x27;&#x27;);
+
+  /** value filtered by search keyword */
+  public filteredLiteralVariables: ReplaySubject&lt;any&gt; &#x3D; new ReplaySubject&lt;any&gt;(1);
+
+  /** control for the MatSelect filter keyword single-selection */
+  public qualifierPropertyFilterCtrl: FormControl&lt;string | null&gt; &#x3D; new FormControl&lt;string&gt;(&#x27;&#x27;);
+
+  /** value filtered by search keyword */
+  public filteredQualifierProperties: ReplaySubject&lt;any&gt; &#x3D; new ReplaySubject&lt;any&gt;(1);
+
+  /** control for the MatSelect filter keyword single-selection */
+  public qualifierValueFilterCtrl: FormControl&lt;string&gt; &#x3D; new FormControl&lt;string&gt;(&#x27;&#x27;);
+
+  /** value filtered by search keyword */
+  public filteredQualifierValues: ReplaySubject&lt;any&gt; &#x3D; new ReplaySubject&lt;any&gt;(1);
+
+  /** control for the MatSelect filter keyword single-selection */
+  public qualifierLiteralFilterCtrl: FormControl&lt;string&gt; &#x3D; new FormControl&lt;string&gt;(&#x27;&#x27;);
+
+  /** value filtered by search keyword */
+  public filteredQualifierLiteralVariables: ReplaySubject&lt;any&gt; &#x3D; new ReplaySubject&lt;any&gt;(1);
+
+
+  addStatements() {
+    this.statements.push(this.statement);
+    console.log(&#x27;Added statement, new statements length:&#x27;, this.statements.length);
+    this.isRemoveStatement &#x3D; true;
+    this.filteredItemTypesArray.push(new ReplaySubject&lt;any[]&gt;(1)); // Initialiser un nouveau ReplaySubject pour la nouvelle déclaration
+    this.filteredItemValuesArray.push(new ReplaySubject&lt;any[]&gt;(1)); // Initialiser un nouveau ReplaySubject pour la nouvelle déclaration
+    this.filteredPropertyMultiArray.push(new ReplaySubject&lt;any[]&gt;(1)); // Initialiser un nouveau ReplaySubject pour la nouvelle déclaration
+    this.statementOptions.push(new BehaviorSubject&lt;any[]&gt;([])); // Initialiser un nouveau BehaviorSubject pour la nouvelle déclaration
+
+
+    // Initialiser les valeurs des nouveaux ReplaySubject avec une liste vide pour filterItemTypes et un observable de liste vide pour filterPropertyMulti
+    this.filteredItemTypesArray[this.lastStatementIndex].next([]);
+    this.filteredItemValuesArray[this.lastStatementIndex].next([]);
+    this.filteredPropertyMultiArray[this.lastStatementIndex].next([]);
+
+
+    this.setCurrentItemTypes(this.lastStatementIndex);
+    this.filterItemTypes(this.lastStatementIndex);
+    this.filterItemValues(this.lastStatementIndex);
+    this.filterPropertyMulti(this.lastStatementIndex, of([]));
+  }
+
+
+  removeStatements(i: number) {
+    this.statements.removeAt(i);
+    console.log(&#x27;Removed statement at index&#x27;, i, &#x27;new statements length:&#x27;, this.statements.length);
+    this.currentItemTypesArray.splice(i, 1); // Supprimer les currentItemTypes correspondants
+    this.filteredItemTypesArray.splice(i, 1); // Supprimer le ReplaySubject correspondant
+    this.setCurrentItemTypes(this.lastStatementIndex);
+    this.filterItemTypes(this.lastStatementIndex);
+  }
+
+  addQualifiers(i: number) {
+    let m &#x3D; this.qualifiers(i).controls.length - 1
+    if (this.qualifiers(i).pristine) { this.qualifiers(i).removeAt(m) };
+    this.isQualifier &#x3D; true;
+    this.qualifiers(i).push(this.qualifier);
+    let qual &#x3D; this.controls.qualifiers(this.statements, i);
+    this.isQualifier &#x3D; true;
+
+  }
+
+  addFirstQualifier(i) {
+    this.controls.qualifiers(this.statements, i).enable();
+    if (i &#x3D;&#x3D;&#x3D; 0) { this.isQualifier &#x3D; true; }
+  }
+
+  removeQualifiers(i: number, j: number) {
+    this.qualifiers(i).removeAt(j);
+  }
+
+  statementControllerDisplay(u, i) {
+    const statement &#x3D; this.statements.at(i) as FormGroup;
+    const itemValueControl &#x3D; statement.get(&#x27;value.itemValue&#x27;) as FormControl;
+
+    if (u &#x3D;&#x3D;&#x3D; &quot;WikibaseItem&quot;) {
+      this.isWikibaseItemOnStatement &#x3D; true;
+      this.isLiteralOnStatement &#x3D; false;
+      itemValueControl.enable();
+      statement.get(&#x27;value.literalValue&#x27;).disable();
+      statement.get(&#x27;value.literalString&#x27;).disable();
+    } else {
+      if (u &#x3D;&#x3D;&#x3D; &quot;String&quot; || u &#x3D;&#x3D;&#x3D; &quot;MonolingualText&quot; || u &#x3D;&#x3D;&#x3D; &quot;Time&quot; || u &#x3D;&#x3D;&#x3D; &quot;Quantity&quot;) {
+        console.log(u);
+        itemValueControl.disable();
+        statement.get(&#x27;value.literalValue&#x27;).enable();
+        statement.get(&#x27;value.literalString&#x27;).enable();
+        this.isWikibaseItemOnStatement &#x3D; false;
+        this.isLiteralStringOnStatement &#x3D; false;
+        this.isLiteralOnStatement &#x3D; true;
+      }
+    }
+  }
+
+
+  literalControllerDisplay(label, i) {
+    if (label &#x3D;&#x3D;&#x3D; &quot;write literal string&quot; || label &#x3D;&#x3D;&#x3D; &quot;write date : YYYY-MM-DD&quot; || label &#x3D;&#x3D;&#x3D; &quot;write number&quot;) {
+      this.controls.literalValue(this.statements, i).enable(); this.controls.literalString(this.statements, i).enable();
+      this.controls.literalValue(this.statements, i).patchValue(&quot;&quot;);
+      this.isLiteralStringOnStatement &#x3D; true;
+      this.placeholderForLiteralString &#x3D; &quot;write below&quot;;
+    }
+    else {
+      this.controls.literalValue(this.statements, i).enable();
+      this.controls.literalString(this.statements, i).disable();
+      this.isLiteralStringOnStatement &#x3D; false;
+      this.placeholderForLiteralString &#x3D; &quot;disabled&quot;;
+    }
+  }
+
+  qualifierControllerDisplay(u, i, j) {
+    console.log(u);
+    let qual &#x3D; this.controls.qualifiers(this.statements, i);
+    if (u &#x3D;&#x3D;&#x3D; &quot;WikibaseItem&quot;) {
+      let value &#x3D; this.controls.qualifierValue(qual, j);
+      console.log(value);
+      this.isWikibaseItemOnQualifier &#x3D; true;
+      this.isLiteralOnQualifier &#x3D; false;
+      this.controls.qualifierValue(qual, j).enable();
+      this.controls.qualifierLiteralValue(qual, j).disable();
+      this.controls.qualifierLiteralString(qual, j).disable();
+      //  this.controls.qualifierValue(qual, j).patchvalue(value);
+    } else {
+      if (u &#x3D;&#x3D;&#x3D; &quot;String&quot; || u &#x3D;&#x3D;&#x3D; &quot;MonolingualText&quot; || u &#x3D;&#x3D;&#x3D; &quot;Time&quot; || u &#x3D;&#x3D;&#x3D; &quot;Quantity&quot;) {
+        this.controls.qualifierLiteralValue(qual, j).enable();
+        this.controls.qualifierLiteralString(qual, j).enable();
+        this.isWikibaseItemOnQualifier &#x3D; false;
+        this.isLiteralOnQualifier &#x3D; true;
+      }
+    }
+  }
+
+  qualifierLiteralControllerDisplay(label, i, j) {
+    let qual &#x3D; this.controls.qualifiers(this.statements, i);
+    if (label &#x3D;&#x3D;&#x3D; &quot;write literal string&quot; || label &#x3D;&#x3D;&#x3D; &quot;write date : YYYY-MM-DD&quot; || label &#x3D;&#x3D;&#x3D; &quot;write number&quot;) {
+      this.controls.qualifierLiteralValue(qual, j).enable(); this.controls.qualifierLiteralString(qual, j).enable();
+      //    this.controls.qualifierLiteralValue(qual, j).patchValue(&quot;&quot;);
+      this.isLiteralStringOnQualifier &#x3D; true;
+    }
+    else {
+      this.controls.literalValue(qual, j).enable();
+      this.controls.literalString(qual, j).disable();
+      this.isLiteralStringOnQualifier &#x3D; false;
+    }
+  }
+
+  onItemTypeSelect(event: MatSelectChange): void {
+    console.log(event.value),
+      console.log(&#x27;Selected itemType:&#x27;, event.value);
+    let i &#x3D; event.value[0]; // name of the statement &quot;i&quot; in the form array &quot;statements&quot;
+    this.controls.propertyValues(this.statements, i).enable();
+    const options$ &#x3D; this.propertyList.propertiesListBuilding(event.value[3]); // create the list of properties; useless?
+    this.filterPropertyMulti(i, options$); // Appeler filterPropertyMulti avec l&#x27;observable
+    this.selectedItemType.emit(event.value); // output to advanced-search-component (see selectedItemType(itemType))
+    this.statements.at(i).get(&#x27;itemType&#x27;).setValue(event.value, { emitEvent: false }); // Mettre à jour la valeur du contrôle
+    console.log(&#x27;Updated itemType control value:&#x27;, this.statements.at(i).get(&#x27;itemType&#x27;).value);
+    this.changeDetector.detectChanges(); // Forcer la détection des changements
+  }
+
+
+  onPropertySelect(event: MatSelectChange): void {
+    let propertyValue &#x3D; [];
+    console.log(&#x27;Event value:&#x27;, event.value);
+    let i &#x3D; event.value[0][0];
+    console.log(i);
+
+    // Itérer sur chaque élément de event.value
+    for (let j &#x3D; 0; j &lt; event.value.length; j++) {
+      if (event.value[j] !&#x3D;&#x3D; undefined) {
+        let propertyType &#x3D; event.value[j][3];
+        console.log(propertyType);
+        if (propertyType) {
+          this.statementControllerDisplay(propertyType, i); // to display the right control
+          this.controls.itemValue(this.statements, i).enable();
+        } else {
+          console.error(&#x27;Property type is undefined or invalid:&#x27;, event.value[j][1].propertyType);
+        }
+      } else {
+        console.error(&#x27;Event value[&#x27; + j + &#x27;] is undefined:&#x27;, event.value);
+      }
+    }
+  }
+
+ 
+
+
+  onValueSelect(event: MatSelectChange): void {  // to update the mutator and add the selected value type to the current itemTypes
+    let i &#x3D; event.value[0];
+    let label &#x3D; event.value[1];
+    let dataType &#x3D; event.value[2];
+    console.log(event.value);
+
+    // Mettre à jour la valeur du contrôle itemValue
+    const itemValueControl &#x3D; this.statements.at(i).get(&#x27;value.itemValue&#x27;) as FormControl;
+  //  itemValueControl.setValue(label, { emitEvent: false });
+
+    // Déclencher la détection des changements pour mettre à jour le template
+    this.changeDetector.detectChanges();
+
+
+
+    if (label.charAt(0) &#x3D;&#x3D;&#x3D; &quot;?&quot;) {
+ //    this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValue(itemType))
+    }
+    this.isAddQualifier &#x3D; true;
+    this.isAddStatement &#x3D; true;
+    // Appeler resetPreviousItemValues après la mise à jour du contrôle itemValue
+    this.resetPreviousItemValues(i);
+    console.log(this.resetPreviousItemValues(i))
+  };
+
+  onLiteralValueSelect(event: MatSelectChange): void {
+    let i &#x3D; event.value[0];
+    let label &#x3D; event.value[1];
+    this.placeholderForLiteralString &#x3D; label;
+    this.literalControllerDisplay(label, i); // to display and enable the right controls
+    if (label.charAt(0) &#x3D;&#x3D;&#x3D; &quot;?&quot;) {
+      console.log(label);
+      //    this.selectedValue.emit(event.value); // output to advanced-search-component (see selectedValueType(itemType)). ?string is not an itemType
+    }
+    this.isAddStatement &#x3D; true;
+    this.isAddQualifier &#x3D; true;
+  }
+
+  onQualifierPropertySelect(event: MatSelectChange): void {
+    console.log(event.value);
+    let i &#x3D; event.value[0];
+    let j &#x3D; event.value[1];
+    let datatype &#x3D; event.value[3];
+    //   this.qualifierPropertyDatatype.emit([i, j, datatype]);
+    this.qualifierControllerDisplay(datatype, i, j); // to display the right controls
+
+  }
+
+  onQualifierValueSelect(event: MatSelectChange): void {
+    console.log(event.value);
+    let i &#x3D; event.value[0];
+    let j &#x3D; event.value[1];
+    let dataType &#x3D; event.value[2];
+    let col &#x3D; event.value[3];
+    let id &#x3D; event.value[4];
+    let u &#x3D; [i, dataType, col, id];
+    if (dataType.charAt(0) &#x3D;&#x3D;&#x3D; &quot;?&quot;) {
+      //      this.selectedQualifierValue.emit(u);
+    }
+    this.isRemoveQualifier &#x3D; true;
+    let qual &#x3D; this.controls.qualifiers(this.statements, i);
+    let value &#x3D; this.controls.qualifierValue(qual, j);
+    console.log(value);
+    this.controls.patchQualifierValue(value, qual, j)
+  };
+
+  onQualifierLiteralValueSelect(event: MatSelectChange): void {
+    console.log(event.value);
+    let i &#x3D; event.value[0];
+    let label &#x3D; event.value[2];
+    // let dataType &#x3D; event.value[2];
+    if (label.charAt(0) &#x3D;&#x3D;&#x3D; &quot;?&quot;) {
+      //     this.selectedQualifierValue.emit(event.value);
+      this.isLiteralStringOnQualifier &#x3D; false;
+    } else this.isLiteralStringOnQualifier &#x3D; true;
+    this.isRemoveQualifier &#x3D; true;
+  };
+
+  public items &#x3D; [];
+
+  //  public datatype &#x3D; &quot;WikibaseItem&quot;;
+  public isQualifier2Display: boolean &#x3D; false;
+  //propertiesList: any[];
+  selectedPropertiesList: string[];
+
+
+  @ViewChild(&#x27;matRef&#x27;) matRef: MatSelect;
+
+  clear() {
+    this.matRef.options.forEach((data: MatOption) &#x3D;&gt; data.deselect());
+  }
+
+
+  @ViewChild(&#x27;singleSelect&#x27;, { static: true }) singleSelect: MatSelect;
+
+  @ViewChild(&#x27;multiSelect&#x27;, { static: true }) multiSelect: MatSelect;
+
+  //  @Output() typeSelectionChange: EventEmitter&lt;MatSelectChange&gt; &#x3D; new EventEmitter&lt;MatSelectChange&gt;();
+  @Output() selectionChange: EventEmitter&lt;MatSelectChange&gt; &#x3D; new EventEmitter&lt;MatSelectChange&gt;();
+
+  @Output() propertySelectionChange: EventEmitter&lt;MatSelectChange&gt; &#x3D; new EventEmitter&lt;MatSelectChange&gt;();
+
+  protected _onDestroy &#x3D; new Subject&lt;void&gt;();
+
+
+
+  ngOnInit(): void {
+    console.log(&#x27;Initial statements length:&#x27;, this.statements.length);
+
+    this.propertyList.qualifierPropertiesListBuilding.subscribe(res &#x3D;&gt; this.qualifierPropertiesToSelect &#x3D; res);
+
+    this.itemTypeFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() &#x3D;&gt; {
+        this.filterItemTypes(this.lastStatementIndex);
+      });
+
+    this.propertytMultiFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() &#x3D;&gt; {
+        this.filterPropertyMulti(this.lastStatementIndex, of([]));
+      });
+
+    this.itemValueFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() &#x3D;&gt; {
+        this.filterItemValues(this.lastStatementIndex);
+      });
+
+    this.literalFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() &#x3D;&gt; {
+        this.filterLiteralVariables();
+      });
+
+    this.qualifierPropertyFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() &#x3D;&gt; {
+        this.filterQualifierProperties();
+      });
+
+    this.qualifierValueFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() &#x3D;&gt; {
+        this.filterQualifierValues();
+      });
+
+    this.qualifierLiteralFilterCtrl.valueChanges
+      .pipe(takeUntil(this._onDestroy))
+      .subscribe(() &#x3D;&gt; {
+        this.filterQualifierValues();
+      });
+
+    // Initialiser statementOptions pour l&#x27;index 0
+    this.statementOptions[0] &#x3D; new BehaviorSubject&lt;any[]&gt;([]);
+
+    // Problème 1 et 2: Ajouter le deuxième argument manquant pour filterPropertyMulti
+    
+
+    // Problème 3, 4 et 5: Corriger l&#x27;initialisation des ReplaySubject
+    this.filteredItemTypesArray.push(new ReplaySubject&lt;any[]&gt;(1));
+   this.filteredItemValuesArray.push(new ReplaySubject&lt;any[]&gt;(1));
+    this.filteredPropertyMultiArray.push(new ReplaySubject&lt;any[]&gt;(1));
+   
+
+    this.setCurrentItemTypes(this.lastStatementIndex);
+    this.filterItemTypes(this.lastStatementIndex);
+    this.filterItemValues(this.lastStatementIndex);
+    this.filterPropertyMulti(this.lastStatementIndex, of([]));
+  }
+
+
+
+  ngAfterViewInit() {
+
+    console.log(&#x27;Statements length after view init:&#x27;, this.statements.length);
+
+ //   this.setInitialItemTypeValue();
+ //   this.setInitialPropertyValue();
+//    this.setInitialItemValue();
+    this.setInitialLiteralVariable();
+    this.setInitialQualifierPropertyValue();
+    this.setInitialQualifierValueValue();
+    this.setInitialQualifierLiteralVariable();
+
+  }
+
+
+  protected setInitialItemTypeValue() {
+    this.data.itemTypes$.subscribe(res &#x3D;&gt; {
+      this.filteredItemTypesArray.forEach((filteredItemTypes, index) &#x3D;&gt; {
+        console.log(res);
+        filteredItemTypes.next(res);
+        this.filterItemTypes(index);
+      });
+    });
+  }
+
+  protected setInitialPropertyValue() {
+    this.filteredPropertyMultiArray.forEach((filteredProperties, index) &#x3D;&gt; {
+      filteredProperties
+    });
+}
+
+
+  protected setInitialItemValue() {
+    this.filteredItemValuesArray.forEach((filteredItemValues, index) &#x3D;&gt; {
+      filteredItemValues;
+  });
+}
+
+  protected setInitialLiteralVariable() {
+    this.filteredLiteralVariables;
+  }
+
+  protected setInitialQualifierPropertyValue() {
+    this.filteredQualifierProperties;
+  }
+
+  protected setInitialQualifierValueValue() {
+    this.filteredQualifierValues;
+  }
+
+  protected setInitialQualifierLiteralVariable() {
+    this.filterQualifierLiteralVariables;
+  }
+
+
+  protected filterItemTypes(index: number) {
+    console.log(&#x27;Calling setCurrentItemTypes with index:&#x27;, index);
+    this.setCurrentItemTypes(index);
+    console.log(&#x27;currentItemTypes after setCurrentItemTypes:&#x27;, this.currentItemTypesArray[index]);
+
+    let search &#x3D; this.itemTypeFilterCtrl.value;
+    if (!search) {
+      this.filteredItemTypesArray[index].next(this.currentItemTypesArray[index].slice());
+    } else {
+      search &#x3D; search.toLowerCase();
+      this.filteredItemTypesArray[index].next(
+        this.currentItemTypesArray[index].filter(itemType &#x3D;&gt; itemType.label.toLowerCase().indexOf(search) &gt; -1)
+      );
+    }
+
+    this.changeDetector.detectChanges();
+  }
+
+
+
+  /**
+ * Initialise et met à jour la liste des types d&#x27;éléments disponibles pour chaque déclaration.
+ * Cette fonction est appelée chaque fois qu&#x27;une nouvelle déclaration est ajoutée ou qu&#x27;une déclaration existante est modifiée.
+ * Elle s&#x27;assure que la liste des types d&#x27;éléments est toujours à jour et reflète les sélections actuelles.
+ * 
+ * @param index L&#x27;index de la déclaration pour laquelle les types d&#x27;éléments doivent être mis à jour.
+ */
+  protected setCurrentItemTypes(index: number): void {
+    console.log(&#x27;setCurrentItemTypes called with index:&#x27;, index);
+    if (index &#x3D;&#x3D;&#x3D; 0) {
+      if (!ITEMTYPES || ITEMTYPES.length &#x3D;&#x3D;&#x3D; 0) {
+        console.error(&#x27;ITEMTYPES is undefined or empty&#x27;);
+        this.currentItemTypesArray[index] &#x3D; [];
+      } else {
+        this.currentItemTypesArray[index] &#x3D; ITEMTYPES;
+        console.log(&#x27;Updated currentItemTypes:&#x27;, this.currentItemTypesArray[index]);
+      }
+    } else {
+      let labels: any[] &#x3D; [];
+
+      for (let j &#x3D; 0; j &lt; index; j++) {
+        const itemTypeControl &#x3D; this.statements.at(j).get(&#x27;itemType&#x27;) as FormControl;
+        const itemValueControl &#x3D; this.statements.at(j).get(&#x27;value.itemValue&#x27;) as FormControl;
+
+        console.log(&#x27;itemTypeControl at index&#x27;, j, &#x27;:&#x27;, itemTypeControl);
+        console.log(&#x27;itemValueControl at index&#x27;, j, &#x27;:&#x27;, itemValueControl);
+
+        if (itemTypeControl &amp;&amp; itemTypeControl.value) {
+          const itemTypeValue &#x3D; itemTypeControl.value[1]; // Extraire l&#x27;objet unique
+          console.log(&#x60;itemTypeControl value at index ${j}:&#x60;, itemTypeValue);
+          labels.push({ label: itemTypeValue });
+        }
+
+        if (itemValueControl &amp;&amp; itemValueControl.value) {
+          const itemValue &#x3D; itemValueControl.value[1]; // Extraire l&#x27;objet unique
+          if (typeof itemValue &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp; itemValue.startsWith(&#x27;?&#x27;)) {
+            labels.push({ label: itemValue });
+          }
+        }
+      }
+
+      // Supprimer les doublons en comparant les propriétés des objets
+      const uniqueLabels &#x3D; Array.from(new Set(labels.map(label &#x3D;&gt; JSON.stringify(label))))
+        .map(str &#x3D;&gt; JSON.parse(str));
+
+      // Trier les objets par ordre alphabétique selon leurs propriétés
+      this.currentItemTypesArray[index] &#x3D; uniqueLabels.sort((a, b) &#x3D;&gt; a.label.localeCompare(b.label));
+      console.log(&#x27;Updated currentItemTypes:&#x27;, this.currentItemTypesArray[index]);
+    }
+  }
+
+
+
+  protected filterPropertyMulti(index: number, options$: Observable&lt;any[]&gt;): void {
+    options$
+      .pipe(
+        switchMap(options &#x3D;&gt; {
+          if (!options || options.length &#x3D;&#x3D;&#x3D; 0) {
+            console.error(&quot;Les données ne sont pas correctement chargées dans options.&quot;);
+            return of([]);
+          }
+          console.log(options);
+
+          let search &#x3D; this.propertytMultiFilterCtrl.value;
+          if (!search) {
+            return of(options.slice());
+          } else {
+            search &#x3D; search.toLowerCase();
+            // filter the projects
+            return of(options.filter(entity &#x3D;&gt; entity.value.toLowerCase().indexOf(search) &gt; -1));
+          }
+        })
+      )
+      .subscribe(filteredOptions &#x3D;&gt; {
+        this.filteredPropertyMultiArray[index].next(filteredOptions);
+      });
+  }
+
+
+/*  protected filterItemValues(index: number) {
+    const initialSearch &#x3D; this.itemValueFilterCtrl.value ? this.itemValueFilterCtrl.value.toLowerCase() : &#x27;&#x27;;
+    this.itemValueFilterCtrl.valueChanges
+      .pipe(
+        startWith(initialSearch),
+        debounceTime(400),
+        switchMap(search &#x3D;&gt; {
+          search &#x3D; search ? search.toLowerCase() : &#x27;&#x27;;
+          return this.itemValuesList2(search, this.lang.selectedLang, 20).pipe(
+            map(filteredItems &#x3D;&gt; {
+              const selectedOptions &#x3D; this.getSelectedOptionsUpToIndex(index); // Utiliser l&#x27;index actuel
+              const selectedLabels &#x3D; this.getLabelsFromSelectedOptions(selectedOptions);
+              const augmentedItems &#x3D; [...selectedLabels.map(label &#x3D;&gt; ({ label, col: null, id: null, separator: &#x27;&#x27; })), ...filteredItems];
+
+              if (search.startsWith(&#x27;?&#x27;)) {
+                return augmentedItems.filter(item &#x3D;&gt; item.label.toLowerCase().startsWith(search));
+              } else {
+                return augmentedItems.filter(item &#x3D;&gt; item.label.toLowerCase().includes(search));
+              }
+            }),
+            map(items &#x3D;&gt; {
+              const uniqueItems &#x3D; items.filter((item, index, self) &#x3D;&gt;
+                index &#x3D;&#x3D;&#x3D; self.findIndex((t) &#x3D;&gt; (
+                  t.label &#x3D;&#x3D;&#x3D; item.label
+                ))
+              );
+              if (!this.statementOptions[index]) {
+                this.statementOptions[index] &#x3D; new BehaviorSubject&lt;any[]&gt;([]);
+              }
+              this.statementOptions[index].next(uniqueItems); // Stocker les options dans le BehaviorSubject
+              return uniqueItems;
+            })
+          );
+        })
+      )
+      .subscribe(augmentedItems &#x3D;&gt; {
+        console.log(&#x60;Augmented Items for statement ${index}:&#x60;, augmentedItems);
+        if (!this.filteredItemValuesArray[index]) {
+          this.filteredItemValuesArray[index] &#x3D; new ReplaySubject&lt;any[]&gt;(1);
+        }
+        this.filteredItemValuesArray[index].next(augmentedItems); // Utiliser l&#x27;index actuel
+        this.resetPreviousItemValues(index); // Réinitialiser les valeurs des statements précédents
+      });
+
+    // Utiliser les options stockées lors des changements
+    if (this.statementOptions[index]) {
+      this.statementOptions[index].subscribe(options &#x3D;&gt; {
+        this.filteredItemValuesArray[index].next(options);
+      });
+    }
+  } */
+
+
+  protected filterItemValues(index: number) {
+    // Obtenir les options sélectionnées jusqu&#x27;à l&#x27;index actuel
+    const selectedOptions &#x3D; this.getSelectedOptionsUpToIndex(index);
+
+    // Obtenir les labels des options sélectionnées
+    const selectedLabels &#x3D; this.getLabelsFromSelectedOptions(selectedOptions);
+
+    // Créer les éléments augmentés à partir des labels sélectionnés
+    const augmentedItems &#x3D; selectedLabels.map(label &#x3D;&gt; ({ label, col: null, id: null, separator: &#x27;&#x27; }));
+
+    console.log(augmentedItems)
+
+    // Mettre à jour le BehaviorSubject avec les éléments augmentés
+    if (!this.statementOptions[index]) {
+      this.statementOptions[index] &#x3D; new BehaviorSubject&lt;any[]&gt;([]);
+    }
+    this.statementOptions[index].next(augmentedItems);
+
+    // Mettre à jour le ReplaySubject avec les éléments augmentés
+    if (!this.filteredItemValuesArray[index]) {
+      this.filteredItemValuesArray[index] &#x3D; new ReplaySubject&lt;any[]&gt;(1);
+    }
+    this.filteredItemValuesArray[index].next(augmentedItems);
+
+    // Réinitialiser les valeurs des statements précédents
+   this.resetPreviousItemValues(index);
+  }
+
+
+
+
+  protected resetPreviousItemValues(currentIndex: number): void {
+    for (let i &#x3D; 0; i &lt; currentIndex; i++) {
+      const itemValueControl &#x3D; this.statements.at(i).get(&#x27;value.itemValue&#x27;) as FormControl;
+      if (itemValueControl &amp;&amp; itemValueControl.value) {
+        itemValueControl.setValue(itemValueControl.value, { emitEvent: false });
+      }
+    }
+  }
+
+
+
+  getSelectedOptionsUpToIndex(i: number): any[] {
+    let selectedOptions &#x3D; [];
+    const lastItemTypeControl &#x3D; this.statements.at(i).get(&#x27;itemType&#x27;) as FormControl;
+    const lastItemTypeValue &#x3D; lastItemTypeControl ? lastItemTypeControl.value[1] : null;
+
+    for (let index &#x3D; 0; index &lt;&#x3D; i; index++) {
+      const itemTypeControl &#x3D; this.statements.at(index).get(&#x27;itemType&#x27;) as FormControl;
+      const itemValueControl &#x3D; this.statements.at(index).get(&#x27;value.itemValue&#x27;) as FormControl;
+      if (itemTypeControl &amp;&amp; itemTypeControl.value) {
+        let itemTypeValue &#x3D; [...itemTypeControl.value]; // Cloner la valeur pour éviter de modifier l&#x27;original
+        let label &#x3D; itemTypeValue[1]; // Supposons que le label soit à l&#x27;index 1
+
+        // Vérifier si itemValue commence par ? et se termine par un nombre
+        if (itemValueControl &amp;&amp; itemValueControl.value) {
+          const itemValue &#x3D; itemValueControl.value[1];
+          const match &#x3D; itemValue.match(/^\?(.+?)(\d+)$/);
+          if (match) {
+            const baseValue &#x3D; match[1];
+            const number &#x3D; parseInt(match[2]);
+            const itemTypeBase &#x3D; itemTypeControl.value[1].slice(0, -1);
+            if (baseValue &#x3D;&#x3D;&#x3D; itemTypeBase) {
+              label &#x3D; baseValue + (number + 1);
+            }
+          }
+        }
+
+        // Modifier le label selon les règles spécifiées
+        const lastChar &#x3D; label.charAt(label.length - 1);
+        if (/[a-zA-Z]$/.test(lastChar)) {
+          label +&#x3D; &#x27;1&#x27;;
+        } else if (/[0-9]$/.test(lastChar)) {
+          const number &#x3D; parseInt(lastChar);
+          label &#x3D; label.slice(0, -1) + (number + 1);
+        }
+        itemTypeValue[1] &#x3D; label; // Mettre à jour le label dans la valeur itemType clonée
+
+        // Ne pas ajouter au tableau si le label mis à jour est égal à la valeur du contrôle itemType du dernier statement
+        if (index &lt; i &amp;&amp; label &#x3D;&#x3D;&#x3D; lastItemTypeValue) {
+          continue;
+        }
+
+        // Ajouter la valeur du contrôle du statement i en remplaçant le dernier caractère par ce nombre incrémenté de 1
+        if (index &lt; i &amp;&amp; itemValueControl &amp;&amp; itemValueControl.value) {
+          const itemValue &#x3D; itemValueControl.value[1];
+          const match &#x3D; itemValue.match(/^\?(.+?)(\d+)$/);
+          if (match) {
+            const baseValue &#x3D; match[1];
+            const number &#x3D; parseInt(match[2]);
+            const newLabel &#x3D; baseValue + (number + 1);
+            if (!selectedOptions.some(option &#x3D;&gt; option[1] &#x3D;&#x3D;&#x3D; newLabel)) {
+              selectedOptions.push([itemTypeControl.value[0], newLabel]);
+            }
+          }
+        }
+
+        selectedOptions.push(itemTypeValue);
+      }
+    }
+    return selectedOptions;
+  }
+
+  getLabelsFromSelectedOptions(options: any[]): string[] {
+    return options.map(option &#x3D;&gt; option[1]); // Supposons que le label soit à l&#x27;index 1
+  }
+
+
+  itemValuesList1(label) { 
+    return  this.data.mutator$.pipe(map(re &#x3D;&gt; re[0]))
+      }
+
+
+  itemValuesList2(label, lang, number) {
+   let entityValues:any[] &#x3D; [];
+    return  this.request.searchItem(label, lang).pipe(
+      map(res &#x3D;&gt; this.createList(res)),
+      switchMap(url &#x3D;&gt; this.request.getItem(url)),
+      filter(res &#x3D;&gt; res !&#x3D;&#x3D; undefined &amp;&amp; res !&#x3D;&#x3D; null),
+      filter(res &#x3D;&gt; res.entities !&#x3D;&#x3D; undefined &amp;&amp; res.entities !&#x3D;&#x3D; null),
+      map(res &#x3D;&gt; Object.values(res.entities)),
+      map(res &#x3D;&gt; this.setLanguage.item(res, this.lang.selectedLang))
+    )
+} 
+
+
+  protected filterLiteralVariables() {
+    if (this.literalVariables &#x3D;&#x3D;&#x3D; undefined) {
+      return;
+    }
+    // get the search keyword
+    let search &#x3D; this.literalFilterCtrl.value;
+    if (!search) {
+      this.filteredLiteralVariables.next(this.literalVariables.slice());
+      return;
+    } else {
+      search &#x3D; search.toLowerCase();
+    }
+    this.filteredLiteralVariables.next(
+      this.literalVariables.filter(variable &#x3D;&gt; variable.label.toLowerCase().indexOf(search) &gt; -1)
+    );
+  }
+
+  protected filterQualifierProperties() {
+
+    if (!this.qualifierPropertiesToSelect) {
+      return;
+    }
+    let search &#x3D; this.qualifierPropertyFilterCtrl.value;
+    if (!search) {
+      this.filteredQualifierProperties.next(this.qualifierPropertiesToSelect.slice());
+      return;
+    } else {
+      search &#x3D; search.toLowerCase();
+    }
+    // filter the 
+    this.filteredQualifierProperties.next(
+      this.qualifierPropertiesToSelect.filter(entity &#x3D;&gt; entity.itemLabel.label.toLowerCase().indexOf(search) &gt; -1)
+    );
+  }
+
+  protected filterQualifierValues() {
+    let search &#x3D; this.qualifierValueFilterCtrl.value;
+    let firstCharacter &#x3D; search.charAt(0);
+    if (!search) {
+      this.filteredQualifierValues.next(this.entityValues.slice());
+      return;
+    } else {
+      if (firstCharacter !&#x3D;&#x3D; &quot;?&quot;) {
+        search &#x3D; search.toLowerCase();
+        this.qualifierValueFilterCtrl.valueChanges //search engine
+          .pipe(
+            debounceTime(400),
+            switchMap(label &#x3D;&gt; this.request.searchItem(label, this.lang.selectedLang)),
+            map(res &#x3D;&gt; this.createList(res)),
+            debounceTime(400),
+            switchMap(url &#x3D;&gt; this.request.getItem(url)),
+            filter(res &#x3D;&gt; res !&#x3D;&#x3D; undefined &amp;&amp; res !&#x3D;&#x3D; null),
+            filter(res &#x3D;&gt; res.entities !&#x3D;&#x3D; undefined &amp;&amp; res.entities !&#x3D;&#x3D; null),
+            map(res &#x3D;&gt; Object.values(res.entities))
+          ).subscribe(re &#x3D;&gt; {
+            this.entityValues &#x3D; this.setLanguage.item(re, this.lang.selectedLang);
+            this.setSeparator(this.entityValues);
+            this.filteredQualifierValues.next(this.entityValues.filter(value &#x3D;&gt; value.label.toLowerCase().indexOf(search) &gt; -1));
+          }
+          );
+      }
+      else {
+        this.data.mutator$.subscribe(re &#x3D;&gt; {
+          this.entityValues &#x3D; re[0];
+          let qualifierEntityValues &#x3D; [];
+      //    let qualifierTypes: number[] &#x3D; [1, 5, 6, 8, 10, 13, 16, 17, 19, 20, 21, 23];
+          qualifierEntityValues &#x3D; this.entityValues.filter(entityValue &#x3D;&gt; QUALIFIERTYPES.includes(entityValue.col))  // filter the options for the qualifier values
+          if (search &#x3D;&#x3D;&#x3D; &#x27;?*&#x27;) {
+            this.filteredQualifierValues.next(qualifierEntityValues);
+          } else {
+            search &#x3D; search.slice(1);
+            this.filteredQualifierValues.next(qualifierEntityValues.filter(value &#x3D;&gt; value.label.toLowerCase().indexOf(search) &gt; -1));
+          }
+        }
+        );
+      }
+    }
+  }
+
+  protected filterQualifierLiteralVariables() {
+    console.log(this.qualifierLiteralVariables);
+    if (this.qualifierLiteralVariables &#x3D;&#x3D;&#x3D; undefined) {
+      return;
+    }
+    // get the search keyword
+    let search &#x3D; this.qualifierLiteralFilterCtrl.value;
+    console.log(search);
+    if (!search) {
+      console.log(this.qualifierLiteralVariables);
+      this.filteredQualifierLiteralVariables.next(this.qualifierLiteralVariables.slice());
+      return;
+    } else {
+      search &#x3D; search.toLowerCase();
+    }
+    this.filteredQualifierLiteralVariables.next(
+      this.qualifierLiteralVariables.filter(variable &#x3D;&gt; variable.label.toLowerCase().indexOf(search) &gt; -1)
+    );
+  }
+
+
+
+  setSeparator(entityValues: any[]) {
+    for (let i &#x3D; 0; i &lt; entityValues.length; i++) {
+      if (entityValues[i].description) { entityValues[i].separator &#x3D; &quot;, &quot;; };
+    };
+  }
+
+  selectedProperties(property) {
+    this.selectedPropertiesList &#x3D; property.value;
+  }
+
+
+
+  datatypeValidator(control: AbstractControl): { [key: string]: boolean; } | null {
+    if (control.value &amp;&amp; control.value.length &gt; 1) {
+      const firstType &#x3D; control.value[0][3]; // Supposons que le type soit à l&#x27;index 3
+      const allSameType &#x3D; control.value.every((val: any) &#x3D;&gt; val[3] &#x3D;&#x3D;&#x3D; firstType);
+      if (!allSameType) {
+        return { &#x27;differentDatatype&#x27;: true };
+      }
+    }
+    return null;
+  }
+
+
+
+  notFound(res) {
+    res &#x3D;&#x3D; &quot;https://database.factgrid.de//w/api.php?action&#x3D;wbgetentities&amp;ids&#x3D;&amp;format&#x3D;json&amp;origin&#x3D;*&quot; ?
+      res &#x3D; &quot;https://database.factgrid.de//w/api.php?action&#x3D;wbgetentities&amp;ids&#x3D;Q220375&amp;format&#x3D;json&amp;origin&#x3D;*&quot; : res;
+    return res;
+  }
+
+  createList(re) {
+    let baseGetURL &#x3D; &#x27;https://database.factgrid.de//w/api.php?action&#x3D;wbgetentities&amp;ids&#x3D;&#x27;;
+    let getUrlSuffix &#x3D; &#x27;&amp;format&#x3D;json&amp;origin&#x3D;*&#x27;;
+    let list: string &#x3D; &quot;&quot;;
+    let url: string &#x3D; &quot;&quot;;
+    let arr &#x3D; re.search;
+    if (arr &#x3D;&#x3D;&#x3D; undefined) { arr &#x3D; []; }
+    else { arr &#x3D; arr; };
+    for (let i &#x3D; 0; i &lt; arr.length; i++) {
+      list &#x3D; list + &quot;|&quot; + arr[i].id;
+    };
+    list &#x3D; list.slice(1);
+    url &#x3D; baseGetURL + list + getUrlSuffix;
+    return url;
+  }
+
+ 
+
+
+  ngOnDestroy(): void {
+    this._onDestroy.next(),
+      this._onDestroy.complete();
+  }
+
+}
+
+
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'Statement-2.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

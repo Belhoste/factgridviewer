@@ -1,0 +1,1631 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>factgrid documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">factgrid documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ParisSearchComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/paris-search/paris-search.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-paris-search</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>RouterModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>FormsModule</code>
+                            <code>MatInputModule</code>
+                            <code>MatFormFieldModule</code>
+                            <code>MatTableModule</code>
+                            <code>MatIconModule</code>
+                            <code>MatButtonModule</code>
+                            <code>MatCardModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./paris-search.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./paris-search.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#baseGetURL" >baseGetURL</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#changeDetector" >changeDetector</a>
+                            </li>
+                            <li>
+                                <a href="#data$" >data$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#dataService" >dataService</a>
+                            </li>
+                            <li>
+                                <a href="#formerVisitsTitle" >formerVisitsTitle</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getUrlSuffix" >getUrlSuffix</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isDisplay" >isDisplay</a>
+                            </li>
+                            <li>
+                                <a href="#itemId" >itemId</a>
+                            </li>
+                            <li>
+                                <a href="#items" >items</a>
+                            </li>
+                            <li>
+                                <a href="#labels" >labels</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#lang" >lang</a>
+                            </li>
+                            <li>
+                                <a href="#newItem" >newItem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#request" >request</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#router" >router</a>
+                            </li>
+                            <li>
+                                <a href="#searchInput" >searchInput</a>
+                            </li>
+                            <li>
+                                <a href="#searchQuery$" >searchQuery$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#selectedItem" >selectedItem</a>
+                            </li>
+                            <li>
+                                <a href="#selectedParisItemsList" >selectedParisItemsList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#setLanguage" >setLanguage</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addParis" >addParis</a>
+                            </li>
+                            <li>
+                                <a href="#createList" >createList</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openItem" >openItem</a>
+                            </li>
+                            <li>
+                                <a href="#trackById" >trackById</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addParis"></a>
+                    <span class="name">
+                        <span ><b>addParis</b></span>
+                        <a href="#addParis"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addParis(re)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="141"
+                                    class="link-to-prism">src/app/paris-search/paris-search.component.ts:141</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createList"></a>
+                    <span class="name">
+                        <span ><b>createList</b></span>
+                        <a href="#createList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createList(re)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="127"
+                                    class="link-to-prism">src/app/paris-search/paris-search.component.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/app/paris-search/paris-search.component.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/app/paris-search/paris-search.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openItem"></a>
+                    <span class="name">
+                        <span ><b>openItem</b></span>
+                        <a href="#openItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openItem(item: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/app/paris-search/paris-search.component.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="trackById"></a>
+                    <span class="name">
+                        <span ><b>trackById</b></span>
+                        <a href="#trackById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>trackById(index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, item: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="146"
+                                    class="link-to-prism">src/app/paris-search/paris-search.component.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>item</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="baseGetURL"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>baseGetURL</b></span>
+                        <a href="#baseGetURL"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;https://database.factgrid.de//w/api.php?action&#x3D;wbgetentities&amp;ids&#x3D;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/paris-search/paris-search.component.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="changeDetector"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>changeDetector</b></span>
+                        <a href="#changeDetector"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/paris-search/paris-search.component.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="data$"></a>
+                    <span class="name">
+                        <span ><b>data$</b></span>
+                        <a href="#data$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Observable&lt;string[]&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/paris-search/paris-search.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dataService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>dataService</b></span>
+                        <a href="#dataService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ParisDatabaseService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/paris-search/paris-search.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formerVisitsTitle"></a>
+                    <span class="name">
+                        <span ><b>formerVisitsTitle</b></span>
+                        <a href="#formerVisitsTitle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&quot;you have visited:&quot;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/paris-search/paris-search.component.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getUrlSuffix"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getUrlSuffix</b></span>
+                        <a href="#getUrlSuffix"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&amp;format&#x3D;json&amp;origin&#x3D;*&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/paris-search/paris-search.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isDisplay"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>isDisplay</b></span>
+                        <a href="#isDisplay"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/paris-search/paris-search.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="itemId"></a>
+                    <span class="name">
+                        <span ><b>itemId</b></span>
+                        <a href="#itemId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/paris-search/paris-search.component.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="items"></a>
+                    <span class="name">
+                        <span ><b>items</b></span>
+                        <a href="#items"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/paris-search/paris-search.component.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="labels"></a>
+                    <span class="name">
+                        <span ><b>labels</b></span>
+                        <a href="#labels"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/paris-search/paris-search.component.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lang"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>lang</b></span>
+                        <a href="#lang"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SelectedLangService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/paris-search/paris-search.component.ts:51</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="newItem"></a>
+                    <span class="name">
+                        <span ><b>newItem</b></span>
+                        <a href="#newItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/paris-search/paris-search.component.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="request"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>request</b></span>
+                        <a href="#request"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(RequestService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/paris-search/paris-search.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(Router)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/paris-search/paris-search.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchInput"></a>
+                    <span class="name">
+                        <span ><b>searchInput</b></span>
+                        <a href="#searchInput"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new FormControl()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/paris-search/paris-search.component.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchQuery$"></a>
+                    <span class="name">
+                        <span ><b>searchQuery$</b></span>
+                        <a href="#searchQuery$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new BehaviorSubject&lt;string&gt;(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/paris-search/paris-search.component.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedItem"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>selectedItem</b></span>
+                        <a href="#selectedItem"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Observable&lt;any&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/paris-search/paris-search.component.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedParisItemsList"></a>
+                    <span class="name">
+                        <span ><b>selectedParisItemsList</b></span>
+                        <a href="#selectedParisItemsList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(JSON.parse(localStorage.getItem(&#x27;selectedItems&#x27;)) || []).filter(item &#x3D;&gt; item &amp;&amp; item.value &amp;&amp; item.value.id)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/paris-search/paris-search.component.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setLanguage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>setLanguage</b></span>
+                        <a href="#setLanguage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SetLanguageService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/paris-search/paris-search.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, ChangeDetectorRef, inject } from &#x27;@angular/core&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { Observable, BehaviorSubject, combineLatest} from &#x27;rxjs&#x27;;
+import { map, switchMap, tap, debounceTime, takeWhile, filter } from &#x27;rxjs/operators&#x27;;
+import { ParisDatabaseService } from &#x27;./services/paris-database.service&#x27;;
+import { MatTableDataSource, MatTableModule } from &#x27;@angular/material/table&#x27;;
+import { FormControl, ReactiveFormsModule, FormsModule } from &#x27;@angular/forms&#x27;;
+import { MatInputModule } from &#x27;@angular/material/input&#x27;;
+import { MatFormFieldModule} from &#x27;@angular/material/form-field&#x27;;
+import { MatCardModule } from &#x27;@angular/material/card&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import {MatButtonModule} from &#x27;@angular/material/button&#x27;;
+//import { RouterLinkActive, RouterLink, RouterOutlet } from &#x27;@angular/router&#x27;;
+import { RouterModule } from &#x27;@angular/router&#x27;;
+import { SetLanguageService } from &#x27;../services/set-language.service&#x27;;
+import { RequestService } from &#x27;../services/request.service&#x27;;
+import { SelectedLangService } from &#x27;../selected-lang.service&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+
+
+
+
+
+@Component({
+  selector: &#x27;app-paris-search&#x27;,
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+  ],
+  templateUrl: &#x27;./paris-search.component.html&#x27;,
+  styleUrls: [&#x27;./paris-search.component.scss&#x27;]
+})
+
+
+
+
+export class ParisSearchComponent implements OnInit {
+ private dataService &#x3D; inject(ParisDatabaseService);
+ private changeDetector &#x3D; inject(ChangeDetectorRef);
+ private request &#x3D; inject(RequestService);
+ private setLanguage &#x3D; inject(SetLanguageService);
+ private lang &#x3D; inject(SelectedLangService);
+ private router &#x3D; inject(Router);
+
+
+
+  //  selectedLang: string &#x3D; (localStorage[&#x27;selectedLang&#x27;]&#x3D;&#x3D;&#x3D;undefined)? &quot;en&quot;: localStorage[&#x27;selectedLang&#x27;]; //initialization of the storage of the selected language (english)
+
+
+    searchInput &#x3D; new FormControl();
+
+    public selectedItem:Observable&lt;any&gt;;
+    public isDisplay:boolean &#x3D; false;
+
+    data$ &#x3D; new Observable&lt;string[]&gt;();
+    searchQuery$ &#x3D; new BehaviorSubject&lt;string&gt;(&#x27;&#x27;);
+    
+    labels
+    items &#x3D; [];
+    newItem;
+    itemId:string;
+
+    private baseGetURL &#x3D; &#x27;https://database.factgrid.de//w/api.php?action&#x3D;wbgetentities&amp;ids&#x3D;&#x27; ;
+    private getUrlSuffix&#x3D; &#x27;&amp;format&#x3D;json&amp;origin&#x3D;*&#x27; ;
+
+    formerVisitsTitle:string &#x3D;&quot;you have visited:&quot;;
+    selectedParisItemsList: any[] &#x3D; (JSON.parse(localStorage.getItem(&#x27;selectedItems&#x27;)) || []).filter(item &#x3D;&gt; item &amp;&amp; item.value &amp;&amp; item.value.id);
+
+
+  openItem(item: any) {
+    console.log(&#x27;openItem called with:&#x27;, item);
+    sessionStorage.setItem(&#x27;from&#x27;, &#x27;paris-search&#x27;);
+    this.router.navigate([&#x27;/item&#x27;, item.id], { state: { from: &#x27;paris-search&#x27; } });
+  }
+
+  ngOnInit(): void {
+
+   /*
+    this.formerVisitsTitle &#x3D; &quot;you have visited:&quot;
+    if(this.selectedLang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {this.formerVisitsTitle &#x3D; &quot;Sie haben besucht:&quot;};
+    if(this.selectedLang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {this.formerVisitsTitle &#x3D; &quot;vous avez visité :&quot;};
+    if(this.selectedLang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {this.formerVisitsTitle &#x3D; &quot;has visitado :&quot;}
+    if(this.selectedLang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {this.formerVisitsTitle &#x3D; &quot;hai visitato :&quot;}
+    */
+
+      this.formerVisitsTitle &#x3D; this.lang.formerVisitsTitle();
+      console.log(&#x27;selectedParisItemsList:&#x27;, this.selectedParisItemsList);
+
+    this.labels &#x3D; this.searchInput.valueChanges   //search engine
+    .pipe(
+    debounceTime(400),
+    map( res &#x3D;&gt; &quot;Paris, &quot; + res ),
+    tap(res &#x3D;&gt; console.log(res)),
+    //switchMap(label &#x3D;&gt; this.request.searchItem(label, this.selectedLang)),
+     switchMap(label &#x3D;&gt; this.request.searchItem(label, this.lang.selectedLang)),
+
+    map( res &#x3D;&gt; this.createList(res)),
+    map(res &#x3D;&gt; res &#x3D;&#x3D; &quot;https://database.factgrid.de//w/api.php?action&#x3D;wbgetentities&amp;ids&#x3D;&amp;format&#x3D;json&amp;origin&#x3D;*&quot;? 
+   &quot;https://database.factgrid.de//w/api.php?action&#x3D;wbgetentities&amp;ids&#x3D;Q220375&amp;format&#x3D;json&amp;origin&#x3D;*&quot; : res ),
+    debounceTime(200),
+    switchMap(url &#x3D;&gt; this.request.getItem(url)),
+  //  takeWhile (res &#x3D;&gt; res !&#x3D;&#x3D; undefined),
+    filter (res &#x3D;&gt; res !&#x3D;&#x3D; undefined),
+    filter (res &#x3D;&gt; res.entities !&#x3D;&#x3D; undefined &amp;&amp; res.entities !&#x3D;&#x3D;null),
+   // filter (res &#x3D;&gt; res.entities !&#x3D;&#x3D; null),
+    map(res &#x3D;&gt; Object.values(res.entities))
+   )
+    .subscribe(re &#x3D;&gt; { 
+  //  this.items &#x3D; this.setLanguage.item(re, this.selectedLang);
+     this.items &#x3D; this.setLanguage.item(re, this.lang.selectedLang);
+  //  this.items &#x3D; this.filterResearchField(this.items, this.selectedResearchField);
+      this.isDisplay &#x3D; true ;
+      if (this.items[0].id &#x3D;&#x3D; &quot;Q220375&quot;) { this.isDisplay &#x3D; false };
+   this.changeDetector.detectChanges();
+      })
+    }
+
+   createList(re) {  //create an url whith the elements of an array
+    let list &#x3D; &quot;&quot;;
+    let url &#x3D; &quot;&quot;;
+    let arr &#x3D; re.search;
+    if ( arr &#x3D;&#x3D;&#x3D; undefined ) { arr &#x3D; []}
+    else { arr &#x3D; arr };
+    for (let i &#x3D; 0; i &lt; arr.length; i++) {
+      list &#x3D; list+&quot;|&quot;+arr[i].id;    
+    };
+    list &#x3D; list.slice(1) ;
+    url &#x3D; this.baseGetURL+list+this.getUrlSuffix;
+    return url
+    }
+
+  addParis(re) {
+     re &#x3D; &quot;Paris, &quot;+re;
+    // return re
+  }
+
+  trackById(index: number, item: any): any {
+    return item &amp;&amp; item.value ? item.value.id : index;
+  }
+
+
+    ngOnDestroy(): void {
+       this.labels.unsubscribe()
+       }
+   
+   }
+
+   
+
+ 
+
+
+
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;head&gt;
+
+  &lt;link href&#x3D;&quot;https://fonts.googleapis.com/icon?family&#x3D;Material+Icons&quot;
+        rel&#x3D;&quot;stylesheet&quot;&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+
+
+
+&lt;div class&#x3D;&quot;cardBackground&quot;&gt;
+     &lt;div class&#x3D;&quot;bigTitle&quot;&gt;Paris on FactGrid&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;mat-card appearance&#x3D;&quot;outlined&quot; class&#x3D;mat-elevation-z12&gt;
+  &lt;mat-card-content&gt;
+    &lt;div class&#x3D;&quot;search-center2&quot;&gt;
+      &lt;mat-form-field&gt;
+        &lt;input matInput placeholder&#x3D;&quot;Ex. rue de la Paix&quot; value&#x3D;&quot;rue de la Paix&quot; [formControl]&#x3D;&quot;searchInput&quot;&gt;
+      &lt;/mat-form-field&gt;
+    &lt;/div&gt;
+  &lt;/mat-card-content&gt;
+
+  &lt;div class&#x3D;&quot;search-center&quot;&gt;
+    @if (isDisplay &#x3D;&#x3D; true) {
+    &lt;div class&#x3D;&quot;searchListSize&quot;&gt;
+      &lt;!--  class&#x3D;&quot;searchListSize&quot; seems to be useless --&gt;
+      &lt;div class&#x3D;&quot;details&quot;&gt;
+        @for (item of items; track item) {
+        &lt;div&gt;
+          &lt;span class&#x3D;&quot;search-label&quot;&gt;{{item.label}}&amp;nbsp;&lt;/span&gt;
+          &lt;mat-icon-button class&#x3D;&quot;internalLink&quot; (click)&#x3D;&quot;openItem(item)&quot;&gt;
+            &lt;mat-icon color&#x3D;&quot;primary&quot; [inline]&#x3D;&quot;true&quot;&gt;open_in_new&lt;/mat-icon&gt;
+          &lt;/mat-icon-button&gt;
+          &amp;nbsp;&amp;nbsp;&amp;nbsp;
+          @if (item.description) {
+          &lt;span&gt;, {{item.description }}&lt;/span&gt;
+          }
+          &lt;hr&gt;
+        &lt;/div&gt;
+        }
+      &lt;/div&gt;
+    &lt;/div&gt;
+    }
+
+    @if (isDisplay &#x3D;&#x3D; false) {
+    &lt;div&gt;
+      &lt;div class&#x3D;&quot;search-center&quot;&gt;
+        &lt;a href&#x3D;&quot;https://database.factgrid.de/query/#%23model%0A%0ASELECT%20%3Fitem%20%3Fviewer%20%3FitemLabel%20%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP2%20wd%3AQ7%3B%0A%20%20%20%20%20%20%20%20wdt%3AP247%20wd%3AQ24708.%0A%20%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%0A%20%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%0A%7D%0A&quot;&gt;
+          sparql query
+        &lt;/a&gt;
+        &lt;span&gt;&amp;nbsp;&amp;nbsp;|&amp;nbsp;&amp;nbsp;&lt;/span&gt;
+        &lt;a [routerLink]&#x3D;&quot;[&#x27;&#x27;]&quot;&gt;FactGrid&lt;/a&gt;  &lt;!-- new route --&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;search-itemSelected&quot;&gt;
+        &lt;mat-card appearance&#x3D;&quot;outlined&quot; class&#x3D;&quot;search-itemSelected-mat-card&quot;&gt;
+          &lt;div class&#x3D;&quot;selectedListTitle2&quot;&gt;{{formerVisitsTitle}}&lt;/div&gt;
+          &lt;div class&#x3D;&quot;selectedItemSize&quot;&gt;
+            &lt;hr&gt;
+            &lt;mat-card-content&gt;
+              &lt;div&gt;
+                @for (selectedItem of selectedParisItemsList; track trackById(selectedItem)) {
+                &lt;div class&#x3D;&quot;labelTitlePadding&quot;&gt;
+                  @if (selectedItem) {
+                  &lt;span class&#x3D;&quot;selectedItemText&quot;&gt;
+                    {{selectedItem.label}}&amp;nbsp;
+                    &lt;mat-icon-button class&#x3D;&quot;internalLink&quot; [routerLink]&#x3D;&quot;[&#x27;/item&#x27;, selectedItem.value.id]&quot;&gt;&lt;mat-icon class&#x3D;&quot;whiteButton&quot; [inline]&#x3D;&quot;true&quot;&gt;open_in_new&lt;/mat-icon&gt;&lt;/mat-icon-button&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+                  &lt;/span&gt;
+                  }
+                  &lt;br&gt;
+                &lt;/div&gt;
+                }
+              &lt;/div&gt;
+            &lt;/mat-card-content&gt;
+          &lt;/div&gt;
+        &lt;/mat-card&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    }
+  &lt;/div&gt;
+&lt;/mat-card&gt;
+
+&lt;/body&gt;
+
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./paris-search.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.search-center {  
+  display: flex;
+  justify-content: center;
+}
+
+
+.search-center2 {
+  margin-top:40px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-label { // style of the labels of the items
+  font-weight: bold;
+}
+
+.search-itemSelected { // put a margin on top of the box of selected items
+  margin-top: 50px;
+}
+
+
+
+.selectedItemSize {
+   font-size: 14px;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><head>  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"        rel="stylesheet"></head><body><div class="cardBackground">     <div class="bigTitle">Paris on FactGrid</div></div><mat-card appearance="outlined" class=mat-elevation-z12>  <mat-card-content>    <div class="search-center2">      <mat-form-field>        <input matInput placeholder="Ex. rue de la Paix" value="rue de la Paix" [formControl]="searchInput">      </mat-form-field>    </div>  </mat-card-content>  <div class="search-center">    @if (isDisplay == true) {    <div class="searchListSize">      <!--  class="searchListSize" seems to be useless -->      <div class="details">        @for (item of items; track item) {        <div>          <span class="search-label">{{item.label}}&nbsp;</span>          <mat-icon-button class="internalLink" (click)="openItem(item)">            <mat-icon color="primary" [inline]="true">open_in_new</mat-icon>          </mat-icon-button>          &nbsp;&nbsp;&nbsp;          @if (item.description) {          <span>, {{item.description }}</span>          }          <hr>        </div>        }      </div>    </div>    }    @if (isDisplay == false) {    <div>      <div class="search-center">        <a href="https://database.factgrid.de/query/#%23model%0A%0ASELECT%20%3Fitem%20%3Fviewer%20%3FitemLabel%20%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP2%20wd%3AQ7%3B%0A%20%20%20%20%20%20%20%20wdt%3AP247%20wd%3AQ24708.%0A%20%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%0A%20%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%0A%7D%0A">          sparql query        </a>        <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>        <a [routerLink]="[\'\']">FactGrid</a>  <!-- new route -->      </div>      <div class="search-itemSelected">        <mat-card appearance="outlined" class="search-itemSelected-mat-card">          <div class="selectedListTitle2">{{formerVisitsTitle}}</div>          <div class="selectedItemSize">            <hr>            <mat-card-content>              <div>                @for (selectedItem of selectedParisItemsList; track trackById(selectedItem)) {                <div class="labelTitlePadding">                  @if (selectedItem) {                  <span class="selectedItemText">                    {{selectedItem.label}}&nbsp;                    <mat-icon-button class="internalLink" [routerLink]="[\'/item\', selectedItem.value.id]"><mat-icon class="whiteButton" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                  </span>                  }                  <br>                </div>                }              </div>            </mat-card-content>          </div>        </mat-card>      </div>    </div>    }  </div></mat-card></body></div>'
+    var COMPONENTS = [{'name': 'AdvancedSearchComponent', 'selector': 'app-advanced-search'},{'name': 'AdvancedSearchListComponent', 'selector': 'app-advanced-search-list'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'CareerDisplayComponent', 'selector': 'app-career-display'},{'name': 'DisplayComponent', 'selector': 'app-display'},{'name': 'EducationDisplayComponent', 'selector': 'app-education-display'},{'name': 'FooterComponent', 'selector': 'app-footer'},{'name': 'HarmoniaUniversalisComponent', 'selector': 'app-harmonia-universalis'},{'name': 'HeaderDisplayComponent', 'selector': 'app-header-display'},{'name': 'IframesDisplayComponent', 'selector': 'app-iframes-display'},{'name': 'ItemInfoComponent', 'selector': 'app-item-info'},{'name': 'MainDisplayComponent', 'selector': 'app-main-display'},{'name': 'MapComponent', 'selector': 'app-map'},{'name': 'ParisSearchComponent', 'selector': 'app-paris-search'},{'name': 'ProjectSelectComponent', 'selector': 'app-project-select'},{'name': 'SearchComponent', 'selector': 'app-search'},{'name': 'SociabilityDisplayComponent', 'selector': 'app-sociability-display'},{'name': 'SourcesDisplayComponent', 'selector': 'app-sources-display'},{'name': 'Sparql0DisplayComponent', 'selector': 'app-sparql0-display'},{'name': 'Sparql1DisplayComponent', 'selector': 'app-sparql1-display'},{'name': 'Sparql2DisplayComponent', 'selector': 'app-sparql2-display'},{'name': 'Sparql3DisplayComponent', 'selector': 'app-sparql3-display'},{'name': 'Sparql4DisplayComponent', 'selector': 'app-sparql4-display'},{'name': 'StatementSearchComponent', 'selector': 'app-statement-search'},{'name': 'StatementSearchComponent', 'selector': 'app-statement-search'},{'name': 'TextDisplayComponent', 'selector': 'app-text-display'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ParisSearchComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ParisSearchComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

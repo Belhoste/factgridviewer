@@ -1,0 +1,657 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>factgrid documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">factgrid documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >FactgridSubtitlesService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/factgrid-subtitles.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#lang" >lang</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#setSubtitle1" >setSubtitle1</a>
+                            </li>
+                            <li>
+                                <a href="#setSubtitle2" >setSubtitle2</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSubtitle1"></a>
+                    <span class="name">
+                        <span ><b>setSubtitle1</b></span>
+                        <a href="#setSubtitle1"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSubtitle1(re, propertyId, lang)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="15"
+                                    class="link-to-prism">src/app/services/factgrid-subtitles.service.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>propertyId</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>lang</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setSubtitle2"></a>
+                    <span class="name">
+                        <span ><b>setSubtitle2</b></span>
+                        <a href="#setSubtitle2"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setSubtitle2(re, propertyId, number, lang)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/app/services/factgrid-subtitles.service.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>re</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>propertyId</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>number</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>lang</td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lang"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>lang</b></span>
+                        <a href="#lang"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SelectedLangService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/services/factgrid-subtitles.service.ts:10</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, inject } from &#x27;@angular/core&#x27;;
+import { SelectedLangService } from &#x27;../selected-lang.service&#x27;;
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class FactgridSubtitlesService {
+  private lang &#x3D; inject(SelectedLangService);
+
+
+  //TODO: pass the lang selection to the SelectedLangService
+
+  setSubtitle1(re,propertyId,lang){  //to add a subtitle with a condition on the property
+  if (propertyId &#x3D;&#x3D;&#x3D; &quot;P320&quot;){
+   re.claims[propertyId].sparql &#x3D; &quot;List of members&quot;;
+   if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].sparql &#x3D; &quot;Mitgliederverzeichnis&quot;}
+   else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].sparql &#x3D; &quot;Liste des membres&quot;}
+   else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].sparql &#x3D; &quot;Lista de miembros&quot;}
+   else if (lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].sparql &#x3D; &quot;Elenco dei membri&quot;}
+    else if (lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].sparql &#x3D; &quot;A tagok listája&quot;};
+  }
+  if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].other &#x3D; &quot;further&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].other &#x3D; &quot;weiteren&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].other &#x3D; &quot;autres&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].other &#x3D; &quot;más&quot;}
+   else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].other &#x3D; &quot;di più&quot;}
+   else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].other &#x3D; &quot;további&quot;};
+ // if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].place &#x3D; &quot;place&quot;}
+ // else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].place &#x3D; &quot;Ort&quot;}
+ // else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].place &#x3D; &quot;lieu&quot;};
+  if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].sources &#x3D; &quot;Sources&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].sources &#x3D; &quot;Quellen&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].sources &#x3D; &quot;Sources&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].sources &#x3D; &quot;Fuentes&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].sources &#x3D; &quot;Fonti&quot;}
+  else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].sources &#x3D; &quot;Források&quot;};
+  }
+
+setSubtitle2(re,propertyId,number,lang){  //to add a subtitle with a condition on the value of a property (in general the property P2)
+  let j &#x3D; number;
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q7&quot;) { //person
+    re.claims[propertyId].person &#x3D; &quot;person&quot;;
+    if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Life and family&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Leben und Familie&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Vie et famille&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Vida y familia&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Vita e famiglia&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Élet és család&quot;};
+
+    if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].training &#x3D; &quot;Education&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].training &#x3D; &quot;Ausbildung&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].training &#x3D; &quot;Éducation&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].training &#x3D; &quot;Educación&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].training &#x3D; &quot;Educazione&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].training &#x3D; &quot;Oktatás&quot;};
+
+    if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].career &#x3D; &quot;Career and activities&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].career &#x3D; &quot;Beruf und Aktivitäten&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].career &#x3D; &quot;Carrière et activités&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].career &#x3D; &quot;Carrera y actividades&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].career &#x3D; &quot;Carriera e attività&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].career &#x3D; &quot;Karrier és tevékenységek&quot;};
+
+
+    if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].sociability &#x3D; &quot;Sociability and culture&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].sociability &#x3D; &quot;Soziabilität und Kultur&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].sociability &#x3D; &quot;Sociabilité et culture&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].sociability &#x3D; &quot;Sociabilidad y cultura&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].sociability &#x3D; &quot;Sociabilità e cultura&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].sociability &#x3D; &quot;Szociabilitás és kultúra&quot;};
+      }
+ /*   if (re.claims[propertyId][j].mainsnak.datavalue.value.id !&#x3D;&#x3D; &quot;Q7&quot;) { //person
+      re.claims[propertyId].person &#x3D; undefined;
+      re.claims[propertyId].training &#x3D; undefined;
+      re.claims[propertyId].career &#x3D; undefined;
+      re.claims[propertyId].sociability &#x3D; undefined;
+       } ;
+*/
+
+   if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q22&quot;) { //basic object
+      if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Basic object&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Fundamentalobjekt&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Objet de base&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Objeto básico&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Oggetto di base&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Alapobjektum&quot;};
+   };
+
+
+   if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q147829&quot;) { //basic object
+    if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Database&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Datenbank&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Base de données&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Base de datos&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Base dati&quot;}
+    else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Adatbázis&quot;};
+   };
+
+    if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q8&quot; || 
+    re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q11174&quot; ||
+    re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q21925&quot; ||
+    re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q164344&quot;) { //place
+      re.claims[propertyId].place &#x3D; &quot;place&quot;;
+      re.claims[propertyId].main &#x3D; &quot;Place&quot;;
+      if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Place&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Ort&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Lieu&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Lugar&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Luogo&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Hely&quot;};
+        };
+ //   if (re.claims[propertyId][j].mainsnak.datavalue.value.id !&#x3D;&#x3D; &quot;Q8&quot;) { //place
+ //     re.claims[propertyId].place &#x3D; undefined; }
+    if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q9&quot;) { //event
+      if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Event&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Ereignis&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Évènement&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Evento&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Evento&quot;}
+      else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Esemény&quot;};
+    }
+ //   if (re.claims[propertyId][j].mainsnak.datavalue.value.id !&#x3D;&#x3D; &quot;Q9&quot;) { //event
+ //     re.claims[propertyId].event &#x3D; undefined; }
+    if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q12&quot; || //org
+      re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q220833&quot; ||  
+      re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q140806&quot; ||
+      re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q11214&quot; ) {
+      re.claims[propertyId].org &#x3D; &quot;org&quot;;
+        if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Organisation&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Organisation&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Organisation&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Organización&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Organizzazione&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Szervezet&quot;};
+          }
+  //  else re.claims[propertyId].org &#x3D; undefined;
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q20&quot; ||
+      re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q257227&quot;) { //publication
+      re.claims[propertyId].document &#x3D; &quot;publication&quot;;
+        if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Print publication&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Druckpublikation&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Publication imprimée&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Publicación impresa&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Pubblicazione stampata&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Nyomtatott kiadvány&quot;};
+      }
+ // if (re.claims[propertyId][j].mainsnak.datavalue.value.id !&#x3D;&#x3D; &quot;Q20&quot;) { //publication
+ //     re.claims[propertyId].document &#x3D; undefined; }
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q146602&quot; || //activity
+    re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q21909&quot; ||
+    re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q37073&quot;) {
+      re.claims[propertyId].activity &#x3D; &quot;activity&quot;;
+        if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Activity&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Aktivität&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Activité&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Activitad&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Attività&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Tevékenység&quot;};
+      }
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q10671&quot; || //document
+      re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q21407&quot;) {
+      re.claims[propertyId].document &#x3D; &quot;document&quot;;
+        if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Document&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Dokument&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Document&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Documento&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Documento&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Dokumentum&quot;};
+         }
+  if (re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q10671&quot; || //FactGrid query
+      re.claims[propertyId][j].mainsnak.datavalue.value.id &#x3D;&#x3D; &quot;Q21407&quot;) {
+      re.claims[propertyId].document &#x3D; &quot;document&quot;;
+        if ( lang &#x3D;&#x3D;&#x3D; &quot;en&quot;) {re.claims[propertyId].main &#x3D; &quot;Document&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;de&quot;) {re.claims[propertyId].main &#x3D; &quot;Dokument&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;fr&quot;) {re.claims[propertyId].main &#x3D; &quot;Document&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;es&quot;) {re.claims[propertyId].main &#x3D; &quot;Documento&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {re.claims[propertyId].main &#x3D; &quot;Documento&quot;}
+        else if ( lang &#x3D;&#x3D;&#x3D; &quot;hu&quot;) {re.claims[propertyId].main &#x3D; &quot;Dokumentum&quot;};
+          }
+  //  else re.claims[propertyId].document &#x3D; undefined;
+  }
+}
+
+    
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'FactgridSubtitlesService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

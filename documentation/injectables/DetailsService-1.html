@@ -1,0 +1,1315 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>factgrid documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">factgrid documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >DetailsService</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/services/details.service.ts</code>
+        </p>
+
+
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#requestService" >requestService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#setLanguage" >setLanguage</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#createList" >createList</a>
+                            </li>
+                            <li>
+                                <a href="#getReferenceProperties" >getReferenceProperties</a>
+                            </li>
+                            <li>
+                                <a href="#lessThanFifty" >lessThanFifty</a>
+                            </li>
+                            <li>
+                                <a href="#mergeObjects" >mergeObjects</a>
+                            </li>
+                            <li>
+                                <a href="#setItemsList" >setItemsList</a>
+                            </li>
+                            <li>
+                                <a href="#setProperties" >setProperties</a>
+                            </li>
+                            <li>
+                                <a href="#setPropertiesList" >setPropertiesList</a>
+                            </li>
+                            <li>
+                                <a href="#setQualifierItems" >setQualifierItems</a>
+                            </li>
+                            <li>
+                                <a href="#setReferenceItems" >setReferenceItems</a>
+                            </li>
+                            <li>
+                                <a href="#uniq" >uniq</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createList"></a>
+                    <span class="name">
+                        <span ><b>createList</b></span>
+                        <a href="#createList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>createList(arr: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="202"
+                                    class="link-to-prism">src/app/services/details.service.ts:202</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crée une chaîne de caractères à partir d’un tableau, séparée par &#39;|&#39;.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arr</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getReferenceProperties"></a>
+                    <span class="name">
+                        <span ><b>getReferenceProperties</b></span>
+                        <a href="#getReferenceProperties"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getReferenceProperties(u: <a href="../interfaces/Entity.html" target="_self">Entity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="44"
+                                    class="link-to-prism">src/app/services/details.service.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retourne la liste unique des propriétés de référence d’une entité.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>u</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Entity.html" target="_self" >Entity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lessThanFifty"></a>
+                    <span class="name">
+                        <span ><b>lessThanFifty</b></span>
+                        <a href="#lessThanFifty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>lessThanFifty(arr: T[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="216"
+                                    class="link-to-prism">src/app/services/details.service.ts:216</a></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Type parameters :</b>
+                            <ul class="type-parameters">
+                                    <li>T</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Découpe un tableau en sous-tableaux de 50 éléments maximum.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arr</td>
+                                            <td>
+                                                        <code>T[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>[][]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mergeObjects"></a>
+                    <span class="name">
+                        <span ><b>mergeObjects</b></span>
+                        <a href="#mergeObjects"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>mergeObjects(res: any[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="140"
+                                    class="link-to-prism">src/app/services/details.service.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Fusionne les objets contenus dans un tableau pour créer un seul objet.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>res</td>
+                                            <td>
+                                                        <code>any[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setItemsList"></a>
+                    <span class="name">
+                        <span ><b>setItemsList</b></span>
+                        <a href="#setItemsList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setItemsList(u: <a href="../interfaces/Entity.html" target="_self">Entity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="91"
+                                    class="link-to-prism">src/app/services/details.service.ts:91</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crée la liste des items dans les statements, qualifiers et références.
+Retourne un Observable des items enrichis.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>u</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Entity.html" target="_self" >Entity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setProperties"></a>
+                    <span class="name">
+                        <span ><b>setProperties</b></span>
+                        <a href="#setProperties"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setProperties(arr: any[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="133"
+                                    class="link-to-prism">src/app/services/details.service.ts:133</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retourne la liste unique des propriétés dans les qualifiers et références.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>arr</td>
+                                            <td>
+                                                        <code>any[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setPropertiesList"></a>
+                    <span class="name">
+                        <span ><b>setPropertiesList</b></span>
+                        <a href="#setPropertiesList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setPropertiesList(u: <a href="../interfaces/Entity.html" target="_self">Entity</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="56"
+                                    class="link-to-prism">src/app/services/details.service.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Crée la liste des propriétés dans les statements, qualifiers et références.
+Retourne un Observable des propriétés enrichies.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>u</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Entity.html" target="_self" >Entity</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;any[]&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setQualifierItems"></a>
+                    <span class="name">
+                        <span ><b>setQualifierItems</b></span>
+                        <a href="#setQualifierItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setQualifierItems(values: <a href="../interfaces/Claim.html" target="_self">Claim[][]</a>, arr: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="154"
+                                    class="link-to-prism">src/app/services/details.service.ts:154</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retourne la liste des items dans les qualifiers.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>values</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Claim.html" target="_self" >Claim[][]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>arr</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setReferenceItems"></a>
+                    <span class="name">
+                        <span ><b>setReferenceItems</b></span>
+                        <a href="#setReferenceItems"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setReferenceItems(values: <a href="../interfaces/Claim.html" target="_self">Claim[][]</a>, arr: string[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="176"
+                                    class="link-to-prism">src/app/services/details.service.ts:176</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retourne la liste des items dans les références.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>values</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Claim.html" target="_self" >Claim[][]</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>arr</td>
+                                            <td>
+                                                        <code>string[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>string[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uniq"></a>
+                    <span class="name">
+                        <span ><b>uniq</b></span>
+                        <a href="#uniq"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>uniq(a: T[])</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="209"
+                                    class="link-to-prism">src/app/services/details.service.ts:209</a></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Type parameters :</b>
+                            <ul class="type-parameters">
+                                    <li>T</li>
+                            </ul>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Retourne un tableau sans doublons.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>a</td>
+                                            <td>
+                                                        <code>T[]</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>T[]</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="requestService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>requestService</b></span>
+                        <a href="#requestService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(RequestService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/services/details.service.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setLanguage"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>setLanguage</b></span>
+                        <a href="#setLanguage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SetLanguageService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/services/details.service.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, inject } from &#x27;@angular/core&#x27;;
+import { RequestService } from &#x27;./request.service&#x27;;
+import { SetLanguageService } from &#x27;./set-language.service&#x27;;
+import { map } from &#x27;rxjs/operators&#x27;;
+import { Observable, throwError } from &#x27;rxjs&#x27;;
+
+/** Interfaces pour un typage fort */
+interface Snak {
+  property: string;
+  datatype?: string;
+  datavalue?: { value: { id: string } };
+}
+
+interface Reference {
+  &#x27;snaks-order&#x27;: string[];
+  snaks: { [key: string]: Snak[] };
+}
+
+interface Claim {
+  mainsnak: Snak;
+  qualifiers?: { [key: string]: Snak[] };
+  &#x27;qualifiers-order&#x27;?: string[];
+  references?: Reference[];
+}
+
+interface ClaimsObject {
+  [property: string]: Claim[];
+}
+
+interface Entity {
+  claims: ClaimsObject;
+}
+
+@Injectable({
+  providedIn: &#x27;root&#x27;
+})
+export class DetailsService {
+  private requestService &#x3D; inject(RequestService);
+  private setLanguage &#x3D; inject(SetLanguageService);
+
+  /**
+   * Retourne la liste unique des propriétés de référence d’une entité.
+   */
+  getReferenceProperties(u: Entity): string[] {
+    const referenceProperties &#x3D; Object.values(u.claims)
+      .flatMap(val &#x3D;&gt; val)
+      .flatMap(claim &#x3D;&gt; claim.references ?? [])
+      .flatMap(ref &#x3D;&gt; ref[&#x27;snaks-order&#x27;] ?? []);
+    return this.uniq(referenceProperties);
+  }
+
+  /**
+   * Crée la liste des propriétés dans les statements, qualifiers et références.
+   * Retourne un Observable des propriétés enrichies.
+   */
+  setPropertiesList(u: Entity): Observable&lt;any[]&gt; {
+    const claimsArray &#x3D; Object.values(u.claims);
+
+    let properties &#x3D; claimsArray.flatMap(val &#x3D;&gt; val.map(claim &#x3D;&gt; claim.mainsnak.property));
+    let qualifierProperties &#x3D; claimsArray.flatMap(val &#x3D;&gt; val.flatMap(claim &#x3D;&gt; claim[&#x27;qualifiers-order&#x27;] ?? []));
+    let referenceProperties &#x3D; claimsArray
+      .flatMap(val &#x3D;&gt; val)
+      .flatMap(claim &#x3D;&gt; claim.references ?? [])
+      .flatMap(ref &#x3D;&gt; ref[&#x27;snaks-order&#x27;] ?? []);
+
+    qualifierProperties &#x3D; this.uniq(qualifierProperties);
+    referenceProperties &#x3D; this.uniq(referenceProperties);
+
+    properties &#x3D; this.uniq([...properties, ...qualifierProperties, ...referenceProperties]);
+    const propertiesChunks &#x3D; this.lessThanFifty(properties);
+
+    if (propertiesChunks.length &gt; 8) {
+      return throwError(() &#x3D;&gt; new Error(&#x27;Trop de statements (plus de 8 groupes de 50 propriétés)&#x27;));
+    }
+
+    const propertiesLists &#x3D; propertiesChunks.map(list &#x3D;&gt; this.createList(list).slice(1));
+    while (propertiesLists.length &lt; 8) propertiesLists.push(&#x27;&#x27;);
+
+    return this.requestService.requestProperties(propertiesLists)
+      .pipe(
+        map(res &#x3D;&gt; this.mergeObjects(res as any[])), // &lt;--- cast ici
+        map(res &#x3D;&gt; Object.values(res))
+      );
+
+  }
+
+  /**
+   * Crée la liste des items dans les statements, qualifiers et références.
+   * Retourne un Observable des items enrichis.
+   */
+  setItemsList(u: Entity): Observable&lt;any[]&gt; {
+    const claimsArray &#x3D; Object.values(u.claims);
+
+    let items &#x3D; claimsArray.flatMap(val &#x3D;&gt;
+      val
+        .filter(claim &#x3D;&gt; claim.mainsnak.datavalue?.value?.id !&#x3D;&#x3D; undefined)
+        .map(claim &#x3D;&gt; claim.mainsnak.datavalue.value.id)
+    );
+
+    let qualifierProperties &#x3D; claimsArray.flatMap(val &#x3D;&gt; val.flatMap(claim &#x3D;&gt; claim[&#x27;qualifiers-order&#x27;] ?? []));
+    let referenceProperties &#x3D; claimsArray
+      .flatMap(val &#x3D;&gt; val)
+      .flatMap(claim &#x3D;&gt; claim.references ?? [])
+      .flatMap(ref &#x3D;&gt; ref[&#x27;snaks-order&#x27;] ?? []);
+
+    qualifierProperties &#x3D; this.uniq(qualifierProperties);
+    referenceProperties &#x3D; this.uniq(referenceProperties);
+
+    const qualifierItems &#x3D; this.setQualifierItems(claimsArray, qualifierProperties).filter(Boolean);
+    const referenceItems &#x3D; this.setReferenceItems(claimsArray, referenceProperties).filter(Boolean);
+
+    items &#x3D; this.uniq([...items, ...qualifierItems, ...referenceItems]);
+    const itemsChunks &#x3D; this.lessThanFifty(items);
+
+    if (itemsChunks.length &gt; 8) {
+      return throwError(() &#x3D;&gt; new Error(&#x27;Trop de statements (plus de 8 groupes de 50 items)&#x27;));
+    }
+
+    const itemsLists &#x3D; itemsChunks.map(list &#x3D;&gt; this.createList(list).slice(1));
+    while (itemsLists.length &lt; 8) itemsLists.push(&#x27;&#x27;);
+
+    return this.requestService.requestItems(itemsLists)
+      .pipe(
+        map(res &#x3D;&gt; this.mergeObjects(res as any[])), // &lt;--- cast ici
+        map(res &#x3D;&gt; Object.values(res))
+      );
+
+  }
+
+  /**
+   * Retourne la liste unique des propriétés dans les qualifiers et références.
+   */
+  setProperties(arr: any[]): string[] {
+    return arr.flatMap(obj &#x3D;&gt; Object.keys(obj));
+  }
+
+  /**
+   * Fusionne les objets contenus dans un tableau pour créer un seul objet.
+   */
+  mergeObjects(res: any[]): any {
+    // Filtrer les objets valides qui possèdent la propriété &#x27;entities&#x27;
+    const validObjects &#x3D; (res ?? []).filter(obj &#x3D;&gt; obj &amp;&amp; obj.entities);
+    let u &#x3D; validObjects.length &gt; 0 ? validObjects[0].entities : {};
+    for (const obj of validObjects.slice(1)) {
+      u &#x3D; { ...u, ...obj.entities };
+    }
+    return u;
+  }
+
+
+  /**
+   * Retourne la liste des items dans les qualifiers.
+   */
+  setQualifierItems(values: Claim[][], arr: string[]): string[] {
+    arr &#x3D; arr.filter(Boolean);
+    const result: string[] &#x3D; [];
+    for (const val of values) {
+      for (const claim of val) {
+        for (const prop of arr) {
+          if (claim.qualifiers?.[prop]) {
+            for (const snak of claim.qualifiers[prop]) {
+              if (snak?.datavalue?.value?.id) {
+                result.push(snak.datavalue.value.id);
+              }
+            }
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Retourne la liste des items dans les références.
+   */
+  setReferenceItems(values: Claim[][], arr: string[]): string[] {
+    arr &#x3D; arr.filter(Boolean);
+    const result: string[] &#x3D; [];
+    for (const val of values) {
+      for (const claim of val) {
+        if (!claim.references) continue;
+        for (const ref of claim.references) {
+          for (const prop of arr) {
+            const snaks &#x3D; ref.snaks[prop];
+            if (snaks &amp;&amp; snaks[0]?.datatype &#x3D;&#x3D;&#x3D; &#x27;wikibase-item&#x27;) {
+              for (const snak of snaks) {
+                if (snak?.datavalue?.value?.id) {
+                  result.push(snak.datavalue.value.id);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Crée une chaîne de caractères à partir d’un tableau, séparée par &#x27;|&#x27;.
+   */
+  createList(arr: string[]): string {
+    return Array.from(new Set(arr)).reduce((list, item) &#x3D;&gt; list + &#x27;|&#x27; + item, &#x27;&#x27;);
+  }
+
+  /**
+   * Retourne un tableau sans doublons.
+   */
+  uniq&lt;T&gt;(a: T[]): T[] {
+    return Array.from(new Set(a.filter(Boolean)));
+  }
+
+  /**
+   * Découpe un tableau en sous-tableaux de 50 éléments maximum.
+   */
+  lessThanFifty&lt;T&gt;(arr: T[]): T[][] {
+    const result: T[][] &#x3D; [];
+    let u &#x3D; arr.length;
+    let tempArr &#x3D; arr.slice();
+    while (u &gt; 0) {
+      result.push(tempArr.slice(0, 50));
+      tempArr &#x3D; tempArr.slice(50);
+      u &#x3D; tempArr.length;
+    }
+    return result;
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'DetailsService-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
