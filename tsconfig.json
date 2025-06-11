@@ -8,16 +8,15 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
-  //  "paths": { "selected-lang2":["../selected-lang2.service"]},
     "target": "ES2022",
     "module": "es2020",
     "lib": [
       "es2020",
       "dom"
     ],
-    "useDefineForClassFields": false,
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false
