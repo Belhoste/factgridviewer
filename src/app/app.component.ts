@@ -1,13 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, switchMap, map, filter, takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { SetLanguageService } from './services/set-language.service';
-import { RequestService } from './services/request.service';
 import { SlideUpAnimation } from './slide-up-animation';
-import { RouterLink, RouterModule, Router } from '@angular/router';
-import { NgFor, NgIf } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,10 +26,7 @@ export interface Lang {
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    NgFor,
-    NgIf,
     RouterModule,
-    RouterLink,
     FooterComponent,
     MatTooltipModule
   ]

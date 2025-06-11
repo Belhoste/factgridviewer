@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { SelectedLangService } from '../../selected-lang.service';
-import { UnitPipe } from '../../unit.pipe';
+
 
 
 
@@ -15,7 +15,7 @@ import { UnitPipe } from '../../unit.pipe';
     templateUrl: './item-info.component.html',
     styleUrls: ['./item-info.component.scss'],
     standalone: true,
-    imports: [CommonModule, NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule, UnitPipe]
+    imports: [CommonModule, NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule]
 })
 export class ItemInfoComponent implements OnChanges {
   private lang = inject(SelectedLangService);

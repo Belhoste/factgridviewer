@@ -1,53 +1,53 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" 
-    rel="stylesheet">
-  
+<mat-toolbar class="custom-toolbar">
 
-    <mat-toolbar class="custom-toolbar">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/FactGrid-Logo.png/289px-FactGrid-Logo.png" width="90" height="90" style="vertical-align:bottom; padding:10px; margin:10px" (click)="linking()">
 
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/FactGrid-Logo.png/289px-FactGrid-Logo.png" width="90" height="90" style="vertical-align:bottom; padding:10px; margin:10px" (click)="linking()">
+  <span class="toolbar-spacer"></span>
 
-      <span class="toolbar-spacer"></span>
+  <button mat-icon-button onClick="window.open('https://blog.factgrid.de/archives/2684')" aria-label="Example icon-button with a menu">
+    <mat-icon>info</mat-icon>
+  </button>
 
-      <button mat-icon-button onClick="window.open('https://blog.factgrid.de/archives/2684')" aria-label="Example icon-button with a menu">
-        <mat-icon>info</mat-icon>
-      </button>
+  <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Sélection de la langue">
+    <mat-icon>language</mat-icon>
+  </button>
+  <mat-menu #menuLanguage="matMenu" class="language-menu">
+    @for (lang of langs; track lang) {
+    <button (click)="langSetting(lang)" mat-menu-item [class.selected-lang]="lang.code === this.selectedLang">
+      <!-- Optionnel : Affichage d'un drapeau si tu as une propriété lang.flag -->
+      @if (lang.flag) {
+      <img [src]="lang.flag" width="24" height="16" style="margin-right:8px; border-radius:2px;">
+      }
+      <span style="flex:1; font-weight: 500;">{{lang.name}}</span>
+      @if (lang.code === this.selectedLang) {
+      <mat-icon color="primary">check_circle</mat-icon>
+      }
+    </button>
+    }
+  </mat-menu>
 
-      <button mat-icon-button [matMenuTriggerFor]="menuLanguage" aria-label="Sélection de la langue">
-        <mat-icon>language</mat-icon>
-      </button>
-      <mat-menu #menuLanguage="matMenu" class="language-menu">
-        @for (lang of langs; track lang) {
-        <button (click)="langSetting(lang)" mat-menu-item [class.selected-lang]="lang.code === this.selectedLang">
-          <!-- Optionnel : Affichage d'un drapeau si tu as une propriété lang.flag -->
-          <!-- <img *ngIf="lang.flag" [src]="lang.flag" width="24" height="16" style="margin-right:8px; border-radius:2px;"> -->
-          <span style="flex:1; font-weight: 500;">{{lang.name}}</span>
-          <mat-icon *ngIf="lang.code === this.selectedLang" color="primary">check_circle</mat-icon>
-        </button>
-        }
-      </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Sélection du champ de recherche">
+    <mat-icon>settings</mat-icon>
+  </button>
+  <mat-menu #menuResearchField="matMenu" class="researchfield-menu">
+    @for (researchField of researchFieldsSorted; track researchField.id) {
+    <button mat-menu-item
+            (click)="researchFieldSelect(researchField)"
+            [disabled]="!isResearchFieldEnabled(researchField)"
+            [class.selected-researchfield]="researchField.id === selectedResearchField">
+      <span style="flex:1; font-weight: 500;">{{researchField.name}}</span>
+      @if (researchField.id === selectedResearchField) {
+      <mat-icon color="primary" style="margin-left:8px;">check_circle</mat-icon>
+      }
+    </button>
+    }
+  </mat-menu>
 
+</mat-toolbar>
 
-      <button mat-icon-button [matMenuTriggerFor]="menuResearchField" aria-label="Sélection du champ de recherche">
-        <mat-icon>settings</mat-icon>
-      </button>
-      <mat-menu #menuResearchField="matMenu" class="researchfield-menu">
-        @for (researchField of researchFieldsSorted; track researchField.id) {
-        <button mat-menu-item
-                (click)="researchFieldSelect(researchField)"
-                [disabled]="!isResearchFieldEnabled(researchField)"
-                [class.selected-researchfield]="researchField.id === selectedResearchField">
-          <span style="flex:1; font-weight: 500;">{{researchField.name}}</span>
-          <mat-icon *ngIf="researchField.id === selectedResearchField" color="primary" style="margin-left:8px;">check_circle</mat-icon>
-        </button>
-        }
-      </mat-menu>
-
-
-    </mat-toolbar>
-
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
-
-  
+<router-outlet></router-outlet>
+<app-footer></app-footer>
 

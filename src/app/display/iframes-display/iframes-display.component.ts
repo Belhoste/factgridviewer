@@ -1,15 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { UnitPipe } from '../../unit.pipe';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-iframes-display',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatCardModule, RouterLink, UnitPipe],
+  imports: [CommonModule, MatIconModule, MatCardModule],
   templateUrl: './iframes-display.component.html',
   styleUrl: './iframes-display.component.scss'
 })

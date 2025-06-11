@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { RouterLink } from '@angular/router';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { SelectedLangService } from '../../selected-lang.service';
 import { ArrayToCsvService} from '../../services/array-to-csv.service';
@@ -17,7 +17,7 @@ import { ArrayToCsvService} from '../../services/array-to-csv.service';
     styleUrls: ['sparql0-display.component.scss'],
     standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatCardModule, NgClass, NgFor, NgIf, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule]
+    imports: [MatCardModule, NgClass, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule]
 })
 export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
   private lang = inject(SelectedLangService);
