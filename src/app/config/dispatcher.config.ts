@@ -91,7 +91,8 @@ export const EVENT_DISPLAY_PROPERTIES = [
 ];
 
 export const EXCLUDED_DISPLAY_PROPERTIES = [
-  { property:'P899', comment:"object type propertyies"} // Ajoutez ici les identifiants des propriétés à ne pas afficher
+  { property: 'P899', comment: "object type properties" }, // Ajoutez ici les identifiants des propriétés à ne pas afficher
+  { property: 'P679', comment: "FactGrid map" } //
   // ...
 ];
 

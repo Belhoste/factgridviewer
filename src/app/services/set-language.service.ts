@@ -78,7 +78,6 @@ export class SetLanguageService {
       };
       if (description) result.description = description;
       if (aliases.length > 0) result.aliases = aliases;
-      console.log("item2", result);
       return result;
     });
   }
