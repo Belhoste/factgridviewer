@@ -4,13 +4,13 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\iframes-display",
+    "\\src\\app\\display\\education-display",
+    "\\src\\app\\display\\item-info",
     "\\src\\app\\display\\main-display",
-    "\\src\\app\\display\\services",
-    "\\src\\app\\paris-search",
+    "\\src\\app\\footer",
     "\\src\\app\\search",
     "\\src\\app\\services"
   ],
-  "SelectedNode": "\\src\\app\\display\\services\\iframes-display.service.ts",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }
