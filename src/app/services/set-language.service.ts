@@ -10,19 +10,49 @@ export class SetLanguageService {
   lang: string;
 
   /** Utility: get the value for a field in the preferred language, with fallback */
-  private getLangValue(obj: any, lang: string, fallbackOrder: string[] = ['en', 'fr', 'de', 'es', 'it', 'hu']) {
+  private getLangValue(
+    obj: any,
+    lang: string,
+    fallbackOrder: string[] = ['en', 'fr', 'de', 'es', 'zh', 'zh-hans', 'zh-hant', 'it', 'hu']
+  ) {
     if (!obj) return undefined;
+
+    // Si la langue demandée est "zh", privilégier zh puis zh-hans, puis zh-hant
+   
+
+    // Si la langue demandée est "zh", privilégier zh puis zh-cn
+    if (lang === 'zh') {
+      if (obj['zh']) return obj['zh'];
+      if (obj['zh-cn']) return obj['zh-cn'];
+      if (obj['zh-hans']) return obj['zh-hans'];
+      if (obj['zh-hant']) return obj['zh-hant'];
+    }
+    // Si la langue demandée est "zh-hans" (chinois simplifié explicite)
+    if (lang === 'zh-hans') {
+      if (obj['zh-hans']) return obj['zh-hans'];
+      if (obj['zh']) return obj['zh'];
+      if (obj['zh-hant']) return obj['zh-hant'];
+    }
+    // Si la langue demandée est "zh-hant" (chinois traditionnel explicite)
+    if (lang === 'zh-hant') {
+      if (obj['zh-hant']) return obj['zh-hant'];
+      if (obj['zh']) return obj['zh'];
+      if (obj['zh-hans']) return obj['zh-hans'];
+    }
+
+    // Fallback général
     if (obj[lang]) return obj[lang];
     for (const code of fallbackOrder) {
       if (obj[code]) return obj[code];
     }
-    // fallback: first available
+    // fallback: première langue disponible
     const keys = Object.keys(obj);
     return keys.length > 0 ? obj[keys[0]] : undefined;
   }
 
+
   /** Utility: get aliases as array of strings for the preferred language */
-  private getAliases(obj: any, lang: string, fallbackOrder: string[] = ['en', 'fr', 'de', 'es', 'it', 'hu']) {
+  private getAliases(obj: any, lang: string, fallbackOrder: string[] = ['en', 'fr', 'de', 'es', 'it', 'hu', 'zh']) {
     const aliasesObj = this.getLangValue(obj, lang, fallbackOrder);
     return Array.isArray(aliasesObj) ? aliasesObj.map(a => a.value) : [];
   }
@@ -48,6 +78,7 @@ export class SetLanguageService {
       };
       if (description) result.description = description;
       if (aliases.length > 0) result.aliases = aliases;
+      console.log("item2", result);
       return result;
     });
   }
@@ -78,4 +109,5 @@ export class SetLanguageService {
       return result;
     });
   }
+
 }

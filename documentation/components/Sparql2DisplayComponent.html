@@ -1131,7 +1131,7 @@ export class Sparql2DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle &#x3D;&#x3D; &quot;Q140759&quot;) {  //patients
         this.isWorks &#x3D; true;
-        this.subTitle &#x3D; this.lang.patientsTitle();
+        this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
       }
       else {
         this.subTitle &#x3D; &quot;&quot;;

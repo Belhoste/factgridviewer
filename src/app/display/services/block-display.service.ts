@@ -11,8 +11,9 @@ import {
   SOCIABILITY_DISPLAY_PROPERTIES,
   HEADER_DISPLAY_PROPERTIES,
   SOURCES_DISPLAY_PROPERTIES,
-  EXTERNAL_LINKS_DISPLAY_PROPERTIES
-} from './properties-display.config';
+  EXTERNAL_LINKS_DISPLAY_PROPERTIES,
+  EXCLUDED_DISPLAY_PROPERTIES
+} from '../../config/dispatcher.config';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,11 @@ export class BlockDisplayService {
       }
     }
     return targetArray;
+  }
+
+
+  setExcludedProperties(item: any, excludedProperties: any[]): any[] {
+    return this.populateDisplay(item, excludedProperties, EXCLUDED_DISPLAY_PROPERTIES);
   }
 
   setHeaderDisplay(item: any, headerDetail: any[]): any[] {

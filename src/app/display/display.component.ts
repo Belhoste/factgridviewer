@@ -214,15 +214,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isSpinner = true;
     this.isInfo = false;
-    this.newSearch = this.lang.newSearch();
-    this.linkedPagesTitle = this.lang.linkedPagesTitle();
-    this.mainPage = this.lang.mainPage();
-    this.factGridQuery = this.lang.factGridQuery();
-    this.externalLinksTitle = this.lang.externalLinksTitle();
-    this.formerVisitsTitle = this.lang.formerVisitsTitle();
-    this.clickToDownload = this.lang.clickToDownload();
-    this.clickToDisplay = this.lang.clickToDisplay();
-    this.stemma = this.lang.stemma();
+    this.newSearch = this.lang.getTranslation('newSearch', this.lang.selectedLang);
+    this.linkedPagesTitle = this.lang.getTranslation('linkedPagesTitle', this.lang.selectedLang);
+    this.mainPage = this.lang.getTranslation('mainPage', this.lang.selectedLang);
+    this.factGridQuery = this.lang.getTranslation('factGridQuery', this.lang.selectedLang);
+    this.externalLinksTitle = this.lang.getTranslation('externalLinksTitle', this.lang.selectedLang);
+    this.formerVisitsTitle = this.lang.getTranslation('formerVisitsTitle', this.lang.selectedLang);
+    this.clickToDownload = this.lang.getTranslation('clickToDownLoad', this.lang.selectedLang);
+    this.clickToDisplay = this.lang.getTranslation('clickToDisplay', this.lang.selectedLang);
+    this.stemma = this.lang.getTranslation('stemma', this.lang.selectedLang);
 
     this.subscription0 = this.route.paramMap.subscribe(params => {
       this.itemId = params.get('id');
@@ -237,7 +237,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         if (res[0].query !== undefined) {
           this.linkedItems = this.backListDetails.setBackList(res[0].query.pages);
         } else {
-          this.linkedItems = [{ id: "Q21898", label: this.lang.noneLabel() }];
+          this.linkedItems = [{ id: "Q21898", label: this.lang.getTranslation('$1', this.lang.selectedLang) }];
         }
       }))
       .subscribe();
@@ -251,6 +251,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       case "es": return "ninguno";
       case "hu": return "nincs";
       case "it": return "nessuno";
+      case "zh": return "无";
       default: return "none";
     }
   }
@@ -275,7 +276,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       this.main = this.claims.P2.main;
       if (this.mainTitle == "Humain") { this.mainTitle = "Personne"; }
       if (["Q37073", "Q257052"].includes(this.claims.P2[0].mainsnak.datavalue.value.id)) {
-        this.mainTitle = this.lang.activity();
+        this.mainTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
       }
       this.urlId = this.factGridUrl + this.id;
 
@@ -429,6 +430,13 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sparqlSubject4 = u[4][0];
       this.sparqlData4 = u[4][1];
       this.isSparql4 = !!(this.sparqlData4 && this.sparqlData4[0]);
+    }
+  }
+
+  openImage(url: string): void {
+    console.log(url);
+    if (url) {
+      window.open(url, '_blank');
     }
   }
 

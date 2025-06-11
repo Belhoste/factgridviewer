@@ -64,7 +64,7 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
           
       if (this.subTitle == "Q945280" || this.subTitle =="Q960698"){  //FactGrid superclass
       this.isWorks=true; 
-      this.subTitle = this.lang.subclassesListTitle();
+      this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
       }
      
                  else {

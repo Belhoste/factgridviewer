@@ -1234,19 +1234,19 @@ export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle &#x3D;&#x3D; &quot;master&quot;) {  //pupils and disciples
         this.isWorks &#x3D; true;
-        this.subTitle &#x3D; this.lang.pupilTitle();
+        this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
       } else {
         if (this.subTitle &#x3D;&#x3D; &quot;Q945258&quot;) { //set
           this.isWorks &#x3D; true;
-          this.subTitle &#x3D; this.lang.setTitle();
+          this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
         } else {
           if (this.subTitle &#x3D;&#x3D; &quot;Q172192&quot;) { //list
             this.isWorks &#x3D; true;
-            this.subTitle &#x3D; this.lang.listTitle();
+            this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
           } else {
             if (this.subTitle &#x3D;&#x3D; &quot;current address:&quot;) { //current address
               this.isWorks &#x3D; false;
-              this.subTitle &#x3D; this.lang.currentAddress();
+              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
               console.log(this.subTitle);
             }
             else {

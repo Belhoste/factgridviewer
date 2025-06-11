@@ -1278,14 +1278,14 @@ export class ItemInfoComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    this.instancesListTitle &#x3D; this.lang.instancesListTitle();
-    this.subclassesListTitle &#x3D; this.lang.subclassesListTitle();
-    this.classesListTitle &#x3D; this.lang.classesListTitle();
-    this.natureOfListTitle &#x3D; this.lang.natureOfListTitle();
-    this.subInfoTitle &#x3D; this.lang.subInfoTitle();
-    this.prefix1 &#x3D; this.lang.prefix1();
-    this.prefix2 &#x3D; this.lang.prefix2();
-    this.suffix1 &#x3D; this.lang.suffix1();
+    this.instancesListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.subclassesListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.classesListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.natureOfListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.subInfoTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.prefix1 &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.prefix2 &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.suffix1 &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
     // Utilisation des listes depuis infoList
     this.list1 &#x3D; this.infoList?.subclassesList ?? [];

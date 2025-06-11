@@ -1448,43 +1448,43 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle &#x3D;&#x3D; &quot;Q8&quot;) {  //location
         this.isWorks &#x3D; true;
-        this.subTitle &#x3D; this.lang.buildingTitle();
+        this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
       }
       else {
         if (this.subTitle &#x3D;&#x3D; &quot;Q24499&quot;) { //family name
           this.isWorks &#x3D; false;
-          this.subTitle &#x3D; this.lang.familyNameTitle();
+          this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
         }
         else {
           if (this.subTitle &#x3D;&#x3D; &quot;Q12&quot;) { //organisation
             this.isWorks &#x3D; false;
             if (this.list[0] &amp;&amp; this.list[0].activity) {  // people active in this organisation
-              this.subTitle &#x3D; this.lang.activityTitle();
+              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
             }
             else {   //people members of this organisation
               this.isWorks &#x3D; true;
-              this.subTitle &#x3D; this.lang.organisationTitle();
+              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
             }
           }
           else {
             if (this.subTitle &#x3D;&#x3D; &quot;Q37073&quot;) { //activity
               this.isWorks &#x3D; true;
-              this.subTitle &#x3D; this.lang.activityTitle();
+              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
             }
             else {
               if (this.subTitle &#x3D;&#x3D; &quot;Q16200&quot;) {  //address
                 this.isWorks &#x3D; true;
-                this.subTitle &#x3D; this.lang.addressTitle();
+                this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
               }
               else {
                 if (this.subTitle &#x3D;&#x3D; &quot;Q456376&quot;) { //author
                   this.isWorks &#x3D; true;
-                  this.subTitle &#x3D; this.lang.workTitle();
+                  this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
                 }
                 else {
                   if (this.subTitle &#x3D; &quot;Q172192&quot;) { //list
                     this.isWorks &#x3D; true;
-                    this.subTitle &#x3D; this.lang.listTitle();
+                    this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
                   }
                   else {
                     this.subTitle &#x3D; &quot;&quot;;

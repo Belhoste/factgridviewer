@@ -1948,11 +1948,11 @@ export class AdvancedSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.subtitle &#x3D; this.lang.subtitle();
+    this.subtitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
-    this.projects &#x3D; this.lang.projects();
+    this.projects &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
-    this.fields &#x3D; this.lang.fields();
+    this.fields &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
     this.projectList.projectsListBuilding(&quot;Q11295&quot;).subscribe(res &#x3D;&gt; this.projectsList &#x3D; res); // list of projects
 

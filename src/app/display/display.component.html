@@ -81,9 +81,10 @@
                   <div class="cardBackground">
 
                     <mat-card-content>
-                      <div class="itemTitle">
-                        <span>{{ label }}</span>
-                      </div>
+                      
+                        <div class="itemTitle" [attr.lang]="selectedLang === 'de' ? 'de' : null">{{ label }}</div>
+
+                      
                       <div [ngClass]="isAliases ? 'hide-division':'show-division'" class="aliases">
                         {{ aliases | join }}
                       </div>
@@ -110,7 +111,7 @@
                                loading="lazy"
                                alt="Image description"
                                (error)="onImageError($event)"
-                               (click)="openImage(picture.picture)" />
+                               (click)="openImage(picture.full)" />
                           <!--                  </mat-card>   -->
                         </div>
                       </div>
@@ -264,7 +265,7 @@
                            alt="Image description"
                            (load)="onThumbnailLoad(picture)"
                            (error)="onImageError($event)"
-                           (click)="openImage(picture.picture)" />
+                           (click)="openImage(picture.full)" />
 
                       <!---</mat-card> --->
                     </div>

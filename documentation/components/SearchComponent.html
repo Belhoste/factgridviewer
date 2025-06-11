@@ -1299,15 +1299,15 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.subtitle &#x3D; this.lang.subtitle();
+    this.subtitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
-    this.advanced_search &#x3D; this.lang.advanced_search();
+    this.advanced_search &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
-    this.projects &#x3D; this.lang.projects();
+    this.projects &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
-    this.fields &#x3D; this.lang.fields();
+    this.fields &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
-    this.formerVisitsTitle &#x3D; this.lang.formerVisitsTitle()
+    this.formerVisitsTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang)
 
     this.selectedItemsList &#x3D; this.selectedItemsList.filter(function (el) { return (el !&#x3D;&#x3D; null) });
 

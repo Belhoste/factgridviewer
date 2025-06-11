@@ -36,12 +36,13 @@ export class AppComponent implements OnInit {
 
   langs: Lang[] = [
     { name: 'English', code: 'en' },
-    { name: 'German', code: 'de' },
-    { name: 'French', code: 'fr' },
-    { name: 'Spanish', code: 'es' },
-    { name: 'Italian', code: 'it' },
-    { name: 'Hungarian', code: 'hu' },
-    { name: 'Swedish', code: 'se' }
+    { name: 'Deutsch', code: 'de' },
+    { name: 'Français', code: 'fr' },
+    { name: 'Español', code: 'es' },
+    { name: '中文', code: 'zh' },
+    { name: 'Italiano', code: 'it' },
+    { name: 'Magyar', code: 'hu' },
+    { name: 'Svenska', code: 'se' }
   ];
 
   specialPages = [

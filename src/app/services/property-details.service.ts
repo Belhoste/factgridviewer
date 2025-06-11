@@ -100,10 +100,6 @@ export class PropertyDetailsService {
 
           statement.qualifiers2.push(qualifier2Obj);
         }
-
-        // Debug
-        console.log('qualifiers-order:', qualifierOrder);
-        console.log('qualifiers2 créé:', statement.qualifiers2);
       }
     }
     return re;

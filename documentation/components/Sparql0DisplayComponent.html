@@ -1134,7 +1134,7 @@ export class Sparql0DisplayComponent implements OnChanges, OnDestroy {
           
       if (this.subTitle &#x3D;&#x3D; &quot;Q945280&quot; || this.subTitle &#x3D;&#x3D;&quot;Q960698&quot;){  //FactGrid superclass
       this.isWorks&#x3D;true; 
-      this.subTitle &#x3D; this.lang.subclassesListTitle();
+      this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
       }
      
                  else {

@@ -57,14 +57,14 @@ export class ItemInfoComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    this.instancesListTitle = this.lang.instancesListTitle();
-    this.subclassesListTitle = this.lang.subclassesListTitle();
-    this.classesListTitle = this.lang.classesListTitle();
-    this.natureOfListTitle = this.lang.natureOfListTitle();
-    this.subInfoTitle = this.lang.subInfoTitle();
-    this.prefix1 = this.lang.prefix1();
-    this.prefix2 = this.lang.prefix2();
-    this.suffix1 = this.lang.suffix1();
+    this.instancesListTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.subclassesListTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.classesListTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.natureOfListTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.subInfoTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.prefix1 = this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.prefix2 = this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.suffix1 = this.lang.getTranslation('$1', this.lang.selectedLang);
 
     // Utilisation des listes depuis infoList
     this.list1 = this.infoList?.subclassesList ?? [];

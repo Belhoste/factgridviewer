@@ -148,12 +148,12 @@ export class ItemDetailsService {
               });
             } else if (q.datatype === "string" && q.datavalue?.value) {
               display.push({
-                value: q.datavalue.value,
+                string: q.datavalue.value,
                 datatype: "string"
               });
             } else if (q.datatype === "monolingualtext" && q.datavalue?.value) {
               display.push({
-                value: q.datavalue.value,
+                string: q.datavalue.value,
                 datatype: "monolingualtext"
               });
             } else if (q.datavalue?.value) {

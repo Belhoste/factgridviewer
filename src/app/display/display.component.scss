@@ -104,12 +104,17 @@ body {
     line-height: 50px;
   }
 
-  @media (max-width: 959.98px) { //change the size of the title for small screen
-    .itemTitle { //big title of the item
-      font-size: 37px;
-      line-height: 45px;
-    }
+@media (max-width: 959.98px) {
+  .itemTitle {
+    font-size: 37px;
+    line-height: 45px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    white-space: normal;
   }
+}
 
   .aliases { //styling the aliases of the item
     font-size: 16px;

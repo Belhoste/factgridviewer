@@ -5282,15 +5282,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.isSpinner &#x3D; true;
     this.isInfo &#x3D; false;
-    this.newSearch &#x3D; this.lang.newSearch();
-    this.linkedPagesTitle &#x3D; this.lang.linkedPagesTitle();
-    this.mainPage &#x3D; this.lang.mainPage();
-    this.factGridQuery &#x3D; this.lang.factGridQuery();
-    this.externalLinksTitle &#x3D; this.lang.externalLinksTitle();
-    this.formerVisitsTitle &#x3D; this.lang.formerVisitsTitle();
-    this.clickToDownload &#x3D; this.lang.clickToDownload();
-    this.clickToDisplay &#x3D; this.lang.clickToDisplay();
-    this.stemma &#x3D; this.lang.stemma();
+    this.newSearch &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.linkedPagesTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.mainPage &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.factGridQuery &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.externalLinksTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.formerVisitsTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.clickToDownload &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.clickToDisplay &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.stemma &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
 
     this.subscription0 &#x3D; this.route.paramMap.subscribe(params &#x3D;&gt; {
       this.itemId &#x3D; params.get(&#x27;id&#x27;);
@@ -5305,7 +5305,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
         if (res[0].query !&#x3D;&#x3D; undefined) {
           this.linkedItems &#x3D; this.backListDetails.setBackList(res[0].query.pages);
         } else {
-          this.linkedItems &#x3D; [{ id: &quot;Q21898&quot;, label: this.lang.noneLabel() }];
+          this.linkedItems &#x3D; [{ id: &quot;Q21898&quot;, label: this.lang.getTranslation('$1', this.lang.selectedLang) }];
         }
       }))
       .subscribe();
@@ -5343,7 +5343,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       this.main &#x3D; this.claims.P2.main;
       if (this.mainTitle &#x3D;&#x3D; &quot;Humain&quot;) { this.mainTitle &#x3D; &quot;Personne&quot;; }
       if ([&quot;Q37073&quot;, &quot;Q257052&quot;].includes(this.claims.P2[0].mainsnak.datavalue.value.id)) {
-        this.mainTitle &#x3D; this.lang.activity();
+        this.mainTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
       }
       this.urlId &#x3D; this.factGridUrl + this.id;
 

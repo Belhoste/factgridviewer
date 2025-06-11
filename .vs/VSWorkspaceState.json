@@ -4,13 +4,12 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\education-display",
-    "\\src\\app\\display\\item-info",
-    "\\src\\app\\display\\main-display",
-    "\\src\\app\\footer",
+    "\\src\\app\\harmonia-universalis",
+    "\\src\\app\\paris-search",
     "\\src\\app\\search",
+    "\\src\\app\\search\\advanced-search",
     "\\src\\app\\services"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\src\\app\\services\\list-details.service.ts",
   "PreviewInSolutionExplorer": false
 }

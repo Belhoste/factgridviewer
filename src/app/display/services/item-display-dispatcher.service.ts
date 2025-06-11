@@ -33,7 +33,11 @@ export class ItemDisplayDispatcherService {
 
   dispatch(item: any, target: any): DisplayFlags {
     const claims = item[0].claims;
-  
+
+    //Excluded properties
+    target.excludedProperties = [];
+    this.blockDisplay.setExcludedProperties(item, target.excludedProperties);
+
     // Header
     target.headerDetail = [];
     this.blockDisplay.setHeaderDisplay(item, target.headerDetail);
