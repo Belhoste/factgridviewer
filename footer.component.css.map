@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/footer/footer.component.scss"],
+  "sourcesContent": [".footer {\n  width: 100%;\n  text-align: center;\n  padding: 1em 0;\n  background: #f5f5f5;\n  color: #555;\n  font-size: 0.95em;\n  border-top: 1px solid #ddd;\n}\n\n\n.footer a {\n  color: #1976d2;\n  text-decoration: underline;\n}\n\n\n\n.github-link img {\n  background: #f5f5f5; // même couleur que le footer\n  border-radius: 50%;\n  padding: 2px;\n  transition: box-shadow 0.2s, opacity 0.2s;\n  opacity: 0.8;\n}\n\n.github-link img:hover {\n  box-shadow: 0 0 4px #888;\n  opacity: 1;\n}\n\n"],
+  "mappings": ";AAAA,CAAA;AACE,SAAA;AACA,cAAA;AACA,WAAA,IAAA;AACA,cAAA;AACA,SAAA;AACA,aAAA;AACA,cAAA,IAAA,MAAA;;AAIF,CAXA,OAWA;AACE,SAAA;AACA,mBAAA;;AAKF,CAAA,YAAA;AACE,cAAA;AACA,iBAAA;AACA,WAAA;AACA,cAAA,WAAA,IAAA,EAAA,QAAA;AACA,WAAA;;AAGF,CARA,YAQA,GAAA;AACE,cAAA,EAAA,EAAA,IAAA;AACA,WAAA;;",
+  "names": []
+}
