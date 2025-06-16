@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/paris-search/paris-search.component.scss"],
-  "sourcesContent": [".example-container {\r\n  display: flex;\r\n  flex-direction: column;\r\n  min-width: 300px;\r\n}\r\n\r\n.example-header {\r\n  min-height: 64px;\r\n  padding: 8px 24px 0;\r\n}\r\n\r\n.mat-form-field {\r\n  font-size: 14px;\r\n  width: 100%;\r\n}\r\n\r\n.mat-table {\r\n  overflow: auto;\r\n  max-height: 500px;\r\n}\r\n\r\n.search-center {  \r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n\r\n.search-center2 {\r\n  margin-top:40px;\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n\r\n.search-label { // style of the labels of the items\r\n  font-weight: bold;\r\n}\r\n\r\n.search-itemSelected { // put a margin on top of the box of selected items\r\n  margin-top: 50px;\r\n}\r\n\r\n\r\n\r\n.selectedItemSize {\r\n   font-size: 14px;\r\n}\r\n"],
-  "mappings": ";AAAA,CAAA;AACE,WAAA;AACA,kBAAA;AACA,aAAA;;AAGF,CAAA;AACE,cAAA;AACA,WAAA,IAAA,KAAA;;AAGF,CAAA;AACE,aAAA;AACA,SAAA;;AAGF,CAAA;AACE,YAAA;AACA,cAAA;;AAGF,CAAA;AACE,WAAA;AACA,mBAAA;;AAIF,CAAA;AACE,cAAA;AACA,WAAA;AACA,mBAAA;;AAGF,CAAA;AACE,eAAA;;AAGF,CAAA;AACE,cAAA;;AAKF,CAAA;AACG,aAAA;;",
-  "names": []
-}

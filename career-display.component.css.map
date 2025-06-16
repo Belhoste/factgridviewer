@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/display/career-display/career-display.component.scss"],
-  "sourcesContent": ["img {\r\nwidth:50%;\r\nheight:auto\r\n}\r\n\r\n@media (min-width: 959.98px) {  // change the size of the picture for big screen\r\nimg {\r\n   width: 30% ;\r\n}\r\n}\r\n"],
-  "mappings": ";AAAA;AACA,SAAA;AACA,UAAA;;AAGA,OAAA,CAAA,SAAA,EAAA;AACA;AACG,WAAA;;;",
-  "names": []
-}
