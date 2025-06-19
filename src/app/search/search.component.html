@@ -1,93 +1,110 @@
-<head>
+<div class="cardBackground">
+  <div class="FactGridTitle" [class.with-researchfield-input]="showResearchField">
+    FactGrid
+  </div>  
+  <div class="subTitle">{{subtitle}}</div>
+  <div *ngIf="selectedResearchField$ | async as selected">
+    <div class="selected-research-field">
+      <ng-container *ngIf="selected.name !== 'all'">
+        {{ selected.name }}
+      </ng-container>
+    </div>
+  </div>
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet">
 
-</head>
-
-<body>
-
- <!--
- <mat-card  appearance="outlined" class=mat-elevation-z12>
-       <mat-card-content  class="cardBackground">
-        <div class="FactGridTitle">FactGrid</div>
-        <div class="subTitle">{{subtitle}}</div>
-       </mat-card-content>
--->
- <div class="cardBackground">
-        <div class="FactGridTitle">FactGrid</div>
-        <div class="subTitle">{{subtitle}}</div>
 </div>
 
-<mat-card  appearance="outlined" class=mat-elevation-z12>
-  <mat-card-content>
-      <div>
-         <div class="search-center2">
-           <mat-form-field>
-             <input matInput placeholder="Ex. Goethe" value="Goethe" [formControl]="searchInput">
-             <mat-hint align="end">{{this.pages | async }} items</mat-hint>
-           </mat-form-field>
-         </div>
-      </div>
-  </mat-card-content>
-
-   <div class="search-center">
-           @if (isDisplay == true) {
-             <div class="searchListSize">   <!--  class="searchListSize" seems to be useless -->
-                <div class="details">
-                      @for (item of items; track item) {
-                          <div>
-                            <span class="search-label">{{item.label}}&nbsp;</span>
-                            <mat-icon-button class="internalLink" [routerLink]="['/item',item.id]"><mat-icon color="primary" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;       
-                            @if (item.description) {
-                            <span>, {{item.description }}</span>
-                            }                           
-                            <hr>
-                          </div>
-                          }
-                </div>
-             </div>
+<div class="search-center2">
+  <div class="search-inputs-row">
+    <!-- Colonne projet -->
+    <!---   <div class="search-field-col">
+         <mat-form-field appearance="outline" class="search-field">
+           <mat-label>{{projectsInput}}</mat-label>
+           <input type="text"
+                  matInput
+                  class="search-input-style"
+                  [formControl]="searchResearchField"
+                  [matAutocomplete]="auto"
+                  placeholder="Nom du projet">
+           <button mat-icon-button
+                   matSuffix
+                   *ngIf="searchResearchField.value"
+                   aria-label="Effacer"
+                   (click)="clearProjectSearch()">
+             <mat-icon>close</mat-icon>
+           </button>
+           <mat-autocomplete #auto="matAutocomplete"
+                             [displayWith]="displayResearchField.bind(this)"
+                             (optionSelected)="researchFieldSelect($event.option.value)">
+             @for (researchField of filteredResearchFields$ | async; track researchField) {
+             <mat-option [value]="researchField">
+               <span class="autocomplete-option-content">{{ researchField.name }}</span>
+               @if (researchField.id === selectedResearchField) {
+               <mat-icon color="primary" style="margin-left:8px;">check_circle</mat-icon>
+               }
+             </mat-option>
              }
+           </mat-autocomplete>
+         </mat-form-field>
+       </div> --->
+    <!-- Colonne items -->
+    <div class="search-field-col">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>{{itemsInput}}</mat-label>
+        <input matInput
+               class="search-input-style"
+               placeholder="ex: Goethe"
+               [formControl]="searchInput">
+        <button mat-icon-button
+                matSuffix
+                *ngIf="searchInput.value"
+                aria-label="Effacer"
+                (click)="clearItemSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint align="end">{{ hintValue$ | async }} items</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
 
-          @if (isDisplay == false) {
-             <div>
-               <div class="search-center">
-                 <a [routerLink]="['./advanced_search']">{{advanced_search}}</a> <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                 <a href="https://database.factgrid.de/query/#%23model%0A%0ASELECT%20%3Fitem%20%3Fviewer%20%3FitemLabel%20%20WHERE%20%7B%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22%5BAUTO_LANGUAGE%5D%2Cen%22.%20%7D%0A%20%20%3Fitem%20wdt%3AP2%20wd%3AQ7%3B%0A%20%20%20%20%20%20%20%20wdt%3AP247%20wd%3AQ24708.%0A%20%20BIND%28STRAFTER%28STR%28%3Fitem%29%2C%20STR%28wd%3A%29%29%20AS%20%3FitemId%29%0A%20%20BIND%28IRI%28CONCAT%28%22https%3A%2F%2Fdatabase.factgrid.de%2Fviewer%2Fitem%2F%22%2C%20%3FitemId%29%29%20AS%20%3Fviewer%29%0A%7D%0A">
-                   sparql query
-                 </a>
-                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                 <!---       <a [routerLink]="['/harmonia_universalis']">Harmonia Universalis</a> --->
-               </div>
-
-                    <div class="search-itemSelected">
-                        <mat-card appearance="outlined" class="search-itemSelected-mat-card">
-                          <div class="selectedListTitle2">{{formerVisitsTitle}}</div>
-                          <div class="selectedItemSize">
-                            <hr>
-                            <mat-card-content>
-                              <div>
-                                @for (selectedItem of selectedItemsList; track selectedItem) {
-                                <div class="labelTitlePadding">
-                                  @if (selectedItem) {
-                                  <span class="selectedItemText">
-                                    {{selectedItem.label}}&nbsp;
-                                    <mat-icon-button class="internalLink" [routerLink]="['/item', selectedItem.value.id]"><mat-icon class="whiteButton" [inline]="true">open_in_new</mat-icon></mat-icon-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                  </span>
-                                  }
-                                  <br>
-                                </div>
-                                }
-                              </div>
-                            </mat-card-content>
-                         </div>
-                        </mat-card>
-                    </div>
-               </div>
-              }
+<!-- Affichage de la liste des items trouvés -->
+@let results = (searchResults$ | async);
+@if (results && results.length > 0) {
+<div class="items-list-container">
+  <div class="items-list-inner">
+    @if (results.length > 20) {
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>{{filterResults}}</mat-label>
+      <input matInput [formControl]="filterInput" placeholder="Filtrer par nom ou description">
+    </mat-form-field>
+    }
+    <ul>
+      @for (item of filteredItems$ | async; track item.id) {
+      <li class="item-row">
+        <div class="item-main">
+          <span class="search-label">
+            {{ item.label }}<span *ngIf="item.description">,&nbsp;</span>
+          </span>
+          @if (item.description) {
+          <span class="item-description">{{ item.description }}</span>
+          }
         </div>
+        <span class="item-actions" style="margin-left:auto;">
+          <button mat-icon-button class="internalLink" [routerLink]="['/item', item.id]" aria-label="Voir l'item">
+            <mat-icon color="primary" [inline]="true">open_in_new</mat-icon>
+          </button>
+        </span>
+      </li>
+      }
+    </ul>
+  </div>
+</div>
+}
+@let filtered = (filteredItems$ | async);
+@let searchValue = (searchInputValue$ | async);
+@if (isArray(filtered) && filtered.length === 0 && searchValue) {
+<p class="no-results">Aucun résultat trouvé.</p>
+}
 
-     </mat-card>
-
-  </body>
 

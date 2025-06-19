@@ -838,7 +838,7 @@ export class StatementSearchComponent
       filter(res => res !== undefined && res !== null),
       filter(res => res.entities !== undefined && res.entities !== null),
       map(res => Object.values(res.entities)),
-      map(res => this.setLanguage.item(res, this.lang.selectedLang))
+      map(res => this.setLanguage.item2(res, this.lang.selectedLang))
     )
 } 
 

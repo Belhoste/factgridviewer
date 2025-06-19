@@ -170,7 +170,6 @@
                             <code>NgIf</code>
                             <code>RouterLink</code>
                             <code>MatIconModule</code>
-                            <code>UnitPipe</code>
                 </td>
             </tr>
 
@@ -1226,7 +1225,7 @@ import { RouterLink } from &#x27;@angular/router&#x27;;
 import { MatCardModule } from &#x27;@angular/material/card&#x27;;
 import { NgClass, NgFor, NgIf } from &#x27;@angular/common&#x27;;
 import { SelectedLangService } from &#x27;../../selected-lang.service&#x27;;
-import { UnitPipe } from &#x27;../../unit.pipe&#x27;;
+
 
 
 
@@ -1236,7 +1235,7 @@ import { UnitPipe } from &#x27;../../unit.pipe&#x27;;
     templateUrl: &#x27;./item-info.component.html&#x27;,
     styleUrls: [&#x27;./item-info.component.scss&#x27;],
     standalone: true,
-    imports: [CommonModule, NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule, UnitPipe]
+    imports: [CommonModule, NgClass, MatCardModule, NgFor, NgIf, RouterLink, MatIconModule]
 })
 export class ItemInfoComponent implements OnChanges {
   private lang &#x3D; inject(SelectedLangService);
@@ -1278,14 +1277,14 @@ export class ItemInfoComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    this.instancesListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
-    this.subclassesListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
-    this.classesListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
-    this.natureOfListTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
-    this.subInfoTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
-    this.prefix1 &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
-    this.prefix2 &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
-    this.suffix1 &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+    this.instancesListTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
+    this.subclassesListTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
+    this.classesListTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
+    this.natureOfListTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
+    this.subInfoTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
+    this.prefix1 &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
+    this.prefix2 &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
+    this.suffix1 &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
 
     // Utilisation des listes depuis infoList
     this.list1 &#x3D; this.infoList?.subclassesList ?? [];

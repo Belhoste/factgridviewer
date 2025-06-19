@@ -12,6 +12,31 @@
   flex: 1 1 auto;
 }
 
+.toolbar-btn {
+  margin-top: -12px; /* Ajustez la valeur selon le rendu souhaité */
+}
+
+/* Par défaut, mobile caché, desktop visible */
+.desktop-only {
+  display: inline-block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* En mobile, on inverse */
+@media (max-width: 700px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+
 .language-menu .mat-menu-item.selected-lang {
   background: #e3f2fd;
   font-weight: bold;
@@ -38,6 +63,32 @@
   margin-left: 8px;
 }
 
+.researchfield-mobile {
+  margin-left: 10px;
+  margin-top: 200px; /* valeur par défaut pour mobile hors media query, à ajuster */
+}
+
+@media (max-width: 700px) {
+  .custom-toolbar {
+    padding-bottom: 0;
+  }
+
+  .researchfield-mobile {
+    margin-top: 60px; /* espace sous la toolbar en mobile */
+    margin-left: 10px;
+    width: 90vw;
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 700px) {
+  .researchfield-mobile {
+    margin-top: 0; /* Désactive la marge en desktop */
+  }
+}
+
+
+
 
 html, body {
   height: 100%;
@@ -54,7 +105,10 @@ body, app-root {
 
 .main-content {
   flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
 }
+
 
 footer, app-footer {
   flex-shrink: 0;

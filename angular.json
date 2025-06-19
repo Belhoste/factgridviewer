@@ -67,7 +67,7 @@
                   "maximumError": "10kb"
                 }
               ],
-              "baseHref": "https://belhoste.github.io/factgridviewer/"
+              "baseHref": "/factgridviewer/"
             }
           },
           "defaultConfiguration": ""

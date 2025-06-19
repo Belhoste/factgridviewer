@@ -149,10 +149,23 @@ $my-theme: mat.m2-define-light-theme(( color:(
 
 html, body {
   font-family: 'Oxygen';
-//  background-color: rgb(250, 246, 239);
+  height: 100%;
   margin: 0;
-  //font-family: Cantarell, "Helvetica Neue", sans-serif;
-  width: 100%;
+  padding: 0;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* important pour que le scroll fonctionne */
+  overflow: auto;
 }
 
 /* TODO(mdc-migration): The following rule targets internal classes of button that may no longer apply for the MDC version. */
@@ -170,6 +183,86 @@ html, body {
 .mat-mdc-progress-spinner circle, .mat-mdc-progress-spinner circle {
   stroke: #AD1457;
 }
+
+.mat-mdc-form-field-infix {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.mat-mdc-input-element {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+}
+
+.ellipsis-option {
+  display: block;
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.autocomplete-option-content {
+  font-weight: 500;
+  font-size: 1.25em;
+  color: #283593;
+  display: block;
+  white-space: normal; // autorise le retour à la ligne
+  overflow: visible; // plus de masquage
+  text-overflow: unset; // plus d’ellipsis
+  word-break: break-word; // coupe les mots longs si besoin
+  max-width: 100%; // prend toute la largeur de l’option
+}
+
+
+.mat-autocomplete-panel .mat-option {
+  font-size: 1.25em !important;
+  color: #222 !important;
+  line-height: 1.1 !important; /* interlignage serré */
+  min-height: 28px !important; /* hauteur minimale réduite */
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+
+
+.autocomplete-option-content {
+  font-weight: 500;
+  color: #222 !important; // Texte noir pour le contenu personnalisé
+  font-size: 0.95em; // Taille de police réduite
+}
+
+.mat-mdc-autocomplete-panel .mat-mdc-option {
+  border-bottom: 12px solid #fafbfc; // couleur du fond du panneau
+  background: #fff !important;
+  font-size: 0.95em !important;
+  color: #222 !important;
+}
+
+
+.mat-autocomplete-panel .mat-option:last-child {
+  border-bottom: none;
+}
+
+.mat-autocomplete-panel .mat-option:hover,
+.mat-autocomplete-panel .mat-option.mat-active {
+  background: #f5f5f5 !important;
+}
+
+
+
+.mat-form-field input.mat-input-element.search-input-style {
+  font-size: 0.6em !important;
+}
+
+
 
 //css for components
 
@@ -339,11 +432,143 @@ margin-left: 24px;
   justify-content: center;
 }
 
-.search-center2 { // for styling the search components
-  margin-top: 20px;
+.search-center2 {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.search-inputs-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px; /* espace entre les deux inputs */
+  width: 100%;
   justify-content: center;
 }
+
+.search-field {
+  width: 300px;
+  min-width: 220px;
+}
+
+.items-list-container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centré par défaut (desktop) */
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .items-list-container {
+    align-items: flex-start; /* aligné à gauche en mobile */
+  }
+}
+
+.items-list-inner {
+  width: 100%;
+  max-width: 700px; /* Ajustez selon vos besoins */
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: #fafbfc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+  padding: 16px 0;
+}
+
+
+.items-list-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.items-list-container li {
+  text-align: left;
+  background: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+}
+
+.items-list-container li:last-child {
+  border-bottom: none;
+}
+
+
+.items-list-container li:hover {
+  background: #f5f5f5;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.10);
+}
+
+
+/*.items-list-inner ul {
+  max-height: 60vh; 
+;
+padding: 0
+;
+margin: 0
+;
+width: 100%
+;
+}*/
+
+@media (max-width: 700px) {
+  .items-list-inner,
+  .items-list-container ul {
+    max-width: 98vw;
+    padding: 0 2vw;
+  }
+
+  .items-list-container li {
+    padding: 10px 8px;
+  }
+}
+
+
+.filter-field {
+  width: 300px; /* ou la largeur souhaitée */
+  margin-bottom: 8px;
+  align-self: flex-start; /* S'assure que le filtre reste à gauche même si le parent est en flex */
+}
+
+/* Responsive : sur mobile, les inputs passent l’un sous l’autre */
+@media (max-width: 600px) {
+  .search-center2 {
+    padding-left: 8vw;
+    padding-right: 8vw;
+  }
+
+  .search-inputs-row {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .search-field {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+
+
+mat-form-field.search-field {
+  /* Force la même hauteur pour les deux champs */
+  min-height: 80px; // Ajustez selon le rendu, 80px est une base pour Angular Material outline
+}
+
+
+
+
 
 .search-center3 { // for styling the search components
   display: flex;
@@ -460,31 +685,65 @@ margin-left: 24px;
     }
   }
 
-  .FactGridTitle { //size and color of the title of the search page of FactGrid
-    padding-top: 20px;
-    padding-bottom: 50px;
-    color: #3F51B5;
-    font-size: 4rem;
-    font-weight: 150;
-    @include title();
-    display: flex;
-    justify-content: center;
+.FactGridTitle { //size and color of the title of the search page of FactGrid
+  font-family: 'Inter', 'Oxygen', Arial, sans-serif; // Inter prioritaire, fallback sur Oxygen
+  padding-top: 20px;
+  padding-bottom: 50px;
+  color: #3F51B5;
+  font-size: 4rem;
+  font-weight: 200;
+  @include title();
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width:959.98px) {
+  .FactGridTitle {
+    font-size: 3.5rem;
+    padding-top: 80px;
+    transition: padding-top 0.2s;
   }
 
-  @media (max-width:959.98px) {
-    .FactGridTitle {
-      font-size: 3.5rem;
-      padding-top: 80px;
-    }
+  .FactGridTitle.with-researchfield-input {
+    padding-top: 30px; // ou la valeur souhaitée
   }
+}
+
 
   .subTitle { // subtitle of the FactGrid title
     padding-top: 20px;
     display: flex;
     justify-content: center;
-    padding-bottom: 30px;
   }
 
+.selected-research-field {
+  display: flex;
+  justify-content: center; /* centre horizontalement le contenu */
+  align-items: center; /* centre verticalement si hauteur fixée */
+  color: #3F51B5;
+  font-weight: 400;
+  padding: 8px 30px;
+  margin: 0 auto; /* centre le div si largeur fixée */
+  padding-bottom: 40px; /* espace important sous l'élément */
+}
+
+
+
+.research-field-option {
+  line-height: 1.1;
+  min-height: 28px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  /* Optionnel : réduire la taille de police */
+  font-size: 0.97em;
+}
+
+.research-field-description {
+  font-size: 0.85em;
+  color: #888;
+  line-height: 1;
+  margin-top: 0;
+}
 
   @media (min-width: 959.98px) { // change the size of the picture for big screen
     .smallPicture {
@@ -554,14 +813,18 @@ margin-left: 24px;
     font-size: 16px;
   }
 
-  .search-itemSelected-mat-card { //style the card of selected items
-    height: fit-content;
-    width: 600px;
-    background-color: rgb(99, 98, 98) !important;
-    margin-bottom: 4px;
-    margin-right: 2px;
-    margin-left: 2px;
-  }
+.search-itemSelected-mat-card { //style the card of selected items
+  height: fit-content;
+  width: 600px;
+  background-color: rgb(99, 98, 98) !important;
+  margin-bottom: 4px;
+  margin-right: 2px;
+  margin-left: 2px;
+  /* Ajoutez ceci pour centrer */
+  margin-left: auto;
+  margin-right: auto;
+  display: block; // s'assure que le mat-card prend toute la largeur disponible
+}
 
   @media (max-width: 959.98px) { //change the size of the subsubtitles for small screen
     .search-itemSelected-mat-card { //size and color of the subsubtitles
@@ -569,15 +832,93 @@ margin-left: 24px;
     }
   }
 
-  .internalLink {
-    cursor: pointer;
-    position: absolute;
+.item-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px 0;
+}
+
+.item-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-description {
+  color: #666;
+  font-size: 0.98em;
+  margin-top: 2px;
+  margin-left: 32px; /* pour l’aligner sous le label, optionnel */
+}
+
+@media (min-width: 700px) {
+  .item-row {
+    flex-direction: row;
+    align-items: center;
+  }
+  .item-main {
+    margin-right: 16px;
+  }
+  .item-description {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .item-row {
+    flex-direction: row;
+    align-items: flex-start;
+    line-height: 1; // réduit l'interlignage en mobile
   }
 
-  .whiteText {
-    //  color:white;
-    color: #283593;
+  .item-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1; // réduit l'interlignage
+    width: auto;
+    flex: 1 1 auto;
   }
+
+  .item-description {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left;
+    line-height: 1 !important;
+    width: 100%;
+  }
+}
+
+
+
+.item-actions {
+  align-self: flex-start; // pour aligner l'icône en haut
+  margin-left: auto;
+  margin-top: 0;
+}
+
+.internalLink {
+  cursor: pointer;
+  /* plus de position: absolute */
+  display: inline-flex;
+  align-items: center;
+}
+
+.mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+  min-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 1 !important;
+}
+
+.whiteText {
+  //  color:white;
+  color: #283593;
+}
 
   .center { // use in the display-component for buttons on the drawer and new search
     display: flex;
@@ -637,5 +978,11 @@ margin-left: 24px;
 .separatorStyle {
   margin-left: 1em; // ou la valeur qui convient, par exemple 8px ou 16px
 }
+
+
+
+
+
+
 
 

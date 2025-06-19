@@ -378,8 +378,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="97"
-                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:97</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="95"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:95</a></div>
                         </td>
                     </tr>
 
@@ -441,8 +441,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="113"
-                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:113</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="111"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:111</a></div>
                         </td>
                     </tr>
 
@@ -504,8 +504,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="102"
-                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:102</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:100</a></div>
                         </td>
                     </tr>
 
@@ -649,8 +649,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="119"
-                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:119</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:117</a></div>
                         </td>
                     </tr>
 
@@ -686,8 +686,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="106"
-                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:106</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="104"
+                                    class="link-to-prism">src/app/display/sparql3-display/sparql3-display.component.ts:104</a></div>
                         </td>
                     </tr>
 
@@ -1230,23 +1230,21 @@ export class Sparql3DisplayComponent implements OnChanges, OnDestroy {
     }
     if (changes.sparqlSubject &amp;&amp; changes.sparqlSubject.currentValue) {
       this.subTitle &#x3D; this.sparqlSubject();
-      console.log(this.subTitle);
-
       if (this.subTitle &#x3D;&#x3D; &quot;master&quot;) {  //pupils and disciples
         this.isWorks &#x3D; true;
-        this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+        this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
       } else {
         if (this.subTitle &#x3D;&#x3D; &quot;Q945258&quot;) { //set
           this.isWorks &#x3D; true;
-          this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+          this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
         } else {
           if (this.subTitle &#x3D;&#x3D; &quot;Q172192&quot;) { //list
             this.isWorks &#x3D; true;
-            this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+            this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
           } else {
             if (this.subTitle &#x3D;&#x3D; &quot;current address:&quot;) { //current address
               this.isWorks &#x3D; false;
-              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+              this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
               console.log(this.subTitle);
             }
             else {

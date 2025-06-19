@@ -18,14 +18,21 @@ export class CreateCompleteItemService {
   private lang = inject(SelectedLangService);
 
 
-  completeItem(res) { 
- 
-    let u = this.createItem.createItemToDisplay(res = this.setLanguage.item(res, this.lang.selectedLang)[0], this.lang.selectedLang);
+  completeItem(res) {
   
+    const itemArray = this.setLanguage.item(res, this.lang.selectedLang);
+    const firstItem = itemArray[0];
+   
+    this.itemSparql.itemSparql(firstItem);
+
+    let u = this.createItem.createItemToDisplay(firstItem, this.lang.selectedLang);
+
+    u.subscribe(res => console.log(res));
+
     this.itemInfo.infoListBuilding(res);
 
-    this.itemSparql.itemSparql(res);
-
-  return u
+    return u;
   }
+
+
 }

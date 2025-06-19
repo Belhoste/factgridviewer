@@ -1181,12 +1181,12 @@ export class ItemDetailsService {
               });
             } else if (q.datatype &#x3D;&#x3D;&#x3D; &quot;string&quot; &amp;&amp; q.datavalue?.value) {
               display.push({
-                value: q.datavalue.value,
+                string: q.datavalue.value,
                 datatype: &quot;string&quot;
               });
             } else if (q.datatype &#x3D;&#x3D;&#x3D; &quot;monolingualtext&quot; &amp;&amp; q.datavalue?.value) {
               display.push({
-                value: q.datavalue.value,
+                string: q.datavalue.value,
                 datatype: &quot;monolingualtext&quot;
               });
             } else if (q.datavalue?.value) {

@@ -34,7 +34,7 @@ export class ItemSparqlService {
   sparql2$: Observable<any>;
   sparql3$: Observable<any>;
   sparql4$: Observable<any[]>;
- 
+
 
   langService: string = "%20.%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%22" + this.lang.selectedLang + "%22%2C%22en%22.%20%7D%0A%7D%0A";
 
@@ -49,7 +49,7 @@ export class ItemSparqlService {
     //   this.Q37073Test = this.sparqlAsk(this.subclassTest(item.claims.P2[0].mainsnak.datavalue.value.id, "Q37073")).pipe(startWith(false), tap(res => console.log(res))); // boolean test for Q37073 (career statemnent)
 
     this.Q8Test = this.sparqlAsk(this.subclassTest(item.id, "Q8")).pipe(startWith(false));  // boolean test for Q8 (locality)
- //   this.Q12Test = this.sparqlAsk(this.subclassTest(item.id, "Q12")).pipe(startWith(false));// boolean test for Q12 (organisation)
+    //   this.Q12Test = this.sparqlAsk(this.subclassTest(item.id, "Q12")).pipe(startWith(false));// boolean test for Q12 (organisation)
 
 
     this.Q12Test = this.sparqlAsk(this.Q12TestGet(item.id)).pipe(startWith(false));// boolean test for Q12 (organisation)
@@ -74,10 +74,10 @@ export class ItemSparqlService {
     this.sparql3$ = forkJoin([this.masterTest, this.listTest, this.setTest, this.Q16200Test]).pipe(switchMap(([test1, test2, test3, test4]) => this.selectSparql3(test1, test2, test3, test4, item)), startWith([undefined, undefined]));  // data for the component sparql3 : pupils and students, list of items of a class, parts of a class
 
     this.sparql4$ = forkJoin([this.Q8Test, this.GOVTest]).pipe(switchMap(([test1, test2]) => this.selectSparql4(test1, test2, item)), startWith([undefined, undefined]));  // data for the component sparql4: locality (buildings, etc.)
-  
+
     item.sparql = forkJoin([this.sparql0$, this.sparql1$, this.sparql2$, this.sparql3$, this.sparql4$])
   }
-/*-------------------------------------------------------- select the sparql query depending on the test --------------------------------------------------------------------------*/
+  /*-------------------------------------------------------- select the sparql query depending on the test --------------------------------------------------------------------------*/
 
   // on selectSparql0 and selectSparql1 list and set don't work.
 
@@ -87,7 +87,7 @@ export class ItemSparqlService {
       result = this.superclassSparql(test1, item);  // all-orders subclasses
     }
     else {
-      if (test2 === true) { 
+      if (test2 === true) {
         result = this.superclass1Sparql(test2, item);   // 1st-order subclasses
       }
       else result = this.noResult();
@@ -102,30 +102,30 @@ export class ItemSparqlService {
     }
     else {
       if (test1 === true) {              // members of organisations
-      result = this.Q12Sparql(test1, item);
-    }
-    else {
-      if (test2 === true) {       // career statements
-        result = this.Q37073Sparql(test2, item)
+        result = this.Q12Sparql(test1, item);
       }
       else {
-        if (test3 === true) {   // creators
-          result = this.Q456376Sparql(test3, item)
+        if (test2 === true) {       // career statements
+          result = this.Q37073Sparql(test2, item)
         }
         else {
-          if (test4 === true) {  // family names
-            result = this.Q24499Sparql(item);
+          if (test3 === true) {   // creators
+            result = this.Q456376Sparql(test3, item)
           }
-              else {
-                if (test6 === true) {    // properties of a class of Factgrid properties
-                  result = this.Q77457Sparql(item);
-                }
-                else result = this.noResult()
-              } 
+          else {
+            if (test4 === true) {  // family names
+              result = this.Q24499Sparql(item);
+            }
+            else {
+              if (test6 === true) {    // properties of a class of Factgrid properties
+                result = this.Q77457Sparql(item);
+              }
+              else result = this.noResult()
             }
           }
         }
       }
+    }
     return result
   }
 
@@ -135,12 +135,11 @@ export class ItemSparqlService {
       result = this.Q140759Sparql(test1, item);  // health practitioners
     } else {
       if (test2 === true) {    // current address for an old address
-   //     result = this.currentAddress(item);
         result = this.noResult();
       }
-        else result = this.noResult();
+      else result = this.noResult();
     }
-    
+
     return result
   }
 
@@ -159,13 +158,12 @@ export class ItemSparqlService {
         }
         else {
           if (test4 === true) {
-           result = this.currentAddress(item);
-    //        result = this.noResult();
+            result = this.currentAddress(item);
           }
           else result = this.noResult();
         }
-       }
       }
+    }
     return result
   }
 
@@ -189,10 +187,20 @@ export class ItemSparqlService {
 
   Q24499TestGet(item) {     // to get the boolean test for Q2449 (family name)
     let test: boolean = false;
-    if (item.claims.P2[0].mainsnak.datavalue.value.id == "Q24499") {
+    if (
+      item &&
+      item.claims &&
+      item.claims.P2 &&
+      Array.isArray(item.claims.P2) &&
+      item.claims.P2[0] &&
+      item.claims.P2[0].mainsnak &&
+      item.claims.P2[0].mainsnak.datavalue &&
+      item.claims.P2[0].mainsnak.datavalue.value &&
+      item.claims.P2[0].mainsnak.datavalue.value.id === "Q24499"
+    ) {
       test = true;
     }
-    return of(test)
+    return of(test);
   }
 
   Q8TestGet(item) {     // to get the boolean test for Q8 (locality); deprecated
@@ -203,14 +211,25 @@ export class ItemSparqlService {
     return of(test)
   }
 
- 
-  Q16200TestGet(item) {     // to get the boolean test for Q16200 (address);
+
+  Q16200TestGet(item) {
     let test: boolean = false;
-    if (item.claims.P2[0].mainsnak.datavalue.value.id == "Q16200") {
+    if (
+      item &&
+      item.claims &&
+      item.claims.P2 &&
+      Array.isArray(item.claims.P2) &&
+      item.claims.P2[0] &&
+      item.claims.P2[0].mainsnak &&
+      item.claims.P2[0].mainsnak.datavalue &&
+      item.claims.P2[0].mainsnak.datavalue.value &&
+      item.claims.P2[0].mainsnak.datavalue.value.id === "Q16200"
+    ) {
       test = true;
-    };
-    return of(test)
+    }
+    return of(test);
   }
+
 
   Q172192TestGet(item) {  // to get the boolean test for Q172192 (list); deprecated
     let test: boolean = false;
@@ -222,21 +241,40 @@ export class ItemSparqlService {
 
   Q77457TestGet(item) {  // to get the boolean test for Q77457 (class of FactGrid properties)
     let test: boolean = false;
-    if (item.claims.P2[0].mainsnak.datavalue.value.id == "Q77457") {
+    if (
+      item &&
+      item.claims &&
+      item.claims.P2 &&
+      Array.isArray(item.claims.P2) &&
+      item.claims.P2[0] &&
+      item.claims.P2[0].mainsnak &&
+      item.claims.P2[0].mainsnak.datavalue &&
+      item.claims.P2[0].mainsnak.datavalue.value &&
+      item.claims.P2[0].mainsnak.datavalue.value.id === "Q77457"
+    ) {
       test = true;
-    };
-    return of(test)
+    }    return of(test)
   }
 
   GOVTestGet(item) {
     let test: boolean = false;
-    if (item.claims.P2[0].mainsnak.datavalue.value.id == "Q780657") {
-      test = true
-    };
+    if (
+      item &&
+      item.claims &&
+      item.claims.P2 &&
+      Array.isArray(item.claims.P2) &&
+      item.claims.P2[0] &&
+      item.claims.P2[0].mainsnak &&
+      item.claims.P2[0].mainsnak.datavalue &&
+      item.claims.P2[0].mainsnak.datavalue.value &&
+      item.claims.P2[0].mainsnak.datavalue.value.id === "Q780657"
+    ) {
+      test = true;
+    }
     return of(test);
   }
 
-  
+
 
   /********************************* queries with specific tests  **********************************************************/
 
@@ -248,23 +286,21 @@ export class ItemSparqlService {
       let prefix4 = "%20%7D%20UNION%20%7B%20%3Fitem%20wdt%3AP315%20wd%3A";
       let suffix = "%20.%20%7D%0A%3Fitem%20wdt%3AP247%20%3Ff";
       let u = prefix1 + res.id + prefix2 + res.id + prefix3 + res.id + prefix4 + res.id + suffix + this.langService + "ORDER%20BY%20%3FfLabel";
-      console.log(u);
       return this.sparqlQuery(u).pipe(map(res => ["Q12", this.listFromSparql(res).results.bindings]))
     }
   }
 
   Q37073Sparql(test, res) {  // query  career statement
     if (test === true) {
-     let prefix1 = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%3FfamilyNameLabel%20WHERE%20%7B%20%0A%20%7B%20%3Fitem%20wdt%3AP165%2Fwdt%3AP3%2a%20wd%3A";
-     let prefix2 = "%20%7D%20UNION%20%7B%20%3Fitem%20p%3AP165%20%5Bpq%3AP122%20wd%3A";
-     let suffix = "%5D%20%7D%0A%20%20%20%20%20%20%20OPTIONAL%20%7B%20%3Fitem%20wdt%3AP247%20%3FfamilyName%20%7D";
-//    let prefix1 = "https://database.factgrid.de/query/#SELECT%20%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%3FfamilyNameLabel%0A%20%20WITH%20%7B%20SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%7B%0A%20%7B%20%3Fitem%20wdt%3AP165%2Fwdt%3AP3%2a%20wd%3A";
-//    let prefix2 = "%20%7D%20%20UNION%20%7B%20%3Fitem%20p%3AP165%20%5Bpq%3AP122%20wd%3A";
- //   let suffix = "%5D%20%7D%20%20%0A%20%20%20%20OPTIONAL%20%7B%20%3Fitem%20wdt%3AP247%20%3FfamilyName%20%7D%20.%0A%7D%7D%20AS%20%25results%0AWHERE%20%7B%0A%20include%20%25results";
+      let prefix1 = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%3FfamilyNameLabel%20WHERE%20%7B%20%0A%20%7B%20%3Fitem%20wdt%3AP165%2Fwdt%3AP3%2a%20wd%3A";
+      let prefix2 = "%20%7D%20UNION%20%7B%20%3Fitem%20p%3AP165%20%5Bpq%3AP122%20wd%3A";
+      let suffix = "%5D%20%7D%0A%20%20%20%20%20%20%20OPTIONAL%20%7B%20%3Fitem%20wdt%3AP247%20%3FfamilyName%20%7D";
+      //    let prefix1 = "https://database.factgrid.de/query/#SELECT%20%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%3FfamilyNameLabel%0A%20%20WITH%20%7B%20SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%7B%0A%20%7B%20%3Fitem%20wdt%3AP165%2Fwdt%3AP3%2a%20wd%3A";
+      //    let prefix2 = "%20%7D%20%20UNION%20%7B%20%3Fitem%20p%3AP165%20%5Bpq%3AP122%20wd%3A";
+      //   let suffix = "%5D%20%7D%20%20%0A%20%20%20%20OPTIONAL%20%7B%20%3Fitem%20wdt%3AP247%20%3FfamilyName%20%7D%20.%0A%7D%7D%20AS%20%25results%0AWHERE%20%7B%0A%20include%20%25results";
       let u = prefix1 + res.id + prefix2 + res.id + suffix +
         this.langService
         + "ORDER%20by%20%3FfamilyNameLabel%20%0ALIMIT%2010000";
-      console.log(u);
       return this.sparqlQuery(u).pipe(map(res => ["Q37073", this.listFromSparql(res).results.bindings]))
     }
   }
@@ -308,7 +344,7 @@ export class ItemSparqlService {
       let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP8%20%7C%20wdt%3AP319%20%20wd%3A"
       let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
       return this.sparqlQuery(u).pipe(map(res => ["Q945258", this.listFromSparql(res).results.bindings]))
-      
+
     }
   }
 
@@ -333,7 +369,6 @@ export class ItemSparqlService {
     let suffix = "ORDER%20by%20%3FitemLabel";
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%20WHERE%20%7B%20%20%3Fitem%20wdt%3AP247%2Fwdt%3AP3%2a%20wd%3A";
     u = prefix + res.id + this.langService + suffix;
-    console.log(u);
     return this.sparqlQuery(u).pipe(map(res => ["Q24499", this.listFromSparql(res).results.bindings]));
   }
 
@@ -342,17 +377,14 @@ export class ItemSparqlService {
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%0A%7B%3Fitem%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ160381%3B%20wdt%3AP83%20%7C%20wdt%3AP47%20wd%3A";
     let suffix = "ORDER%20by%20%3FitemLabel";
     u = prefix + res.id + this.langService + suffix;
-    console.log(u);
     return this.sparqlQuery(u).pipe(map(res => ["Q8", this.listFromSparql(res).results.bindings]));
   }
 
   GOVSparql(res) {  //query GOV
-    console.log(res.id);
     let u = "";
     let prefix = "https://database.factgrid.de/query/#SELECT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%20WHERE%20%7B%3Fitem%20wdt%3AP1075%20wd%3A"
     let suffix = "ORDER%20by%20%3FitemLabel";
     u = prefix + res.id + this.langService + suffix;
-    console.log(u);
     return this.sparqlQuery(u).pipe(map(res => ["GOV", this.listFromSparql(res).results.bindings]));
   }
 
@@ -360,20 +392,18 @@ export class ItemSparqlService {
     let u = "";
     let prefix = "https://database.factgrid.de/query/#SELECT%20DISTINCT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20%0AWHERE%20%0A%7B%0A%20%20%3Fitem%20wdt%3AP208%20wd%3A"
     u = prefix + res.id + this.langService + "ORDER%20BY%20%3FfitemLabel";
-    console.log(u);
     return this.sparqlQuery(u).pipe(map(res => ["Q16200", this.listFromSparql(res).results.bindings]));
   }
 
 
   Q77457Sparql(res) {  //  // query class of FactGrid properties: the list of the properties belonging to the class
-      let prefix = "https://database.factgrid.de/query/#SELECT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP8%20wd%3A"
+    let prefix = "https://database.factgrid.de/query/#SELECT%20%3Fitem%20%3FitemLabel%20%3FitemDescription%20WHERE%20%7B%20%3Fitem%20wdt%3AP8%20wd%3A"
     let u = prefix + res.id + this.langService + "ORDER%20BY%20%3FitemLabel";
-    console.log(u);
-      let v = this.sparqlQuery(u).pipe(map(res => ["Q77457", this.listFromSparql(res).results.bindings]));
-      return v
+    let v = this.sparqlQuery(u).pipe(map(res => ["Q77457", this.listFromSparql(res).results.bindings]));
+    return v
   }
 
- 
+
 
   /*----------------------------------------- special queries --------------------------------------------*/
 
@@ -381,7 +411,7 @@ export class ItemSparqlService {
     // sparql query to get a list to display : used in Q8Test(), etc...
     sparql = this.newSparqlAdress(sparql);
     return this.request.getList(sparql).pipe(
-    map(res => this.listFromSparql(res)));
+      map(res => this.listFromSparql(res)));
   }
 
   sparqlAsk(sparql) {    // sparql query for a boolean test;
@@ -406,10 +436,10 @@ export class ItemSparqlService {
     }
   }
 
-/*-------------------------------------- Tests ----------------------------------------------------*/
+  /*-------------------------------------- Tests ----------------------------------------------------*/
 
   Q12TestGet(a) {
-    let u =  "https://database.factgrid.de/query/#ASK%20%7Bwd%3A" + a + "%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ12.%20FILTER%28NOT%20EXISTS%20%7Bwd%3A" + a +"%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ8%7D%29%20%7D%0A%20"
+    let u = "https://database.factgrid.de/query/#ASK%20%7Bwd%3A" + a + "%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ12.%20FILTER%28NOT%20EXISTS%20%7Bwd%3A" + a + "%20wdt%3AP2%2Fwdt%3AP3%2a%20wd%3AQ8%7D%29%20%7D%0A%20"
     return u
   }
 
@@ -442,20 +472,24 @@ export class ItemSparqlService {
     let Q140759Tests = [] // test for activity of health care practioner 
     let masterTests = [];  // test for activity of master (professor, painter, physician)
     let b: boolean = false; // in case item.claims.P165 is undefined;
-    if (item.claims.P165 !== undefined) {   // to fill the array Q456376Tests
+    if (item &&
+      item.claims &&
+      item.claims.P165 &&
+      Array.isArray(item.claims.P165) &&
+      item.claims.P165.length > 0) {   // to fill the array Q456376Tests
       for (let i = 0; i < item.claims.P165.length; i++) {
         Q456376Tests.push(this.sparqlAsk(this.classTest(item.claims.P165[i].mainsnak.datavalue.value.id, "Q456376")).pipe(startWith(false))); //array of boolean tests for the activiy of creator (Q456376)
         Q140759Tests.push(this.sparqlAsk(this.classTest(item.claims.P165[i].mainsnak.datavalue.value.id, "Q140759")).pipe(startWith(false))); //array of boolean tests for the activity of health care practitioner (Q140759)
         masterTests.push(this.sparqlAsk(this.masterSubclassTest(item.claims.P165[i].mainsnak.datavalue.value.id)).pipe(startWith(false))); //array of boolean tests for the activiy of master
       }
-    } else { Q456376Tests.push(of(b));  Q140759Tests.push(of(b)), masterTests.push(of(b)) };
+    } else { Q456376Tests.push(of(b)); Q140759Tests.push(of(b)), masterTests.push(of(b)) };
     let u0 = forkJoin(Q456376Tests).pipe(switchMap(res => this.testArrayGet(res)));  //boolean test for Q456376 (creators)
     let u1 = forkJoin(Q140759Tests).pipe(switchMap(res => this.testArrayGet(res)));  //boolean test for Q140759 (health care practitioner);
     let u2 = forkJoin(masterTests).pipe(switchMap(res => this.testArrayGet(res)));  //booelean test for master
     return [u0, u1, u2]
   }
 
- /*----------------------------------------------- handlers --------------------------------------------------------*/
+  /*----------------------------------------------- handlers --------------------------------------------------------*/
 
   testArrayGet(res) {   // get the boolean test in the array of boolean tests, used in activitiesTest
     let result
@@ -486,22 +520,21 @@ export class ItemSparqlService {
           res.results.bindings[i]["item"].id = res.results.bindings[i]["item"].value.replace(
             "https://database.factgrid.de/entity/", "");
           res.results.bindings[i]["item"].id.startsWith("P") ? res.results.bindings[i]["item"].entity = "property" : res.results.bindings[i]["item"].entity = "item";
-          ;  
+          ;
         }
       };
     }
     else {
       res = { head: { vars: ['item', 'itemLabel', 'itemDescription', 'fLabel', 'activityLabel'] }, results: { bindings: [] } }
     };
+    console.log(res);
     return res
   }
 
- 
+
 
   noResult() {   // query in case there is no test
     let u = "";
     return this.sparqlQuery(u);
   }
 }
-
-

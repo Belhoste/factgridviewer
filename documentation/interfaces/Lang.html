@@ -236,14 +236,9 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit, inject } from &#x27;@angular/core&#x27;;
 import { FormControl } from &#x27;@angular/forms&#x27;;
-import { debounceTime, switchMap, map, filter, takeWhile } from &#x27;rxjs/operators&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
-import { HttpClient } from &#x27;@angular/common/http&#x27;;
-import { SetLanguageService } from &#x27;./services/set-language.service&#x27;;
-import { RequestService } from &#x27;./services/request.service&#x27;;
 import { SlideUpAnimation } from &#x27;./slide-up-animation&#x27;;
-import { RouterLink, RouterModule, Router } from &#x27;@angular/router&#x27;;
-import { NgFor, NgIf } from &#x27;@angular/common&#x27;;
+import { RouterModule, Router } from &#x27;@angular/router&#x27;;
 import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
 import { MatMenuModule } from &#x27;@angular/material/menu&#x27;;
 import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
@@ -267,10 +262,7 @@ export interface Lang {
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    NgFor,
-    NgIf,
     RouterModule,
-    RouterLink,
     FooterComponent,
     MatTooltipModule
   ]
@@ -280,12 +272,13 @@ export class AppComponent implements OnInit {
 
   langs: Lang[] &#x3D; [
     { name: &#x27;English&#x27;, code: &#x27;en&#x27; },
-    { name: &#x27;German&#x27;, code: &#x27;de&#x27; },
-    { name: &#x27;French&#x27;, code: &#x27;fr&#x27; },
-    { name: &#x27;Spanish&#x27;, code: &#x27;es&#x27; },
-    { name: &#x27;Italian&#x27;, code: &#x27;it&#x27; },
-    { name: &#x27;Hungarian&#x27;, code: &#x27;hu&#x27; },
-    { name: &#x27;Swedish&#x27;, code: &#x27;se&#x27; }
+    { name: &#x27;Deutsch&#x27;, code: &#x27;de&#x27; },
+    { name: &#x27;Français&#x27;, code: &#x27;fr&#x27; },
+    { name: &#x27;Español&#x27;, code: &#x27;es&#x27; },
+    { name: &#x27;中文&#x27;, code: &#x27;zh&#x27; },
+    { name: &#x27;Italiano&#x27;, code: &#x27;it&#x27; },
+    { name: &#x27;Magyar&#x27;, code: &#x27;hu&#x27; },
+    { name: &#x27;Svenska&#x27;, code: &#x27;se&#x27; }
   ];
 
   specialPages &#x3D; [

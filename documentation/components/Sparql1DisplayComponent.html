@@ -170,8 +170,6 @@
                 <td class="col-md-9">
                             <code>MatCardModule</code>
                             <code>NgClass</code>
-                            <code>NgFor</code>
-                            <code>NgIf</code>
                             <code>RouterLink</code>
                             <code>MatIconModule</code>
                             <code>MatFormFieldModule</code>
@@ -1381,7 +1379,7 @@ import { MatInputModule } from &#x27;@angular/material/input&#x27;;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
 import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
 import { RouterLink } from &#x27;@angular/router&#x27;;
-import { NgClass, NgFor, NgIf } from &#x27;@angular/common&#x27;;
+import { NgClass } from &#x27;@angular/common&#x27;;
 import { MatCardModule } from &#x27;@angular/material/card&#x27;;
 import { SelectedLangService } from &#x27;../../selected-lang.service&#x27;;
 import { ArrayToCsvService } from &#x27;../../services/array-to-csv.service&#x27;;
@@ -1393,7 +1391,7 @@ import { ArrayToCsvService } from &#x27;../../services/array-to-csv.service&#x27
   styleUrls: [&#x27;sparql1-display.component.scss&#x27;],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatCardModule, NgClass, NgFor, NgIf, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule]
+  imports: [MatCardModule, NgClass, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule]
 })
 export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
   private lang &#x3D; inject(SelectedLangService);
@@ -1448,43 +1446,43 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle &#x3D;&#x3D; &quot;Q8&quot;) {  //location
         this.isWorks &#x3D; true;
-        this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+        this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
       }
       else {
         if (this.subTitle &#x3D;&#x3D; &quot;Q24499&quot;) { //family name
           this.isWorks &#x3D; false;
-          this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+          this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
         }
         else {
           if (this.subTitle &#x3D;&#x3D; &quot;Q12&quot;) { //organisation
             this.isWorks &#x3D; false;
             if (this.list[0] &amp;&amp; this.list[0].activity) {  // people active in this organisation
-              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+              this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
             }
             else {   //people members of this organisation
               this.isWorks &#x3D; true;
-              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+              this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
             }
           }
           else {
             if (this.subTitle &#x3D;&#x3D; &quot;Q37073&quot;) { //activity
               this.isWorks &#x3D; true;
-              this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+              this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
             }
             else {
               if (this.subTitle &#x3D;&#x3D; &quot;Q16200&quot;) {  //address
                 this.isWorks &#x3D; true;
-                this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+                this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
               }
               else {
                 if (this.subTitle &#x3D;&#x3D; &quot;Q456376&quot;) { //author
                   this.isWorks &#x3D; true;
-                  this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+                  this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
                 }
                 else {
                   if (this.subTitle &#x3D; &quot;Q172192&quot;) { //list
                     this.isWorks &#x3D; true;
-                    this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+                    this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
                   }
                   else {
                     this.subTitle &#x3D; &quot;&quot;;

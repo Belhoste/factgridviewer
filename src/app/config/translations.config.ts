@@ -154,6 +154,17 @@ export const TRANSLATIONS = {
     hu: "kutatási területek",
     zh: "研究领域"
   },
+
+  filterResults: {
+    de: "Ergebnisse filtern",
+    fr: "Filtrer les résultats",
+    es: "Filtrar resultados",
+    it: "Filtra i risultati",
+    en: "Filter results",
+    hu: "Eredmények szűrése",
+    zh: "筛选结果"
+  },
+
   formerVisitsTitle: {
     de: "Sie haben besucht:",
     fr: "vous avez visité :",
@@ -180,6 +191,15 @@ export const TRANSLATIONS = {
     hu: "Entitások (korlát: 50):",
     en: "Instances (limit: 50):",
     zh: "实例（上限：50）："
+  },
+  itemsInput: {
+    de: "Items suchen", 
+    fr: "Rechercher les items",
+    es: "Buscar items",
+    it: "Cerca gli itemi",
+    hu: "Keresés az elemek között",
+    en: "Search items",
+    zh: "搜索项目",
   },
   linkedPagesTitle: {
     de: "verlinkte Seiten",
@@ -288,6 +308,15 @@ export const TRANSLATIONS = {
     en: "research projects",
     hu: "kutatási projektek",
     zh: "研究项目"
+  },
+  projectsInput: {
+    de: "Projekt suchen",
+    fr: "Rechercher un projet",
+    es: "Buscar un proyecto",
+    it: "Cerca un progetto",
+    en: "Search project",
+    hu: "Projekt keresése",
+    zh: "搜索项目"
   },
   pupilTitle: {
     de: "Schüler/innen",

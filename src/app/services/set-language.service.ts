@@ -18,7 +18,7 @@ export class SetLanguageService {
     if (!obj) return undefined;
 
     // Si la langue demandée est "zh", privilégier zh puis zh-hans, puis zh-hant
-   
+
 
     // Si la langue demandée est "zh", privilégier zh puis zh-cn
     if (lang === 'zh') {
@@ -53,7 +53,7 @@ export class SetLanguageService {
 
   /** Utility: get aliases as array of strings for the preferred language */
   private getAliases(obj: any, lang: string, fallbackOrder: string[] = ['en', 'fr', 'de', 'es', 'it', 'hu', 'zh']) {
-    const aliasesObj = this.getLangValue(obj, lang, fallbackOrder);
+    const aliasesObj = obj && obj[lang];
     return Array.isArray(aliasesObj) ? aliasesObj.map(a => a.value) : [];
   }
 
@@ -72,7 +72,7 @@ export class SetLanguageService {
       const result: any = {
         id: item.id,
         label,
-        claims: item.claims,
+        claims: item.claims ?? {},
         sitelinks: item.sitelinks,
         datatype: item.datatype
       };

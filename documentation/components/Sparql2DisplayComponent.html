@@ -166,8 +166,6 @@
                 <td class="col-md-9">
                             <code>MatCardModule</code>
                             <code>NgClass</code>
-                            <code>NgFor</code>
-                            <code>NgIf</code>
                             <code>RouterLink</code>
                             <code>MatIconModule</code>
                             <code>MatFormFieldModule</code>
@@ -1071,7 +1069,7 @@ import { MatButtonModule } from &#x27;@angular/material/button&#x27;
 import { FormsModule } from &#x27;@angular/forms&#x27;;
 import { MatFormFieldModule } from &#x27;@angular/material/form-field&#x27;;
 import { RouterLink } from &#x27;@angular/router&#x27;;
-import { NgClass, NgFor, NgIf } from &#x27;@angular/common&#x27;;
+import { NgClass } from &#x27;@angular/common&#x27;;
 import { MatCardModule } from &#x27;@angular/material/card&#x27;;
 import { SelectedLangService } from &#x27;../../selected-lang.service&#x27;;
 import { ArrayToCsvService } from &#x27;../../services/array-to-csv.service&#x27;;
@@ -1080,7 +1078,7 @@ import { ArrayToCsvService } from &#x27;../../services/array-to-csv.service&#x27
 @Component({
   selector: &#x27;app-sparql2-display&#x27;,
   standalone: true,
-  imports: [MatCardModule, NgClass, NgFor, NgIf, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
+  imports: [MatCardModule, NgClass, RouterLink, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule, FormsModule],
   templateUrl: &#x27;./sparql2-display.component.html&#x27;,
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: &#x27;./sparql2-display.component.scss&#x27;
@@ -1131,7 +1129,7 @@ export class Sparql2DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle &#x3D;&#x3D; &quot;Q140759&quot;) {  //patients
         this.isWorks &#x3D; true;
-        this.subTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+        this.subTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
       }
       else {
         this.subTitle &#x3D; &quot;&quot;;

@@ -221,8 +221,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/app/services/set-language.service.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="55"
+                                    class="link-to-prism">src/app/services/set-language.service.ts:55</a></div>
                         </td>
                     </tr>
 
@@ -284,7 +284,7 @@
                                             </td>
 
                                             <td>
-                                                    <code>[&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;]</code>
+                                                    <code>[&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;, &#x27;zh&#x27;]</code>
                                             </td>
 
                                         </tr>
@@ -387,7 +387,7 @@
                                             </td>
 
                                             <td>
-                                                    <code>[&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;]</code>
+                                                    <code>[&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;zh&#x27;, &#x27;zh-hans&#x27;, &#x27;zh-hant&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;]</code>
                                             </td>
 
                                         </tr>
@@ -425,8 +425,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="31"
-                                    class="link-to-prism">src/app/services/set-language.service.ts:31</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/app/services/set-language.service.ts:61</a></div>
                         </td>
                     </tr>
 
@@ -499,8 +499,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="56"
-                                    class="link-to-prism">src/app/services/set-language.service.ts:56</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="86"
+                                    class="link-to-prism">src/app/services/set-language.service.ts:86</a></div>
                         </td>
                     </tr>
 
@@ -603,19 +603,49 @@ export class SetLanguageService {
   lang: string;
 
   /** Utility: get the value for a field in the preferred language, with fallback */
-  private getLangValue(obj: any, lang: string, fallbackOrder: string[] &#x3D; [&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;]) {
+  private getLangValue(
+    obj: any,
+    lang: string,
+    fallbackOrder: string[] &#x3D; [&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;zh&#x27;, &#x27;zh-hans&#x27;, &#x27;zh-hant&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;]
+  ) {
     if (!obj) return undefined;
+
+    // Si la langue demandée est &quot;zh&quot;, privilégier zh puis zh-hans, puis zh-hant
+   
+
+    // Si la langue demandée est &quot;zh&quot;, privilégier zh puis zh-cn
+    if (lang &#x3D;&#x3D;&#x3D; &#x27;zh&#x27;) {
+      if (obj[&#x27;zh&#x27;]) return obj[&#x27;zh&#x27;];
+      if (obj[&#x27;zh-cn&#x27;]) return obj[&#x27;zh-cn&#x27;];
+      if (obj[&#x27;zh-hans&#x27;]) return obj[&#x27;zh-hans&#x27;];
+      if (obj[&#x27;zh-hant&#x27;]) return obj[&#x27;zh-hant&#x27;];
+    }
+    // Si la langue demandée est &quot;zh-hans&quot; (chinois simplifié explicite)
+    if (lang &#x3D;&#x3D;&#x3D; &#x27;zh-hans&#x27;) {
+      if (obj[&#x27;zh-hans&#x27;]) return obj[&#x27;zh-hans&#x27;];
+      if (obj[&#x27;zh&#x27;]) return obj[&#x27;zh&#x27;];
+      if (obj[&#x27;zh-hant&#x27;]) return obj[&#x27;zh-hant&#x27;];
+    }
+    // Si la langue demandée est &quot;zh-hant&quot; (chinois traditionnel explicite)
+    if (lang &#x3D;&#x3D;&#x3D; &#x27;zh-hant&#x27;) {
+      if (obj[&#x27;zh-hant&#x27;]) return obj[&#x27;zh-hant&#x27;];
+      if (obj[&#x27;zh&#x27;]) return obj[&#x27;zh&#x27;];
+      if (obj[&#x27;zh-hans&#x27;]) return obj[&#x27;zh-hans&#x27;];
+    }
+
+    // Fallback général
     if (obj[lang]) return obj[lang];
     for (const code of fallbackOrder) {
       if (obj[code]) return obj[code];
     }
-    // fallback: first available
+    // fallback: première langue disponible
     const keys &#x3D; Object.keys(obj);
     return keys.length &gt; 0 ? obj[keys[0]] : undefined;
   }
 
+
   /** Utility: get aliases as array of strings for the preferred language */
-  private getAliases(obj: any, lang: string, fallbackOrder: string[] &#x3D; [&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;]) {
+  private getAliases(obj: any, lang: string, fallbackOrder: string[] &#x3D; [&#x27;en&#x27;, &#x27;fr&#x27;, &#x27;de&#x27;, &#x27;es&#x27;, &#x27;it&#x27;, &#x27;hu&#x27;, &#x27;zh&#x27;]) {
     const aliasesObj &#x3D; this.getLangValue(obj, lang, fallbackOrder);
     return Array.isArray(aliasesObj) ? aliasesObj.map(a &#x3D;&gt; a.value) : [];
   }
@@ -671,6 +701,7 @@ export class SetLanguageService {
       return result;
     });
   }
+
 }
 </code></pre>
     </div>

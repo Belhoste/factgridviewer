@@ -20,6 +20,7 @@
     font-size: 60px;
   }
 
+
 .search-label { // style of the labels of the items
   font-weight: bold;
 }
@@ -29,14 +30,89 @@
 }
 
 
+.selected-project-label {
+  font-size: 0.95em;
+  color: #283593;
+  margin-top: 4px;
+  margin-left: 0;
+  width: 300px; /* même largeur que .search-field */
+  box-sizing: border-box;
+}
+
+
 
 //style the card of selected items
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 
  
 
 .selectedItemSize {
    font-size: 14px;
 }
+
+
+// Réduit l’interligne entre les deux mat-hint
+mat-form-field .mat-hint {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 0.5 !important;
+  padding: 0 !important;
+}
+
+
+// Affine le style du label de la checkbox (ligne déjà présente)
+mat-hint mat-checkbox .mat-checkbox-layout .mat-checkbox-label {
+  font-size: 0.75rem !important;
+  font-weight: normal !important;
+  line-height: 0.5 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.search-inputs-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.search-field-col {
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* même largeur que .search-field */
+}
+
+.selected-project-label {
+  font-size: 0.95em;
+  color: #283593;
+  margin-top: 0.25em; /* ou essaye 2px ou 0.25em pour être encore plus proche */
+  margin-left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 1.2;
+  /* Optionnel : style mat-hint */
+  opacity: 0.8;
+  font-style: italic;
+}
+
+
+.no-results {
+  text-align: center;
+  margin-top: 24px;
+  color: #AD1457;
+  font-size: 1.1em;
+}
+
+
+
 
 
 

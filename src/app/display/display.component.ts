@@ -375,8 +375,8 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       // sparql lists
-      this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
-
+        this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
+ 
       // Spinner
       this.isSpinner = false;
 

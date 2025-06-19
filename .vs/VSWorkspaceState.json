@@ -1,15 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\dist\\factgrid",
+    "\\dist\\factgrid\\browser",
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\harmonia-universalis",
-    "\\src\\app\\paris-search",
+    "\\src\\app\\display\\sparql3-display",
     "\\src\\app\\search",
-    "\\src\\app\\search\\advanced-search",
     "\\src\\app\\services"
   ],
-  "SelectedNode": "\\src\\app\\services\\list-details.service.ts",
+  "SelectedNode": "\\dist",
   "PreviewInSolutionExplorer": false
 }

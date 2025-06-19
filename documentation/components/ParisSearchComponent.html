@@ -1295,7 +1295,7 @@ export class ParisSearchComponent implements OnInit {
     if(this.selectedLang &#x3D;&#x3D;&#x3D; &quot;it&quot;) {this.formerVisitsTitle &#x3D; &quot;hai visitato :&quot;}
     */
 
-      this.formerVisitsTitle &#x3D; this.lang.getTranslation('$1', this.lang.selectedLang);
+      this.formerVisitsTitle &#x3D; this.lang.getTranslation(&#x27;$1&#x27;, this.lang.selectedLang);
       console.log(&#x27;selectedParisItemsList:&#x27;, this.selectedParisItemsList);
 
     this.labels &#x3D; this.searchInput.valueChanges   //search engine

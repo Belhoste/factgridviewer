@@ -776,7 +776,11 @@ export class ItemDisplayDispatcherService {
 
   dispatch(item: any, target: any): DisplayFlags {
     const claims &#x3D; item[0].claims;
-  
+
+    //Excluded properties
+    target.excludedProperties &#x3D; [];
+    this.blockDisplay.setExcludedProperties(item, target.excludedProperties);
+
     // Header
     target.headerDetail &#x3D; [];
     this.blockDisplay.setHeaderDisplay(item, target.headerDetail);
