@@ -66,14 +66,13 @@ export class Sparql4DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle == "Q8") {  //location
         this.isWorks = true;
-        this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+        this.subTitle = this.lang.getTranslation('buildingTitle', this.lang.selectedLang);
       }
       else {
 
         if (this.subTitle == "GOV") {  //GOV
           this.isWorks = true;
-          //      this.subTitle = this.lang.buildingTitle(this.buildingTitle
-          this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+          this.subTitle = this.lang.getTranslation('listTitle', this.lang.selectedLang);
         }
 
         else {

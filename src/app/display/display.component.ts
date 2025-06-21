@@ -120,7 +120,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedItems: any[];
   infoList: any;
 
-
   // Affichage
   isSpinner = false;
   isMain = false;
@@ -207,9 +206,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   factGridLogo: string = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/FactGrid-Logo4.png';
 
   ngOnInit(): void {
-
     const selectedResearchField = localStorage.getItem('selectedResearchField');
-
     this.from = (selectedResearchField === 'Q10441') ? 'paris' : 'search';
 
     this.isSpinner = true;
@@ -264,7 +261,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (!item) return;
       this.item = item;
-      console.log('Item loaded:', this.item); 
+      console.log('Item loaded:', this.item);
       this.setList.addToSelectedItemsList(item[0]);
       this.claims = item[0].claims;
       this.setList.addToSelectedItemsList(item[0]);
@@ -375,14 +372,15 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       // sparql lists
-        this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
- 
+      this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
+
       // Spinner
       this.isSpinner = false;
 
       // Trees
       this.isFamilyTree = !!(this.claims.P150 || this.claims.P141 || this.claims.P142);
       this.isStemma = !!this.claims.P233;
+
     });
   }
 
@@ -405,6 +403,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (u[1]) {
       this.sparqlSubject1 = u[1][0];
+      console.log("titre SPARQL 1:", this.sparqlSubject1);
       this.sparqlData1 = u[1][1];
       this.isSparql1 = !!(this.sparqlData1 && this.sparqlData1[0]);
     }

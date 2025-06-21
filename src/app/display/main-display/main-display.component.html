@@ -62,7 +62,6 @@
           <mat-icon-button class="internalLink" [routerLink]="['/item', M.mainsnak.datavalue.value.id]">
             <mat-icon color="primary" [inline]="true">open_in_new</mat-icon>
           </mat-icon-button>
-          &nbsp;&nbsp;&nbsp;
         </span>
         {{M.mainsnak.separator}}
         <span class="description-text">{{M.mainsnak.description}}&nbsp;</span>
@@ -146,8 +145,9 @@
                 <mat-icon-button class="internalLink" [routerLink]="['/item', D.id]">
                   <mat-icon color="primary" [inline]="true">open_in_new</mat-icon>
                 </mat-icon-button>
-                @if(D.description){ &nbsp;&nbsp;&nbsp;}
+                @if(D.description){
                 {{D.separator}}<span class="description-text">{{D.description}}</span>
+                }
               </span>
               }
               @if (D.datatype==='commonsMedia') {

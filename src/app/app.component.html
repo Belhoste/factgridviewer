@@ -12,13 +12,13 @@
     <!-- Champ de recherche projet (desktop uniquement) -->
     <div *ngIf="showResearchField" class="desktop-only">
       <mat-form-field appearance="outline" style="width: 250px; margin: 8px;">
-        <mat-label>Rechercher un projet</mat-label>
+        <mat-label>{{projectSearch}}</mat-label>
         <input #searchResearchFieldInput
                type="text"
                matInput
                [formControl]="searchResearchField"
                [matAutocomplete]="autoResearchField"
-               placeholder="Nom du projet">
+               [placeholder]="projectName">
         <mat-autocomplete #autoResearchField="matAutocomplete"
                           [displayWith]="displayResearchField"
                           class="wide-autocomplete"
@@ -34,6 +34,26 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
+      <button mat-icon-button
+              class="small-icon-btn people-btn"
+              (click)="togglePeopleFilter()"
+              [class.active]="filterPeople === 'people'"
+              [matTooltip]="filterPeople === 'people' ? 'Désactiver le filtre personnes' : 'Activer le filtre personnes'"
+              aria-label="Filtrer par personnes">
+        <mat-icon class="small-icon">
+          {{ filterPeople === 'people' ? 'person' : 'person_outline' }}
+        </mat-icon>
+      </button>
+      <button mat-icon-button
+              class="small-icon-btn"
+              (click)="togglePublicationFilter()"
+              [class.active]="filterPublication === 'publication'"
+              [matTooltip]="filterPeople === 'publication' ? 'Désactiver le filtre publications' : 'Activer le filtre publications'"              aria-label="Filtrer par publications">
+        <mat-icon class="small-icon">
+          {{ filterPublication === 'publication' ? 'library_books' : 'menu_books' }}
+        </mat-icon>
+      </button>
+
     </div>
 
     <button mat-icon-button class="toolbar-btn" (click)="toggleResearchField()" aria-label="Sélection du projet de recherche">
@@ -65,13 +85,13 @@
   <!-- Champ de recherche projet (mobile uniquement, sous le logo) -->
   <div *ngIf="showResearchField" class="mobile-only researchfield-mobile">
     <mat-form-field appearance="outline" style="width: 90vw; max-width: 350px;">
-      <mat-label>Rechercher un projet</mat-label>
+      <mat-label>{{projectSearch}}</mat-label>
       <input #searchResearchFieldInputMobile
              type="text"
              matInput
              [formControl]="searchResearchField"
              [matAutocomplete]="autoResearchField"
-             placeholder="Nom du projet">
+             [placeholder]="projectName">
       <mat-autocomplete #autoResearchField="matAutocomplete"
                         [displayWith]="displayResearchField"
                         class="wide-autocomplete"

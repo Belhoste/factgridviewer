@@ -110,7 +110,8 @@ export class ItemDetailsService {
                 label: enriched?.label || val.label || val.id,
                 description: enriched?.description || val.description || "",
                 aliases: enriched?.aliases || val.aliases || [],
-                datatype: "wikibase-item"
+                datatype: "wikibase-item",
+                separator: (enriched?.description || val.description) ? ", " : ""
               });
             } else if (q.datatype === "commonsMedia" && q.datavalue?.value) {
               display.push({

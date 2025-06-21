@@ -72,43 +72,44 @@ export class Sparql1DisplayComponent implements OnChanges, OnDestroy {
 
       if (this.subTitle == "Q8") {  //location
         this.isWorks = true;
-        this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+        this.subTitle = this.lang.getTranslation('buildingTitle', this.lang.selectedLang);
       }
       else {
         if (this.subTitle == "Q24499") { //family name
           this.isWorks = false;
-          this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+          this.subTitle = this.lang.getTranslation("familyNameTitle", this.lang.selectedLang);
+          console.log(this.subTitle);
         }
         else {
           if (this.subTitle == "Q12") { //organisation
             this.isWorks = false;
             if (this.list[0] && this.list[0].activity) {  // people active in this organisation
-              this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+              this.subTitle = this.lang.getTranslation('activityTitle', this.lang.selectedLang);
             }
             else {   //people members of this organisation
               this.isWorks = true;
-              this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+              this.subTitle = this.lang.getTranslation('organisationTitle', this.lang.selectedLang);
             }
           }
           else {
             if (this.subTitle == "Q37073") { //activity
               this.isWorks = true;
-              this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+              this.subTitle = this.lang.getTranslation('activityTitle', this.lang.selectedLang);
             }
             else {
               if (this.subTitle == "Q16200") {  //address
                 this.isWorks = true;
-                this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+                this.subTitle = this.lang.getTranslation('addressTitle', this.lang.selectedLang);
               }
               else {
                 if (this.subTitle == "Q456376") { //author
                   this.isWorks = true;
-                  this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+                  this.subTitle = this.lang.getTranslation('workTitle', this.lang.selectedLang);
                 }
                 else {
                   if (this.subTitle = "Q172192") { //list
                     this.isWorks = true;
-                    this.subTitle = this.lang.getTranslation('$1', this.lang.selectedLang);
+                    this.subTitle = this.lang.getTranslation('listTitle', this.lang.selectedLang);
                   }
                   else {
                     this.subTitle = "";

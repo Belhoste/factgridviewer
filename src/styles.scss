@@ -262,20 +262,19 @@ html, body {
   font-size: 0.6em !important;
 }
 
-
-
 //css for components
 
 @mixin font-size($sizeValue:16px) {
  font-size: $sizeValue;
 }
 
-.cardBackground { // for styling card
-height: fit-content;
-margin-right: 2px;
-margin-left: 24px;
-// background-color: white ;
+.cardBackground {
+  height: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px; /* ou la largeur souhaitée */
 }
+
 
 @media screen and (max-width: 959.98px) { //change the padding for small screen
   .cardBackground { // for styling card
@@ -509,18 +508,6 @@ margin-left: 24px;
   box-shadow: 0 2px 8px rgba(44,62,80,0.10);
 }
 
-
-/*.items-list-inner ul {
-  max-height: 60vh; 
-;
-padding: 0
-;
-margin: 0
-;
-width: 100%
-;
-}*/
-
 @media (max-width: 700px) {
   .items-list-inner,
   .items-list-container ul {
@@ -566,8 +553,45 @@ mat-form-field.search-field {
   min-height: 80px; // Ajustez selon le rendu, 80px est une base pour Angular Material outline
 }
 
+.search-field-col {
+  width: 300px; /* ou la largeur de ton mat-form-field */
+  margin: 0 auto; /* centre le bloc sur la page */
+}
 
+.search-icons-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* prend toute la largeur du parent */
+  margin-top: 2px;
+  gap: 12px; /* espace entre les icônes */
+}
 
+.small-icon-btn .mat-icon {
+  color: #3F51B5;
+}
+
+.people-btn {
+  /* Optionnel : pour séparer un peu plus */
+  margin-right: 4px;
+}
+
+.small-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  line-height: 18px !important;
+}
+
+button.mat-icon-button.active .mat-icon {
+  color: #1976d2 !important; // bleu pour actif
+  background: #e3f2fd;
+  border-radius: 50%;
+}
+
+button.mat-icon-button .mat-icon {
+  color: #888 !important; // gris pour inactif
+}
 
 
 .search-center3 { // for styling the search components
@@ -755,7 +779,6 @@ mat-form-field.search-field {
     object-fit: cover;
   }
 
-
   @media (max-width: 959.98px) { //change the size of the subtitles for small screen
     .divisionTitle { //size and color of the subtitles
       font-size: 1.6rem;
@@ -891,8 +914,6 @@ mat-form-field.search-field {
   }
 }
 
-
-
 .item-actions {
   align-self: flex-start; // pour aligner l'icône en haut
   margin-left: auto;
@@ -908,11 +929,10 @@ mat-form-field.search-field {
 
 .mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
   min-height: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  line-height: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: 0 !important;
+  height:0 !important;
 }
 
 .whiteText {

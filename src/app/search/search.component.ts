@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -51,6 +53,7 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
     MatInputModule,
     MatFormFieldModule,
     MatTableModule,
+    MatTooltipModule,
     MatIconModule,
     MatButtonModule,
     MatCardModule,
@@ -83,7 +86,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   // --- State ---
   showResearchField = false;
   showInDescription = false;
-  isDisplay = false;
   isSearching = false;
 
   // --- Form Controls ---
@@ -114,17 +116,55 @@ export class SearchComponent implements OnInit, OnDestroy {
   private readonly baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=';
   private readonly getUrlSuffix = '&format=json&origin=*';
 
+  filterPeople: 'people' | null = null;
+  filterPublication: 'publication' | null = null;
+
+
+  togglePeopleFilter() {
+    if (this.filterPeople === 'people') {
+      this.filterPeople = null;
+    } else {
+      this.filterPeople = 'people';
+      this.filterPublication = null; // désactive l'autre filtre
+    }
+    this.searchInput.setValue(this.searchInput.value || '');
+  }
+
+  togglePublicationFilter() {
+    if (this.filterPublication === 'publication') {
+      this.filterPublication = null;
+    } else {
+      this.filterPublication = 'publication';
+      this.filterPeople = null; // désactive l'autre filtre
+    }
+    this.searchInput.setValue(this.searchInput.value || '');
+  }
+
+
   // --- Lifecycle hooks ---
   ngOnInit(): void {
     this.initTranslations();
     this.initSelectedItemsList();
     this.initShowResearchFieldSync();
     this.initResearchFields();
-    this.initFilteredResearchFields();
+    //  this.initFilteredResearchFields();
     this.initSearchResults();
     this.initFilteredItems();
     this.initHintValue();
+
   }
+
+  private initResearchFields() {
+    const sub = this.selectedResearchFieldService.selectedResearchField$.subscribe(() => {
+      this.searchInput.setValue('');
+      this.items = [];
+      this.items$.next([]);
+      this.changeDetector.markForCheck();
+    });
+    this.subscriptions.push(sub);
+  }
+
+  
 
   ngOnDestroy(): void {
     // Unsubscribe from all manual subscriptions
@@ -161,8 +201,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
+  
   /** Fetch and prepare the list of research fields */
-  private initResearchFields() {
+/*  private initResearchFields() {
     const lang = this.lang.selectedLang;
     const ResearchFieldQuery = `https://database.factgrid.de/sparql?query=SELECT ?item ?itemLabel ?itemDescription  
       WHERE {
@@ -199,10 +240,11 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.researchFields$.next(projects);
         this.updateHintValue();
       });
-  }
+  } */
 
   /** Set up filtered research fields observable */
-  private initFilteredResearchFields() {
+ /*
+    private initFilteredResearchFields() {
     this.filteredResearchFields$ = combineLatest([
       this.researchFields$,
       this.searchResearchField.valueChanges.pipe(startWith(''))
@@ -220,7 +262,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       }
     });
     this.subscriptions.push(sub);
-  }
+  } */
 
   /** Set up the main search results observable */
   private initSearchResults() {
@@ -237,7 +279,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (!label || label.length === 0) {
           this.items = [];
           this.items$.next([]);
-          this.isDisplay = false;
           this.updateHintValue();
           this.changeDetector.markForCheck();
           this.isSearching = false;
@@ -247,21 +288,35 @@ export class SearchComponent implements OnInit, OnDestroy {
         const searchTerm = (label || '').toLowerCase();
         const selectedId = selectedResearchField && selectedResearchField.id ? selectedResearchField.id : 'all';
 
-        let searchQuery = '';
-        if (!selectedId || selectedId === 'all' || selectedId === 'Q0') {
-          searchQuery = searchTerm ? `${searchTerm}*` : '';
-        } else {
-          searchQuery = `haswbstatement:P131=${selectedId}${searchTerm ? ' ' + searchTerm + '*' : ''}`;
+        const filters: string[] = [];
+        if (this.filterPeople === 'people') {
+          filters.push('haswbstatement:P2=Q7');
         }
+        if (this.filterPublication === 'publication') {
+          filters.push('haswbstatement:P2=Q20');
+        }
+        if (selectedId && selectedId !== '-' && selectedId !== 'Q0' && selectedId !== 'all') {
+          filters.push(`haswbstatement:P131=${selectedId}`);
+        }
+        if (searchTerm) {
+          filters.push(`inlabel:${searchTerm}*`);
+        }
+        const searchQuery = filters.join(' ');
 
+
+        // Génère l’URL avec plusieurs srsearch
         const searchUrl = 'https://database.factgrid.de/w/api.php' +
           '?action=query' +
           '&list=search' +
           '&format=json' +
           '&origin=*' +
-          `&srsearch=${searchQuery}` +
+          `&srsearch=${encodeURIComponent(searchQuery)}` +
           '&srnamespace=120' +
           '&srlimit=500';
+
+
+
+        console.log(`Searching with URL: ${searchUrl}`); // Debug log)
 
         return this.request.getItem(searchUrl).pipe(
           map(res => {
@@ -309,7 +364,6 @@ export class SearchComponent implements OnInit, OnDestroy {
           tap((items: WikibaseEntity[]) => {
             this.items = items;
             this.items$.next(items);
-            this.isDisplay = items.length > 0;
             this.updateHintValue();
             this.changeDetector.markForCheck();
           })
@@ -428,7 +482,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.searchInput.setValue('', { emitEvent: false });
     this.items = [];
     this.items$.next([]);
-    this.isDisplay = false;
     this.changeDetector.detectChanges();
   }
 

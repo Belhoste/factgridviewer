@@ -13,106 +13,128 @@
 }
 
 .toolbar-btn {
-  margin-top: -12px; /* Ajustez la valeur selon le rendu souhaité */
+  margin-top: -24px; /* Ajustez la valeur selon le rendu souhaité */
 }
 
 /* Par défaut, mobile caché, desktop visible */
 .desktop-only {
   display: inline-block;
+  padding-right: 40px;
 }
-
-.mobile-only {
-  display: none;
-}
-
-/* En mobile, on inverse */
-@media (max-width: 700px) {
-  .desktop-only {
-    display: none !important;
-  }
 
   .mobile-only {
-    display: block !important;
+    display: none;
   }
-}
+  /* En mobile, on inverse */
+  @media (max-width: 700px) {
+    .desktop-only {
+      display: none !important;
+    }
+
+    .mobile-only {
+      display: block !important;
+    }
+  }
 
 
-.language-menu .mat-menu-item.selected-lang {
-  background: #e3f2fd;
-  font-weight: bold;
-}
+  .language-menu .mat-menu-item.selected-lang {
+    background: #e3f2fd;
+    font-weight: bold;
+  }
 
-.language-menu .mat-menu-item:hover {
-  background: #bbdefb;
-}
+  .language-menu .mat-menu-item:hover {
+    background: #bbdefb;
+  }
 
-.language-menu .mat-menu-item mat-icon {
-  margin-left: 8px;
-}
+  .language-menu .mat-menu-item mat-icon {
+    margin-left: 8px;
+  }
 
-.researchfield-menu .mat-menu-item.selected-researchfield {
-  background: #e3f2fd;
-  font-weight: bold;
-}
+  .researchfield-menu .mat-menu-item.selected-researchfield {
+    background: #e3f2fd;
+    font-weight: bold;
+  }
 
-.researchfield-menu .mat-menu-item:hover {
-  background: #bbdefb;
-}
+  .researchfield-menu .mat-menu-item:hover {
+    background: #bbdefb;
+  }
 
-.researchfield-menu .mat-menu-item mat-icon {
-  margin-left: 8px;
-}
-
-.researchfield-mobile {
-  margin-left: 10px;
-  margin-top: 200px; /* valeur par défaut pour mobile hors media query, à ajuster */
-}
-
-@media (max-width: 700px) {
-  .custom-toolbar {
-    padding-bottom: 0;
+  .researchfield-menu .mat-menu-item mat-icon {
+    margin-left: 8px;
   }
 
   .researchfield-mobile {
-    margin-top: 60px; /* espace sous la toolbar en mobile */
     margin-left: 10px;
-    width: 90vw;
-    max-width: 350px;
+    margin-top: 200px; /* valeur par défaut pour mobile hors media query, à ajuster */
   }
-}
 
-@media (min-width: 700px) {
-  .researchfield-mobile {
-    margin-top: 0; /* Désactive la marge en desktop */
+  @media (max-width: 700px) {
+    .custom-toolbar {
+      padding-bottom: 0;
+    }
+
+    .researchfield-mobile {
+      margin-top: 60px; /* espace sous la toolbar en mobile */
+      margin-left: 10px;
+      width: 90vw;
+      max-width: 350px;
+    }
   }
-}
+
+  @media (min-width: 700px) {
+    .researchfield-mobile {
+      margin-top: 0; /* Désactive la marge en desktop */
+    }
+  }
+
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body, app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100%;
+  }
+
+  .main-content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
 
 
 
+  [matSuffix] {
+    display: flex;
+    align-items: center;
+    gap: 0 !important; /* supprime l’espace entre les enfants */
+  }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  [matSuffix] .mat-icon-button {
+    margin: 0 !important;
+    padding: 0 0 !important;
+    min-width: 0 !important;
+    width: 28px !important; /* réduit la largeur du bouton */
+    height: 28px !important;
+  }
 
-body, app-root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  height: 100%;
-}
-
-.main-content {
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-}
+  [matSuffix] .mat-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    line-height: 18px !important;
+  }
 
 
-footer, app-footer {
-  flex-shrink: 0;
-}
+
+  footer, app-footer {
+    flex-shrink: 0;
+  }
 
 
 

@@ -17,6 +17,7 @@ import { RequestService } from './services/request.service';
 import { SelectedResearchFieldService } from './services/selected-research-field.service'; 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { SelectedLangService } from './selected-lang.service';
 
 export interface Lang {
   name: string;
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private request = inject(RequestService);
   private selectedResearchFieldService = inject(SelectedResearchFieldService);
+  private lang = inject(SelectedLangService);
 
   langs: Lang[] = [
     { name: 'English', code: 'en' },
@@ -92,7 +94,8 @@ export class AppComponent implements OnInit {
 
   showResearchField = false;
 
- 
+  projectSearch: string = "Search a project";
+  projectName: string = "Project name";
 
   ResearchFieldQuery = `https://database.factgrid.de/sparql?query=SELECT ?item ?itemLabel ?itemDescription  
    WHERE {
@@ -100,6 +103,18 @@ export class AppComponent implements OnInit {
   ?item wdt:P2 wd:Q11295.
    }`;
 
+  filterPeople: 'people' | 'all' = 'all';
+
+  filterPublication: 'publication' | 'all' = 'all';
+
+  togglePeopleFilter() {
+    this.filterPeople = this.filterPeople === 'people' ? 'all' : 'people';
+    // ... logique de filtrage
+  }
+
+  togglePublicationFilter() {
+    this.filterPublication = this.filterPublication === 'publication' ? 'all' : 'publication';
+  }
   constructor() { }
 
   ngOnInit(): void {
@@ -115,6 +130,9 @@ export class AppComponent implements OnInit {
     if (localStorage['selectedParisItems'] === undefined) {
       localStorage.setItem('selectedParisItems', JSON.stringify([{ value: { id: 'Q152233' }, label: 'FactGrid' }]));
     }
+
+    this.projectSearch = this.lang.getTranslation('projectSearch', this.lang.selectedLang);
+    this.projectName = this.lang.getTranslation('projectName', this.lang.selectedLang);
 
     // Initialisation de l'observable filtré, toujours prêt
     this.filteredResearchFields$ = combineLatest([
@@ -132,7 +150,7 @@ export class AppComponent implements OnInit {
       .pipe(
         map(res => this.listFromSparql(res)),
         map(res => [
-          { name: 'all', id: 'all' },
+          { name: '-', id: '-' },
           ...res.results.bindings.map(b => ({
             name: b.itemLabel.value,
             id: b.item.id,
@@ -163,7 +181,7 @@ export class AppComponent implements OnInit {
       description: researchField.description ?? ''
     });
 
-    }
+  }
   
 
   linking() {

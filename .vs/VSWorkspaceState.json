@@ -1,15 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\dist\\factgrid",
-    "\\dist\\factgrid\\browser",
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\sparql3-display",
+    "\\src\\app\\display\\sources-display",
     "\\src\\app\\search",
     "\\src\\app\\services"
   ],
-  "SelectedNode": "\\dist",
+  "SelectedNode": "\\src\\app\\app.component.scss",
   "PreviewInSolutionExplorer": false
 }
