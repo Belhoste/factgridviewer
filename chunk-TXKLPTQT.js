@@ -1,2 +1,2 @@
-import{G as c}from"./chunk-HM76ELIN.js";var m=(()=>{let t=class t{constructor(){}arrayToCsv(e){return e.map(r=>r.map(String).map(a=>a.replaceAll('"','""')).join(",")).join(`\r
+import{G as c}from"./chunk-67T52SWN.js";var m=(()=>{let t=class t{constructor(){}arrayToCsv(e){return e.map(r=>r.map(String).map(a=>a.replaceAll('"','""')).join(",")).join(`\r
 `)}downloadBlob(e,r,a){var i=new Blob([e],{type:a}),l=URL.createObjectURL(i),n=document.createElement("a");n.href=l,n.setAttribute("download",r),n.click()}};t.\u0275fac=function(r){return new(r||t)},t.\u0275prov=c({token:t,factory:t.\u0275fac,providedIn:"root"});let o=t;return o})();export{m as a};
