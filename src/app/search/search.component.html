@@ -3,98 +3,74 @@
     FactGrid
   </div>
   <div class="subTitle">{{subtitle}}</div>
-  <div *ngIf="selectedResearchField$ | async as selected">
-    <div class="selected-research-field">
-      <ng-container *ngIf="selected.name !== '-'">
-        {{ selected.name }}
-      </ng-container>
-    </div>
+  @let selected = (selectedResearchField$ | async);
+  <div class="selected-research-field" style="display: flex; align-items: center; gap: 4px;">
+    @if (selected?.name !== '-' && selected?.name !== '' && selected?.name !== 'all') {
+    {{ selected.name }}
+    <button mat-icon-button
+            aria-label="Désélectionner le projet"
+            style="margin-left: 2px; font-size: 18px;"
+            (click)="clearProjectSearch()">
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+    <!-- Sinon, rien n'est affiché mais l'espace reste réservé -->
   </div>
-
 
 </div>
 
 <div class="search-center2">
-  <div class="search-inputs-row">
-    <!-- Colonne projet -->
-    <!---   <div class="search-field-col">
-         <mat-form-field appearance="outline" class="search-field">
-           <mat-label>{{projectsInput}}</mat-label>
-           <input type="text"
-                  matInput
-                  class="search-input-style"
-                  [formControl]="searchResearchField"
-                  [matAutocomplete]="auto"
-                  placeholder="Nom du projet">
-           <button mat-icon-button
-                   matSuffix
-                   *ngIf="searchResearchField.value"
-                   aria-label="Effacer"
-                   (click)="clearProjectSearch()">
-             <mat-icon>close</mat-icon>
-           </button>
-           <mat-autocomplete #auto="matAutocomplete"
-                             [displayWith]="displayResearchField.bind(this)"
-                             (optionSelected)="researchFieldSelect($event.option.value)">
-             @for (researchField of filteredResearchFields$ | async; track researchField) {
-             <mat-option [value]="researchField">
-               <span class="autocomplete-option-content">{{ researchField.name }}</span>
-               @if (researchField.id === selectedResearchField) {
-               <mat-icon color="primary" style="margin-left:8px;">check_circle</mat-icon>
-               }
-             </mat-option>
-             }
-           </mat-autocomplete>
-         </mat-form-field>
-       </div> --->
-    <!-- Colonne items -->
-    <div class="search-field-col">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>{{itemsInput}}</mat-label>
-        <input matInput
-               class="search-input-style"
-               placeholder="ex: Goethe"
-               [formControl]="searchInput">
+  <div class="search-field-col">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>{{itemsInput}}</mat-label>
+      <input matInput
+             class="search-input-style"
+             placeholder="ex: Goethe"
+             [formControl]="searchInput">
+      <button mat-icon-button
+              matSuffix
+              *ngIf="searchInput.value"
+              aria-label="Effacer"
+              (click)="clearItemSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+      @if (
+      (selectedResearchField$ | async)?.id &&
+      (selectedResearchField$ | async)?.id !== 'all' &&
+      (selectedResearchField$ | async)?.id !== '-' &&
+      (selectedResearchField$ | async)?.id !== 'Q0'
+      ) {      
+      <div class="search-icons-row">
         <button mat-icon-button
-                matSuffix
-                *ngIf="searchInput.value"
-                aria-label="Effacer"
-                (click)="clearItemSearch()">
-          <mat-icon>close</mat-icon>
+                class="small-icon-btn people-btn"
+                (click)="togglePeopleFilter()"
+                [class.active]="filterPeople === 'people'"
+                [matTooltip]="filterPeople === 'people' ? filterPeopleDeactivate : filterPeopleActivate"
+                aria-label="Filtrer par personnes">
+          <mat-icon class="small-icon"
+                    [ngClass]="filterPeople === 'people' ? 'icon-active' : 'icon-inactive'">
+            {{ filterPeople === 'people' ? 'person' : 'person_outline' }}
+          </mat-icon>
         </button>
-        <div class="search-icons-row">
-          <button mat-icon-button
-                  class="small-icon-btn people-btn"
-                  (click)="togglePeopleFilter()"
-                  [class.active]="filterPeople === 'people'"
-                  [matTooltip]="filterPeople === 'people' ? 'Désactiver le filtre personnes' : 'Activer le filtre personnes'"
-                  aria-label="Filtrer par personnes">
-            <mat-icon class="small-icon"
-              [ngClass]="filterPeople === 'people' ? 'icon-active' : 'icon-inactive'">
-              {{ filterPeople === 'people' ? 'person' : 'person_outline' }}
-            </mat-icon>
-          </button>
-          <button mat-icon-button
-                  class="small-icon-btn"
-                  (click)="togglePublicationFilter()"
-                  [class.active]="filterPublication === 'publication'"
-                  [matTooltip]="filterPublication === 'publication' ? 'Désactiver le filtre publications' : 'Activer le filtre publications'"
-                  aria-label="Filtrer par publications">
-            <mat-icon class="small-icon"
-               [ngClass]="filterPublication === 'publication' ? 'icon-active' : 'icon-inactive'">
-              {{ filterPublication === 'publication' ? 'menu_book' : 'menu_book' }}
-            </mat-icon>
-          </button>
-        </div>
-      </mat-form-field>
+        <button mat-icon-button
+                class="small-icon-btn"
+                (click)="togglePublicationFilter()"
+                [class.active]="filterPublication === 'publication'"
+                [matTooltip]="filterPublication === 'publication' ? filterPublicationDeactivate : filterPublicationActivate" aria-label="Filtrer par publications">
+          <mat-icon class="small-icon"
+                    [ngClass]="filterPublication === 'publication' ? 'icon-active' : 'icon-inactive'">
+            {{ filterPublication === 'publication' ? 'menu_book' : 'menu_book' }}
+          </mat-icon>
+        </button>
+      </div>
+      }
+
+
+    </mat-form-field>
       <!-- Ajoute ce bloc juste après le mat-form-field -->
-  
+
     </div>
-
-  </div>
 </div>
-
-
 
 <!-- Affichage de la liste des items trouvés -->
 @let results = (searchResults$ | async);
@@ -103,31 +79,40 @@
 @if (isArray(filtered) && filtered.length === 0) {-->
 <div class="items-list-container">
   <div class="items-list-inner">
-    @if (results.length > 20) {
-    <mat-form-field appearance="outline" class="filter-field">
-      <mat-label>{{filterResults}}</mat-label>
-      <input matInput [formControl]="filterInput" placeholder="Filtrer par nom ou description">
-    </mat-form-field>
+    @let filtered = (filteredItems$ | async);
+    @let searchValue = (searchInputValue$ | async);
+    @if (searchValue && searchValue.length > 0) {
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>{{filterResults}}</mat-label>
+        <input matInput [formControl]="filterInput">
+      </mat-form-field>
+      <span class="item-count">
+        {{ filtered.length }} {{dataOptions}}
+      </span>
+    </div>
     }
+
+
     <ul>
       @for (item of filteredItems$ | async; track item.id) {
-      <li class="item-row">
+      <li class="item-row"
+          [class.clicked]="clickedItemId === item.id"
+          (click)="onItemRowClick(item.id)"
+          tabindex="0"
+          style="cursor:pointer;">
         <div class="item-main">
-          <span class="search-label">
+          <span class="item-label">
             {{ item.label }}
           </span>
           @if (item.description) {
           <span class="item-description">{{ item.description }}</span>
           }
         </div>
-        <span class="item-actions" style="margin-left:auto;">
-          <button mat-icon-button class="internalLink" [routerLink]="['/item', item.id]" aria-label="Voir l'item">
-            <mat-icon color="primary" [inline]="true">open_in_new</mat-icon>
-          </button>
-        </span>
       </li>
       }
     </ul>
+
   </div>
 </div>
 }

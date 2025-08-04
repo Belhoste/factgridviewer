@@ -13,7 +13,7 @@
 }
 
 .toolbar-btn {
-  margin-top: -24px; /* Ajustez la valeur selon le rendu souhaité */
+  margin-top: -10px; /* Ajustez la valeur selon le rendu souhaité */
 }
 
 /* Par défaut, mobile caché, desktop visible */
@@ -87,7 +87,6 @@
     }
   }
 
-
   html, body {
     height: 100%;
     margin: 0;
@@ -106,8 +105,6 @@
     display: flex;
     flex-direction: column;
   }
-
-
 
   [matSuffix] {
     display: flex;
@@ -129,8 +126,6 @@
     height: 18px !important;
     line-height: 18px !important;
   }
-
-
 
   footer, app-footer {
     flex-shrink: 0;

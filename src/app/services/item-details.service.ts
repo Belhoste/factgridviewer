@@ -22,11 +22,14 @@ export class ItemDetailsService {
 
   addLongestWordLength(re) { re.longestWordLength = this.longestLength.findLongestWord(re.label) };
 
-  addClaimItemDetails(items, re, itemProperties, lang) { // add labels, descriptions and aliases to the items in the mainsnaks   
+  addClaimItemDetails(items, re, itemProperties, lang) {
     for (let i = 0; i < itemProperties.length; i++) {
       let timeOrder = 23000000;
+      // Vérifie que la propriété existe et est un tableau non vide
+      if (!re.claims[itemProperties[i]] || !Array.isArray(re.claims[itemProperties[i]]) || re.claims[itemProperties[i]].length === 0) {
+        continue;
+      }
       re.claims[itemProperties[i]].datatype = re.claims[itemProperties[i]][0].mainsnak.datatype;
-      //     if(re.claims[itemProperties[i]][0].mainsnak.datatype =="external-id"){re.claims[itemProperties[i]].external ="1"}; // add external = "1" if external link property
       for (let j = 0; j < re.claims[itemProperties[i]].length; j++) {
         re.claims[itemProperties[i]][j].mainsnak.timeOrder = timeOrder;
         if (re.claims[itemProperties[i]][j].mainsnak.datatype === "time") {
@@ -34,13 +37,6 @@ export class ItemDetailsService {
           value = value.substring(0, value.length - 10);
           re.claims[itemProperties[i]][j].mainsnak.datavalue.value.date = this.setDate.setDate(value, lang);
         }
-        //add typology, that is the nature of the item    
-        /*  if(itemProperties[i] === "P2"){
-            let u ="";
-           re.claims[itemProperties[i]][j].typology = this.typology.getValue(re.claims[itemProperties[i]][j].mainsnak.datavalue.value.id);
-         
-          }*/
-
         if (itemProperties[i] === "P189" || itemProperties[i] === "P556" || itemProperties[i] === "P181" || itemProperties[i] === "P1267") {
           re.claims[itemProperties[i]][j].picture = this.baseWikimediaURL + re.claims[itemProperties[i]][j].mainsnak.datavalue.value
         }
@@ -190,8 +186,12 @@ export class ItemDetailsService {
 
 
 
-  addReferenceItemDetails(items, re, itemProperties, lang) {  //add labels, definitions and aliases of items in the references
+  addReferenceItemDetails(items, re, itemProperties, lang) {
     for (let i = 0; i < itemProperties.length; i++) {
+      // Vérifie que la propriété existe et est un tableau non vide
+      if (!re.claims[itemProperties[i]] || !Array.isArray(re.claims[itemProperties[i]]) || re.claims[itemProperties[i]].length === 0) {
+        continue;
+      }
       for (let j = 0; j < re.claims[itemProperties[i]].length; j++) {
         if (re.claims[itemProperties[i]][j].references === undefined) { continue }
         for (let k = 0; k < re.claims[itemProperties[i]][j].references.length; k++) {
@@ -224,8 +224,9 @@ export class ItemDetailsService {
         }
       }
     }
-    return re
+    return re;
   }
+
 
   addReference2ItemDetails(items, re, itemProperties) { //add the items of the qualifiers to the array qualifiers     
 

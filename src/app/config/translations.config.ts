@@ -154,6 +154,42 @@ export const TRANSLATIONS = {
     hu: "kutatási területek",
     zh: "研究领域"
   },
+  filterPeopleActivate: {
+    de: "Personen filtern",
+    fr: "Filtrer les personnes",
+    es: "Filtrar personas",
+    it: "Filtra le persone",
+    hu: "Személyek szűrése",
+    en: "Filter people",
+    zh: "筛选人员"
+  },
+  filterPeopleDeactivate: {
+    de: "Personen filtern deaktivieren",
+    fr: "Désactiver le filtrage des personnes",
+    es: "Desactivar filtro de personas",
+    it: "Disattiva filtro persone",
+    hu: "Személyek szűrésének kikapcsolása",
+    en: "Deactivate people filter", 
+    zh: "停用人员筛选"
+  },
+  filterPublicationActivate: {
+    de: "Publikationen filtern",
+    fr: "Filtrer les publications",
+    es: "Filtrar publicaciones",
+    it: "Filtra le pubblicazioni",
+    hu: "Publikációk szűrése",
+    en: "Filter publications",
+    zh: "筛选出版物"
+  },
+  filterPublicationDeactivate: {
+    de: "Publikationen filtern deaktivieren",
+    fr: "Désactiver le filtrage des publications",
+    es: "Desactivar filtro de publicaciones",
+    it: "Disattiva filtro pubblicazioni",
+    hu: "Publikációk szűrésének kikapcsolása",
+    en: "Deactivate publications filter",
+    zh: "停用出版物筛选"
+  },
   filterResults: {
     de: "Ergebnisse filtern",
     fr: "Filtrer les résultats",
@@ -336,6 +372,15 @@ export const TRANSLATIONS = {
     hu: "Müvek",
     en: "Pupils and disciples",
     zh: "学生和弟子"
+  },
+  results: {
+    de: "Ergebnisse",
+    fr: "Résultats",
+    es: "Resultados",
+    it: "Risultati",
+    hu: "Eredmények",
+    en: "Results",
+    zh: "结果"
   },
   setTitle: {
     de: "Erhalten:",

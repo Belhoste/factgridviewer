@@ -1,10 +1,73 @@
 <mat-card-content class="cardBackground">
   <div class="subdivisionTitle">{{mainTitle}}</div>
-
   <router-outlet></router-outlet>
 
   @for (P of mainList; track P.id) {
   <div class="listStyle">
+    @if (P.id === 'P248'  && P.length > 0 && P.label) { <!---for the given names (P248)-->
+    <div class="labelTitlePadding">
+      <span class="propertyStyle hover-bg-light"
+            matTooltip="[{{P.id}}] {{P.description || ''}}"
+            matTooltipPosition="right">
+        {{P.label}}:
+      </span>
+    </div>
+    <span>
+      @for (M of (P | orderByP499); track M; let last = $last; let first = $first) {
+      @if (first) {
+      <span class="alignStyle prenom-padding">
+        @if (M.mainsnak.datavalue?.value?.id) {
+        <span>
+          {{ M.mainsnak.label }}
+          <mat-icon-button class="internalLink"
+                           [routerLink]="['/item', M.mainsnak.datavalue.value.id]">
+            <mat-icon color="primary" [inline]="true">open_in_new</mat-icon>
+          </mat-icon-button>
+        </span>
+        }
+        @else {
+        <span>{{ M.mainsnak.label }}</span>
+        }
+        @for (qid of (M.qualifiers ? (M.qualifiers | objectKeys | filterNotP499) : []); track qid) {
+        @if (M.qualifiers[qid][0]?.datavalue?.value?.label) {
+        <span>
+          ({{ M.qualifiers[qid][0].datavalue.value.label }})
+        </span>
+        }
+        }
+      </span>
+      }
+      @else {
+      <span class="alignStyle">
+        @if (M.mainsnak.datavalue?.value?.id) {
+        <span>
+          {{ M.mainsnak.label }}
+          <mat-icon-button class="internalLink"
+                           [routerLink]="['/item', M.mainsnak.datavalue.value.id]">
+            <mat-icon color="primary" [inline]="true">open_in_new</mat-icon>
+          </mat-icon-button>
+        </span>
+        }
+        @else {
+        <span>{{ M.mainsnak.label }}</span>
+        }
+        @for (qid of (M.qualifiers ? (M.qualifiers | objectKeys | filterNotP499) : []); track qid) {
+        @if (M.qualifiers[qid][0]?.datavalue?.value?.label) {
+        <span>
+          ({{ M.qualifiers[qid][0].datavalue.value.label }})
+        </span>
+        }
+        }
+      </span>
+      }
+      @if (!last) {
+      <span>&#8239;</span>
+      }
+      }
+    </span>
+    }
+
+    @else if (P.label && P?.length > 0 ) {
     <div class="labelTitlePadding">
       <span class="propertyStyle hover-bg-light"
             matTooltip="[{{P.id}}] {{P.description || ''}}"
@@ -13,6 +76,7 @@
       </span>
     </div>
     @for (M of P; track M) {
+    @if (M && M.mainsnak) {
     <div class="statementStyle">
       <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
         @if (M.mainsnak.datatype ==='time') {
@@ -133,7 +197,7 @@
               }
               @if (D.datatype === 'url') {
               <span class="displayLayout">
-                <a href="{{D.string}}" target="_blank">{{D.string}}</a>
+                <a href="{{D.value}}" target="_blank">{{D.value}}</a>
               </span>
               @if (!isLast) {
               <span>,&nbsp;</span>
@@ -167,7 +231,6 @@
         </span>
         }
       </div>
-      <!-- References -->
       @if (M['references2'] && M['references2'].length > 0) {
       <button mat-button
               class="references-toggle-btn"
@@ -243,6 +306,8 @@
       }
       }
     </div>
+    }
+    }
     }
   </div>
   }

@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, Subscription, BehaviorSubject, map, switchMap, tap, debounceTime, combineLatest, filter, startWith, forkJoin, of } from 'rxjs';
+import {
+  Observable, Subscription, BehaviorSubject, map, switchMap, tap, debounceTime,
+  combineLatest, filter, startWith, forkJoin, of
+} from 'rxjs';
 import { MatTableModule } from '@angular/material/table';
 import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -8,31 +11,31 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { SetLanguageService } from '../services/set-language.service';
 import { RequestService } from '../services/request.service';
 import { SelectedLangService } from '../selected-lang.service';
 import { SelectedResearchFieldService } from '../services/selected-research-field.service';
+import { WikibaseSearchService } from '../services/wikibase-search.service';
+import { SearchFilterService } from '../services/search-filter.service';
+import { SearchCacheService } from '../services/search-cache.service';
 
-export interface WikibaseEntity {
-  id: string;
-  label?: string;
-  aliases?: string[];
-  description?: string;
+import { WikibaseEntity } from '../models/wikibase-entity.model';
+import { ResearchField } from '../models/research-field.model';
+
+function normalizeString(s: string | undefined | null): string {
+  if (!s) return '';
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
-export interface ResearchField {
-  id: string;
-  name: string;
-  description: string;
-}
-
-// Utility function to chunk an array into smaller arrays
 function chunkArray<T>(array: T[], chunkSize: number): T[][] {
   const results: T[][] = [];
   for (let i = 0; i < array.length; i += chunkSize) {
@@ -65,35 +68,47 @@ function chunkArray<T>(array: T[], chunkSize: number): T[][] {
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-  // --- Services ---
+  // ========== SERVICES ==========
   private readonly changeDetector = inject(ChangeDetectorRef);
   private readonly request = inject(RequestService);
   private readonly setLanguage = inject(SetLanguageService);
   private readonly lang = inject(SelectedLangService);
-  private readonly selectedResearchFieldService = inject(SelectedResearchFieldService);
+  private readonly selectedResearchField = inject(SelectedResearchFieldService);
+  private readonly wikibaseSearch = inject(WikibaseSearchService);
+  private readonly searchFilter = inject(SearchFilterService);
+  private readonly searchCache = inject(SearchCacheService);
+  private readonly router = inject(Router);
 
-  // --- UI Texts ---
+  // ========== UI TEXTS ==========
   title = 'factgrid';
   subtitle = '';
   advanced_search = '';
   projects = '';
   fields = '';
+  dataOptions = '';
   projectsInput = '';
   itemsInput = '';
   filterResults = '';
   formerVisitsTitle = '';
+  filterPeopleActivate = '';
+  filterPeopleDeactivate = '';
+  filterPublicationActivate = '';
+  filterPublicationDeactivate = '';
 
-  // --- State ---
+  // ========== COMPONENT STATE ==========
   showResearchField = false;
   showInDescription = false;
   isSearching = false;
 
-  // --- Form Controls ---
+  // ========== FORM CONTROLS ==========
   searchResearchField = new FormControl('');
   searchInput = new FormControl();
   filterInput = new FormControl('');
 
-  // --- Data ---
+  // ========== LINKS ==========
+  clickedItemId: string | null = null;
+
+  // ========== DATA SOURCES ==========
   researchFields: ResearchField[] = [];
   private researchFields$ = new BehaviorSubject<ResearchField[]>([]);
   filteredResearchFields$: Observable<ResearchField[]>;
@@ -104,28 +119,51 @@ export class SearchComponent implements OnInit, OnDestroy {
   hintValue$: Observable<number>;
   pages: Observable<number>;
   selectedItemsList: any[] = [];
-  selectedResearchField$ = this.selectedResearchFieldService.selectedResearchField$;
+  selectedResearchField$ = this.selectedResearchField.selectedResearchField$;
 
-  // --- Subscriptions ---
+  // ========== SUBSCRIPTIONS ==========
   private subscriptions: Subscription[] = [];
 
-  // --- Subjects ---
+  // ========== SUBJECTS ==========
   showInDescriptionSubject = new BehaviorSubject<boolean>(false);
 
-  // --- Constants ---
+  // ========== PAGINATION ==========
+  pageSize = 20;
+  currentPage = 0;
+  totalResults = 0;
+  maxApiResults = 100; // Nombre maximum d'items récupérables via l'API (1 ou 2 requêtes de 50)
+
+  // ========== API ENDPOINTS ==========
   private readonly baseGetURL = 'https://database.factgrid.de//w/api.php?action=wbgetentities&ids=';
   private readonly getUrlSuffix = '&format=json&origin=*';
 
+  // ========== FILTERS ==========
   filterPeople: 'people' | null = null;
   filterPublication: 'publication' | null = null;
 
+  // ========== CACHING MECHANISM ==========
+  private termCache: { [term: string]: WikibaseEntity[] } = {};
+  private broadCacheInput: string = '';
+  private broadCacheItems: WikibaseEntity[] = [];
+  private broadCacheComplete: boolean = false;
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.searchInput.setValue(this.searchInput.value || '', { emitEvent: true });
+  }
+
+  setPageSize(size: number) {
+    this.pageSize = size;
+    this.currentPage = 0;
+    this.searchInput.setValue(this.searchInput.value || '', { emitEvent: true });
+  }
 
   togglePeopleFilter() {
     if (this.filterPeople === 'people') {
       this.filterPeople = null;
     } else {
       this.filterPeople = 'people';
-      this.filterPublication = null; // désactive l'autre filtre
+      this.filterPublication = null;
     }
     this.searchInput.setValue(this.searchInput.value || '');
   }
@@ -135,27 +173,41 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.filterPublication = null;
     } else {
       this.filterPublication = 'publication';
-      this.filterPeople = null; // désactive l'autre filtre
+      this.filterPeople = null;
     }
     this.searchInput.setValue(this.searchInput.value || '');
   }
 
-
-  // --- Lifecycle hooks ---
   ngOnInit(): void {
     this.initTranslations();
     this.initSelectedItemsList();
     this.initShowResearchFieldSync();
     this.initResearchFields();
-    //  this.initFilteredResearchFields();
     this.initSearchResults();
     this.initFilteredItems();
     this.initHintValue();
 
+    this.pageSize = 100;
+    this.currentPage = 0;
+
+    this.searchInput.valueChanges.subscribe(() => {
+      this.filterInput.setValue('', { emitEvent: false });
+    });
+
   }
 
+  onItemRowClick(itemId: string) {
+    this.clickedItemId = itemId;
+    // Changement de couleur temporaire (par exemple 200ms)
+    setTimeout(() => {
+      this.clickedItemId = null;
+      this.router.navigate(['/item', itemId]);
+    }, 200);
+  }
+
+
   private initResearchFields() {
-    const sub = this.selectedResearchFieldService.selectedResearchField$.subscribe(() => {
+    const sub = this.selectedResearchField.selectedResearchField$.subscribe(() => {
       this.searchInput.setValue('');
       this.items = [];
       this.items$.next([]);
@@ -164,16 +216,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  
-
   ngOnDestroy(): void {
-    // Unsubscribe from all manual subscriptions
     this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.items = [];
+    this.items$.next([]);
+    this.termCache = {};
+    this.broadCacheItems = [];
   }
 
-  // --- Initialization methods ---
-
-  /** Initialize translations for UI texts */
   private initTranslations() {
     const lang = this.lang.selectedLang;
     this.subtitle = this.lang.getTranslation('subtitle', lang);
@@ -184,226 +234,243 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.itemsInput = this.lang.getTranslation('itemsInput', lang);
     this.formerVisitsTitle = this.lang.getTranslation('formerVisitsTitle', lang);
     this.filterResults = this.lang.getTranslation('filterResults', lang);
+    this.filterPeopleActivate = this.lang.getTranslation('filterPeopleActivate', lang);
+    this.filterPeopleDeactivate = this.lang.getTranslation('filterPeopleDeactivate', lang);
+    this.filterPublicationActivate = this.lang.getTranslation('filterPublicationActivate', lang);
+    this.filterPublicationDeactivate = this.lang.getTranslation('filterPublicationDeactivate', lang);
+    this.dataOptions = this.lang.getTranslation('results', lang);
   }
 
-  /** Initialize the selected items list from localStorage */
   private initSelectedItemsList() {
     const stored = localStorage.getItem('selectedItems');
     this.selectedItemsList = stored ? JSON.parse(stored).filter((el: any) => el !== null) : [];
   }
 
-  /** Synchronize showResearchField state with the service */
   private initShowResearchFieldSync() {
-    const sub = this.selectedResearchFieldService.showResearchField$.subscribe(show => {
+    const sub = this.selectedResearchField.showResearchField$.subscribe(show => {
       this.showResearchField = show;
       this.changeDetector.markForCheck();
     });
     this.subscriptions.push(sub);
   }
 
-  
-  /** Fetch and prepare the list of research fields */
-/*  private initResearchFields() {
-    const lang = this.lang.selectedLang;
-    const ResearchFieldQuery = `https://database.factgrid.de/sparql?query=SELECT ?item ?itemLabel ?itemDescription  
-      WHERE {
-        SERVICE wikibase:label { bd:serviceParam wikibase:language "${lang},en". }
-        ?item wdt:P2 wd:Q11295.
-      }
-      ORDER BY ?itemLabel
-    `;
-
-    this.pages = this.request.getStat().pipe(
-      map(res => {
-        const values = Object.values(res);
-        if (values[1] && values[1].statistics && typeof values[1].statistics.pages === 'number') {
-          return values[1].statistics.pages;
-        }
-        return 0;
+  /**
+   * Récupère jusqu'à 50 items 
+   */
+  private fetchAutocompleteEntities(
+    searchTerm: string,
+    lang: string,
+    maxResults: number = 50
+  ): Observable<{ items: WikibaseEntity[], total: number }> {
+    return this.request.searchItem(searchTerm, lang, 0, maxResults).pipe(
+      map((res: any) => {
+        const total = res.searchinfo?.totalhits ?? (res.search?.length ?? 0);
+        const items = (res.search || []).map((e: any) => ({
+          id: e.id,
+          label: e.label,
+          aliases: (e.aliases || []).filter((a: any) => a.language === lang).map((a: any) => a.value),
+          description: e.description || ''
+        }));
+        return { items, total };
       })
     );
+  }
 
-    this.request.getList(ResearchFieldQuery)
-      .pipe(
-        map(res => this.listFromSparql(res)),
-        map(res => [
-          { name: 'all', id: 'Q0', description: '' },
-          ...res.results.bindings.map((b: any) => ({
-            name: b.itemLabel.value,
-            id: b.item.id,
-            description: b.itemDescription?.value ?? ''
-          }))
-        ]),
-      )
-      .subscribe((projects: ResearchField[]) => {
-        this.researchFields = projects;
-        this.researchFields$.next(projects);
-        this.updateHintValue();
-      });
-  } */
 
-  /** Set up filtered research fields observable */
- /*
-    private initFilteredResearchFields() {
-    this.filteredResearchFields$ = combineLatest([
-      this.researchFields$,
-      this.searchResearchField.valueChanges.pipe(startWith(''))
-    ]).pipe(
-      map(([fields, value]) => {
-        const search = (value ?? '').toString().toLowerCase();
-        return fields.filter(f => f.name.toLowerCase().includes(search));
-      })
-    );
-
-    // Reset selected research field if input is cleared
-    const sub = this.searchResearchField.valueChanges.subscribe(value => {
-      if (typeof value === 'string') {
-        this.selectedResearchFieldService.setSelectedResearchField({ id: 'all', name: 'all', description: '' });
-      }
-    });
-    this.subscriptions.push(sub);
-  } */
-
-  /** Set up the main search results observable */
+  /**
+   * Initialisation de la recherche principale avec pagination UI
+   */
   private initSearchResults() {
     this.searchResults$ = combineLatest([
       this.searchInput.valueChanges.pipe(startWith('')),
       this.showInDescriptionSubject,
-      this.selectedResearchFieldService.selectedResearchField$
+      this.selectedResearchField.selectedResearchField$
     ]).pipe(
       tap(([label]) => {
         this.isSearching = !!label && label.length > 0;
       }),
       debounceTime(250),
       switchMap(([label, showInDescription, selectedResearchField]) => {
-        if (!label || label.length === 0) {
-          this.items = [];
-          this.items$.next([]);
-          this.updateHintValue();
-          this.changeDetector.markForCheck();
-          this.isSearching = false;
+        const searchTerm = normalizeString(label);
+        const selectedId = selectedResearchField?.id || 'all';
+
+        if (!searchTerm) {
+          this.searchCache.invalidateCache();
+          this.resetSearchState();
           return of([]);
         }
 
-        const searchTerm = (label || '').toLowerCase();
-        const selectedId = selectedResearchField && selectedResearchField.id ? selectedResearchField.id : 'all';
+        // Recherche globale paginée (max 100 résultats)
+        if (!selectedId || selectedId === 'all' || selectedId === '-' || selectedId === 'Q0') {
+          // On récupère jusqu'à 100 résultats, puis on découpe la page courante
+          const offset = this.currentPage * this.pageSize;
+          const maxResults = Math.min(this.maxApiResults, offset + this.pageSize);
+          return this.fetchAutocompleteEntities(searchTerm, this.lang.selectedLang, maxResults).pipe(
+            map(({ items, total }) => {
+              const pagedItems = items.slice(offset, offset + this.pageSize);
+              this.totalResults = total;
+              this.updateItemsList(pagedItems);
+              return pagedItems;
+            })
+          );
+        }
 
-        const filters: string[] = [];
-        if (this.filterPeople === 'people') {
-          filters.push('haswbstatement:P2=Q7');
-        }
-        if (this.filterPublication === 'publication') {
-          filters.push('haswbstatement:P2=Q20');
-        }
-        if (selectedId && selectedId !== '-' && selectedId !== 'Q0' && selectedId !== 'all') {
-          filters.push(`haswbstatement:P131=${selectedId}`);
-        }
-        if (searchTerm) {
-          filters.push(`inlabel:${searchTerm}*`);
-        }
+        // Recherche filtrée (CirrusSearch) : pas de pagination ici
+        const firstWord = searchTerm.split(' ')[0];
+        const filters = this.searchFilter.buildSearchFilters(
+          firstWord,
+          selectedId,
+          this.filterPeople === 'people',
+          this.filterPublication === 'publication'
+        );
         const searchQuery = filters.join(' ');
+        const searchUrl = this.wikibaseSearch.buildSearchUrl(searchQuery);
 
-
-        // Génère l’URL avec plusieurs srsearch
-        const searchUrl = 'https://database.factgrid.de/w/api.php' +
-          '?action=query' +
-          '&list=search' +
-          '&format=json' +
-          '&origin=*' +
-          `&srsearch=${encodeURIComponent(searchQuery)}` +
-          '&srnamespace=120' +
-          '&srlimit=500';
-
-
-
-        console.log(`Searching with URL: ${searchUrl}`); // Debug log)
-
-        return this.request.getItem(searchUrl).pipe(
-          map(res => {
-            if (!res.query || !res.query.search) return [];
-            const ids = res.query.search
-              .map((item: any) => {
-                const match = item.title.match(/Q\d+/);
-                return match ? match[0] : null;
-              })
-              .filter((qid: string | null) => !!qid);
-            return ids;
+        return this.wikibaseSearch.fetchAllIds(searchUrl).pipe(
+          tap(ids => {
+            const isComplete = ids.length < 2000;
+            this.searchCache.setCacheComplete(isComplete);
           }),
-          filter((ids: string[]) => ids.length > 0),
-          switchMap((ids: string[]) => {
-            const chunks = chunkArray(ids, 50);
-            const requests = chunks.map(chunk => {
-              const idsParam = chunk.join('|');
-              const getEntitiesUrl = `https://database.factgrid.de/w/api.php?action=wbgetentities&ids=${idsParam}&format=json&languages=${this.lang.selectedLang}&origin=*`;
-              return this.request.getItem(getEntitiesUrl).pipe(
-                map((res: any) => res && res.entities ? Object.values(res.entities) as WikibaseEntity[] : [])
-              );
-            });
-            return requests.length > 0 ? forkJoin(requests).pipe(
-              map(results => results.flat())
-            ) : of([]);
-          }),
-          map((entities: WikibaseEntity[]) => {
-            const lang = this.lang.selectedLang;
-            // The setLanguage.item method is assumed to map API entities to {id, label, aliases, description}
-            const translated = this.setLanguage.item(entities, lang);
-            return translated.filter((item: any) => {
-              const label = item.label?.toLowerCase() || '';
-              const aliases = (item.aliases || []).map((a: string) => a.toLowerCase());
-              const desc = item.description?.toLowerCase() || '';
-              if (!searchTerm) return true;
-              if (label.includes(searchTerm) || aliases.some(alias => alias.includes(searchTerm))) {
-                return true;
-              }
-              if (showInDescription && desc.includes(searchTerm)) {
-                return true;
-              }
-              return false;
-            });
-          }),
-          tap((items: WikibaseEntity[]) => {
-            this.items = items;
-            this.items$.next(items);
-            this.updateHintValue();
-            this.changeDetector.markForCheck();
+          switchMap(ids => this.wikibaseSearch.fetchEntities(ids)),
+          map(entities => this.searchFilter.filterResultsLocally(
+            entities,
+            searchTerm,
+            showInDescription,
+          )),
+          tap(items => {
+            this.totalResults = items.length;
+            if (this.searchCache.isComplete()) {
+              this.searchCache.cacheItems(searchTerm, items);
+            }
+            this.updateItemsList(items);
           })
         );
       })
     );
   }
 
-  /** Set up filtered items observable for the UI */
+  private resetSearchState(): void {
+    this.items = [];
+    this.items$.next([]);
+    this.updateHintValue();
+    this.changeDetector.markForCheck();
+    this.termCache = {};
+    this.broadCacheInput = '';
+    this.broadCacheItems = [];
+    this.broadCacheComplete = false;
+    this.totalResults = 0;
+    this.currentPage = 0;
+  }
+
+  private buildSearchFilters(selectedId: string, searchTerm: string): string[] {
+    const filters: string[] = [];
+    if (this.filterPeople === 'people') {
+      filters.push('haswbstatement:P2=Q7');
+    }
+    if (this.filterPublication === 'publication') {
+      filters.push('haswbstatement:P2=Q20');
+    }
+    if (selectedId && selectedId !== '-' && selectedId !== 'Q0' && selectedId !== 'all') {
+      filters.push(`haswbstatement:P131=${selectedId}`);
+    }
+    filters.push(`${searchTerm}*`);
+    return filters;
+  }
+
+  private buildSearchUrl(searchQuery: string): string {
+    return 'https://database.factgrid.de/w/api.php' +
+      '?action=query' +
+      '&list=search' +
+      '&format=json' +
+      '&origin=*' +
+      `&srsearch=${encodeURIComponent(searchQuery)}` +
+      '&srnamespace=120' +
+      '&srlimit=500';
+  }
+
+  private fetchEntities(ids: string[]): Observable<WikibaseEntity[]> {
+    if (ids.length === 0) return of([]);
+    const chunks = chunkArray(ids, 50);
+    const requests = chunks.map(chunk => {
+      const idsParam = chunk.join('|');
+      const getEntitiesUrl =
+        `https://database.factgrid.de/w/api.php?action=wbgetentities` +
+        `&ids=${idsParam}` +
+        `&format=json` +
+        `&languages=${this.lang.selectedLang}` +
+        `&origin=*`;
+      return this.request.getItem(getEntitiesUrl).pipe(
+        map((res: any) => {
+          if (!res.entities) return [];
+          return this.adaptEntities(Object.values(res.entities), this.lang.selectedLang);
+        })
+      );
+    });
+    return requests.length > 0 ?
+      forkJoin(requests).pipe(map(results => results.flat())) :
+      of([]);
+  }
+
+  private filterResultsLocally(
+    entities: WikibaseEntity[],
+    searchTerm: string,
+    showInDescription: boolean
+  ): WikibaseEntity[] {
+    if (!this.broadCacheComplete && this.broadCacheItems.length > 0) {
+      return this.broadCacheItems.filter(item =>
+        this.matchesSearchCriteria(item, searchTerm, showInDescription)
+      );
+    }
+    return entities.filter(item =>
+      this.matchesSearchCriteria(item, searchTerm, showInDescription)
+    );
+  }
+
+  private matchesSearchCriteria(
+    item: WikibaseEntity,
+    searchTerm: string,
+    showInDescription: boolean
+  ): boolean {
+    const normalizedLabel = normalizeString(item.label);
+    const normalizedAliases = (item.aliases || []).map(normalizeString);
+    const normalizedDesc = normalizeString(item.description);
+    if (normalizedLabel.includes(searchTerm)) return true;
+    if (normalizedAliases.some(alias => alias.includes(searchTerm))) return true;
+    if (showInDescription && normalizedDesc.includes(searchTerm)) return true;
+    return false;
+  }
+
+  private updateItemsList(items: WikibaseEntity[]): void {
+    this.items = items;
+    this.items$.next(items);
+    this.updateHintValue();
+    this.changeDetector.markForCheck();
+  }
+
   private initFilteredItems() {
     this.filteredItems$ = combineLatest([
-      this.filterInput.valueChanges.pipe(startWith('')),
-      this.items$
+      this.items$,
+      this.filterInput.valueChanges.pipe(startWith(''))
     ]).pipe(
-      map(([filter, items]) => {
-        const f = (filter || '').toLowerCase();
-        if (!f) return items;
+      map(([items, filterValue]) => {
+        const filter = normalizeString(filterValue || '');
+        if (!filter) return items;
         return items.filter(item =>
-          (item.label && item.label.toLowerCase().includes(f)) ||
-          (item.description && item.description.toLowerCase().includes(f))
+          normalizeString(item.label).includes(filter) ||
+          normalizeString(item.description).includes(filter)
         );
       })
     );
-    // Debug log
-    const sub = this.filteredItems$.subscribe(items => {
-      console.log('filteredItems$', items);
-    });
+    const sub = this.filteredItems$.subscribe();
     this.subscriptions.push(sub);
   }
 
-  /** Set up the hint value observable */
   private initHintValue() {
-    this.hintValue$ = of(0); // Will be updated by updateHintValue()
+    this.hintValue$ = of(0);
   }
 
-  // --- Utility methods ---
-
-  /** Update the hint value (number of items or pages) */
   updateHintValue() {
-    const selectedResearchField = this.selectedResearchFieldService.getSelectedResearchField();
+    const selectedResearchField = this.selectedResearchField.getSelectedResearchField();
     this.hintValue$ = this.items.length > 0
       ? of(this.items.length)
       : (!selectedResearchField || selectedResearchField.id === 'Q0')
@@ -411,19 +478,16 @@ export class SearchComponent implements OnInit, OnDestroy {
         : of(0);
   }
 
-  /** Utility: check if a value is an array */
   isArray(val: any): boolean {
     return Array.isArray(val);
   }
 
-  /** Utility: create a list of IDs for API calls */
   createList(re: any): string {
     let arr = re.search ?? [];
     let list = arr.map((item: any) => item.id).join('|');
     return this.baseGetURL + list + this.getUrlSuffix;
   }
 
-  /** Utility: parse SPARQL results */
   listFromSparql(res: any) {
     if (res?.results) {
       for (let i = 0; i < res.results.bindings.length; i++) {
@@ -445,12 +509,20 @@ export class SearchComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  /** Handle research field selection */
+  private adaptEntities(entities: any[], lang: string): WikibaseEntity[] {
+    return entities.map(e => ({
+      id: e.id,
+      label: e.labels?.[lang]?.value || '',
+      aliases: e.aliases?.[lang]?.map((a: any) => a.value) || [],
+      description: e.descriptions?.[lang]?.value || ''
+    }));
+  }
+
   researchFieldSelect(researchField: any) {
     if (!researchField) {
-      this.selectedResearchFieldService.setSelectedResearchField({ id: 'all', name: 'all', description: '' });
+      this.selectedResearchField.setSelectedResearchField({ id: 'all', name: 'all', description: '' });
     } else {
-      this.selectedResearchFieldService.setSelectedResearchField({
+      this.selectedResearchField.setSelectedResearchField({
         id: researchField.id,
         name: researchField.name,
         description: researchField.description ?? ''
@@ -462,7 +534,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.updateHintValue();
   }
 
-  /** Display function for research field autocomplete */
   public displayResearchField(researchField: any): string {
     if (typeof researchField === 'string') {
       return researchField;
@@ -470,14 +541,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     return researchField && researchField.name ? researchField.name : '';
   }
 
-  /** Clear the project search input */
   clearProjectSearch() {
     this.searchResearchField.setValue('');
-    this.selectedResearchFieldService.setSelectedResearchField({ id: 'all', name: 'all', description: '' });
+    this.selectedResearchField.setSelectedResearchField({ id: 'all', name: 'all', description: '' });
+    this.selectedResearchField.setShowResearchField(false);
     this.updateHintValue();
   }
 
-  /** Clear the item search input */
   clearItemSearch() {
     this.searchInput.setValue('', { emitEvent: false });
     this.items = [];
@@ -485,13 +555,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.changeDetector.detectChanges();
   }
 
-  /** Handle checkbox for searching in description */
   onShowInDescriptionChange(checked: boolean) {
     this.showInDescription = checked;
     this.showInDescriptionSubject.next(checked);
   }
 
-  /** Observable for the current value of the search input */
   searchInputValue$: Observable<string> = this.searchInput.valueChanges.pipe(
     startWith(this.searchInput.value || '')
   );

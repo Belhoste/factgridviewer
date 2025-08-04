@@ -1,13 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\dist\\factgrid",
+    "\\dist\\factgrid\\browser",
     "\\src",
     "\\src\\app",
     "\\src\\app\\display",
-    "\\src\\app\\display\\sources-display",
+    "\\src\\app\\display\\iframes-display",
+    "\\src\\app\\models",
     "\\src\\app\\search",
     "\\src\\app\\services"
   ],
-  "SelectedNode": "\\src\\app\\app.component.scss",
+  "SelectedNode": "\\src\\app\\display\\iframes-display\\iframes-display.component.html",
   "PreviewInSolutionExplorer": false
 }

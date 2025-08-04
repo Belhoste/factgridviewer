@@ -1,5 +1,5 @@
 <mat-card-content class="cardBackground">
-  @for (P of headerDetail; track P) {
+  @for (P of headerDetailOptimized; track P.id) {
   <div class="listStyle">
     <div class="labelTitlePadding">
       <span class="propertyStyle hover-bg-light"
@@ -8,7 +8,7 @@
         {{P.label}}:
       </span>
     </div>
-    @for (M of P; track M) {
+    @for (M of P.claims; track M.id) {
     <div class="statementStyle">
       <div [ngStyle]="{'background-color': (M.rank=='deprecated') ? '#f1f1f1' : '#ffffff'}">
         @if (M.mainsnak.datatype ==='time') {
@@ -128,8 +128,9 @@
               }
               }
               @if (D.datatype === 'url') {
+              <span>{{D | json}}</span>
               <span class="displayLayout">
-                <a href="{{D.string}}" target="_blank">{{D.string}}</a>
+                <a href="{{D.value}}" target="_blank">{{D.value}}</a>
               </span>
               @if (!isLast) {
               <span>,&nbsp;</span>

@@ -52,15 +52,17 @@ export class RequestService {
     return forkJoin(requests);
   }
 
-  searchItem(label: string, lang: string) {
+  searchItem(label: string, lang: string, offset: number = 0, limit: number = 50) {
     const params = new HttpParams()
       .set('action', 'wbsearchentities')
       .set('search', label)
       .set('language', lang)
       .set('uselang', lang)
-      .set('limit', '50')
+      .set('limit', limit.toString())
       .set('format', 'json')
-      .set('origin', '*');
+      .set('origin', '*')
+      .set('offset', offset.toString());
+      ;
     return this.http.get('https://database.factgrid.de//w/api.php', { params });
   }
 
@@ -195,9 +197,6 @@ export class RequestService {
       })))
     );
   }
-
-
-
 
   getQidsList(search: string): Observable<string[]> {
     const baseParams = new HttpParams()

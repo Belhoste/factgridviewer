@@ -167,23 +167,7 @@
 
               <div class="matCardPadding" [ngClass]="isIframes ? 'show-division':'hide-division'">
                 <mat-card appearance="outlined" class=mat-elevation-z12>
-                  <app-iframes-display [claims]="claims"
-                                       [urlSafe1]="urlSafe1"
-                                       [urlSafe2]="urlSafe2"
-                                       [urlSafe3]="urlSafe3"
-                                       [urlSafe4]="urlSafe4"
-                                       [urlSafe5]="urlSafe5"
-                                       [urlSafe6]="urlSafe6"
-                                       [urlSafe7]="urlSafe7"
-                                       [urlSafe8]="urlSafe8"
-                                       [urlSafe9]="urlSafe9"
-                                       [urlSafe10]="urlSafe10"
-                                       [urlSafe11]="urlSafe11"
-                                       [urlSafe12]="urlSafe12"
-                                       [urlSafe13]="urlSafe13"
-                                       [urlSafe14]="urlSafe14"
-                                       [urlSafe15]="urlSafe15">
-                  </app-iframes-display>
+                  <app-iframes-display [iframeGroups]="iframeGroups"></app-iframes-display>
                 </mat-card>
               </div>
 

@@ -562,7 +562,7 @@ mat-form-field.search-field {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%; /* prend toute la largeur du parent */
+  width: auto; /* prend toute la largeur du parent */
   margin-top: 2px;
   gap: 12px; /* espace entre les icônes */
 }
@@ -823,11 +823,14 @@ button.mat-icon-button .mat-icon {
     padding: 10px;
   }
 
-  .iFrameComment {
-    font-size: 14px;
-    text-overflow: ellipsis;
-    word-break: normal;
-  }
+.iFrameComment {
+  color: #3F51B5;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  word-break: normal;
+//  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 
   .searchListSize { // in the search-component for the list of items
     margin-top: 50px;
@@ -862,15 +865,30 @@ button.mat-icon-button .mat-icon {
   padding: 12px 0;
 }
 
+.item-row.clicked,
+.item-row.clicked:hover,
+.item-row.clicked:focus {
+  background-color: #e0e0e0 !important; 
+  transition: background-color 0.2s;
+}
+
+
 .item-main {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+.item-label {
+  font-weight: 500;
+  color: black;
+  font-size: 1.1em; /* Taille de police légèrement plus grande */
+  line-height: 1.2; /* Interlignage pour une meilleure lisibilité */
+}
+
 .item-description {
   color: #666;
-  font-size: 0.98em;
+  font-size: 1.1em;
   margin-top: 2px;
   margin-left: 32px; /* pour l’aligner sous le label, optionnel */
 }

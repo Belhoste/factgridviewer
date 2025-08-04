@@ -10,8 +10,11 @@ setIframesDisplay(item, iframes){
 
   if (item[0].claims.P309 !==undefined){  //FactGrid table of contents     
     console.log(item[0].claims.P309[0].mainsnak.datavalue.value);
-    item[1].splice(item[1].indexOf("P309"),1);
-    for (let i=0; i<item[0].claims.P309[i].length; i++){
+    item[1].splice(item[1].indexOf("P309"), 1);
+    if (!item[0].claims.P309.iframe) {
+      item[0].claims.P309.iframe = [];
+    }
+    for (let i=0; i<item[0].claims.P309.length; i++){
       item[0].claims.P309[i].mainsnak.datatype=item[0].claims.P309[i].mainsnak.datavalue.value;
       item[0].claims.P309.iframe[i]= item[0].claims.P309[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P309);
@@ -20,16 +23,20 @@ setIframesDisplay(item, iframes){
 
   if (item[0].claims.P320 !==undefined){  //FactGrid list of members     
     item[1].splice(item[1].indexOf("P320"),1);
-    for (let i=0; i<item[0].claims.P320[i].length; i++){
+    for (let i=0; i<item[0].claims.P320.length; i++){
       item[0].claims.P320[i].mainsnak.datatype=item[0].claims.P320[i].mainsnak.datavalue.value;
       item[0].claims.P320.iframe[i]= item[0].claims.P320[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P320);
     }
   
     
-  if (item[0].claims.P679 !==undefined){ //house numbers
-    item[1].splice(item[1].indexOf("P679"),1);
-    for (let i=0; i<item[0].claims.P679[i].length; i++){
+  if (item[0].claims.P679 !== undefined) { //house numbers
+    console.log(item[0].claims.P679);
+    item[1].splice(item[1].indexOf("P679"), 1);
+    if (!item[0].claims.P679.iframe) {
+      item[0].claims.P679.iframe = [];
+    }
+    for (let i=0; i<item[0].claims.P679.length; i++){
       item[0].claims.P679[i].mainsnak.datatype=item[0].claims.P679[i].mainsnak.datavalue.value;
       item[0].claims.P679.iframe[i]= item[0].claims.P679[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P679);
@@ -37,7 +44,7 @@ setIframesDisplay(item, iframes){
     
   if (item[0].claims.P693 !==undefined){ //FactGrid map visualisation
     item[1].splice(item[1].indexOf("P693"),1); 
-    for (let i=0; i<item[0].claims.P693[i].length; i++){   
+    for (let i=0; i<item[0].claims.P693.length; i++){   
       item[0].claims.P693[i].mainsnak.datatype=item[0].claims.P693[i].mainsnak.datavalue.value;
       item[0].claims.P693.iframe[i]= item[0].claims.P693[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P693);
@@ -45,7 +52,7 @@ setIframesDisplay(item, iframes){
 
   if (item[0].claims.P720 !==undefined){ //FactGrid list
     item[1].splice(item[1].indexOf("P720"),1);    
-    for (let i=0; i<item[0].claims.P720[i].length; i++){
+    for (let i=0; i<item[0].claims.P720.length; i++){
       item[0].claims.P720[i].mainsnak.datatype=item[0].claims.P720[i].mainsnak.datavalue.value;
       item[0].claims.P720.iframe[i]= item[0].claims.P720[i].mainsnak.datavalue.value ;}
       iframes.push(item[0].claims.P720);

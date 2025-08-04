@@ -3,6 +3,7 @@ import { SetLanguageService } from './set-language.service';
 import { DetailsService } from './details.service';
 import { PropertyDetailsService } from './property-details.service';
 import { ItemDetailsService } from './item-details.service';
+import { RoleOfObjectRenderingService } from './role-of-object-rendering.service'; 
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -14,6 +15,7 @@ export class CreateItemToDisplayService {
   private details = inject(DetailsService);
   private addPropertyDetails = inject(PropertyDetailsService);
   private addItemDetails = inject(ItemDetailsService);
+  private roleOfObjectRendering = inject(RoleOfObjectRenderingService);
 
   createItemToDisplay(re, selectedLang) {
     const itemProperties = Object.keys(re.claims);
@@ -30,23 +32,29 @@ export class CreateItemToDisplayService {
         // Enrich the claims with all necessary details
         this.enrichClaims(re, propertiesDetails, itemsDetails, itemProperties, selectedLang);
 
+        // Applique la transformation avancée des rôles d'objet
+        this.roleOfObjectRendering.transformProperties(re);
+
         // Apply the P820 label transformation
         this.transformClaimsWithP820(re);
+        const updatedItemProperties = Object.keys(re.claims);
 
         // Retrieve qualifier and reference property lists
-        const qualifierProperties = this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, itemProperties)[1];
+        const qualifierProperties = this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, updatedItemProperties)[1];
         const referenceProperties = this.details.getReferenceProperties(re);
 
         // Build the final item structure
-        const item = this.addItemDetails.addReference2ItemDetails(itemsDetails, re, itemProperties);
+        const item = this.addItemDetails.addReference2ItemDetails(itemsDetails, re, updatedItemProperties);
 
-        return [item, itemProperties, qualifierProperties, referenceProperties];
+        return [item, updatedItemProperties, qualifierProperties, referenceProperties];
       })
     );
   }
 
   /** Groups all claim enrichment steps for clarity */
-  private enrichClaims(re, propertiesDetails, itemsDetails, itemProperties, selectedLang) {
+  private enrichClaims(re, propertiesDetails, itemsDetails,
+    itemProperties, selectedLang) {
+    const updatedItemProperties = Object.keys(re.claims);
     this.addItemDetails.addSitelinksDetails(re);
     this.addPropertyDetails.addClaimPropertyDetails(propertiesDetails, re, itemProperties);
     this.addPropertyDetails.addQualifierPropertyDetails(propertiesDetails, re, itemProperties);
@@ -64,13 +72,16 @@ export class CreateItemToDisplayService {
     let claims = item.claims;
     if (!claims) return;
 
+    // 1. Suppression des qualifiers P820 et des statements sans qualifiers
     for (const prop of Object.keys(claims)) {
-      for (const statement of claims[prop]) {
+      // On boucle à l'envers pour pouvoir supprimer des éléments
+      for (let i = claims[prop].length - 1; i >= 0; i--) {
+        const statement = claims[prop][i];
         if (!statement.qualifiers2 || !statement.qualifiers) continue;
 
         const p820Qualifier2 = statement.qualifiers2.find(q => q.id === 'P820');
         if (p820Qualifier2 && p820Qualifier2.display && p820Qualifier2.display.length > 0) {
-          // Lowercase the first letter of each label
+          // Ajout du label du rôle
           const roleLabels = p820Qualifier2.display
             .map(d => d.label ? d.label.charAt(0).toLowerCase() + d.label.slice(1) : '')
             .filter(label => !!label)
@@ -82,15 +93,15 @@ export class CreateItemToDisplayService {
             statement.mainsnak.label = `(${roleLabels})`;
           }
         }
+      }
+    }
 
-        // Remove the now-unnecessary P820 qualifier
-        if (statement.qualifiers['P820']) {
-          delete statement.qualifiers['P820'];
-        }
-        if (statement.qualifiers2) {
-          statement.qualifiers2 = statement.qualifiers2.filter(q => q.id !== 'P820');
-        }
+    // 2. Suppression des propriétés dont le tableau est vide
+    for (const prop of Object.keys(claims)) {
+      if (Array.isArray(claims[prop]) && claims[prop].length === 0) {
+        delete claims[prop];
       }
     }
   }
+
 }

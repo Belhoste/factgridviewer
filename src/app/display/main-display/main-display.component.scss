@@ -8,3 +8,19 @@ img {
    width: 20% ;
 }
 }
+
+.alignStyle { //size of the text of the statements
+  //color: black;
+  //color:mat-primary;
+
+  width: 60vw;
+  font-size: 16px;
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px; // from 3px
+}
+
+.alignStyle.prenom-padding {
+  padding-left: 15px !important;
+}
+

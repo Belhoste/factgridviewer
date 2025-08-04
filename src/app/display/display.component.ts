@@ -100,6 +100,7 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
   sourcesList: any[] = [];
   externalLinks: any[] = [];
   iframes: any[] = [];
+  iframeGroups: any[] = [];
   headerDetail: any[] = [];
   education: any[] = [];
   careerAndActivities: any[] = [];
@@ -336,21 +337,14 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       this.isIframes = this.iframes.length > 0;
 
       // Extraction des URLs brutes pour les iframes
-      this.urlSafe1 = this.claims.P309?.[0]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe2 = this.claims.P309?.[1]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe3 = this.claims.P309?.[2]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe4 = this.claims.P320?.[0]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe5 = this.claims.P320?.[1]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe6 = this.claims.P320?.[2]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe7 = this.claims.P679?.[0]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe8 = this.claims.P679?.[1]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe9 = this.claims.P679?.[2]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe10 = this.claims.P693?.[0]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe11 = this.claims.P693?.[1]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe12 = this.claims.P693?.[2]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe13 = this.claims.P720?.[0]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe14 = this.claims.P720?.[1]?.mainsnak?.datavalue?.value || '';
-      this.urlSafe15 = this.claims.P720?.[2]?.mainsnak?.datavalue?.value || '';
+
+ this.iframeGroups = [
+  { property: 'P309', label: this.claims.P309?.label, claims: this.claims.P309 || [] },
+  { property: 'P320', label: this.claims.P320?.label, claims: this.claims.P320 || [] },
+  { property: 'P679', label: this.claims.P679?.label, claims: this.claims.P679 || [] },
+  { property: 'P693', label: this.claims.P693?.label, claims: this.claims.P693 || [] },
+  { property: 'P720', label: this.claims.P720?.label, claims: this.claims.P720 || [] }
+].filter(g => g.label && g.claims.length > 0);
 
       // Transcription
       if (this.claims.P251 && this.claims.P251[0].mainsnak.datavalue.value) {
@@ -372,7 +366,22 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       // sparql lists
-      this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
+
+      console.log('item[0].sparql', this.item[0].sparql);
+
+      if (this.item[0].sparql && typeof this.item[0].sparql.subscribe === 'function') {
+        this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
+      } else {
+        // Attendre que sparql soit prêt
+        const checkSparql = () => {
+          if (this.item[0].sparql && typeof this.item[0].sparql.subscribe === 'function') {
+            this.item[0].sparql.subscribe(res => this.sparqlDisplay(res));
+          } else {
+            setTimeout(checkSparql, 30);
+          }
+        };
+        checkSparql();
+      }
 
       // Spinner
       this.isSpinner = false;
@@ -403,7 +412,6 @@ export class DisplayComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (u[1]) {
       this.sparqlSubject1 = u[1][0];
-      console.log("titre SPARQL 1:", this.sparqlSubject1);
       this.sparqlData1 = u[1][1];
       this.isSparql1 = !!(this.sparqlData1 && this.sparqlData1[0]);
     }
